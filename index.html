@@ -2077,7 +2077,7 @@
                  try {
                      const file = new File([blob], safeFilename(), { type: "image/png" });
                      if (navigator.canShare({ files: [file] })) {
-                         await navigator.share({ files: [file], title: 'Observation Results' });
+                         await navigator.share({ files: [file] });
                          shareStatus.textContent = "Shared successfully!";
                      } else {
                          throw new Error("canShare returned false");
@@ -2111,7 +2111,7 @@
                          try {
                              const file = new File([blob], safeFilename(), { type: "image/png" });
                              if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                                 await navigator.share({ files: [file], title: 'Observation Results' });
+                                 await navigator.share({ files: [file] });
                                  shareStatus.textContent = "Shared successfully!";
                              } else {
                                  throw clipboardErr;
