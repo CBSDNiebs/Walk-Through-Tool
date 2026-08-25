@@ -292,13 +292,32 @@
 
     .results-grid{
       margin-top:16px;
-      display:grid;
-      grid-template-columns:1fr;
+      display:flex;
+      flex-direction:column;
       gap:14px;
-      align-items:start;
     }
 
-    .summary{border:1px solid var(--hairline);border-radius:14px;padding:14px;}
+    .mode-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 768px) {
+      .mode-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .summary{
+      border:1px solid var(--hairline);
+      border-radius:14px;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
     .summary .row{
       display:flex;justify-content:space-between;gap:12px;
       padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.10);
@@ -307,7 +326,14 @@
     .summary .k{color:var(--muted);font-size:12px;}
     .summary .v{font-family:var(--mono);font-size:12px;text-align:right;}
 
-    .chartWrap{border:1px solid var(--hairline);border-radius:14px;padding:14px;}
+    .chartWrap{
+      border:1px solid var(--hairline);
+      border-radius:14px;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
     .chartTitle{font-size:12px;color:var(--muted);margin-bottom:10px;}
     .chartHost{width:100%;overflow:hidden;}
     .chartHost svg{width:100%;height:auto;display:block;}
@@ -394,7 +420,7 @@
 
       <section class="form">
         <label class="field">
-          <span class="label">Educator Name</span>
+          <span class="label">Observed Educator Name</span>
           <input type="text" id="educatorInput" class="control" placeholder="Enter name…" />
         </label>
 
@@ -453,6 +479,7 @@
         <button id="modeOtrBtn" class="mode-btn" type="button">OTRs</button>
         <button id="modePraiseBtn" class="mode-btn" type="button">Praise</button>
         <button id="modeEngagementBtn" class="mode-btn" type="button">Engagement</button>
+        <button id="modeAllBtn" class="mode-btn" type="button">All</button>
       </section>
     </main>
   </template>
@@ -478,9 +505,15 @@
         </div>
       </section>
 
-      <section class="runControls" role="group" aria-label="Recording controls">
-        <button id="startBtn" class="btn start" type="button">Start</button>
+      <button id="startBtn" class="btn start" type="button" style="margin-top:16px; width: 100%;">Start</button>
 
+      <div id="timerNotesContainer" style="margin-top:16px;">
+        <span class="label" style="font-weight:bold;">Notes</span>
+        <textarea id="timerNotes" class="notes-input" style="margin-top:8px; min-height: 60px;" placeholder="Type notes here..." aria-label="Observation notes"></textarea>
+      </div>
+
+      <section class="runControls" role="group" aria-label="Recording controls">
+        <div id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; color:var(--ink);">OTRs</div>
         <div id="otrButtons1" class="otrRow" style="grid-template-columns: 1fr;" aria-label="Target buttons">
           <button id="otrGroupBtn" class="btn otr group" type="button" disabled>Whole Group</button>
         </div>
@@ -491,6 +524,7 @@
           <button id="otrVolunteerBtn" class="btn otr volunteer" type="button" disabled>Volunteer</button>
         </div>
 
+        <div id="praiseSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Praise</div>
         <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Praise buttons">
           <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise</button>
           <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise</button>
@@ -500,6 +534,7 @@
           <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism</button>
         </div>
 
+        <div id="engSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Engagement</div>
         <div id="engButtons1" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Engagement buttons 1">
           <button id="engWholeBtn" class="btn otr eng-whole" type="button" disabled>Whole Group</button>
           <button id="engSmallBtn" class="btn otr eng-small" type="button" disabled>Small Group</button>
@@ -519,8 +554,6 @@
           </button>
           <button id="stopBtn" class="btn stop" type="button" disabled>Stop</button>
         </div>
-
-        <textarea id="timerNotes" class="notes-input" placeholder="Type notes here..." aria-label="Observation notes"></textarea>
       </section>
 
       <footer class="fineprint">
@@ -555,26 +588,21 @@
         <button id="resultsBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
       </header>
 
-      <section class="results-grid">
-        <div class="summary" id="summaryContainer">
+      <section class="actions" style="margin-top: 16px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline);">
+        <div class="fineprint" style="width: 100%; text-align: center; margin-bottom: 8px; border-top: none; padding-top: 0; color: #1f9d55; font-weight: bold;">Clicking Share copies an image of these results that can be pasted into an email or spreadsheet.</div>
+        <div style="display:flex; gap:12px; width:100%;">
+          <button id="shareBtn" class="btn" type="button" style="flex:1;">Share</button>
+          <button id="restartBtn" class="btn restart" type="button" style="flex:1;">Restart</button>
         </div>
-
-        <div class="chartWrap">
-          <div class="chartTitle" id="chartTitle">OTR per minute over time</div>
-          <div id="chartHost" class="chartHost" role="img" aria-label="OTR per minute over time chart"></div>
-          
-          <div id="resultsNotesContainer" style="display:flex; flex-direction: column; align-items: flex-start; margin-top: 16px; border-top: 1px solid var(--hairline); padding-top: 16px;">
-             <span class="k" style="font-weight:bold; font-size:12px; color:var(--muted);">Notes</span>
-             <textarea id="resultsNotesText" class="notes-input" style="margin-top:8px; width:100%; font-weight:bold; border:none; background:transparent; padding:0; box-shadow:none;" placeholder="Type notes here..." aria-label="Observation notes"></textarea>
-          </div>
-        </div>
+        <div id="shareStatus" class="fineprint" aria-live="polite" style="width: 100%; text-align: center; margin-top: 4px; border-top: none; padding-top: 0;"></div>
       </section>
 
-      <section class="actions">
-        <div class="fineprint" style="width: 100%; text-align: center; margin-bottom: 8px; border-top: none; padding-top: 0; color: #1f9d55; font-weight: bold;">Clicking Share copies an image of these results that can be pasted into an email or spreadsheet.</div>
-        <button id="shareBtn" class="btn" type="button">Share</button>
-        <button id="restartBtn" class="btn restart" type="button">Restart</button>
-        <div id="shareStatus" class="fineprint" aria-live="polite" style="width: 100%; text-align: center; margin-top: 4px; border-top: none; padding-top: 0;"></div>
+      <div id="resultsNotesContainer" style="display:flex; flex-direction: column; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px solid var(--hairline); padding-bottom: 16px;">
+         <span class="label" style="font-weight:bold; font-size:12px; color:var(--muted);">Notes</span>
+         <textarea id="resultsNotesText" class="notes-input" style="margin-top:8px; width:100%; font-weight:bold; min-height: 80px;" placeholder="Type notes here..." aria-label="Observation notes"></textarea>
+      </div>
+
+      <section class="results-grid" id="resultsGrid">
       </section>
     </main>
   </template>
@@ -660,6 +688,13 @@
           updateBeginEnabled();
         });
 
+        educatorInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && !beginBtn.disabled) {
+            e.preventDefault();
+            beginBtn.click();
+          }
+        });
+
         beginBtn.addEventListener("click", showModeSelect);
       }
 
@@ -719,6 +754,10 @@
           state.mode = "Engagement";
           showRun();
         });
+        document.getElementById("modeAllBtn").addEventListener("click", () => {
+          state.mode = "All";
+          showRun();
+        });
       }
 
       function showRun(restore = false){
@@ -740,6 +779,9 @@
         } else if (state.mode === "Engagement") {
           runTitle.textContent = "Engagement Timer";
           totalKicker.textContent = "Total Engagement";
+        } else if (state.mode === "All") {
+          runTitle.textContent = "All Timer";
+          totalKicker.textContent = "Total Events";
         } else {
           runTitle.textContent = "OTR Timer";
           totalKicker.textContent = "Total OTR";
@@ -751,6 +793,10 @@
         const praiseButtons = document.getElementById("praiseButtons");
         const engButtons1 = document.getElementById("engButtons1");
         const engButtons2 = document.getElementById("engButtons2");
+        
+        const otrSectionLabel = document.getElementById("otrSectionLabel");
+        const praiseSectionLabel = document.getElementById("praiseSectionLabel");
+        const engSectionLabel = document.getElementById("engSectionLabel");
 
         if (state.mode === "Praise") {
           otrButtons1.style.display = "none";
@@ -758,18 +804,36 @@
           praiseButtons.style.display = "grid";
           engButtons1.style.display = "none";
           engButtons2.style.display = "none";
+          otrSectionLabel.style.display = "none";
+          praiseSectionLabel.style.display = "none";
+          engSectionLabel.style.display = "none";
         } else if (state.mode === "Engagement") {
           otrButtons1.style.display = "none";
           otrButtons2.style.display = "none";
           praiseButtons.style.display = "none";
           engButtons1.style.display = "grid";
           engButtons2.style.display = "grid";
+          otrSectionLabel.style.display = "none";
+          praiseSectionLabel.style.display = "none";
+          engSectionLabel.style.display = "none";
+        } else if (state.mode === "All") {
+          otrButtons1.style.display = "grid";
+          otrButtons2.style.display = "grid";
+          praiseButtons.style.display = "grid";
+          engButtons1.style.display = "grid";
+          engButtons2.style.display = "grid";
+          otrSectionLabel.style.display = "block";
+          praiseSectionLabel.style.display = "block";
+          engSectionLabel.style.display = "block";
         } else {
           otrButtons1.style.display = "grid";
           otrButtons2.style.display = "grid";
           praiseButtons.style.display = "none";
           engButtons1.style.display = "none";
           engButtons2.style.display = "none";
+          otrSectionLabel.style.display = "none";
+          praiseSectionLabel.style.display = "none";
+          engSectionLabel.style.display = "none";
         }
 
         const otrGroupBtn = document.getElementById("otrGroupBtn");
@@ -801,7 +865,7 @@
           showModeSelect();
         });
 
-        runContext.textContent = `Educator: ${state.educatorName}`;
+        runContext.textContent = `Observed Educator Name: ${state.educatorName}`;
 
         const engagementModal = document.getElementById("engagementModal");
         const engTotalStudents = document.getElementById("engTotalStudents");
@@ -815,7 +879,7 @@
           elapsedText.textContent = formatElapsed(Math.max(0, elapsed));
           otrTotalText.textContent = String(state.otrEvents.length);
 
-          if (state.mode === "Engagement" && state.startedAt !== null && state.stoppedAt === null) {
+          if ((state.mode === "Engagement" || state.mode === "All") && state.startedAt !== null && state.stoppedAt === null) {
             const minutesElapsed = elapsed / 60000;
             const checkTimes = [1, 5, 9];
             for (const t of checkTimes) {
@@ -866,14 +930,12 @@
           praiseGenCritBtn.disabled = !on;
           praiseIndCritBtn.disabled = !on;
           
-          const lastKind = state.otrEvents.length > 0 ? state.otrEvents[state.otrEvents.length - 1].kind : null;
-          
-          engWholeBtn.disabled = !on || (state.mode === "Engagement" && lastKind === "engWhole");
-          engSmallBtn.disabled = !on || (state.mode === "Engagement" && lastKind === "engSmall");
-          engPartnersBtn.disabled = !on || (state.mode === "Engagement" && lastKind === "engPartners");
-          engChoralBtn.disabled = !on || (state.mode === "Engagement" && lastKind === "engChoral");
-          engClozeBtn.disabled = !on || (state.mode === "Engagement" && lastKind === "engCloze");
-          engWhiteboardBtn.disabled = !on || (state.mode === "Engagement" && lastKind === "engWhiteboard");
+          engWholeBtn.disabled = !on;
+          engSmallBtn.disabled = !on;
+          engPartnersBtn.disabled = !on;
+          engChoralBtn.disabled = !on;
+          engClozeBtn.disabled = !on;
+          engWhiteboardBtn.disabled = !on;
         }
 
         const undoBtn = document.getElementById("undoBtn");
@@ -1084,9 +1146,9 @@
       function renderEngagementStackedBarChartSVG(events, durationMs) {
         const svgNS = "http://www.w3.org/2000/svg";
         
-        const W = 720;
-        const H = 320;
-        const pad = { l: 150, r: 40, t: 40, b: 60 };
+        const W = 800;
+        const H = 450;
+        const pad = { l: 40, r: 200, t: 60, b: 80 };
         const innerW = W - pad.l - pad.r;
         const innerH = H - pad.t - pad.b;
 
@@ -1094,29 +1156,26 @@
           viewBox: `0 0 ${W} ${H}`,
           width: W,
           height: H,
-          style: "max-width:100%; height:auto; background:#fff; font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;"
+          style: "max-width:100%; height:auto; background:#fff; font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; font-size:14px;"
         });
 
         svg.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: H, fill: "#fff" }));
 
-        const css = getComputedStyle(document.documentElement);
         const categories = [
-          { key: "engWhole", color: css.getPropertyValue("--eng-whole").trim() || "#0369a1", label: "Whole Group" },
-          { key: "engSmall", color: css.getPropertyValue("--eng-small").trim() || "#0284c7", label: "Small Group" },
-          { key: "engPartners", color: css.getPropertyValue("--eng-partners").trim() || "#38bdf8", label: "Precision Partners" },
-          { key: "engChoral", color: css.getPropertyValue("--eng-choral").trim() || "#d97706", label: "Choral Response" },
-          { key: "engCloze", color: css.getPropertyValue("--eng-cloze").trim() || "#f59e0b", label: "Cloze Reading" },
-          { key: "engWhiteboard", color: css.getPropertyValue("--eng-whiteboard").trim() || "#fbbf24", label: "White Board Response" }
+          { key: "engWhole", color: "#7dd3fc", label: "Whole Group" },
+          { key: "engSmall", color: "#bae6fd", label: "Small Group" },
+          { key: "engPartners", color: "#e0f2fe", label: "Precision Partners" },
+          { key: "engChoral", color: "#fcd34d", label: "Choral Response" },
+          { key: "engCloze", color: "#fde68a", label: "Cloze Reading" },
+          { key: "engWhiteboard", color: "#fef3c7", label: "White Board Response" }
         ];
 
         const maxMs = Math.max(durationMs, 60000);
         const maxMinutes = Math.ceil(maxMs / 60000);
         
         const x = (ms) => pad.l + (ms / (maxMinutes * 60000)) * innerW;
-        const rowH = innerH / categories.length;
-        const y = (i) => pad.t + i * rowH;
 
-        // Draw X-axis grid lines (Minutes)
+        // X-axis grid lines (Minutes)
         for (let m = 0; m <= maxMinutes; m++) {
           const tx = x(m * 60000);
           svg.appendChild(el(svgNS, "line", {
@@ -1124,33 +1183,24 @@
             stroke: "rgba(0,0,0,.05)", "stroke-width": 1
           }));
           svg.appendChild(el(svgNS, "text", {
-            x: tx, y: pad.t + innerH + 16, "text-anchor": "middle",
-            "font-size": 12, fill: "rgba(0,0,0,.60)"
+            x: tx, y: pad.t + innerH + 18, "text-anchor": "middle",
+            "font-size": 14, fill: "rgba(0,0,0,.60)"
           }, String(m)));
         }
 
         // X-axis label
         svg.appendChild(el(svgNS, "text", {
-          x: pad.l + innerW / 2, y: pad.t + innerH + 36, "text-anchor": "middle",
-          "font-size": 12, fill: "rgba(0,0,0,.60)"
+          x: pad.l + innerW / 2, y: pad.t + innerH + 40, "text-anchor": "middle",
+          "font-size": 14, fill: "rgba(0,0,0,.60)"
         }, "Minutes"));
 
-        // Draw Y-axis labels and row backgrounds
-        categories.forEach((cat, i) => {
-          const ry = y(i);
-          if (i % 2 === 0) {
-            svg.appendChild(el(svgNS, "rect", {
-              x: pad.l, y: ry, width: innerW, height: rowH,
-              fill: "rgba(0,0,0,.02)"
-            }));
-          }
-          svg.appendChild(el(svgNS, "text", {
-            x: pad.l - 12, y: ry + rowH / 2 + 4, "text-anchor": "end",
-            "font-size": 12, fill: "rgba(0,0,0,.75)"
-          }, cat.label));
-        });
+        // Single background row for the timeline
+        svg.appendChild(el(svgNS, "rect", {
+          x: pad.l, y: pad.t, width: innerW, height: innerH,
+          fill: "rgba(0,0,0,.02)", stroke: "rgba(0,0,0,.1)", "stroke-width": 1
+        }));
 
-        // Draw events as continuous blocks
+        // Draw events as continuous vertical bands extending horizontally
         for (let j = 0; j < events.length; j++) {
           const ev = events[j];
           const catIdx = categories.findIndex(c => c.key === ev.kind);
@@ -1159,11 +1209,10 @@
             const endMs = (j + 1 < events.length) ? events[j + 1].tMs : durationMs;
             const ex1 = x(startMs);
             const ex2 = x(endMs);
-            const ey = y(catIdx);
             
             svg.appendChild(el(svgNS, "rect", {
-              x: ex1, y: ey + 4, width: Math.max(2, ex2 - ex1), height: rowH - 8,
-              fill: categories[catIdx].color, rx: 2
+              x: ex1, y: pad.t, width: Math.max(0, ex2 - ex1), height: innerH,
+              fill: categories[catIdx].color
             }));
           }
         }
@@ -1187,22 +1236,41 @@
             
             // Label the dot
             svg.appendChild(el(svgNS, "text", {
-              x: cx, y: pad.t - 16, "text-anchor": "middle",
-              "font-size": 10, "font-weight": "bold", fill: "#e11d48"
+              x: cx, y: pad.t - 18, "text-anchor": "middle",
+              "font-size": 14, "font-weight": "bold", fill: "#e11d48"
             }, `${check.offTaskStudents}/${check.totalStudents}`));
           }
         }
-
+        
         // Axes borders
         svg.appendChild(el(svgNS, "line", { x1: pad.l, y1: pad.t + innerH, x2: pad.l + innerW, y2: pad.t + innerH, stroke: "rgba(0,0,0,.25)", "stroke-width": 1 }));
         svg.appendChild(el(svgNS, "line", { x1: pad.l, y1: pad.t, x2: pad.l, y2: pad.t + innerH, stroke: "rgba(0,0,0,.25)", "stroke-width": 1 }));
+
+        // Legend on the right
+        const lx = pad.l + innerW + 18;
+        const lyStart = pad.t + 8;
+        const lh = 22;
+        
+        categories.forEach((cat, i) => {
+           const ly = lyStart + (i * lh);
+           
+           svg.appendChild(el(svgNS, "rect", {
+              x: lx, y: ly - 12, width: 14, height: 14,
+              fill: cat.color, rx: 2
+           }));
+           
+           svg.appendChild(el(svgNS, "text", {
+              x: lx + 20, y: ly, "text-anchor": "start",
+              "font-size": 14, fill: "rgba(0,0,0,.75)"
+           }, cat.label));
+        });
 
         return svg;
       }
 
       function renderOtrMultiLineChartSVG(events, durationMs){
-        const W = 720, H = state.mode === "Praise" ? 336 : 320;
-        const pad = { l: 46, r: 150, t: 16, b: state.mode === "Praise" ? 76 : 60 };
+        const W = 800, H = 450;
+        const pad = { l: 50, r: 200, t: 16, b: 80 };
         const innerW = W - pad.l - pad.r;
         const innerH = H - pad.t - pad.b;
 
@@ -1252,8 +1320,8 @@
           const gy = y(t);
           svg.appendChild(el(svgNS, "line", { x1: pad.l, y1: gy, x2: pad.l + innerW, y2: gy, stroke: "rgba(0,0,0,.08)", "stroke-width": 1 }));
           svg.appendChild(el(svgNS, "text", {
-            x: pad.l - 10, y: gy + 4, "text-anchor": "end",
-            "font-size": 11, "font-family": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+            x: pad.l - 10, y: gy + 5, "text-anchor": "end",
+            "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             fill: "rgba(0,0,0,.65)"
           }, String(t)));
         }
@@ -1280,7 +1348,7 @@
           const gx = x(i);
           svg.appendChild(el(svgNS, "text", {
             x: gx, y: pad.t + innerH + 18, "text-anchor": "middle",
-            "font-size": 11, "font-family": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+            "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             fill: "rgba(0,0,0,.65)"
           }, String(i)));
         }
@@ -1344,8 +1412,8 @@
         }
 
         svg.appendChild(el(svgNS, "text", {
-          x: pad.l + innerW / 2, y: pad.t + innerH + 36, "text-anchor": "middle",
-          "font-size": 12, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+          x: pad.l + innerW / 2, y: pad.t + innerH + 40, "text-anchor": "middle",
+          "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
           fill: "rgba(0,0,0,.60)"
         }, "Minute window"));
 
@@ -1363,37 +1431,37 @@
           const isGoalMet = ratioValue >= 5;
 
           svg.appendChild(el(svgNS, "text", {
-            x: pad.l + innerW / 2, y: pad.t + innerH + 54, "text-anchor": "middle",
-            "font-size": 12, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+            x: pad.l + innerW / 2, y: pad.t + innerH + 60, "text-anchor": "middle",
+            "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             "font-weight": "bold",
             fill: "rgba(31, 157, 85, 0.85)"
           }, "Goal: 5:1 positive to negative feedback"));
 
           svg.appendChild(el(svgNS, "text", {
-            x: pad.l + innerW / 2, y: pad.t + innerH + 72, "text-anchor": "middle",
-            "font-size": 12, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+            x: pad.l + innerW / 2, y: pad.t + innerH + 78, "text-anchor": "middle",
+            "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             "font-weight": "bold",
             fill: isGoalMet ? "rgba(31, 157, 85, 0.85)" : "rgba(220, 38, 38, 0.85)"
           }, `Actual Positive to Negative (ratio): ${ratioText}`));
         } else if (state.mode === "OTRs") {
           svg.appendChild(el(svgNS, "text", {
-            x: pad.l + innerW / 2, y: pad.t + innerH + 54, "text-anchor": "middle",
-            "font-size": 12, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+            x: pad.l + innerW / 2, y: pad.t + innerH + 60, "text-anchor": "middle",
+            "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             "font-weight": "bold",
             fill: "rgba(31, 157, 85, 0.85)"
           }, "Goal: 3-5 OTRs per minute of instruction"));
         }
 
         svg.appendChild(el(svgNS, "text", {
-          x: 14, y: pad.t + innerH / 2, "text-anchor": "middle",
-          "font-size": 12, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+          x: 16, y: pad.t + innerH / 2, "text-anchor": "middle",
+          "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
           fill: "rgba(0,0,0,.60)",
-          transform: `rotate(-90 14 ${pad.t + innerH / 2})`
+          transform: `rotate(-90 16 ${pad.t + innerH / 2})`
         }, state.mode === "Praise" ? "Praise per minute" : state.mode === "Engagement" ? "Engagement per minute" : "OTR per minute"));
 
-        const lx = pad.l + innerW + 14;
+        const lx = pad.l + innerW + 18;
         const ly = pad.t + 8;
-        const lh = 18;
+        const lh = 22;
         const font = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
 
         function legendRow(i, color, label, dashArray){
@@ -1402,8 +1470,8 @@
           if (dashArray) attrs["stroke-dasharray"] = dashArray;
           svg.appendChild(el(svgNS, "line", attrs));
           svg.appendChild(el(svgNS, "text", {
-            x: lx + 30, y: y0 + 4, "text-anchor": "start",
-            "font-size": 12, "font-family": font,
+            x: lx + 30, y: y0 + 5, "text-anchor": "start",
+            "font-size": 14, "font-family": font,
             fill: "rgba(0,0,0,.75)"
           }, label));
         }
@@ -1516,13 +1584,51 @@
         const titlePrefix = state.mode === 'Praise' ? 'Praise' : state.mode === 'Engagement' ? 'Engagement' : 'OTR';
         const lines = [
           `${titlePrefix} Timer Results`,
-          `Educator: ${educator}`,
+          `Observed Educator Name: ${educator}`
+        ];
+
+        if (notes) {
+          lines.push("Notes:");
+          const maxChars = 85;
+          const nl = notes.split('\n');
+          for (const n of nl) {
+            if (!n) {
+              lines.push("");
+              continue;
+            }
+            let currentLine = "";
+            const words = n.split(" ");
+            for (let word of words) {
+              while (word.length > maxChars) {
+                if (currentLine) {
+                  lines.push(`  ${currentLine.trimEnd()}`);
+                  currentLine = "";
+                }
+                lines.push(`  ${word.substring(0, maxChars)}`);
+                word = word.substring(maxChars);
+              }
+              if (!word) continue;
+              
+              if (currentLine.length + word.length > maxChars) {
+                lines.push(`  ${currentLine.trimEnd()}`);
+                currentLine = word + " ";
+              } else {
+                currentLine += word + " ";
+              }
+            }
+            if (currentLine) {
+              lines.push(`  ${currentLine.trimEnd()}`);
+            }
+          }
+        }
+
+        lines.push(
           `Recorded on: ${recordedOn}`,
           `Recorded from: ${recordedFrom}`,
           `Time length: ${formatElapsed(durationMs)}`,
           `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`,
           `Lesson target referenced: ${lessonTargetPosted}`
-        ];
+        );
 
         if (state.mode === "Praise") {
           lines.push(`Specific Praise: ${specific}`);
@@ -1560,59 +1666,30 @@
         }
         
         if (notes) {
-          // Notes handled separately in renderResultsCompositeSVG for positioning below chart
+          // Notes handled above after educator name
         }
         
         return lines;
       }
 
-      function renderResultsCompositeSVG(lines, chartSvg){
+      function renderResultsCompositeSVG(blocks){
         const svgNS = "http://www.w3.org/2000/svg";
-        const W = 720;
-        const chartH = Number(chartSvg.getAttribute("height")) || 320;
+        const W = 800;
         const pad = 16;
-        const lineH = 18;
-        const textBlockH = pad + (lines.length * lineH) + 8;
+        const lineH = 20;
         
-        let notesBlockH = 0;
-        let notesLines = [];
-        if (state.notes) {
-          notesLines = ["Notes:"];
-          const maxChars = 85;
-          const nl = state.notes.split('\n');
-          for (const n of nl) {
-            if (!n) {
-              notesLines.push("");
-              continue;
-            }
-            let currentLine = "";
-            const words = n.split(" ");
-            for (let word of words) {
-              while (word.length > maxChars) {
-                if (currentLine) {
-                  notesLines.push(`  ${currentLine.trimEnd()}`);
-                  currentLine = "";
-                }
-                notesLines.push(`  ${word.substring(0, maxChars)}`);
-                word = word.substring(maxChars);
-              }
-              if (!word) continue;
-              
-              if (currentLine.length + word.length > maxChars) {
-                notesLines.push(`  ${currentLine.trimEnd()}`);
-                currentLine = word + " ";
-              } else {
-                currentLine += word + " ";
-              }
-            }
-            if (currentLine) {
-              notesLines.push(`  ${currentLine.trimEnd()}`);
-            }
-          }
-          notesBlockH = (notesLines.length * lineH) + pad;
+        let totalH = 0;
+        const fontSans = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
+
+        // Calculate heights and store block offsets
+        for (const block of blocks) {
+          block.textBlockH = pad + (block.lines.length * lineH) + 8;
+          block.chartH = block.chartSvg ? (Number(block.chartSvg.getAttribute("height")) || 450) : 0;
+          block.totalH = block.textBlockH + block.chartH + pad;
+          totalH += block.totalH;
         }
         
-        const H = textBlockH + chartH + pad + notesBlockH;
+        const H = totalH;
 
         const root = document.createElementNS(svgNS, "svg");
         root.setAttribute("xmlns", svgNS);
@@ -1621,89 +1698,76 @@
         root.setAttribute("height", String(H));
         root.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: H, fill: "#fff" }));
 
-        const fontSans = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
-        const fontMono = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace";
+        let currentYOffset = 0;
 
-        for (let i = 0; i < lines.length; i++){
-          const isTitle = i === 0;
-          const lineText = lines[i];
-          const yPos = pad + (i + 1) * lineH;
+        for (const block of blocks) {
+          for (let i = 0; i < block.lines.length; i++){
+            const isTitle = i === 0;
+            const lineText = block.lines[i];
+            const yPos = currentYOffset + pad + (i + 1) * lineH;
 
-          if (lineText.startsWith("Lesson target referenced:") || lineText.startsWith("Agreed upon teaching materials used:")) {
-            const isYes = lineText.endsWith("Yes");
-            const isNo = lineText.endsWith("No");
-            if (isYes || isNo) {
-              root.appendChild(el(svgNS, "rect", {
-                x: pad - 4,
-                y: yPos - lineH + 4,
-                width: W - (pad * 2) + 8,
-                height: lineH + 4,
-                fill: isYes ? "rgba(134, 239, 172, 0.4)" : "rgba(252, 165, 165, 0.4)",
-                rx: 4
-              }));
+            if (lineText.startsWith("Lesson target referenced:") || lineText.startsWith("Agreed upon teaching materials used:")) {
+              const isYes = lineText.endsWith("Yes");
+              const isNo = lineText.endsWith("No");
+              if (isYes || isNo) {
+                root.appendChild(el(svgNS, "rect", {
+                  x: pad - 4,
+                  y: yPos - lineH + 4,
+                  width: W - (pad * 2) + 8,
+                  height: lineH + 4,
+                  fill: isYes ? "rgba(134, 239, 172, 0.4)" : "rgba(252, 165, 165, 0.4)",
+                  rx: 4
+                }));
+              }
+            } else if (lineText.startsWith("Positive to Negative (ratio):")) {
+              const ratioStr = lineText.split("Positive to Negative (ratio):")[1].trim();
+              const ratioVal = parseInt(ratioStr.split(":")[0], 10);
+              if (!isNaN(ratioVal)) {
+                const isMet = ratioVal >= 5;
+                root.appendChild(el(svgNS, "rect", {
+                  x: pad - 4,
+                  y: yPos - lineH + 4,
+                  width: W - (pad * 2) + 8,
+                  height: lineH + 4,
+                  fill: isMet ? "rgba(134, 239, 172, 0.4)" : "rgba(252, 165, 165, 0.4)",
+                  rx: 4
+                }));
+              }
             }
-          } else if (lineText.startsWith("Positive to Negative (ratio):")) {
-            const ratioStr = lineText.split("Positive to Negative (ratio):")[1].trim();
-            const ratioVal = parseInt(ratioStr.split(":")[0], 10);
-            if (!isNaN(ratioVal)) {
-              const isMet = ratioVal >= 5;
-              root.appendChild(el(svgNS, "rect", {
-                x: pad - 4,
-                y: yPos - lineH + 4,
-                width: W - (pad * 2) + 8,
-                height: lineH + 4,
-                fill: isMet ? "rgba(134, 239, 172, 0.4)" : "rgba(252, 165, 165, 0.4)",
-                rx: 4
-              }));
+
+            let isNoteLine = false;
+            if (lineText === "Notes:" || lineText.startsWith("  ")) {
+              isNoteLine = true;
             }
-          }
 
-          let isNoteLine = false;
-          if (lineText === "Notes:" || lineText.startsWith("  ")) {
-            isNoteLine = true;
-          }
-
-          root.appendChild(el(svgNS, "text", {
-            x: pad,
-            y: yPos,
-            "text-anchor": "start",
-            "font-size": isTitle ? 16 : 12,
-            "font-family": isTitle ? fontSans : fontMono,
-            "font-weight": (isTitle || isNoteLine) ? 700 : 500,
-            fill: "rgba(0,0,0,.90)"
-          }, lineText));
-        }
-
-        root.appendChild(el(svgNS, "line", {
-          x1: pad, y1: textBlockH - 6,
-          x2: W - pad, y2: textBlockH - 6,
-          stroke: "rgba(0,0,0,.12)",
-          "stroke-width": 1
-        }));
-
-        const g = document.createElementNS(svgNS, "g");
-        g.setAttribute("transform", `translate(0 ${textBlockH})`);
-        const cloned = chartSvg.cloneNode(true);
-        while (cloned.firstChild){
-          g.appendChild(cloned.firstChild);
-        }
-        root.appendChild(g);
-
-        if (state.notes) {
-          const notesStartY = textBlockH + chartH + pad;
-          for (let i = 0; i < notesLines.length; i++) {
-            const yPos = notesStartY + (i + 1) * lineH;
             root.appendChild(el(svgNS, "text", {
               x: pad,
               y: yPos,
               "text-anchor": "start",
-              "font-size": 12,
-              "font-family": fontMono,
-              "font-weight": 700,
-              fill: "rgba(0,0,0,.90)",
-              "xml:space": "preserve"
-            }, notesLines[i]));
+              "font-size": isTitle ? 16 : 14,
+              "font-family": fontSans,
+              "font-weight": (isTitle || isNoteLine) ? 700 : 500,
+              fill: "rgba(0,0,0,.90)"
+            }, lineText));
           }
+
+          if (block.chartSvg) {
+            root.appendChild(el(svgNS, "line", {
+              x1: pad, y1: currentYOffset + block.textBlockH - 6,
+              x2: W - pad, y2: currentYOffset + block.textBlockH - 6,
+              stroke: "rgba(0,0,0,.12)",
+              "stroke-width": 1
+            }));
+
+            const g = document.createElementNS(svgNS, "g");
+            g.setAttribute("transform", `translate(0 ${currentYOffset + block.textBlockH})`);
+            const cloned = block.chartSvg.cloneNode(true);
+            while (cloned.firstChild){
+              g.appendChild(cloned.firstChild);
+            }
+            root.appendChild(g);
+          }
+          currentYOffset += block.totalH;
         }
 
         return root;
@@ -1736,38 +1800,34 @@
         const totalEngCloze = bins.engCloze.reduce((a, b) => a + b, 0);
         const totalEngWhiteboard = bins.engWhiteboard.reduce((a, b) => a + b, 0);
 
-        const totalOtr = state.otrEvents.length;
-        let ratioText = "";
-        if (state.mode === "Praise") {
-          const positive = totalSpecific + totalGeneral + totalCorrective;
-          const negative = totalRedirect + totalGenCrit + totalIndCrit;
-          ratioText = formatPraiseRatio(positive, negative, durationMs);
-        } else {
-          ratioText = formatOtrRatio(totalOtr, durationMs);
-        }
+        const totalOtr = state.otrEvents.filter(e => ["group","warm","cold","volunteer"].includes(e.kind)).length;
+        const totalPraise = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind)).length;
+        const totalEngagement = state.otrEvents.filter(e => ["engWhole","engSmall","engPartners","engChoral","engCloze","engWhiteboard"].includes(e.kind)).length;
+        
+        const positivePraise = totalSpecific + totalGeneral + totalCorrective;
+        const negativePraise = totalRedirect + totalGenCrit + totalIndCrit;
 
-        // Populate summary UI
         const resultsTitle = document.getElementById("resultsTitle");
-        const chartTitle = document.getElementById("chartTitle");
-
+        
         if (state.mode === "Praise") {
           resultsTitle.textContent = "Praise Results";
-          chartTitle.textContent = "Praise per minute over time";
         } else if (state.mode === "Engagement") {
           resultsTitle.textContent = "Engagement Results";
-          chartTitle.textContent = "Engagement per minute over time";
+        } else if (state.mode === "All") {
+          resultsTitle.textContent = "All Results";
         } else {
           resultsTitle.textContent = "OTR Results";
-          chartTitle.textContent = "OTR per minute over time";
         }
 
-        document.getElementById("resultsContext").textContent = `Educator: ${state.educatorName}`;
+        document.getElementById("resultsContext").textContent = `Observed Educator Name: ${state.educatorName}`;
         
-        const summaryContainer = document.getElementById("summaryContainer");
-        summaryContainer.innerHTML = "";
-
-        function addSummaryRow(k, v) {
-          if (k === "Notes" && !v) return;
+        const resultsGrid = document.getElementById("resultsGrid");
+        resultsGrid.innerHTML = "";
+        
+        const renderModes = state.mode === "All" ? ["OTRs", "Praise", "Engagement"] : [state.mode];
+        const sharedBlocks = [];
+        
+        const createSummaryRow = (k, v) => {
           const row = document.createElement("div");
           row.className = "row";
           if (k === "Lesson target referenced" || k === "Agreed upon teaching materials used") {
@@ -1794,103 +1854,106 @@
               }
             }
           }
-          
-          if (k === "Notes") {
-            row.style.flexDirection = "column";
-            row.style.alignItems = "flex-start";
-            row.innerHTML = `<span class="k" style="font-weight:bold;">${k}</span><span class="v" style="text-align:left; margin-top:4px; white-space:pre-wrap; font-weight:bold;">${v}</span>`;
-          } else {
-            row.innerHTML = `<span class="k">${k}</span><span class="v">${v}</span>`;
-          }
-          summaryContainer.appendChild(row);
-        }
-
-        addSummaryRow("Educator", state.educatorName);
-        addSummaryRow("Recorded on", state.startWall ? state.startWall.toLocaleDateString() : "");
-        addSummaryRow("Recorded from", `${formatTime(state.startWall)} to ${formatTime(state.stopWall)}`);
-        addSummaryRow("Time length", formatElapsed(durationMs));
-        addSummaryRow("Agreed upon teaching materials used", state.curriculaMaterialsUsed);
-        addSummaryRow("Lesson target referenced", state.lessonTargetPosted);
-
-        if (state.mode === "Praise") {
-          addSummaryRow("Specific Praise", totalSpecific);
-          addSummaryRow("General Praise", totalGeneral);
-          addSummaryRow("Corrective Feedback", totalCorrective);
-          addSummaryRow("Redirective Statements", totalRedirect);
-          addSummaryRow("General Criticism", totalGenCrit);
-          addSummaryRow("Individual Criticism", totalIndCrit);
-          addSummaryRow("Total Statements", totalOtr);
-          addSummaryRow("Positive to Negative (ratio)", ratioText);
-        } else if (state.mode === "Engagement") {
-          addSummaryRow("Whole Group", totalEngWhole);
-          addSummaryRow("Small Group", totalEngSmall);
-          addSummaryRow("Precision Partners", totalEngPartners);
-          addSummaryRow("Choral Response", totalEngChoral);
-          addSummaryRow("Cloze Reading", totalEngCloze);
-          addSummaryRow("White Board Response", totalEngWhiteboard);
-          addSummaryRow("Total Engagement", totalOtr);
-          addSummaryRow("Engagement per min (ratio)", ratioText);
-          
-          if (state.engagementChecks && state.engagementChecks.length > 0) {
-            for (const check of state.engagementChecks) {
-              const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
-              addSummaryRow(`Engagement Check (${check.timeMin} min)`, `${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`);
-            }
-          }
-        } else {
-          addSummaryRow("Whole Group OTR", totalGroup);
-          addSummaryRow("Warm Call OTR", totalWarm);
-          addSummaryRow("Cold Call OTR", totalCold);
-          addSummaryRow("Volunteer OTR", totalVol);
-          addSummaryRow("OTR total", totalOtr);
-          addSummaryRow("OTR per min (ratio)", ratioText);
-        }
-        
-        // Render Chart
-        const chartHost = document.getElementById("chartHost");
-        let chartSvg;
-        if (state.mode === "Engagement") {
-          chartSvg = renderEngagementStackedBarChartSVG(state.otrEvents, durationMs);
-        } else {
-          chartSvg = renderOtrMultiLineChartSVG(state.otrEvents, durationMs);
-        }
-        chartHost.appendChild(chartSvg);
-
-        // Render Notes below chart
-        const notesContainer = document.getElementById("resultsNotesContainer");
-        const notesText = document.getElementById("resultsNotesText");
-        notesText.value = state.notes;
-        notesText.style.resize = "none";
-        notesText.style.overflow = "hidden";
-        
-        const adjustNotesHeight = () => {
-          notesText.style.height = "auto";
-          notesText.style.height = (notesText.scrollHeight) + "px";
+          row.innerHTML = `<span class="k">${k}</span><span class="v">${v}</span>`;
+          return row;
         };
         
-        notesText.addEventListener("input", (e) => {
-          state.notes = e.target.value;
-          adjustNotesHeight();
-        });
-        
-        requestAnimationFrame(adjustNotesHeight);
-
-        // Navigation Buttons
-        document.getElementById("restartBtn").addEventListener("click", () => showSetup("setup"));
-        document.getElementById("resultsBackBtn").addEventListener("click", () => showQuestions());
-
-        // Sharing Button & Logic
-        const shareBtn = document.getElementById("shareBtn");
-        const shareStatus = document.getElementById("shareStatus");
-
-        shareBtn.addEventListener("click", () => {
-          shareStatus.textContent = "Generating image...";
-          shareBtn.disabled = true;
-          shareBtn.textContent = "Copied";
-          shareBtn.classList.add("copied");
-
-          const blobPromise = (async () => {
-            const lines = buildResultsLines({
+        for (const renderMode of renderModes) {
+          const modeContainer = document.createElement("div");
+          modeContainer.className = "mode-container";
+          
+          const summaryContainer = document.createElement("div");
+          summaryContainer.className = "summary";
+          
+          if (renderMode === renderModes[0]) {
+            summaryContainer.appendChild(createSummaryRow("Educator", state.educatorName));
+            summaryContainer.appendChild(createSummaryRow("Recorded on", state.startWall ? state.startWall.toLocaleDateString() : ""));
+            summaryContainer.appendChild(createSummaryRow("Recorded from", `${formatTime(state.startWall)} to ${formatTime(state.stopWall)}`));
+            summaryContainer.appendChild(createSummaryRow("Time length", formatElapsed(durationMs)));
+            summaryContainer.appendChild(createSummaryRow("Agreed upon teaching materials used", state.curriculaMaterialsUsed));
+            summaryContainer.appendChild(createSummaryRow("Lesson target referenced", state.lessonTargetPosted));
+          }
+          
+          let blockLines = [];
+          
+          if (renderMode === "Praise") {
+            const ratioText = formatPraiseRatio(positivePraise, negativePraise, durationMs);
+            summaryContainer.appendChild(createSummaryRow("Specific Praise", totalSpecific));
+            summaryContainer.appendChild(createSummaryRow("General Praise", totalGeneral));
+            summaryContainer.appendChild(createSummaryRow("Corrective Feedback", totalCorrective));
+            summaryContainer.appendChild(createSummaryRow("Redirective Statements", totalRedirect));
+            summaryContainer.appendChild(createSummaryRow("General Criticism", totalGenCrit));
+            summaryContainer.appendChild(createSummaryRow("Individual Criticism", totalIndCrit));
+            summaryContainer.appendChild(createSummaryRow("Total Statements", totalPraise));
+            summaryContainer.appendChild(createSummaryRow("Positive to Negative (ratio)", ratioText));
+          } else if (renderMode === "Engagement") {
+            const ratioText = formatOtrRatio(totalEngagement, durationMs);
+            summaryContainer.appendChild(createSummaryRow("Whole Group", totalEngWhole));
+            summaryContainer.appendChild(createSummaryRow("Small Group", totalEngSmall));
+            summaryContainer.appendChild(createSummaryRow("Precision Partners", totalEngPartners));
+            summaryContainer.appendChild(createSummaryRow("Choral Response", totalEngChoral));
+            summaryContainer.appendChild(createSummaryRow("Cloze Reading", totalEngCloze));
+            summaryContainer.appendChild(createSummaryRow("White Board Response", totalEngWhiteboard));
+            summaryContainer.appendChild(createSummaryRow("Total Engagement", totalEngagement));
+            summaryContainer.appendChild(createSummaryRow("Engagement per min (ratio)", ratioText));
+            
+            if (state.engagementChecks && state.engagementChecks.length > 0) {
+              for (const check of state.engagementChecks) {
+                const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
+                summaryContainer.appendChild(createSummaryRow(`Engagement Check (${check.timeMin} min)`, `${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`));
+              }
+            }
+          } else {
+            const ratioText = formatOtrRatio(totalOtr, durationMs);
+            summaryContainer.appendChild(createSummaryRow("Whole Group OTR", totalGroup));
+            summaryContainer.appendChild(createSummaryRow("Warm Call OTR", totalWarm));
+            summaryContainer.appendChild(createSummaryRow("Cold Call OTR", totalCold));
+            summaryContainer.appendChild(createSummaryRow("Volunteer OTR", totalVol));
+            summaryContainer.appendChild(createSummaryRow("OTR total", totalOtr));
+            summaryContainer.appendChild(createSummaryRow("OTR per min (ratio)", ratioText));
+          }
+          modeContainer.appendChild(summaryContainer);
+          
+          const chartWrap = document.createElement("div");
+          chartWrap.className = "chartWrap";
+          
+          const chartTitle = document.createElement("div");
+          chartTitle.className = "chartTitle";
+          chartTitle.textContent = `${renderMode} per minute over time`;
+          chartWrap.appendChild(chartTitle);
+          
+          const chartHost = document.createElement("div");
+          chartHost.className = "chartHost";
+          chartHost.setAttribute("role", "img");
+          chartHost.setAttribute("aria-label", `${renderMode} chart`);
+          
+          // Create lines and charts for this block
+          const oldStateMode = state.mode;
+          state.mode = renderMode;
+          
+          let chartSvg;
+          let modeEvents = [];
+          if (renderMode === "Praise") {
+             modeEvents = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind));
+             chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs);
+          } else if (renderMode === "Engagement") {
+             modeEvents = state.otrEvents.filter(e => ["engWhole","engSmall","engPartners","engChoral","engCloze","engWhiteboard"].includes(e.kind));
+             chartSvg = renderEngagementStackedBarChartSVG(modeEvents, durationMs);
+          } else {
+             modeEvents = state.otrEvents.filter(e => ["group","warm","cold","volunteer"].includes(e.kind));
+             chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs);
+          }
+          
+          chartHost.appendChild(chartSvg);
+          chartWrap.appendChild(chartHost);
+          modeContainer.appendChild(chartWrap);
+          
+          resultsGrid.appendChild(modeContainer);
+          
+          const curOtrTotal = renderMode === "Praise" ? totalPraise : renderMode === "Engagement" ? totalEngagement : totalOtr;
+          const curRatioText = renderMode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRatio(curOtrTotal, durationMs);
+          
+          const lines = buildResultsLines({
               educator: state.educatorName,
               recordedOn: state.startWall ? state.startWall.toLocaleDateString() : "",
               recordedFrom: formatTime(state.startWall) + " to " + formatTime(state.stopWall),
@@ -1913,13 +1976,74 @@
               engChoral: totalEngChoral,
               engCloze: totalEngCloze,
               engWhiteboard: totalEngWhiteboard,
-              otrTotal: totalOtr,
-              ratioText,
+              otrTotal: curOtrTotal,
+              ratioText: curRatioText,
+              notes: renderMode === renderModes[0] ? state.notes : "",
+              engagementChecks: state.engagementChecks
+          });
+          state.mode = oldStateMode;
+          // Strip top common info if not first
+          if (renderMode !== renderModes[0]) {
+             lines.splice(1, 6); // remove educator, date, time, duration, materials, target
+          }
+          
+          sharedBlocks.push({ lines, chartSvg });
+        }
+
+        const notesText = document.getElementById("resultsNotesText");
+        notesText.value = state.notes;
+        
+        const adjustNotesHeight = () => {
+          notesText.style.height = "auto";
+          notesText.style.height = (notesText.scrollHeight) + "px";
+        };
+        
+        notesText.addEventListener("input", (e) => {
+          state.notes = e.target.value;
+          adjustNotesHeight();
+        });
+        
+        requestAnimationFrame(adjustNotesHeight);
+
+        document.getElementById("restartBtn").addEventListener("click", () => showSetup("setup"));
+        document.getElementById("resultsBackBtn").addEventListener("click", () => showQuestions());
+
+        const shareBtn = document.getElementById("shareBtn");
+        const shareStatus = document.getElementById("shareStatus");
+
+        shareBtn.addEventListener("click", () => {
+          shareStatus.textContent = "Generating image...";
+          shareBtn.disabled = true;
+          shareBtn.textContent = "Copied";
+          shareBtn.classList.add("copied");
+
+          // Update notes in the first block before rendering
+          const oldStateMode = state.mode;
+          state.mode = renderModes[0];
+          const firstOtrTotal = state.mode === "Praise" ? totalPraise : state.mode === "Engagement" ? totalEngagement : totalOtr;
+          const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRatio(firstOtrTotal, durationMs);
+          
+          sharedBlocks[0].lines = buildResultsLines({
+              educator: state.educatorName,
+              recordedOn: state.startWall ? state.startWall.toLocaleDateString() : "",
+              recordedFrom: formatTime(state.startWall) + " to " + formatTime(state.stopWall),
+              durationMs,
+              lessonTargetPosted: state.lessonTargetPosted,
+              curriculaMaterialsUsed: state.curriculaMaterialsUsed,
+              group: totalGroup, warm: totalWarm, cold: totalCold, volunteer: totalVol,
+              specific: totalSpecific, general: totalGeneral, corrective: totalCorrective,
+              redirect: totalRedirect, genCrit: totalGenCrit, indCrit: totalIndCrit,
+              engWhole: totalEngWhole, engSmall: totalEngSmall, engPartners: totalEngPartners,
+              engChoral: totalEngChoral, engCloze: totalEngCloze, engWhiteboard: totalEngWhiteboard,
+              otrTotal: firstOtrTotal,
+              ratioText: firstRatioText,
               notes: state.notes,
               engagementChecks: state.engagementChecks
-            });
+          });
+          state.mode = oldStateMode;
 
-            const composite = renderResultsCompositeSVG(lines, chartSvg);
+          const blobPromise = (async () => {
+            const composite = renderResultsCompositeSVG(sharedBlocks);
             return await svgElementToPngBlob(composite, 2);
           })();
 
