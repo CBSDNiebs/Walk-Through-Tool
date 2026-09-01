@@ -17,10 +17,17 @@
       --lite:#e0e0e0;
 
       /* Updated OTR colors */
-      --otr-warm:#0b2a6f;       /* dark blue */
-      --otr-cold:#1a4fff;       /* blue */
-      --otr-volunteer:#9fb8ff;  /* muted light blue */
-      --otr-group:#a855f7;      /* light purple */
+      --otr-choral:#0369a1; /* Section 1: Blue hue */
+      --otr-cloze:#0284c7;
+      --otr-whiteboard:#38bdf8;
+      
+      --otr-precision:#16a34a; /* Section 2: Green hue */
+      --otr-elbow:#4ade80;
+      
+      --otr-warm:#7e22ce; /* Section 3: Purple hue */
+      --otr-cold:#a855f7;
+      --otr-volunteer:#d8b4fe;
+
       --otr-total:rgba(0,0,0,0.2); /* transparent grey */
 
       --praise-specific: #1f9d55; /* Green */
@@ -30,12 +37,10 @@
       --praise-gen-crit: #ef4444; /* Red */
       --praise-ind-crit: #b91c1c; /* Dark Red */
 
-      --eng-whole: #0369a1;
-      --eng-small: #0284c7;
-      --eng-partners: #38bdf8;
-      --eng-choral: #d97706;
-      --eng-cloze: #f59e0b;
-      --eng-whiteboard: #fbbf24;
+      --struct-whole: #e11d48; /* Red */
+      --struct-small: #ea580c; /* Orange */
+      --struct-partners: #0d9488; /* Teal */
+      --struct-individual: #4f46e5; /* Indigo */
     }
 
     *{box-sizing:border-box;}
@@ -141,15 +146,16 @@
       letter-spacing:.1px;
     }
     .btn.otr:disabled{opacity:.45;cursor:not-allowed;}
-    .btn.otr.warm{background:var(--otr-warm);}
-    .btn.otr.cold{background:var(--otr-cold);}
-    .btn.otr.group{background:var(--otr-group);}
-    .btn.otr.volunteer{
-      background:var(--otr-volunteer);
-      color:#0b1a3a;
-      border-color:rgba(0,0,0,.12);
-    }
-    .btn.otr.volunteer:disabled{color:rgba(11,26,58,.65);}
+    .btn.otr.otr-choral{background:var(--otr-choral); color:#fff;}
+    .btn.otr.otr-cloze{background:var(--otr-cloze); color:#fff;}
+    .btn.otr.otr-whiteboard{background:var(--otr-whiteboard); color:#0b1a3a;}
+    
+    .btn.otr.otr-precision{background:var(--otr-precision); color:#fff;}
+    .btn.otr.otr-elbow{background:var(--otr-elbow); color:#064e3b;}
+    
+    .btn.otr.otr-warm{background:var(--otr-warm); color:#fff;}
+    .btn.otr.otr-cold{background:var(--otr-cold); color:#fff;}
+    .btn.otr.otr-volunteer{background:var(--otr-volunteer); color:#2e1065;}
 
     .btn.otr.specific{background:var(--praise-specific); color:#fff;}
     .btn.otr.general{background:var(--praise-general); color:#064e3b;}
@@ -158,12 +164,10 @@
     .btn.otr.gen-crit{background:var(--praise-gen-crit); color:#fff;}
     .btn.otr.ind-crit{background:var(--praise-ind-crit); color:#fff;}
 
-    .btn.otr.eng-whole{background:var(--eng-whole); color:#fff;}
-    .btn.otr.eng-small{background:var(--eng-small); color:#fff;}
-    .btn.otr.eng-partners{background:var(--eng-partners); color:#082f49;}
-    .btn.otr.eng-choral{background:var(--eng-choral); color:#fff;}
-    .btn.otr.eng-cloze{background:var(--eng-cloze); color:#fff;}
-    .btn.otr.eng-whiteboard{background:var(--eng-whiteboard); color:#451a03;}
+    .btn.otr.struct-whole{background:var(--struct-whole); color:#fff;}
+    .btn.otr.struct-small{background:var(--struct-small); color:#fff;}
+    .btn.otr.struct-partners{background:var(--struct-partners); color:#fff;}
+    .btn.otr.struct-individual{background:var(--struct-individual); color:#fff;}
 
     .btn.yn {
       border-width: 2px;
@@ -478,7 +482,7 @@
       <section style="display: flex; justify-content: space-around; margin-top: 32px; margin-bottom: 32px; gap: 16px; flex-wrap: wrap;">
         <button id="modeOtrBtn" class="mode-btn" type="button">OTRs</button>
         <button id="modePraiseBtn" class="mode-btn" type="button">Praise</button>
-        <button id="modeEngagementBtn" class="mode-btn" type="button">Engagement</button>
+        <button id="modeEngagementBtn" class="mode-btn" type="button">Lesson Structure</button>
         <button id="modeAllBtn" class="mode-btn" type="button">All</button>
       </section>
     </main>
@@ -513,15 +517,35 @@
       </div>
 
       <section class="runControls" role="group" aria-label="Recording controls">
-        <div id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; color:var(--ink);">OTRs</div>
-        <div id="otrButtons1" class="otrRow" style="grid-template-columns: 1fr;" aria-label="Target buttons">
-          <button id="otrGroupBtn" class="btn otr group" type="button" disabled>Whole Group</button>
+        <div id="structSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; color:var(--ink);">Lesson Structure</div>
+        <div id="structButtons1" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Lesson Structure 1">
+          <button id="structWholeBtn" class="btn otr struct-whole" type="button" disabled>Whole Group</button>
+          <button id="structSmallBtn" class="btn otr struct-small" type="button" disabled>Small Group</button>
+        </div>
+        <div id="structButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Lesson Structure 2">
+          <button id="structPartnersBtn" class="btn otr struct-partners" type="button" disabled>Partners</button>
+          <button id="structIndividualBtn" class="btn otr struct-individual" type="button" disabled>Individual</button>
         </div>
 
-        <div id="otrButtons2" class="otrRow" aria-label="Opportunities to respond buttons">
-          <button id="otrWarmBtn" class="btn otr warm" type="button" disabled>Warm Call</button>
-          <button id="otrColdBtn" class="btn otr cold" type="button" disabled>Cold Call</button>
-          <button id="otrVolunteerBtn" class="btn otr volunteer" type="button" disabled>Volunteer</button>
+        <div id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">OTRs</div>
+        <div id="otrSection1Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Whole Group</div>
+        <div id="otrButtons1" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Whole Group OTR">
+          <button id="otrChoralBtn" class="btn otr otr-choral" type="button" disabled>Choral Response</button>
+          <button id="otrClozeBtn" class="btn otr otr-cloze" type="button" disabled>Close Reading</button>
+          <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response</button>
+        </div>
+
+        <div id="otrSection2Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Partner</div>
+        <div id="otrButtons2" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr;" aria-label="Partner OTR">
+          <button id="otrPrecisionBtn" class="btn otr otr-precision" type="button" disabled>Precision Partner</button>
+          <button id="otrElbowBtn" class="btn otr otr-elbow" type="button" disabled>Elbow Partner</button>
+        </div>
+
+        <div id="otrSection3Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Individual</div>
+        <div id="otrButtons3" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Individual OTR">
+          <button id="otrWarmBtn" class="btn otr otr-warm" type="button" disabled>Warm Call</button>
+          <button id="otrColdBtn" class="btn otr otr-cold" type="button" disabled>Cold Call</button>
+          <button id="otrVolunteerBtn" class="btn otr otr-volunteer" type="button" disabled>Volunteer</button>
         </div>
 
         <div id="praiseSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Praise</div>
@@ -532,19 +556,6 @@
           <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements</button>
           <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism</button>
           <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism</button>
-        </div>
-
-        <div id="engSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Engagement</div>
-        <div id="engButtons1" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Engagement buttons 1">
-          <button id="engWholeBtn" class="btn otr eng-whole" type="button" disabled>Whole Group</button>
-          <button id="engSmallBtn" class="btn otr eng-small" type="button" disabled>Small Group</button>
-          <button id="engPartnersBtn" class="btn otr eng-partners" type="button" disabled>Precision Partners</button>
-        </div>
-
-        <div id="engButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Engagement buttons 2">
-          <button id="engChoralBtn" class="btn otr eng-choral" type="button" disabled>Choral Response</button>
-          <button id="engClozeBtn" class="btn otr eng-cloze" type="button" disabled>Cloze Reading</button>
-          <button id="engWhiteboardBtn" class="btn otr eng-whiteboard" type="button" disabled>White Board Response</button>
         </div>
 
         <div class="bottomRow" aria-label="Stop, undo and reset buttons">
@@ -751,7 +762,7 @@
           showRun();
         });
         document.getElementById("modeEngagementBtn").addEventListener("click", () => {
-          state.mode = "Engagement";
+          state.mode = "Lesson Structure";
           showRun();
         });
         document.getElementById("modeAllBtn").addEventListener("click", () => {
@@ -776,9 +787,9 @@
         if (state.mode === "Praise") {
           runTitle.textContent = "Praise Timer";
           totalKicker.textContent = "Total Statements";
-        } else if (state.mode === "Engagement") {
-          runTitle.textContent = "Engagement Timer";
-          totalKicker.textContent = "Total Engagement";
+        } else if (state.mode === "Lesson Structure") {
+          runTitle.textContent = "Lesson Structure Timer";
+          totalKicker.textContent = "Total Events";
         } else if (state.mode === "All") {
           runTitle.textContent = "All Timer";
           totalKicker.textContent = "Total Events";
@@ -788,55 +799,97 @@
         }
 
         const startBtn = document.getElementById("startBtn");
-        const otrButtons1 = document.getElementById("otrButtons1");
-        const otrButtons2 = document.getElementById("otrButtons2");
-        const praiseButtons = document.getElementById("praiseButtons");
-        const engButtons1 = document.getElementById("engButtons1");
-        const engButtons2 = document.getElementById("engButtons2");
+        
+        const structSectionLabel = document.getElementById("structSectionLabel");
+        const structButtons1 = document.getElementById("structButtons1");
+        const structButtons2 = document.getElementById("structButtons2");
         
         const otrSectionLabel = document.getElementById("otrSectionLabel");
+        const otrSection1Label = document.getElementById("otrSection1Label");
+        const otrButtons1 = document.getElementById("otrButtons1");
+        const otrSection2Label = document.getElementById("otrSection2Label");
+        const otrButtons2 = document.getElementById("otrButtons2");
+        const otrSection3Label = document.getElementById("otrSection3Label");
+        const otrButtons3 = document.getElementById("otrButtons3");
+        
         const praiseSectionLabel = document.getElementById("praiseSectionLabel");
-        const engSectionLabel = document.getElementById("engSectionLabel");
+        const praiseButtons = document.getElementById("praiseButtons");
 
         if (state.mode === "Praise") {
+          structSectionLabel.style.display = "none";
+          structButtons1.style.display = "none";
+          structButtons2.style.display = "none";
+          
+          otrSectionLabel.style.display = "none";
+          otrSection1Label.style.display = "none";
           otrButtons1.style.display = "none";
+          otrSection2Label.style.display = "none";
           otrButtons2.style.display = "none";
+          otrSection3Label.style.display = "none";
+          otrButtons3.style.display = "none";
+          
+          praiseSectionLabel.style.display = "none";
           praiseButtons.style.display = "grid";
-          engButtons1.style.display = "none";
-          engButtons2.style.display = "none";
+        } else if (state.mode === "Lesson Structure") {
+          structSectionLabel.style.display = "none";
+          structButtons1.style.display = "grid";
+          structButtons2.style.display = "grid";
+          
           otrSectionLabel.style.display = "none";
-          praiseSectionLabel.style.display = "none";
-          engSectionLabel.style.display = "none";
-        } else if (state.mode === "Engagement") {
+          otrSection1Label.style.display = "none";
           otrButtons1.style.display = "none";
+          otrSection2Label.style.display = "none";
           otrButtons2.style.display = "none";
-          praiseButtons.style.display = "none";
-          engButtons1.style.display = "grid";
-          engButtons2.style.display = "grid";
-          otrSectionLabel.style.display = "none";
+          otrSection3Label.style.display = "none";
+          otrButtons3.style.display = "none";
+          
           praiseSectionLabel.style.display = "none";
-          engSectionLabel.style.display = "none";
+          praiseButtons.style.display = "none";
         } else if (state.mode === "All") {
-          otrButtons1.style.display = "grid";
-          otrButtons2.style.display = "grid";
-          praiseButtons.style.display = "grid";
-          engButtons1.style.display = "grid";
-          engButtons2.style.display = "grid";
+          structSectionLabel.style.display = "block";
+          structButtons1.style.display = "grid";
+          structButtons2.style.display = "grid";
+          
           otrSectionLabel.style.display = "block";
-          praiseSectionLabel.style.display = "block";
-          engSectionLabel.style.display = "block";
-        } else {
+          otrSection1Label.style.display = "block";
           otrButtons1.style.display = "grid";
+          otrSection2Label.style.display = "block";
           otrButtons2.style.display = "grid";
-          praiseButtons.style.display = "none";
-          engButtons1.style.display = "none";
-          engButtons2.style.display = "none";
+          otrSection3Label.style.display = "block";
+          otrButtons3.style.display = "grid";
+          
+          praiseSectionLabel.style.display = "block";
+          praiseButtons.style.display = "grid";
+        } else {
+          // OTR
+          structSectionLabel.style.display = "none";
+          structButtons1.style.display = "none";
+          structButtons2.style.display = "none";
+          
           otrSectionLabel.style.display = "none";
+          otrSection1Label.style.display = "block";
+          otrButtons1.style.display = "grid";
+          otrSection2Label.style.display = "block";
+          otrButtons2.style.display = "grid";
+          otrSection3Label.style.display = "block";
+          otrButtons3.style.display = "grid";
+          
           praiseSectionLabel.style.display = "none";
-          engSectionLabel.style.display = "none";
+          praiseButtons.style.display = "none";
         }
 
-        const otrGroupBtn = document.getElementById("otrGroupBtn");
+        const structWholeBtn = document.getElementById("structWholeBtn");
+        const structSmallBtn = document.getElementById("structSmallBtn");
+        const structPartnersBtn = document.getElementById("structPartnersBtn");
+        const structIndividualBtn = document.getElementById("structIndividualBtn");
+
+        const otrChoralBtn = document.getElementById("otrChoralBtn");
+        const otrClozeBtn = document.getElementById("otrClozeBtn");
+        const otrWhiteboardBtn = document.getElementById("otrWhiteboardBtn");
+        
+        const otrPrecisionBtn = document.getElementById("otrPrecisionBtn");
+        const otrElbowBtn = document.getElementById("otrElbowBtn");
+        
         const otrWarmBtn = document.getElementById("otrWarmBtn");
         const otrColdBtn = document.getElementById("otrColdBtn");
         const otrVolunteerBtn = document.getElementById("otrVolunteerBtn");
@@ -847,13 +900,6 @@
         const praiseRedirectBtn = document.getElementById("praiseRedirectBtn");
         const praiseGenCritBtn = document.getElementById("praiseGenCritBtn");
         const praiseIndCritBtn = document.getElementById("praiseIndCritBtn");
-
-        const engWholeBtn = document.getElementById("engWholeBtn");
-        const engSmallBtn = document.getElementById("engSmallBtn");
-        const engPartnersBtn = document.getElementById("engPartnersBtn");
-        const engChoralBtn = document.getElementById("engChoralBtn");
-        const engClozeBtn = document.getElementById("engClozeBtn");
-        const engWhiteboardBtn = document.getElementById("engWhiteboardBtn");
 
         const resetBtn = document.getElementById("resetBtn");
         const stopBtn = document.getElementById("stopBtn");
@@ -879,7 +925,7 @@
           elapsedText.textContent = formatElapsed(Math.max(0, elapsed));
           otrTotalText.textContent = String(state.otrEvents.length);
 
-          if ((state.mode === "Engagement" || state.mode === "All") && state.startedAt !== null && state.stoppedAt === null) {
+          if ((state.mode === "Lesson Structure" || state.mode === "All") && state.startedAt !== null && state.stoppedAt === null) {
             const minutesElapsed = elapsed / 60000;
             const checkTimes = [1, 5, 9];
             for (const t of checkTimes) {
@@ -919,23 +965,26 @@
         });
 
         function setOtrEnabled(on){
-          otrGroupBtn.disabled = !on;
+          structWholeBtn.disabled = !on;
+          structSmallBtn.disabled = !on;
+          structPartnersBtn.disabled = !on;
+          structIndividualBtn.disabled = !on;
+          
+          otrChoralBtn.disabled = !on;
+          otrClozeBtn.disabled = !on;
+          otrWhiteboardBtn.disabled = !on;
+          otrPrecisionBtn.disabled = !on;
+          otrElbowBtn.disabled = !on;
           otrWarmBtn.disabled = !on;
           otrColdBtn.disabled = !on;
           otrVolunteerBtn.disabled = !on;
+
           praiseSpecificBtn.disabled = !on;
           praiseGeneralBtn.disabled = !on;
           praiseCorrectiveBtn.disabled = !on;
           praiseRedirectBtn.disabled = !on;
           praiseGenCritBtn.disabled = !on;
           praiseIndCritBtn.disabled = !on;
-          
-          engWholeBtn.disabled = !on;
-          engSmallBtn.disabled = !on;
-          engPartnersBtn.disabled = !on;
-          engChoralBtn.disabled = !on;
-          engClozeBtn.disabled = !on;
-          engWhiteboardBtn.disabled = !on;
         }
 
         const undoBtn = document.getElementById("undoBtn");
@@ -1030,10 +1079,21 @@
 
         undoBtn.addEventListener("click", doUndo);
         startBtn.addEventListener("click", doStart);
-        otrGroupBtn.addEventListener("click", () => doOtr("group"));
-        otrWarmBtn.addEventListener("click", () => doOtr("warm"));
-        otrColdBtn.addEventListener("click", () => doOtr("cold"));
-        otrVolunteerBtn.addEventListener("click", () => doOtr("volunteer"));
+        structWholeBtn.addEventListener("click", () => doOtr("structWhole"));
+        structSmallBtn.addEventListener("click", () => doOtr("structSmall"));
+        structPartnersBtn.addEventListener("click", () => doOtr("structPartners"));
+        structIndividualBtn.addEventListener("click", () => doOtr("structIndividual"));
+
+        otrChoralBtn.addEventListener("click", () => doOtr("otrChoral"));
+        otrClozeBtn.addEventListener("click", () => doOtr("otrCloze"));
+        otrWhiteboardBtn.addEventListener("click", () => doOtr("otrWhiteboard"));
+        
+        otrPrecisionBtn.addEventListener("click", () => doOtr("otrPrecision"));
+        otrElbowBtn.addEventListener("click", () => doOtr("otrElbow"));
+
+        otrWarmBtn.addEventListener("click", () => doOtr("otrWarm"));
+        otrColdBtn.addEventListener("click", () => doOtr("otrCold"));
+        otrVolunteerBtn.addEventListener("click", () => doOtr("otrVolunteer"));
 
         praiseSpecificBtn.addEventListener("click", () => doOtr("specific"));
         praiseGeneralBtn.addEventListener("click", () => doOtr("general"));
@@ -1041,13 +1101,6 @@
         praiseRedirectBtn.addEventListener("click", () => doOtr("redirect"));
         praiseGenCritBtn.addEventListener("click", () => doOtr("genCrit"));
         praiseIndCritBtn.addEventListener("click", () => doOtr("indCrit"));
-
-        engWholeBtn.addEventListener("click", () => doOtr("engWhole"));
-        engSmallBtn.addEventListener("click", () => doOtr("engSmall"));
-        engPartnersBtn.addEventListener("click", () => doOtr("engPartners"));
-        engChoralBtn.addEventListener("click", () => doOtr("engChoral"));
-        engClozeBtn.addEventListener("click", () => doOtr("engCloze"));
-        engWhiteboardBtn.addEventListener("click", () => doOtr("engWhiteboard"));
 
         stopBtn.addEventListener("click", doStop);
         resetBtn.addEventListener("click", doReset);
@@ -1083,44 +1136,57 @@
         const minutes = Math.max(1, Math.ceil(Math.max(0, durationMs) / 60000));
         const bins = {
           total: new Array(minutes).fill(0),
-          group: new Array(minutes).fill(0),
-          warm: new Array(minutes).fill(0),
-          cold: new Array(minutes).fill(0),
-          volunteer: new Array(minutes).fill(0),
+          
+          structWhole: new Array(minutes).fill(0),
+          structSmall: new Array(minutes).fill(0),
+          structPartners: new Array(minutes).fill(0),
+          structIndividual: new Array(minutes).fill(0),
+
+          otrChoral: new Array(minutes).fill(0),
+          otrCloze: new Array(minutes).fill(0),
+          otrWhiteboard: new Array(minutes).fill(0),
+          otrPrecision: new Array(minutes).fill(0),
+          otrElbow: new Array(minutes).fill(0),
+          otrWarm: new Array(minutes).fill(0),
+          otrCold: new Array(minutes).fill(0),
+          otrVolunteer: new Array(minutes).fill(0),
+          
           specific: new Array(minutes).fill(0),
           general: new Array(minutes).fill(0),
           corrective: new Array(minutes).fill(0),
           redirect: new Array(minutes).fill(0),
           genCrit: new Array(minutes).fill(0),
-          indCrit: new Array(minutes).fill(0),
-          engWhole: new Array(minutes).fill(0),
-          engSmall: new Array(minutes).fill(0),
-          engPartners: new Array(minutes).fill(0),
-          engChoral: new Array(minutes).fill(0),
-          engCloze: new Array(minutes).fill(0),
-          engWhiteboard: new Array(minutes).fill(0)
+          indCrit: new Array(minutes).fill(0)
         };
 
         for (const e of events){
           const idx = Math.min(minutes - 1, Math.max(0, Math.floor(e.tMs / 60000)));
           bins.total[idx] += 1;
-          if (e.kind === "group") bins.group[idx] += 1;
-          if (e.kind === "warm") bins.warm[idx] += 1;
-          if (e.kind === "cold") bins.cold[idx] += 1;
-          if (e.kind === "volunteer") bins.volunteer[idx] += 1;
+          
+          if (e.kind === "structWhole") bins.structWhole[idx] += 1;
+          if (e.kind === "structSmall") bins.structSmall[idx] += 1;
+          if (e.kind === "structPartners") bins.structPartners[idx] += 1;
+          if (e.kind === "structIndividual") bins.structIndividual[idx] += 1;
+
+          if (e.kind === "otrChoral") bins.otrChoral[idx] += 1;
+          if (e.kind === "otrCloze") bins.otrCloze[idx] += 1;
+          if (e.kind === "otrWhiteboard") bins.otrWhiteboard[idx] += 1;
+          
+          if (e.kind === "otrPrecision") bins.otrPrecision[idx] += 1;
+          if (e.kind === "otrElbow") bins.otrElbow[idx] += 1;
+          
+          if (e.kind === "otrWarm") bins.otrWarm[idx] += 1;
+          if (e.kind === "otrCold") bins.otrCold[idx] += 1;
+          if (e.kind === "otrVolunteer") bins.otrVolunteer[idx] += 1;
+          
           if (e.kind === "specific") bins.specific[idx] += 1;
           if (e.kind === "general") bins.general[idx] += 1;
           if (e.kind === "corrective") bins.corrective[idx] += 1;
           if (e.kind === "redirect") bins.redirect[idx] += 1;
           if (e.kind === "genCrit") bins.genCrit[idx] += 1;
           if (e.kind === "indCrit") bins.indCrit[idx] += 1;
-          if (e.kind === "engWhole") bins.engWhole[idx] += 1;
-          if (e.kind === "engSmall") bins.engSmall[idx] += 1;
-          if (e.kind === "engPartners") bins.engPartners[idx] += 1;
-          if (e.kind === "engChoral") bins.engChoral[idx] += 1;
-          if (e.kind === "engCloze") bins.engCloze[idx] += 1;
-          if (e.kind === "engWhiteboard") bins.engWhiteboard[idx] += 1;
         }
+
         return bins;
       }
 
@@ -1162,12 +1228,10 @@
         svg.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: H, fill: "#fff" }));
 
         const categories = [
-          { key: "engWhole", color: "#7dd3fc", lineColor: "#0369a1", label: "Whole Group" },
-          { key: "engSmall", color: "#bae6fd", lineColor: "#0284c7", label: "Small Group" },
-          { key: "engPartners", color: "#e0f2fe", lineColor: "#38bdf8", label: "Precision Partners" },
-          { key: "engChoral", color: "#fcd34d", lineColor: "#d97706", label: "Choral Response" },
-          { key: "engCloze", color: "#fde68a", lineColor: "#f59e0b", label: "Cloze Reading" },
-          { key: "engWhiteboard", color: "#fef3c7", lineColor: "#fbbf24", label: "White Board Response" }
+          { key: "structWhole", color: "#fecdd3", lineColor: "#e11d48", label: "Whole Group" },
+          { key: "structSmall", color: "#ffedd5", lineColor: "#ea580c", label: "Small Group" },
+          { key: "structPartners", color: "#ccfbf1", lineColor: "#0d9488", label: "Partners" },
+          { key: "structIndividual", color: "#e0e7ff", lineColor: "#4f46e5", label: "Individual" }
         ];
 
         const maxMs = Math.max(durationMs, 60000);
@@ -1286,22 +1350,24 @@
         const allMax = Math.max(
           5,
           ...bins.total,
-          ...bins.group,
-          ...bins.warm,
-          ...bins.cold,
-          ...bins.volunteer,
+          ...bins.structWhole,
+          ...bins.structSmall,
+          ...bins.structPartners,
+          ...bins.structIndividual,
+          ...bins.otrChoral,
+          ...bins.otrCloze,
+          ...bins.otrWhiteboard,
+          ...bins.otrPrecision,
+          ...bins.otrElbow,
+          ...bins.otrWarm,
+          ...bins.otrCold,
+          ...bins.otrVolunteer,
           ...bins.specific,
           ...bins.general,
           ...bins.corrective,
           ...bins.redirect,
           ...bins.genCrit,
-          ...bins.indCrit,
-          ...bins.engWhole,
-          ...bins.engSmall,
-          ...bins.engPartners,
-          ...bins.engChoral,
-          ...bins.engCloze,
-          ...bins.engWhiteboard
+          ...bins.indCrit
         );
 
         const x = (i1) => {
@@ -1377,10 +1443,22 @@
 
         const css = getComputedStyle(document.documentElement);
         const cTotal = css.getPropertyValue("--otr-total").trim() || "rgba(0,0,0,0.2)";
-        const cGroup = css.getPropertyValue("--otr-group").trim() || "#a855f7";
-        const cWarm = css.getPropertyValue("--otr-warm").trim() || "#0b2a6f";
-        const cCold = css.getPropertyValue("--otr-cold").trim() || "#1a4fff";
-        const cVol = css.getPropertyValue("--otr-volunteer").trim() || "#9fb8ff";
+        
+        const cStructWhole = css.getPropertyValue("--struct-whole").trim() || "#e11d48";
+        const cStructSmall = css.getPropertyValue("--struct-small").trim() || "#ea580c";
+        const cStructPartners = css.getPropertyValue("--struct-partners").trim() || "#0d9488";
+        const cStructIndividual = css.getPropertyValue("--struct-individual").trim() || "#4f46e5";
+
+        const cOtrChoral = css.getPropertyValue("--otr-choral").trim() || "#065f46";
+        const cOtrCloze = css.getPropertyValue("--otr-cloze").trim() || "#047857";
+        const cOtrWhiteboard = css.getPropertyValue("--otr-whiteboard").trim() || "#a7f3d0";
+        
+        const cOtrPrecision = css.getPropertyValue("--otr-precision").trim() || "#4338ca";
+        const cOtrElbow = css.getPropertyValue("--otr-elbow").trim() || "#a5b4fc";
+        
+        const cOtrWarm = css.getPropertyValue("--otr-warm").trim() || "#6b21a8";
+        const cOtrCold = css.getPropertyValue("--otr-cold").trim() || "#9333ea";
+        const cOtrVolunteer = css.getPropertyValue("--otr-volunteer").trim() || "#e9d5ff";
 
         const cSpecific = css.getPropertyValue("--praise-specific").trim() || "#1f9d55";
         const cGeneral = css.getPropertyValue("--praise-general").trim() || "#86efac";
@@ -1389,13 +1467,6 @@
         const cGenCrit = css.getPropertyValue("--praise-gen-crit").trim() || "#ef4444";
         const cIndCrit = css.getPropertyValue("--praise-ind-crit").trim() || "#b91c1c";
 
-        const cEngWhole = css.getPropertyValue("--eng-whole").trim() || "#0369a1";
-        const cEngSmall = css.getPropertyValue("--eng-small").trim() || "#0284c7";
-        const cEngPartners = css.getPropertyValue("--eng-partners").trim() || "#38bdf8";
-        const cEngChoral = css.getPropertyValue("--eng-choral").trim() || "#d97706";
-        const cEngCloze = css.getPropertyValue("--eng-cloze").trim() || "#f59e0b";
-        const cEngWhiteboard = css.getPropertyValue("--eng-whiteboard").trim() || "#fbbf24";
-
         if (state.mode === "Praise") {
           addSeries(bins.indCrit, cIndCrit, 2, false);
           addSeries(bins.genCrit, cGenCrit, 2, false);
@@ -1403,18 +1474,20 @@
           addSeries(bins.corrective, cCorrective, 2, false);
           addSeries(bins.general, cGeneral, 2, false);
           addSeries(bins.specific, cSpecific, 3, false);
-        } else if (state.mode === "Engagement") {
-          addSeries(bins.engWhiteboard, cEngWhiteboard, 2, false);
-          addSeries(bins.engCloze, cEngCloze, 2, false);
-          addSeries(bins.engChoral, cEngChoral, 2, false);
-          addSeries(bins.engPartners, cEngPartners, 2, false);
-          addSeries(bins.engSmall, cEngSmall, 2, false);
-          addSeries(bins.engWhole, cEngWhole, 3, false, "3,6");
+        } else if (state.mode === "Lesson Structure") {
+          addSeries(bins.structIndividual, cStructIndividual, 2, false);
+          addSeries(bins.structPartners, cStructPartners, 2, false);
+          addSeries(bins.structSmall, cStructSmall, 2, false);
+          addSeries(bins.structWhole, cStructWhole, 3, false);
         } else {
-          addSeries(bins.volunteer, cVol, 2, false);
-          addSeries(bins.cold, cCold, 2, false);
-          addSeries(bins.warm, cWarm, 2, false);
-          addSeries(bins.group, cGroup, 3, false);
+          addSeries(bins.otrVolunteer, cOtrVolunteer, 2, false);
+          addSeries(bins.otrCold, cOtrCold, 2, false);
+          addSeries(bins.otrWarm, cOtrWarm, 2, false);
+          addSeries(bins.otrElbow, cOtrElbow, 2, false);
+          addSeries(bins.otrPrecision, cOtrPrecision, 2, false);
+          addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2, false);
+          addSeries(bins.otrCloze, cOtrCloze, 2, false);
+          addSeries(bins.otrChoral, cOtrChoral, 3, false);
         }
 
         svg.appendChild(el(svgNS, "text", {
@@ -1463,7 +1536,7 @@
           "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
           fill: "rgba(0,0,0,.60)",
           transform: `rotate(-90 16 ${pad.t + innerH / 2})`
-        }, state.mode === "Praise" ? "Praise per minute" : state.mode === "Engagement" ? "Engagement per minute" : "OTR per minute"));
+        }, state.mode === "Praise" ? "Praise per minute" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "OTR per minute"));
 
         const lx = pad.l + innerW + 18;
         const ly = pad.t + 8;
@@ -1489,18 +1562,20 @@
           legendRow(3, cRedirect, "Redirective Statements");
           legendRow(4, cGenCrit, "General Criticism");
           legendRow(5, cIndCrit, "Individual Criticism");
-        } else if (state.mode === "Engagement") {
-          legendRow(0, cEngWhole, "Whole Group", "3,6");
-          legendRow(1, cEngSmall, "Small Group");
-          legendRow(2, cEngPartners, "Precision Partners");
-          legendRow(3, cEngChoral, "Choral Response");
-          legendRow(4, cEngCloze, "Cloze Reading");
-          legendRow(5, cEngWhiteboard, "White Board Response");
+        } else if (state.mode === "Lesson Structure") {
+          legendRow(0, cStructWhole, "Whole Group");
+          legendRow(1, cStructSmall, "Small Group");
+          legendRow(2, cStructPartners, "Partners");
+          legendRow(3, cStructIndividual, "Individual");
         } else {
-          legendRow(0, cGroup, "Whole Group");
-          legendRow(1, cWarm, "Warm Call");
-          legendRow(2, cCold, "Cold Call");
-          legendRow(3, cVol, "Volunteer");
+          legendRow(0, cOtrChoral, "Choral Response");
+          legendRow(1, cOtrCloze, "Cloze Reading");
+          legendRow(2, cOtrWhiteboard, "White Board Response");
+          legendRow(3, cOtrPrecision, "Precision Partner");
+          legendRow(4, cOtrElbow, "Elbow Partner");
+          legendRow(5, cOtrWarm, "Warm Call");
+          legendRow(6, cOtrCold, "Cold Call");
+          legendRow(7, cOtrVolunteer, "Volunteer");
         }
 
         return svg;
@@ -1586,8 +1661,8 @@
         return `${ratio}:1`;
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, group, warm, cold, volunteer, specific, general, corrective, redirect, genCrit, indCrit, engWhole, engSmall, engPartners, engChoral, engCloze, engWhiteboard, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, notes, engagementChecks }){
-        const titlePrefix = state.mode === 'Praise' ? 'Praise' : state.mode === 'Engagement' ? 'Engagement' : 'OTR';
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, notes, engagementChecks }){
+        const titlePrefix = state.mode === 'Praise' ? 'Praise' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : 'OTR';
         const lines = [
           `${titlePrefix} Timer Results`,
           `Observed Educator Name: ${educator}`
@@ -1646,15 +1721,13 @@
           lines.push(`Total Statements: ${otrTotal}`);
           lines.push(`Positive to Negative (ratio): ${ratioText}`);
           lines.push(`Goal: 5:1 positive to negative feedback`);
-        } else if (state.mode === "Engagement") {
-          lines.push(`Whole Group: ${engWhole}`);
-          lines.push(`Small Group: ${engSmall}`);
-          lines.push(`Precision Partners: ${engPartners}`);
-          lines.push(`Choral Response: ${engChoral}`);
-          lines.push(`Cloze Reading: ${engCloze}`);
-          lines.push(`White Board Response: ${engWhiteboard}`);
-          lines.push(`Total Engagement: ${otrTotal}`);
-          lines.push(`Engagement per min (ratio): ${ratioText}`);
+        } else if (state.mode === "Lesson Structure") {
+          lines.push(`Whole Group: ${structWhole}`);
+          lines.push(`Small Group: ${structSmall}`);
+          lines.push(`Partners: ${structPartners}`);
+          lines.push(`Individual: ${structIndividual}`);
+          lines.push(`Total Events: ${otrTotal}`);
+          lines.push(`Lesson Structure per min (ratio): ${ratioText}`);
           if (engagementChecks && engagementChecks.length > 0) {
             for (const check of engagementChecks) {
               const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
@@ -1662,10 +1735,14 @@
             }
           }
         } else {
-          lines.push(`Whole Group OTR: ${group}`);
-          lines.push(`Warm Call OTR: ${warm}`);
-          lines.push(`Cold Call OTR: ${cold}`);
-          lines.push(`Volunteer OTR: ${volunteer}`);
+          lines.push(`Choral Response: ${otrChoral}`);
+          lines.push(`Cloze Reading: ${otrCloze}`);
+          lines.push(`White Board Response: ${otrWhiteboard}`);
+          lines.push(`Precision Partner: ${otrPrecision}`);
+          lines.push(`Elbow Partner: ${otrElbow}`);
+          lines.push(`Warm Call: ${otrWarm}`);
+          lines.push(`Cold Call: ${otrCold}`);
+          lines.push(`Volunteer: ${otrVolunteer}`);
           lines.push(`OTR total: ${otrTotal}`);
           lines.push(`OTR per min (ratio): ${ratioText}`);
           lines.push(`Goal: 3-5 OTRs per minute of instruction`);
@@ -1787,10 +1864,19 @@
         const bins = computeBinsByKind(state.otrEvents, durationMs);
         
         // Calculate new totals
-        const totalGroup = bins.group.reduce((a, b) => a + b, 0);
-        const totalWarm = bins.warm.reduce((a, b) => a + b, 0);
-        const totalCold = bins.cold.reduce((a, b) => a + b, 0);
-        const totalVol = bins.volunteer.reduce((a, b) => a + b, 0);
+        const totalStructWhole = bins.structWhole.reduce((a, b) => a + b, 0);
+        const totalStructSmall = bins.structSmall.reduce((a, b) => a + b, 0);
+        const totalStructPartners = bins.structPartners.reduce((a, b) => a + b, 0);
+        const totalStructIndividual = bins.structIndividual.reduce((a, b) => a + b, 0);
+
+        const totalOtrChoral = bins.otrChoral.reduce((a, b) => a + b, 0);
+        const totalOtrCloze = bins.otrCloze.reduce((a, b) => a + b, 0);
+        const totalOtrWhiteboard = bins.otrWhiteboard.reduce((a, b) => a + b, 0);
+        const totalOtrPrecision = bins.otrPrecision.reduce((a, b) => a + b, 0);
+        const totalOtrElbow = bins.otrElbow.reduce((a, b) => a + b, 0);
+        const totalOtrWarm = bins.otrWarm.reduce((a, b) => a + b, 0);
+        const totalOtrCold = bins.otrCold.reduce((a, b) => a + b, 0);
+        const totalOtrVolunteer = bins.otrVolunteer.reduce((a, b) => a + b, 0);
 
         const totalSpecific = bins.specific.reduce((a, b) => a + b, 0);
         const totalGeneral = bins.general.reduce((a, b) => a + b, 0);
@@ -1799,16 +1885,9 @@
         const totalGenCrit = bins.genCrit.reduce((a, b) => a + b, 0);
         const totalIndCrit = bins.indCrit.reduce((a, b) => a + b, 0);
 
-        const totalEngWhole = bins.engWhole.reduce((a, b) => a + b, 0);
-        const totalEngSmall = bins.engSmall.reduce((a, b) => a + b, 0);
-        const totalEngPartners = bins.engPartners.reduce((a, b) => a + b, 0);
-        const totalEngChoral = bins.engChoral.reduce((a, b) => a + b, 0);
-        const totalEngCloze = bins.engCloze.reduce((a, b) => a + b, 0);
-        const totalEngWhiteboard = bins.engWhiteboard.reduce((a, b) => a + b, 0);
-
-        const totalOtr = state.otrEvents.filter(e => ["group","warm","cold","volunteer"].includes(e.kind)).length;
+        const totalOtr = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind)).length;
         const totalPraise = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind)).length;
-        const totalEngagement = state.otrEvents.filter(e => ["engWhole","engSmall","engPartners","engChoral","engCloze","engWhiteboard"].includes(e.kind)).length;
+        const totalEngagement = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind)).length;
         
         const positivePraise = totalSpecific + totalGeneral + totalCorrective;
         const negativePraise = totalRedirect + totalGenCrit + totalIndCrit;
@@ -1817,8 +1896,8 @@
         
         if (state.mode === "Praise") {
           resultsTitle.textContent = "Praise Results";
-        } else if (state.mode === "Engagement") {
-          resultsTitle.textContent = "Engagement Results";
+        } else if (state.mode === "Lesson Structure") {
+          resultsTitle.textContent = "Lesson Structure Results";
         } else if (state.mode === "All") {
           resultsTitle.textContent = "All Results";
         } else {
@@ -1830,7 +1909,7 @@
         const resultsGrid = document.getElementById("resultsGrid");
         resultsGrid.innerHTML = "";
         
-        const renderModes = state.mode === "All" ? ["OTRs", "Praise", "Engagement"] : [state.mode];
+        const renderModes = state.mode === "All" ? ["OTRs", "Praise", "Lesson Structure"] : [state.mode];
         const sharedBlocks = [];
         
         const createSummaryRow = (k, v) => {
@@ -1892,16 +1971,14 @@
             summaryContainer.appendChild(createSummaryRow("Individual Criticism", totalIndCrit));
             summaryContainer.appendChild(createSummaryRow("Total Statements", totalPraise));
             summaryContainer.appendChild(createSummaryRow("Positive to Negative (ratio)", ratioText));
-          } else if (renderMode === "Engagement") {
+          } else if (renderMode === "Lesson Structure") {
             const ratioText = formatOtrRatio(totalEngagement, durationMs);
-            summaryContainer.appendChild(createSummaryRow("Whole Group", totalEngWhole));
-            summaryContainer.appendChild(createSummaryRow("Small Group", totalEngSmall));
-            summaryContainer.appendChild(createSummaryRow("Precision Partners", totalEngPartners));
-            summaryContainer.appendChild(createSummaryRow("Choral Response", totalEngChoral));
-            summaryContainer.appendChild(createSummaryRow("Cloze Reading", totalEngCloze));
-            summaryContainer.appendChild(createSummaryRow("White Board Response", totalEngWhiteboard));
-            summaryContainer.appendChild(createSummaryRow("Total Engagement", totalEngagement));
-            summaryContainer.appendChild(createSummaryRow("Engagement per min (ratio)", ratioText));
+            summaryContainer.appendChild(createSummaryRow("Whole Group", totalStructWhole));
+            summaryContainer.appendChild(createSummaryRow("Small Group", totalStructSmall));
+            summaryContainer.appendChild(createSummaryRow("Partners", totalStructPartners));
+            summaryContainer.appendChild(createSummaryRow("Individual", totalStructIndividual));
+            summaryContainer.appendChild(createSummaryRow("Total Events", totalEngagement));
+            summaryContainer.appendChild(createSummaryRow("Lesson Structure per min (ratio)", ratioText));
             
             if (state.engagementChecks && state.engagementChecks.length > 0) {
               for (const check of state.engagementChecks) {
@@ -1911,10 +1988,14 @@
             }
           } else {
             const ratioText = formatOtrRatio(totalOtr, durationMs);
-            summaryContainer.appendChild(createSummaryRow("Whole Group OTR", totalGroup));
-            summaryContainer.appendChild(createSummaryRow("Warm Call OTR", totalWarm));
-            summaryContainer.appendChild(createSummaryRow("Cold Call OTR", totalCold));
-            summaryContainer.appendChild(createSummaryRow("Volunteer OTR", totalVol));
+            summaryContainer.appendChild(createSummaryRow("Choral Response", totalOtrChoral));
+            summaryContainer.appendChild(createSummaryRow("Cloze Reading", totalOtrCloze));
+            summaryContainer.appendChild(createSummaryRow("White Board Response", totalOtrWhiteboard));
+            summaryContainer.appendChild(createSummaryRow("Precision Partner", totalOtrPrecision));
+            summaryContainer.appendChild(createSummaryRow("Elbow Partner", totalOtrElbow));
+            summaryContainer.appendChild(createSummaryRow("Warm Call", totalOtrWarm));
+            summaryContainer.appendChild(createSummaryRow("Cold Call", totalOtrCold));
+            summaryContainer.appendChild(createSummaryRow("Volunteer", totalOtrVolunteer));
             summaryContainer.appendChild(createSummaryRow("OTR total", totalOtr));
             summaryContainer.appendChild(createSummaryRow("OTR per min (ratio)", ratioText));
           }
@@ -1942,11 +2023,11 @@
           if (renderMode === "Praise") {
              modeEvents = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs);
-          } else if (renderMode === "Engagement") {
-             modeEvents = state.otrEvents.filter(e => ["engWhole","engSmall","engPartners","engChoral","engCloze","engWhiteboard"].includes(e.kind));
+          } else if (renderMode === "Lesson Structure") {
+             modeEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
              chartSvg = renderEngagementStackedBarChartSVG(modeEvents, durationMs);
           } else {
-             modeEvents = state.otrEvents.filter(e => ["group","warm","cold","volunteer"].includes(e.kind));
+             modeEvents = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs);
           }
           
@@ -1956,7 +2037,7 @@
           
           resultsGrid.appendChild(modeContainer);
           
-          const curOtrTotal = renderMode === "Praise" ? totalPraise : renderMode === "Engagement" ? totalEngagement : totalOtr;
+          const curOtrTotal = renderMode === "Praise" ? totalPraise : renderMode === "Lesson Structure" ? totalEngagement : totalOtr;
           const curRatioText = renderMode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRatio(curOtrTotal, durationMs);
           
           const lines = buildResultsLines({
@@ -1966,22 +2047,28 @@
               durationMs,
               lessonTargetPosted: state.lessonTargetPosted,
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
-              group: totalGroup,
-              warm: totalWarm,
-              cold: totalCold,
-              volunteer: totalVol,
+              
+              structWhole: totalStructWhole,
+              structSmall: totalStructSmall,
+              structPartners: totalStructPartners,
+              structIndividual: totalStructIndividual,
+
+              otrChoral: totalOtrChoral,
+              otrCloze: totalOtrCloze,
+              otrWhiteboard: totalOtrWhiteboard,
+              otrPrecision: totalOtrPrecision,
+              otrElbow: totalOtrElbow,
+              otrWarm: totalOtrWarm,
+              otrCold: totalOtrCold,
+              otrVolunteer: totalOtrVolunteer,
+
               specific: totalSpecific,
               general: totalGeneral,
               corrective: totalCorrective,
               redirect: totalRedirect,
               genCrit: totalGenCrit,
               indCrit: totalIndCrit,
-              engWhole: totalEngWhole,
-              engSmall: totalEngSmall,
-              engPartners: totalEngPartners,
-              engChoral: totalEngChoral,
-              engCloze: totalEngCloze,
-              engWhiteboard: totalEngWhiteboard,
+
               otrTotal: curOtrTotal,
               ratioText: curRatioText,
               notes: renderMode === renderModes[0] ? state.notes : "",
@@ -2026,7 +2113,7 @@
           // Update notes in the first block before rendering
           const oldStateMode = state.mode;
           state.mode = renderModes[0];
-          const firstOtrTotal = state.mode === "Praise" ? totalPraise : state.mode === "Engagement" ? totalEngagement : totalOtr;
+          const firstOtrTotal = state.mode === "Praise" ? totalPraise : state.mode === "Lesson Structure" ? totalEngagement : totalOtr;
           const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRatio(firstOtrTotal, durationMs);
           
           sharedBlocks[0].lines = buildResultsLines({
@@ -2036,11 +2123,11 @@
               durationMs,
               lessonTargetPosted: state.lessonTargetPosted,
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
-              group: totalGroup, warm: totalWarm, cold: totalCold, volunteer: totalVol,
+              structWhole: totalStructWhole, structSmall: totalStructSmall, structPartners: totalStructPartners, structIndividual: totalStructIndividual,
+              otrChoral: totalOtrChoral, otrCloze: totalOtrCloze, otrWhiteboard: totalOtrWhiteboard,
+              otrPrecision: totalOtrPrecision, otrElbow: totalOtrElbow, otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
               specific: totalSpecific, general: totalGeneral, corrective: totalCorrective,
               redirect: totalRedirect, genCrit: totalGenCrit, indCrit: totalIndCrit,
-              engWhole: totalEngWhole, engSmall: totalEngSmall, engPartners: totalEngPartners,
-              engChoral: totalEngChoral, engCloze: totalEngCloze, engWhiteboard: totalEngWhiteboard,
               otrTotal: firstOtrTotal,
               ratioText: firstRatioText,
               notes: state.notes,
