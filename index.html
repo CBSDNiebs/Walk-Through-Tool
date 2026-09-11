@@ -346,25 +346,35 @@
     #shareStatus{margin-top:0;border-top:0;padding-top:0;}
 
     .mode-btn {
-      width: 96px;
-      height: 96px;
+      width: 104px;
+      height: 104px;
       border-radius: 50%;
       background: var(--ink);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.25;
       font-weight: bold;
       border: none;
       cursor: pointer;
-      padding: 0;
+      padding: 8px;
       min-height: auto;
       box-shadow: var(--shadow);
       transition: opacity 0.2s;
     }
     .mode-btn:hover {
       opacity: 0.9;
+    }
+    #modePraiseBtn {
+      border: 4px solid #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25), var(--shadow);
+    }
+    #modePraiseBtn:hover {
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.35), var(--shadow);
     }
 
     #shareBtn, #restartBtn {
@@ -410,6 +420,58 @@
       .results-grid{grid-template-columns:1fr 2fr;gap:18px;}
       .actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
       .actions .btn{flex: 1;}
+    }
+
+    .question-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      padding: 6px 0;
+    }
+    .question-row:not(:last-child) {
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 10px;
+    }
+    .question-label {
+      flex: 1;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+    .rating-select {
+      width: 86px;
+      min-width: 86px;
+      height: 38px;
+      min-height: 38px;
+      padding: 6px 26px 6px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1.5px solid #d1d5db;
+      background-color: #f3f4f6;
+      color: #374151;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+      background-repeat: no-repeat, no-repeat;
+      background-position: right 8px center, 0 0;
+      background-size: 14px, 100% 100%;
+      font-family: inherit;
+      flex-shrink: 0;
+    }
+    .rating-select:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .rating-select:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 1px;
     }
   </style>
 </head>
@@ -464,6 +526,30 @@
           </div>
         </div>
 
+        <div class="question-group" id="qRegulationSpaceGroup" style="display: none;">
+          <div class="label" style="font-size: 16px; color: var(--ink); margin-bottom: 8px; font-weight: 500;">Is there a regulation space in the classroom?</div>
+          <div style="display: flex; gap: 12px;">
+            <button id="q3YesBtn" class="btn yn yes" type="button">Yes</button>
+            <button id="q3NoBtn" class="btn yn no" type="button">No</button>
+          </div>
+        </div>
+
+        <div class="question-group" id="qZonesGraphicGroup" style="display: none;">
+          <div class="label" style="font-size: 16px; color: var(--ink); margin-bottom: 8px; font-weight: 500;">Is there a graphic depicting the character trait of the month?</div>
+          <div style="display: flex; gap: 12px;">
+            <button id="q4YesBtn" class="btn yn yes" type="button">Yes</button>
+            <button id="q4NoBtn" class="btn yn no" type="button">No</button>
+          </div>
+        </div>
+
+        <div class="question-group" id="qSELEvidenceGroup" style="display: none;">
+          <div class="label" style="font-size: 16px; color: var(--ink); margin-bottom: 8px; font-weight: 500;">Is there evidence the educator integrates SEL concepts and strategies into core subjects?</div>
+          <div style="display: flex; gap: 12px;">
+            <button id="q5YesBtn" class="btn yn yes" type="button">Yes</button>
+            <button id="q5NoBtn" class="btn yn no" type="button">No</button>
+          </div>
+        </div>
+
         <section class="actions" style="margin-top: 32px; display:flex; flex-direction: row; gap:12px;">
           <button id="questionsNextBtn" class="btn primary" type="button" disabled style="flex: 1;">Next</button>
         </section>
@@ -480,8 +566,8 @@
         <button id="modeSelectBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
       </header>
       <section style="display: flex; justify-content: space-around; margin-top: 32px; margin-bottom: 32px; gap: 16px; flex-wrap: wrap;">
-        <button id="modeOtrBtn" class="mode-btn" type="button">OTRs</button>
-        <button id="modePraiseBtn" class="mode-btn" type="button">Praise</button>
+        <button id="modeOtrBtn" class="mode-btn" type="button">Opportunities to Respond</button>
+        <button id="modePraiseBtn" class="mode-btn" type="button">Social Emotional Learning</button>
         <button id="modeEngagementBtn" class="mode-btn" type="button">Lesson Structure</button>
         <button id="modeAllBtn" class="mode-btn" type="button">All</button>
       </section>
@@ -504,52 +590,118 @@
           <div class="value" id="elapsedText">00:00.0</div>
         </div>
         <div class="stat">
-          <div class="kicker" id="totalKicker">Total OTR</div>
+          <div class="kicker" id="totalKicker">Total Opportunities to Respond</div>
           <div class="value" id="otrTotalText">0</div>
         </div>
       </section>
 
       <button id="startBtn" class="btn start" type="button" style="margin-top:16px; width: 100%;">Start</button>
 
-      <div id="timerNotesContainer" style="margin-top:16px;">
-        <span class="label" style="font-weight:bold;">Notes</span>
-        <textarea id="timerNotes" class="notes-input" style="margin-top:8px; min-height: 60px;" placeholder="Type notes here..." aria-label="Observation notes"></textarea>
-      </div>
-
       <section class="runControls" role="group" aria-label="Recording controls">
-        <div id="structSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; color:var(--ink);">Lesson Structure</div>
-        <div id="structButtons1" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Lesson Structure 1">
-          <button id="structWholeBtn" class="btn otr struct-whole" type="button" disabled>Whole Group</button>
-          <button id="structSmallBtn" class="btn otr struct-small" type="button" disabled>Small Group</button>
-        </div>
-        <div id="structButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Lesson Structure 2">
-          <button id="structPartnersBtn" class="btn otr struct-partners" type="button" disabled>Partners</button>
-          <button id="structIndividualBtn" class="btn otr struct-individual" type="button" disabled>Individual</button>
+
+        <!-- 1. Notes (First on every timer) -->
+        <div id="timerNotesContainer" style="margin-top:0px;">
+          <span class="label" style="font-weight:bold;">Notes</span>
+          <textarea id="timerNotes" class="notes-input" style="margin-top:8px; min-height: 60px;" placeholder="Type notes here..." aria-label="Observation notes"></textarea>
         </div>
 
-        <div id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">OTRs</div>
+        <!-- 2. Opportunities to Respond (OTR) -->
+        <div id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Opportunities to Respond</div>
         <div id="otrSection1Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Whole Group</div>
-        <div id="otrButtons1" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Whole Group OTR">
+        <div id="otrButtons1" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Whole Group Opportunities to Respond">
           <button id="otrChoralBtn" class="btn otr otr-choral" type="button" disabled>Choral Response</button>
           <button id="otrClozeBtn" class="btn otr otr-cloze" type="button" disabled>Close Reading</button>
           <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response</button>
         </div>
 
         <div id="otrSection2Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Partner</div>
-        <div id="otrButtons2" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr;" aria-label="Partner OTR">
+        <div id="otrButtons2" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr;" aria-label="Partner Opportunities to Respond">
           <button id="otrPrecisionBtn" class="btn otr otr-precision" type="button" disabled>Precision Partner</button>
           <button id="otrElbowBtn" class="btn otr otr-elbow" type="button" disabled>Elbow Partner</button>
         </div>
 
         <div id="otrSection3Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Individual</div>
-        <div id="otrButtons3" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Individual OTR">
+        <div id="otrButtons3" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Individual Opportunities to Respond">
           <button id="otrWarmBtn" class="btn otr otr-warm" type="button" disabled>Warm Call</button>
           <button id="otrColdBtn" class="btn otr otr-cold" type="button" disabled>Cold Call</button>
           <button id="otrVolunteerBtn" class="btn otr otr-volunteer" type="button" disabled>Volunteer</button>
         </div>
 
-        <div id="praiseSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Praise</div>
-        <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Praise buttons">
+        <!-- 3. Social Emotional Learning (SEL) with Character Strong observations followed by Praise -->
+        <div id="praiseSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Social Emotional Learning</div>
+
+        <div id="praiseQuestionsContainer" style="display:none; margin-top:0px; margin-bottom: 0px;">
+          <div class="label" style="font-size:13px; font-weight:bold; margin-bottom:14px; color:var(--ink);">Character Strong observations</div>
+          
+          <div class="question-row">
+            <span class="question-label">Educator models warm & respectful interactions</span>
+            <select class="rating-select" data-q="0" disabled aria-label="Educator models warm & respectful interactions">
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">0</option>
+              <option value="2" style="background-color:#93c5fd; color:#1e3a8a;">1</option>
+              <option value="3" style="background-color:#60a5fa; color:#ffffff;">2</option>
+              <option value="4" style="background-color:#3b82f6; color:#ffffff;">3</option>
+            </select>
+          </div>
+
+          <div class="question-row">
+            <span class="question-label">Educator joins in community-building activities</span>
+            <select class="rating-select" data-q="1" disabled aria-label="Educator joins in community-building activities">
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">0</option>
+              <option value="2" style="background-color:#93c5fd; color:#1e3a8a;">1</option>
+              <option value="3" style="background-color:#60a5fa; color:#ffffff;">2</option>
+              <option value="4" style="background-color:#3b82f6; color:#ffffff;">3</option>
+            </select>
+          </div>
+
+          <div class="question-row">
+            <span class="question-label">Educator leads activities with enthusiasm</span>
+            <select class="rating-select" data-q="2" disabled aria-label="Educator leads activities with enthusiasm">
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">0</option>
+              <option value="2" style="background-color:#93c5fd; color:#1e3a8a;">1</option>
+              <option value="3" style="background-color:#60a5fa; color:#ffffff;">2</option>
+              <option value="4" style="background-color:#3b82f6; color:#ffffff;">3</option>
+            </select>
+          </div>
+
+          <div class="question-row">
+            <span class="question-label">Students share their ideas and perspectives</span>
+            <select class="rating-select" data-q="3" disabled aria-label="Students share their ideas and perspectives">
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">0</option>
+              <option value="2" style="background-color:#93c5fd; color:#1e3a8a;">1</option>
+              <option value="3" style="background-color:#60a5fa; color:#ffffff;">2</option>
+              <option value="4" style="background-color:#3b82f6; color:#ffffff;">3</option>
+            </select>
+          </div>
+
+          <div class="question-row">
+            <span class="question-label">Overall atmosphere of safety and respect</span>
+            <select class="rating-select" data-q="4" disabled aria-label="Overall atmosphere of safety and respect">
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">0</option>
+              <option value="2" style="background-color:#93c5fd; color:#1e3a8a;">1</option>
+              <option value="3" style="background-color:#60a5fa; color:#ffffff;">2</option>
+              <option value="4" style="background-color:#3b82f6; color:#ffffff;">3</option>
+            </select>
+          </div>
+
+          <div class="question-row">
+            <span class="question-label">Evidence of class agreement with student input</span>
+            <select class="rating-select" data-q="5" disabled aria-label="Evidence of class agreement with student input">
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">0</option>
+              <option value="2" style="background-color:#93c5fd; color:#1e3a8a;">1</option>
+              <option value="3" style="background-color:#60a5fa; color:#ffffff;">2</option>
+              <option value="4" style="background-color:#3b82f6; color:#ffffff;">3</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="praiseSubLabel" class="label" style="display:none; font-size:13px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Praise</div>
+        <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Social Emotional Learning buttons">
           <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise</button>
           <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise</button>
           <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback</button>
@@ -558,17 +710,31 @@
           <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism</button>
         </div>
 
+        <!-- 4. Lesson Structure -->
+        <div id="structContainer" style="display:none; margin-top:12px;">
+          <div id="structSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; color:var(--ink);">Lesson Structure</div>
+          <div id="structButtons1" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Lesson Structure 1">
+            <button id="structWholeBtn" class="btn otr struct-whole" type="button" disabled>Whole Group</button>
+            <button id="structSmallBtn" class="btn otr struct-small" type="button" disabled>Small Group</button>
+          </div>
+          <div id="structButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;" aria-label="Lesson Structure 2">
+            <button id="structPartnersBtn" class="btn otr struct-partners" type="button" disabled>Partners</button>
+            <button id="structIndividualBtn" class="btn otr struct-individual" type="button" disabled>Individual</button>
+          </div>
+        </div>
+
+        <!-- 5. Bottom Controls -->
         <div class="bottomRow" aria-label="Stop, undo and reset buttons">
           <button id="undoBtn" class="btn" type="button" disabled>Undo</button>
-          <button id="resetBtn" class="btn reset restart" type="button" title="Reset timer and OTR" aria-label="Reset">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <button id="resetBtn" class="btn reset restart" type="button" title="Reset timer and counts" aria-label="Reset">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/></svg>
           </button>
           <button id="stopBtn" class="btn stop" type="button" disabled>Stop</button>
         </div>
       </section>
 
       <footer class="fineprint">
-        <span id="hintText">Press Start to begin. Then tap an OTR button for each observed response.</span>
+        <span id="hintText">Press Start to begin. Then tap an Opportunities to Respond button for each observed response.</span>
       </footer>
     </main>
 
@@ -593,7 +759,7 @@
     <main class="card">
       <header class="header" style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
-          <h1 id="resultsTitle">OTR Results</h1>
+          <h1 id="resultsTitle">Opportunities to Respond Results</h1>
           <p class="subhead" id="resultsContext"></p>
         </div>
         <button id="resultsBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
@@ -624,15 +790,19 @@
         educatorName: "",
         lessonTargetPosted: null,
         curriculaMaterialsUsed: null,
+        regulationSpace: null,
+        characterTraitGraphic: null,
+        selEvidence: null,
         mode: "OTRs",
         notes: "",
         startedAt: null,
         stoppedAt: null,
         startWall: null,
         stopWall: null,
-        otrEvents: [], // { tMs, kind: "warm"|"cold"|"volunteer"|"group" }
-        engagementChecks: [], // { timeMs, totalStudents, offTaskStudents }
-        engagementPopupsShown: {}, // { "1": true, "5": true, "9": true }
+        otrEvents: [],
+        engagementChecks: [],
+        engagementPopupsShown: {},
+        praiseRatings: [0, 0, 0, 0, 0, 0], // Store slider values 0-4
         tickerId: null,
         currentScreen: "setup"
       };
@@ -664,8 +834,12 @@
         state.stopWall = null;
         state.otrEvents = [];
         state.notes = "";
+        state.regulationSpace = null;
+        state.characterTraitGraphic = null;
+        state.selEvidence = null;
         state.engagementChecks = [];
         state.engagementPopupsShown = {};
+        state.praiseRatings = [0, 0, 0, 0, 0, 0];
       }
 
       function mountTemplate(id){
@@ -717,7 +891,27 @@
         const q1NoBtn = document.getElementById("q1NoBtn");
         const q2YesBtn = document.getElementById("q2YesBtn");
         const q2NoBtn = document.getElementById("q2NoBtn");
+        
+        const qRegulationSpaceGroup = document.getElementById("qRegulationSpaceGroup");
+        const q3YesBtn = document.getElementById("q3YesBtn");
+        const q3NoBtn = document.getElementById("q3NoBtn");
+        
+        const qZonesGraphicGroup = document.getElementById("qZonesGraphicGroup");
+        const q4YesBtn = document.getElementById("q4YesBtn");
+        const q4NoBtn = document.getElementById("q4NoBtn");
+
+        const qSELEvidenceGroup = document.getElementById("qSELEvidenceGroup");
+        const q5YesBtn = document.getElementById("q5YesBtn");
+        const q5NoBtn = document.getElementById("q5NoBtn");
+
         const nextBtn = document.getElementById("questionsNextBtn");
+        
+        const isPraiseOrAll = state.mode === "Praise" || state.mode === "All";
+        if (isPraiseOrAll) {
+          qRegulationSpaceGroup.style.display = "block";
+          qZonesGraphicGroup.style.display = "block";
+          qSELEvidenceGroup.style.display = "block";
+        }
 
         function updateUI() {
           q1YesBtn.classList.toggle("selected", state.lessonTargetPosted === "Yes");
@@ -725,8 +919,23 @@
           
           q2YesBtn.classList.toggle("selected", state.curriculaMaterialsUsed === "Yes");
           q2NoBtn.classList.toggle("selected", state.curriculaMaterialsUsed === "No");
+          
+          if (isPraiseOrAll) {
+            q3YesBtn.classList.toggle("selected", state.regulationSpace === "Yes");
+            q3NoBtn.classList.toggle("selected", state.regulationSpace === "No");
+            
+            q4YesBtn.classList.toggle("selected", state.characterTraitGraphic === "Yes");
+            q4NoBtn.classList.toggle("selected", state.characterTraitGraphic === "No");
+            
+            q5YesBtn.classList.toggle("selected", state.selEvidence === "Yes");
+            q5NoBtn.classList.toggle("selected", state.selEvidence === "No");
+          }
 
-          nextBtn.disabled = !state.lessonTargetPosted || !state.curriculaMaterialsUsed;
+          let isValid = !!state.lessonTargetPosted && !!state.curriculaMaterialsUsed;
+          if (isPraiseOrAll) {
+            isValid = isValid && !!state.regulationSpace && !!state.characterTraitGraphic && !!state.selEvidence;
+          }
+          nextBtn.disabled = !isValid;
         }
 
         q1YesBtn.addEventListener("click", () => { state.lessonTargetPosted = "Yes"; updateUI(); });
@@ -734,6 +943,15 @@
         
         q2YesBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = "Yes"; updateUI(); });
         q2NoBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = "No"; updateUI(); });
+        
+        q3YesBtn.addEventListener("click", () => { state.regulationSpace = "Yes"; updateUI(); });
+        q3NoBtn.addEventListener("click", () => { state.regulationSpace = "No"; updateUI(); });
+        
+        q4YesBtn.addEventListener("click", () => { state.characterTraitGraphic = "Yes"; updateUI(); });
+        q4NoBtn.addEventListener("click", () => { state.characterTraitGraphic = "No"; updateUI(); });
+
+        q5YesBtn.addEventListener("click", () => { state.selEvidence = "Yes"; updateUI(); });
+        q5NoBtn.addEventListener("click", () => { state.selEvidence = "No"; updateUI(); });
 
         nextBtn.addEventListener("click", showResults);
         
@@ -784,22 +1002,29 @@
         const otrTotalText = document.getElementById("otrTotalText");
         const totalKicker = document.getElementById("totalKicker");
 
+        const hintText = document.getElementById("hintText");
+
         if (state.mode === "Praise") {
-          runTitle.textContent = "Praise Timer";
+          runTitle.textContent = "Social Emotional Learning Timer";
           totalKicker.textContent = "Total Statements";
+          if (hintText) hintText.textContent = "Press Start to begin. Then tap a Social Emotional Learning button for each observed response.";
         } else if (state.mode === "Lesson Structure") {
           runTitle.textContent = "Lesson Structure Timer";
           totalKicker.textContent = "Total Events";
+          if (hintText) hintText.textContent = "Press Start to begin. Then tap a Lesson Structure button for each observed event.";
         } else if (state.mode === "All") {
           runTitle.textContent = "All Timer";
           totalKicker.textContent = "Total Events";
+          if (hintText) hintText.textContent = "Press Start to begin. Tap any observation button for each observed event.";
         } else {
-          runTitle.textContent = "OTR Timer";
-          totalKicker.textContent = "Total OTR";
+          runTitle.textContent = "Opportunities to Respond Timer";
+          totalKicker.textContent = "Total Opportunities to Respond";
+          if (hintText) hintText.textContent = "Press Start to begin. Then tap an Opportunities to Respond button for each observed response.";
         }
 
         const startBtn = document.getElementById("startBtn");
         
+        const structContainer = document.getElementById("structContainer");
         const structSectionLabel = document.getElementById("structSectionLabel");
         const structButtons1 = document.getElementById("structButtons1");
         const structButtons2 = document.getElementById("structButtons2");
@@ -813,9 +1038,12 @@
         const otrButtons3 = document.getElementById("otrButtons3");
         
         const praiseSectionLabel = document.getElementById("praiseSectionLabel");
+        const praiseSubLabel = document.getElementById("praiseSubLabel");
         const praiseButtons = document.getElementById("praiseButtons");
+        const praiseQuestionsContainer = document.getElementById("praiseQuestionsContainer");
 
         if (state.mode === "Praise") {
+          if (structContainer) structContainer.style.display = "none";
           structSectionLabel.style.display = "none";
           structButtons1.style.display = "none";
           structButtons2.style.display = "none";
@@ -829,8 +1057,11 @@
           otrButtons3.style.display = "none";
           
           praiseSectionLabel.style.display = "none";
+          if (praiseSubLabel) praiseSubLabel.style.display = "block";
           praiseButtons.style.display = "grid";
+          praiseQuestionsContainer.style.display = "block";
         } else if (state.mode === "Lesson Structure") {
+          if (structContainer) structContainer.style.display = "block";
           structSectionLabel.style.display = "none";
           structButtons1.style.display = "grid";
           structButtons2.style.display = "grid";
@@ -844,8 +1075,11 @@
           otrButtons3.style.display = "none";
           
           praiseSectionLabel.style.display = "none";
+          if (praiseSubLabel) praiseSubLabel.style.display = "none";
           praiseButtons.style.display = "none";
+          praiseQuestionsContainer.style.display = "none";
         } else if (state.mode === "All") {
+          if (structContainer) structContainer.style.display = "block";
           structSectionLabel.style.display = "block";
           structButtons1.style.display = "grid";
           structButtons2.style.display = "grid";
@@ -859,9 +1093,12 @@
           otrButtons3.style.display = "grid";
           
           praiseSectionLabel.style.display = "block";
+          if (praiseSubLabel) praiseSubLabel.style.display = "block";
           praiseButtons.style.display = "grid";
+          praiseQuestionsContainer.style.display = "block";
         } else {
           // OTR
+          if (structContainer) structContainer.style.display = "none";
           structSectionLabel.style.display = "none";
           structButtons1.style.display = "none";
           structButtons2.style.display = "none";
@@ -875,8 +1112,39 @@
           otrButtons3.style.display = "grid";
           
           praiseSectionLabel.style.display = "none";
+          if (praiseSubLabel) praiseSubLabel.style.display = "none";
           praiseButtons.style.display = "none";
+          praiseQuestionsContainer.style.display = "none";
         }
+
+        // Initialize and bind rating selects
+        const updateSelectStyle = (select) => {
+          const val = parseInt(select.value, 10);
+          const colorConfigs = [
+            { bg: "linear-gradient(135deg, #f9fafb, #f3f4f6)", border: "#d1d5db", text: "#374151", stroke: "%234b5563" },
+            { bg: "linear-gradient(135deg, #f0f7ff, #dbeafe)", border: "#93c5fd", text: "#1e40af", stroke: "%231e40af" },
+            { bg: "linear-gradient(135deg, #dbeafe, #93c5fd)", border: "#60a5fa", text: "#1e3a8a", stroke: "%231e3a8a" },
+            { bg: "linear-gradient(135deg, #93c5fd, #60a5fa)", border: "#3b82f6", text: "#ffffff", stroke: "%23ffffff" },
+            { bg: "linear-gradient(135deg, #60a5fa, #3b82f6)", border: "#2563eb", text: "#ffffff", stroke: "%23ffffff" }
+          ];
+          const cfg = colorConfigs[val] || colorConfigs[0];
+          select.style.borderColor = cfg.border;
+          select.style.color = cfg.text;
+          select.style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='${cfg.stroke}' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"), ${cfg.bg}`;
+        };
+
+        const ratingSelects = document.querySelectorAll(".rating-select");
+        ratingSelects.forEach(select => {
+          const qIndex = parseInt(select.getAttribute("data-q"), 10);
+          select.value = String(state.praiseRatings[qIndex] !== undefined ? state.praiseRatings[qIndex] : 0);
+          updateSelectStyle(select);
+
+          select.addEventListener("change", (e) => {
+            const val = parseInt(e.target.value, 10);
+            state.praiseRatings[qIndex] = val;
+            updateSelectStyle(e.target);
+          });
+        });
 
         const structWholeBtn = document.getElementById("structWholeBtn");
         const structSmallBtn = document.getElementById("structSmallBtn");
@@ -903,7 +1171,6 @@
 
         const resetBtn = document.getElementById("resetBtn");
         const stopBtn = document.getElementById("stopBtn");
-        const hintText = document.getElementById("hintText");
         const runBackBtn = document.getElementById("runBackBtn");
 
         runBackBtn.addEventListener("click", () => {
@@ -1002,6 +1269,7 @@
         }
 
         function doStart(){
+          document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
           if (state.startedAt !== null) return;
 
           state.startWall = new Date();
@@ -1018,7 +1286,15 @@
           const timerNotes = document.getElementById("timerNotes");
           if (timerNotes) timerNotes.disabled = false;
 
-          hintText.textContent = "Tap Whole Group, Warm Call, Cold Call, or Volunteer for each observed response.";
+          if (state.mode === "Praise") {
+            hintText.textContent = "Recording... Tap a Social Emotional Learning button for each observed response.";
+          } else if (state.mode === "Lesson Structure") {
+            hintText.textContent = "Recording... Tap a Lesson Structure button for each observed response.";
+          } else if (state.mode === "All") {
+            hintText.textContent = "Recording... Tap an observation button for each response.";
+          } else {
+            hintText.textContent = "Recording... Tap an Opportunities to Respond button for each observed response.";
+          }
           state.tickerId = setInterval(updateUI, 100);
           updateUI();
         }
@@ -1058,9 +1334,18 @@
           state.stopWall = null;
           state.otrEvents = [];
           state.notes = "";
+          state.praiseRatings = [0, 0, 0, 0, 0, 0];
 
           elapsedText.textContent = "00:00.0";
           otrTotalText.textContent = "0";
+
+          document.querySelectorAll(".rating-select").forEach(select => {
+            select.value = "0";
+            select.disabled = true;
+            if (typeof updateSelectStyle === "function") {
+              updateSelectStyle(select);
+            }
+          });
 
           const timerNotes = document.getElementById("timerNotes");
           if (timerNotes) {
@@ -1113,6 +1398,7 @@
 
         if (state.startedAt === null) {
           timerNotes.disabled = true;
+          document.querySelectorAll(".rating-select").forEach(s => s.disabled = true);
         } else if (state.stoppedAt !== null) {
           const durationMs = state.stoppedAt - state.startedAt;
           elapsedText.textContent = formatElapsed(durationMs);
@@ -1126,9 +1412,11 @@
           stopBtn.textContent = "Next";
           
           timerNotes.disabled = false;
+          document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
           hintText.textContent = "Timer stopped. You can edit your notes or proceed.";
         } else {
           timerNotes.disabled = false;
+          document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
         }
       }
 
@@ -1528,7 +1816,7 @@
             "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             "font-weight": "bold",
             fill: "rgba(31, 157, 85, 0.85)"
-          }, "Goal: 3-5 OTRs per minute of instruction"));
+          }, "Goal: 3-5 Opportunities to Respond per minute of instruction"));
         }
 
         svg.appendChild(el(svgNS, "text", {
@@ -1536,7 +1824,7 @@
           "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
           fill: "rgba(0,0,0,.60)",
           transform: `rotate(-90 16 ${pad.t + innerH / 2})`
-        }, state.mode === "Praise" ? "Praise per minute" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "OTR per minute"));
+        }, state.mode === "Praise" ? "Social Emotional Learning per min" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "Opportunities to Respond per min"));
 
         const lx = pad.l + innerW + 18;
         const ly = pad.t + 8;
@@ -1644,7 +1932,8 @@
 
       function safeFilename(){
         const e = (state.educatorName || "Educator").replace(/[^\w]+/g, "_").replace(/^_+|_+$/g, "");
-        return `OTR_${e}.png`;
+        const prefix = state.mode === 'Praise' ? 'SEL' : state.mode === 'Lesson Structure' ? 'Lesson_Structure' : state.mode === 'All' ? 'All' : 'Opportunities_to_Respond';
+        return `${prefix}_${e}.png`;
       }
 
       function formatOtrRatio(otrTotal, durationMs){
@@ -1661,8 +1950,8 @@
         return `${ratio}:1`;
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, notes, engagementChecks }){
-        const titlePrefix = state.mode === 'Praise' ? 'Praise' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : 'OTR';
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, selEvidence, notes, engagementChecks, praiseRatings }){
+        const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`,
           `Observed Educator Name: ${educator}`
@@ -1721,6 +2010,21 @@
           lines.push(`Total Statements: ${otrTotal}`);
           lines.push(`Positive to Negative (ratio): ${ratioText}`);
           lines.push(`Goal: 5:1 positive to negative feedback`);
+          
+          if (praiseRatings) {
+            const labels = ["N/A", "0", "1", "2", "3"];
+            lines.push("");
+            lines.push("Observations:");
+            if (regulationSpace) lines.push(`Is there a regulation space in the classroom?: ${regulationSpace}`);
+            if (characterTraitGraphic) lines.push(`Is there a graphic depicting the character trait of the month?: ${characterTraitGraphic}`);
+            if (selEvidence) lines.push(`Is there evidence the educator integrates SEL concepts and strategies into core subjects?: ${selEvidence}`);
+            lines.push(`Educator models warm & respectful interactions: ${labels[praiseRatings[0]]}`);
+            lines.push(`Educator joins in community-building activities: ${labels[praiseRatings[1]]}`);
+            lines.push(`Educator leads activities with enthusiasm: ${labels[praiseRatings[2]]}`);
+            lines.push(`Students share their ideas and perspectives: ${labels[praiseRatings[3]]}`);
+            lines.push(`Overall atmosphere of safety and respect: ${labels[praiseRatings[4]]}`);
+            lines.push(`Evidence of class agreement with student input: ${labels[praiseRatings[5]]}`);
+          }
         } else if (state.mode === "Lesson Structure") {
           lines.push(`Whole Group: ${structWhole}`);
           lines.push(`Small Group: ${structSmall}`);
@@ -1743,9 +2047,9 @@
           lines.push(`Warm Call: ${otrWarm}`);
           lines.push(`Cold Call: ${otrCold}`);
           lines.push(`Volunteer: ${otrVolunteer}`);
-          lines.push(`OTR total: ${otrTotal}`);
-          lines.push(`OTR per min (ratio): ${ratioText}`);
-          lines.push(`Goal: 3-5 OTRs per minute of instruction`);
+          lines.push(`Opportunities to Respond Total: ${otrTotal}`);
+          lines.push(`Opportunities to Respond per min (ratio): ${ratioText}`);
+          lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
         }
         
         if (notes) {
@@ -1789,7 +2093,7 @@
             const lineText = block.lines[i];
             const yPos = currentYOffset + pad + (i + 1) * lineH;
 
-            if (lineText.startsWith("Lesson target referenced:") || lineText.startsWith("Agreed upon teaching materials used:")) {
+            if (lineText.startsWith("Lesson target referenced:") || lineText.startsWith("Agreed upon teaching materials used:") || lineText.startsWith("Is there a regulation space in the classroom?:") || lineText.startsWith("Is there a graphic depicting the character trait of the month?:") || lineText.startsWith("Is there evidence the educator integrates SEL concepts and strategies into core subjects?:")) {
               const isYes = lineText.endsWith("Yes");
               const isNo = lineText.endsWith("No");
               if (isYes || isNo) {
@@ -1799,6 +2103,21 @@
                   width: W - (pad * 2) + 8,
                   height: lineH + 4,
                   fill: isYes ? "rgba(134, 239, 172, 0.4)" : "rgba(252, 165, 165, 0.4)",
+                  rx: 4
+                }));
+              }
+            } else if (lineText.startsWith("Educator models warm") || lineText.startsWith("Educator joins in") || lineText.startsWith("Educator leads") || lineText.startsWith("Students share") || lineText.startsWith("Overall atmosphere") || lineText.startsWith("Evidence of class agreement")) {
+              const valStr = lineText.split(": ")[1];
+              const labels = ["N/A", "0", "1", "2", "3"];
+              const rowColors = ["#d1d5db4d", "#dbeafe4d", "#93c5fd4d", "#60a5fa4d", "#3b82f64d"];
+              const valIndex = labels.indexOf(valStr);
+              if (valIndex >= 0) {
+                root.appendChild(el(svgNS, "rect", {
+                  x: pad - 4,
+                  y: yPos - lineH + 4,
+                  width: W - (pad * 2) + 8,
+                  height: lineH + 4,
+                  fill: rowColors[valIndex],
                   rx: 4
                 }));
               }
@@ -1895,13 +2214,13 @@
         const resultsTitle = document.getElementById("resultsTitle");
         
         if (state.mode === "Praise") {
-          resultsTitle.textContent = "Praise Results";
+          resultsTitle.textContent = "Social Emotional Learning Results";
         } else if (state.mode === "Lesson Structure") {
           resultsTitle.textContent = "Lesson Structure Results";
         } else if (state.mode === "All") {
           resultsTitle.textContent = "All Results";
         } else {
-          resultsTitle.textContent = "OTR Results";
+          resultsTitle.textContent = "Opportunities to Respond Results";
         }
 
         document.getElementById("resultsContext").textContent = `Observed Educator Name: ${state.educatorName}`;
@@ -1912,10 +2231,14 @@
         const renderModes = state.mode === "All" ? ["OTRs", "Praise", "Lesson Structure"] : [state.mode];
         const sharedBlocks = [];
         
-        const createSummaryRow = (k, v) => {
+        const createSummaryRow = (k, v, forceBgColor) => {
           const row = document.createElement("div");
           row.className = "row";
-          if (k === "Lesson target referenced" || k === "Agreed upon teaching materials used") {
+          if (forceBgColor) {
+            row.style.backgroundColor = forceBgColor;
+            row.style.padding = "8px";
+            row.style.borderRadius = "4px";
+          } else if (k === "Lesson target referenced" || k === "Agreed upon teaching materials used" || k === "Is there a regulation space in the classroom?" || k === "Is there a graphic depicting the character trait of the month?" || k === "Is there evidence the educator integrates SEL concepts and strategies into core subjects?") {
             if (v === "Yes") {
               row.style.backgroundColor = "rgba(134, 239, 172, 0.3)";
               row.style.padding = "8px";
@@ -1971,6 +2294,20 @@
             summaryContainer.appendChild(createSummaryRow("Individual Criticism", totalIndCrit));
             summaryContainer.appendChild(createSummaryRow("Total Statements", totalPraise));
             summaryContainer.appendChild(createSummaryRow("Positive to Negative (ratio)", ratioText));
+
+            if (state.praiseRatings) {
+              const labels = ["N/A", "0", "1", "2", "3"];
+              const rowColors = ["#d1d5db4d", "#dbeafe4d", "#93c5fd4d", "#60a5fa4d", "#3b82f64d"];
+              if (state.regulationSpace) summaryContainer.appendChild(createSummaryRow("Is there a regulation space in the classroom?", state.regulationSpace));
+              if (state.characterTraitGraphic) summaryContainer.appendChild(createSummaryRow("Is there a graphic depicting the character trait of the month?", state.characterTraitGraphic));
+              if (state.selEvidence) summaryContainer.appendChild(createSummaryRow("Is there evidence the educator integrates SEL concepts and strategies into core subjects?", state.selEvidence));
+              summaryContainer.appendChild(createSummaryRow("Educator models warm & respectful interactions", labels[state.praiseRatings[0]], rowColors[state.praiseRatings[0]]));
+              summaryContainer.appendChild(createSummaryRow("Educator joins in community-building activities", labels[state.praiseRatings[1]], rowColors[state.praiseRatings[1]]));
+              summaryContainer.appendChild(createSummaryRow("Educator leads activities with enthusiasm", labels[state.praiseRatings[2]], rowColors[state.praiseRatings[2]]));
+              summaryContainer.appendChild(createSummaryRow("Students share their ideas and perspectives", labels[state.praiseRatings[3]], rowColors[state.praiseRatings[3]]));
+              summaryContainer.appendChild(createSummaryRow("Overall atmosphere of safety and respect", labels[state.praiseRatings[4]], rowColors[state.praiseRatings[4]]));
+              summaryContainer.appendChild(createSummaryRow("Evidence of class agreement with student input", labels[state.praiseRatings[5]], rowColors[state.praiseRatings[5]]));
+            }
           } else if (renderMode === "Lesson Structure") {
             const ratioText = formatOtrRatio(totalEngagement, durationMs);
             summaryContainer.appendChild(createSummaryRow("Whole Group", totalStructWhole));
@@ -1996,8 +2333,8 @@
             summaryContainer.appendChild(createSummaryRow("Warm Call", totalOtrWarm));
             summaryContainer.appendChild(createSummaryRow("Cold Call", totalOtrCold));
             summaryContainer.appendChild(createSummaryRow("Volunteer", totalOtrVolunteer));
-            summaryContainer.appendChild(createSummaryRow("OTR total", totalOtr));
-            summaryContainer.appendChild(createSummaryRow("OTR per min (ratio)", ratioText));
+            summaryContainer.appendChild(createSummaryRow("Opportunities to Respond Total", totalOtr));
+            summaryContainer.appendChild(createSummaryRow("Opportunities to Respond per min (ratio)", ratioText));
           }
           modeContainer.appendChild(summaryContainer);
           
@@ -2006,13 +2343,14 @@
           
           const chartTitle = document.createElement("div");
           chartTitle.className = "chartTitle";
-          chartTitle.textContent = `${renderMode} per minute over time`;
+          const modeDisplay = renderMode === "Praise" ? "Social Emotional Learning" : renderMode === "Lesson Structure" ? "Lesson Structure" : "Opportunities to Respond";
+          chartTitle.textContent = `${modeDisplay} per minute over time`;
           chartWrap.appendChild(chartTitle);
           
           const chartHost = document.createElement("div");
           chartHost.className = "chartHost";
           chartHost.setAttribute("role", "img");
-          chartHost.setAttribute("aria-label", `${renderMode} chart`);
+          chartHost.setAttribute("aria-label", `${modeDisplay} chart`);
           
           // Create lines and charts for this block
           const oldStateMode = state.mode;
@@ -2047,6 +2385,9 @@
               durationMs,
               lessonTargetPosted: state.lessonTargetPosted,
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
+              regulationSpace: state.regulationSpace,
+              characterTraitGraphic: state.characterTraitGraphic,
+              selEvidence: state.selEvidence,
               
               structWhole: totalStructWhole,
               structSmall: totalStructSmall,
@@ -2072,7 +2413,8 @@
               otrTotal: curOtrTotal,
               ratioText: curRatioText,
               notes: renderMode === renderModes[0] ? state.notes : "",
-              engagementChecks: state.engagementChecks
+              engagementChecks: state.engagementChecks,
+              praiseRatings: state.praiseRatings
           });
           state.mode = oldStateMode;
           // Strip top common info if not first
@@ -2123,6 +2465,9 @@
               durationMs,
               lessonTargetPosted: state.lessonTargetPosted,
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
+              regulationSpace: state.regulationSpace,
+              characterTraitGraphic: state.characterTraitGraphic,
+              selEvidence: state.selEvidence,
               structWhole: totalStructWhole, structSmall: totalStructSmall, structPartners: totalStructPartners, structIndividual: totalStructIndividual,
               otrChoral: totalOtrChoral, otrCloze: totalOtrCloze, otrWhiteboard: totalOtrWhiteboard,
               otrPrecision: totalOtrPrecision, otrElbow: totalOtrElbow, otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
@@ -2131,7 +2476,8 @@
               otrTotal: firstOtrTotal,
               ratioText: firstRatioText,
               notes: state.notes,
-              engagementChecks: state.engagementChecks
+              engagementChecks: state.engagementChecks,
+              praiseRatings: state.praiseRatings
           });
           state.mode = oldStateMode;
 
