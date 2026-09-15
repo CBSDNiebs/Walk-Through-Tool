@@ -136,6 +136,7 @@
 
     /* Updated OTR buttons: distinct blues */
     .btn.otr{
+      position:relative;
       color:#fff;
       border-color:rgba(0,0,0,.20);
       min-height:56px;
@@ -167,6 +168,37 @@
     .btn.otr.struct-small{background:var(--struct-small); color:#fff;}
     .btn.otr.struct-partners{background:var(--struct-partners); color:#fff;}
     .btn.otr.struct-individual{background:var(--struct-individual); color:#fff;}
+
+    .btn.otr .btn-badge{
+      position:absolute;
+      top:4px;
+      right:5px;
+      min-width:18px;
+      height:18px;
+      padding:0 4px;
+      border-radius:999px;
+      background:rgba(0,0,0,0.32);
+      color:#ffffff;
+      font-size:11px;
+      font-weight:700;
+      line-height:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      user-select:none;
+      opacity:0.85;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15);
+      transition:transform .15s ease, opacity .15s ease, background-color .15s ease;
+    }
+    .btn.otr .btn-badge.has-count{
+      opacity:1;
+      color:#ffffff;
+      background:rgba(0,0,0,0.48);
+    }
+    .btn.otr .btn-badge.pulse{
+      transform:scale(1.22);
+    }
 
     .question-group {
       display: flex;
@@ -652,12 +684,12 @@
         <div id="structContainer" style="display:none; margin-top:12px;">
           <div id="structSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; color:var(--ink);">Lesson Structure</div>
           <div id="structButtons1" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Lesson Structure 1">
-            <button id="structWholeBtn" class="btn otr struct-whole" type="button" disabled>Whole Group</button>
-            <button id="structSmallBtn" class="btn otr struct-small" type="button" disabled>Small Group</button>
+            <button id="structWholeBtn" class="btn otr struct-whole" type="button" disabled>Whole Group<span class="btn-badge" id="badge-structWhole" aria-hidden="true">0</span></button>
+            <button id="structSmallBtn" class="btn otr struct-small" type="button" disabled>Small Group<span class="btn-badge" id="badge-structSmall" aria-hidden="true">0</span></button>
           </div>
           <div id="structButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;" aria-label="Lesson Structure 2">
-            <button id="structPartnersBtn" class="btn otr struct-partners" type="button" disabled>Partners</button>
-            <button id="structIndividualBtn" class="btn otr struct-individual" type="button" disabled>Individual</button>
+            <button id="structPartnersBtn" class="btn otr struct-partners" type="button" disabled>Partners<span class="btn-badge" id="badge-structPartners" aria-hidden="true">0</span></button>
+            <button id="structIndividualBtn" class="btn otr struct-individual" type="button" disabled>Individual<span class="btn-badge" id="badge-structIndividual" aria-hidden="true">0</span></button>
           </div>
         </div>
 
@@ -665,22 +697,22 @@
         <div id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Opportunities to Respond</div>
         <div id="otrSection1Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Whole Group</div>
         <div id="otrButtons1" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Whole Group Opportunities to Respond">
-          <button id="otrChoralBtn" class="btn otr otr-choral" type="button" disabled>Choral Response</button>
-          <button id="otrClozeBtn" class="btn otr otr-cloze" type="button" disabled>Close Reading</button>
-          <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response</button>
+          <button id="otrChoralBtn" class="btn otr otr-choral" type="button" disabled>Choral Response<span class="btn-badge" id="badge-otrChoral" aria-hidden="true">0</span></button>
+          <button id="otrClozeBtn" class="btn otr otr-cloze" type="button" disabled>Close Reading<span class="btn-badge" id="badge-otrCloze" aria-hidden="true">0</span></button>
+          <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response<span class="btn-badge" id="badge-otrWhiteboard" aria-hidden="true">0</span></button>
         </div>
 
         <div id="otrSection2Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Partner</div>
         <div id="otrButtons2" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr;" aria-label="Partner Opportunities to Respond">
-          <button id="otrPrecisionBtn" class="btn otr otr-precision" type="button" disabled>Precision Partner</button>
-          <button id="otrElbowBtn" class="btn otr otr-elbow" type="button" disabled>Elbow Partner</button>
+          <button id="otrPrecisionBtn" class="btn otr otr-precision" type="button" disabled>Precision Partner<span class="btn-badge" id="badge-otrPrecision" aria-hidden="true">0</span></button>
+          <button id="otrElbowBtn" class="btn otr otr-elbow" type="button" disabled>Elbow Partner<span class="btn-badge" id="badge-otrElbow" aria-hidden="true">0</span></button>
         </div>
 
         <div id="otrSection3Label" class="label" style="display:none; font-size:12px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--muted);">Individual</div>
         <div id="otrButtons3" class="otrRow" style="display:none; grid-template-columns: 1fr 1fr 1fr;" aria-label="Individual Opportunities to Respond">
-          <button id="otrWarmBtn" class="btn otr otr-warm" type="button" disabled>Warm Call</button>
-          <button id="otrColdBtn" class="btn otr otr-cold" type="button" disabled>Cold Call</button>
-          <button id="otrVolunteerBtn" class="btn otr otr-volunteer" type="button" disabled>Volunteer</button>
+          <button id="otrWarmBtn" class="btn otr otr-warm" type="button" disabled>Warm Call<span class="btn-badge" id="badge-otrWarm" aria-hidden="true">0</span></button>
+          <button id="otrColdBtn" class="btn otr otr-cold" type="button" disabled>Cold Call<span class="btn-badge" id="badge-otrCold" aria-hidden="true">0</span></button>
+          <button id="otrVolunteerBtn" class="btn otr otr-volunteer" type="button" disabled>Volunteer<span class="btn-badge" id="badge-otrVolunteer" aria-hidden="true">0</span></button>
         </div>
 
         <!-- 4. Social Emotional Learning (SEL) with Praise followed by Character Strong observations -->
@@ -688,12 +720,12 @@
 
         <div id="praiseSubLabel" class="label" style="display:none; font-size:13px; font-weight:bold; margin-bottom:-24px; margin-top:12px; color:var(--ink);">Praise</div>
         <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Social Emotional Learning buttons">
-          <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise</button>
-          <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise</button>
-          <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback</button>
-          <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements</button>
-          <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism</button>
-          <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism</button>
+          <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise<span class="btn-badge" id="badge-praiseSpecific" aria-hidden="true">0</span></button>
+          <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
+          <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
+          <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements<span class="btn-badge" id="badge-praiseRedirect" aria-hidden="true">0</span></button>
+          <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism<span class="btn-badge" id="badge-praiseGenCrit" aria-hidden="true">0</span></button>
+          <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism<span class="btn-badge" id="badge-praiseIndCrit" aria-hidden="true">0</span></button>
         </div>
 
         <div id="praiseQuestionsContainer" style="display:none; margin-top:16px; margin-bottom: 0px;">
@@ -1281,6 +1313,57 @@
 
         const undoBtn = document.getElementById("undoBtn");
 
+        const OTR_BUTTON_MAP = [
+          { kind: "structWhole", badgeId: "badge-structWhole" },
+          { kind: "structSmall", badgeId: "badge-structSmall" },
+          { kind: "structPartners", badgeId: "badge-structPartners" },
+          { kind: "structIndividual", badgeId: "badge-structIndividual" },
+
+          { kind: "otrChoral", badgeId: "badge-otrChoral" },
+          { kind: "otrCloze", badgeId: "badge-otrCloze" },
+          { kind: "otrWhiteboard", badgeId: "badge-otrWhiteboard" },
+
+          { kind: "otrPrecision", badgeId: "badge-otrPrecision" },
+          { kind: "otrElbow", badgeId: "badge-otrElbow" },
+
+          { kind: "otrWarm", badgeId: "badge-otrWarm" },
+          { kind: "otrCold", badgeId: "badge-otrCold" },
+          { kind: "otrVolunteer", badgeId: "badge-otrVolunteer" },
+
+          { kind: "specific", badgeId: "badge-praiseSpecific" },
+          { kind: "general", badgeId: "badge-praiseGeneral" },
+          { kind: "corrective", badgeId: "badge-praiseCorrective" },
+          { kind: "redirect", badgeId: "badge-praiseRedirect" },
+          { kind: "genCrit", badgeId: "badge-praiseGenCrit" },
+          { kind: "indCrit", badgeId: "badge-praiseIndCrit" }
+        ];
+
+        function updateButtonBadges(pulsedKind) {
+          const counts = {};
+          for (const ev of state.otrEvents) {
+            counts[ev.kind] = (counts[ev.kind] || 0) + 1;
+          }
+          for (const item of OTR_BUTTON_MAP) {
+            const badge = document.getElementById(item.badgeId);
+            if (!badge) continue;
+            const count = counts[item.kind] || 0;
+            badge.textContent = String(count);
+            if (count > 0) {
+              badge.classList.add("has-count");
+            } else {
+              badge.classList.remove("has-count");
+            }
+            if (pulsedKind && item.kind === pulsedKind) {
+              badge.classList.remove("pulse");
+              void badge.offsetWidth;
+              badge.classList.add("pulse");
+              setTimeout(() => {
+                badge.classList.remove("pulse");
+              }, 160);
+            }
+          }
+        }
+
         function updateUndoBtn() {
           undoBtn.disabled = state.startedAt === null || state.stoppedAt !== null || state.otrEvents.length === 0;
         }
@@ -1290,6 +1373,7 @@
           state.otrEvents.pop();
           otrTotalText.textContent = String(state.otrEvents.length);
           updateUndoBtn();
+          updateButtonBadges();
           setOtrEnabled(true);
         }
 
@@ -1307,6 +1391,7 @@
           stopBtn.disabled = false;
           startBtn.disabled = true;
           updateUndoBtn();
+          updateButtonBadges();
           
           const timerNotes = document.getElementById("timerNotes");
           if (timerNotes) timerNotes.disabled = false;
@@ -1330,6 +1415,7 @@
           state.otrEvents.push({ tMs, kind });
           otrTotalText.textContent = String(state.otrEvents.length);
           updateUndoBtn();
+          updateButtonBadges(kind);
           setOtrEnabled(true);
         }
 
@@ -1421,6 +1507,8 @@
           timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
         }
+
+        updateButtonBadges();
       }
 
       function computeBinsByKind(events, durationMs){
