@@ -518,12 +518,12 @@
       color: var(--ink);
     }
     .rating-select {
-      width: 86px;
-      min-width: 86px;
+      width: auto;
+      min-width: 154px;
       height: 38px;
       min-height: 38px;
-      padding: 6px 26px 6px 12px;
-      font-size: 14px;
+      padding: 6px 26px 6px 10px;
+      font-size: 13px;
       font-weight: 600;
       border-radius: 8px;
       border: 1.5px solid #d1d5db;
@@ -539,6 +539,16 @@
       background-size: 14px, 100% 100%;
       font-family: inherit;
       flex-shrink: 0;
+    }
+    @media (max-width: 480px) {
+      .question-row {
+        gap: 8px;
+      }
+      .rating-select {
+        min-width: 144px;
+        font-size: 12px;
+        padding: 5px 22px 5px 8px;
+      }
     }
     .rating-select:disabled {
       opacity: 0.55;
@@ -734,54 +744,54 @@
           <div class="question-row">
             <span class="question-label">Educator models warm & respectful interactions</span>
             <select class="rating-select" data-q="0" disabled aria-label="Educator models warm & respectful interactions">
-              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
-              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1</option>
-              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2</option>
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
+              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
             </select>
           </div>
 
           <div class="question-row">
             <span class="question-label">Educator joins in community-building activities</span>
             <select class="rating-select" data-q="1" disabled aria-label="Educator joins in community-building activities">
-              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
-              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1</option>
-              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2</option>
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
+              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
             </select>
           </div>
 
           <div class="question-row">
             <span class="question-label">Educator leads activities with enthusiasm</span>
             <select class="rating-select" data-q="2" disabled aria-label="Educator leads activities with enthusiasm">
-              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
-              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1</option>
-              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2</option>
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
+              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
             </select>
           </div>
 
           <div class="question-row">
             <span class="question-label">Students share their ideas and perspectives</span>
             <select class="rating-select" data-q="3" disabled aria-label="Students share their ideas and perspectives">
-              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
-              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1</option>
-              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2</option>
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
+              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
             </select>
           </div>
 
           <div class="question-row">
             <span class="question-label">Overall atmosphere of safety and respect</span>
             <select class="rating-select" data-q="4" disabled aria-label="Overall atmosphere of safety and respect">
-              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
-              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1</option>
-              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2</option>
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
+              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
             </select>
           </div>
 
           <div class="question-row">
             <span class="question-label">Evidence of class agreement with student input</span>
             <select class="rating-select" data-q="5" disabled aria-label="Evidence of class agreement with student input">
-              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">N/A</option>
-              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1</option>
-              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2</option>
+              <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
+              <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
+              <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
             </select>
           </div>
         </div>
@@ -2210,7 +2220,7 @@
           lines.push(`Goal: 5:1 positive to negative feedback`);
           
           if (praiseRatings) {
-            const labels = ["N/A", "1", "2"];
+            const labels = ["0 - Not Present", "1 - Partial", "2 - Fully Implemented"];
             lines.push("");
             lines.push("Observations:");
             if (regulationSpace) lines.push(`Is there a regulation space in the classroom?: ${regulationSpace}`);
@@ -2447,7 +2457,7 @@
               }
             } else if (lineText.startsWith("Educator models warm") || lineText.startsWith("Educator joins in") || lineText.startsWith("Educator leads") || lineText.startsWith("Students share") || lineText.startsWith("Overall atmosphere") || lineText.startsWith("Evidence of class agreement")) {
               const valStr = lineText.split(": ")[1];
-              const labels = ["N/A", "1", "2"];
+              const labels = ["0 - Not Present", "1 - Partial", "2 - Fully Implemented"];
               const rowColors = ["#d1d5db4d", "#93c5fd4d", "#3b82f64d"];
               const valIndex = labels.indexOf(valStr);
               if (valIndex >= 0) {
