@@ -439,16 +439,32 @@
       overflow-wrap: break-word;
       word-break: break-word;
       background: var(--bg);
+      color: var(--ink);
       box-sizing: border-box;
       field-sizing: content;
       overflow-y: hidden;
       overflow-x: hidden;
       display: block;
+      cursor: text;
     }
     .notes-input:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+    }
+    .notes-input:empty::before,
+    .notes-input.is-empty::before {
+      content: attr(placeholder);
+      color: #9ca3af;
+      pointer-events: none;
+      display: inline-block;
+    }
+    .notes-input b,
+    .notes-input strong,
+    .notes-input [style*="font-weight: bold"],
+    .notes-input [style*="font-weight: 700"] {
+      font-weight: 700 !important;
+      color: #0f172a;
     }
 
     .modal-overlay {
@@ -770,14 +786,6 @@
           </div>
         </div>
 
-        <div class="question-group" id="qSELEvidenceGroup" style="display: none;">
-          <div class="label">Is there evidence the educator integrates SEL concepts and strategies into core subjects?</div>
-          <div class="yn-group">
-            <button id="q5YesBtn" class="btn yn yes" type="button">Yes</button>
-            <button id="q5NoBtn" class="btn yn no" type="button">No</button>
-          </div>
-        </div>
-
         <section class="actions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
           <button id="questionsNextBtn" class="btn primary" type="button" disabled style="flex: 1;">Next</button>
         </section>
@@ -902,7 +910,7 @@
         <!-- 1. Notes (First on every timer) -->
         <div id="timerNotesContainer" style="margin-top:0px;">
           <span class="label" style="font-weight:bold;">Notes</span>
-          <textarea id="timerNotes" class="notes-input" style="margin-top:8px; min-height: 60px;" placeholder="Type notes here..." aria-label="Observation notes"></textarea>
+          <div id="timerNotes" class="notes-input" contenteditable="true" role="textbox" aria-multiline="true" style="margin-top:8px; min-height: 60px;" placeholder="Type notes here..." aria-label="Observation notes"></div>
         </div>
 
         <!-- Undo Button (Centered below notes and above first set of buttons) -->
@@ -958,17 +966,17 @@
           </div>
         </div>
 
-        <!-- 4. Social Emotional Learning (SEL) with Praise -->
-        <div id="praiseSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:4px; margin-top:16px; color:var(--ink);">Social Emotional Learning</div>
-
-        <div id="praiseSubLabel" class="label" style="display:none; font-size:13px; font-weight:bold; margin-bottom:8px; margin-top:12px; color:var(--ink);">Praise</div>
-        <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr;" aria-label="Social Emotional Learning buttons">
-          <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise<span class="btn-badge" id="badge-praiseSpecific" aria-hidden="true">0</span></button>
-          <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
-          <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
-          <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements<span class="btn-badge" id="badge-praiseRedirect" aria-hidden="true">0</span></button>
-          <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism<span class="btn-badge" id="badge-praiseGenCrit" aria-hidden="true">0</span></button>
-          <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism<span class="btn-badge" id="badge-praiseIndCrit" aria-hidden="true">0</span></button>
+        <!-- 4. Praise buttons -->
+        <div id="praiseContainer" style="display:none; margin-top:12px;">
+          <div id="praiseSubLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; margin-top:0; color:var(--ink);">Praise</div>
+          <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Praise buttons">
+            <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise<span class="btn-badge" id="badge-praiseSpecific" aria-hidden="true">0</span></button>
+            <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
+            <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
+            <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements<span class="btn-badge" id="badge-praiseRedirect" aria-hidden="true">0</span></button>
+            <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism<span class="btn-badge" id="badge-praiseGenCrit" aria-hidden="true">0</span></button>
+            <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism<span class="btn-badge" id="badge-praiseIndCrit" aria-hidden="true">0</span></button>
+          </div>
         </div>
 
         <!-- 5. Bottom Controls -->
@@ -996,7 +1004,10 @@
           <span class="label">How many students are off task?</span>
           <input type="number" id="engOffTaskStudents" class="control" min="0" />
         </label>
-        <button id="engRecordBtn" class="btn primary" style="margin-top: 16px;" disabled>Record</button>
+        <div style="display:flex; gap:10px; margin-top:16px;">
+          <button id="engRecordBtn" class="btn primary" style="flex:1;" disabled>Record</button>
+          <button id="engSkipBtn" class="btn" style="flex:1; background:transparent; border:1px solid var(--hairline); color:var(--muted);" type="button">Skip</button>
+        </div>
       </div>
     </div>
   </template>
@@ -1036,7 +1047,6 @@
         curriculaMaterialsUsed: null,
         regulationSpace: null,
         characterTraitGraphic: null,
-        selEvidence: null,
         skipSELObservations: false,
         mode: "OTRs",
         notes: "",
@@ -1081,7 +1091,6 @@
         state.notes = "";
         state.regulationSpace = null;
         state.characterTraitGraphic = null;
-        state.selEvidence = null;
         state.skipSELObservations = false;
         state.engagementChecks = [];
         state.engagementPopupsShown = {};
@@ -1198,21 +1207,15 @@
         const q4YesBtn = document.getElementById("q4YesBtn");
         const q4NoBtn = document.getElementById("q4NoBtn");
 
-        const qSELEvidenceGroup = document.getElementById("qSELEvidenceGroup");
-        const q5YesBtn = document.getElementById("q5YesBtn");
-        const q5NoBtn = document.getElementById("q5NoBtn");
-
         const nextBtn = document.getElementById("questionsNextBtn");
         
         const isPraiseOrAll = state.mode === "Praise" || state.mode === "All";
         if (isPraiseOrAll) {
           qRegulationSpaceGroup.style.display = "flex";
           qZonesGraphicGroup.style.display = "flex";
-          qSELEvidenceGroup.style.display = "flex";
         } else {
           qRegulationSpaceGroup.style.display = "none";
           qZonesGraphicGroup.style.display = "none";
-          qSELEvidenceGroup.style.display = "none";
         }
 
         function updateUI() {
@@ -1228,14 +1231,11 @@
             
             q4YesBtn.classList.toggle("selected", state.characterTraitGraphic === "Yes");
             q4NoBtn.classList.toggle("selected", state.characterTraitGraphic === "No");
-            
-            q5YesBtn.classList.toggle("selected", state.selEvidence === "Yes");
-            q5NoBtn.classList.toggle("selected", state.selEvidence === "No");
           }
 
           let isValid = !!state.lessonTargetPosted && !!state.curriculaMaterialsUsed;
           if (isPraiseOrAll) {
-            isValid = isValid && !!state.regulationSpace && !!state.characterTraitGraphic && !!state.selEvidence;
+            isValid = isValid && !!state.regulationSpace && !!state.characterTraitGraphic;
           }
           nextBtn.disabled = !isValid;
         }
@@ -1251,9 +1251,6 @@
         
         q4YesBtn.addEventListener("click", () => { state.characterTraitGraphic = "Yes"; updateUI(); });
         q4NoBtn.addEventListener("click", () => { state.characterTraitGraphic = "No"; updateUI(); });
-
-        q5YesBtn.addEventListener("click", () => { state.selEvidence = "Yes"; updateUI(); });
-        q5NoBtn.addEventListener("click", () => { state.selEvidence = "No"; updateUI(); });
 
         nextBtn.addEventListener("click", showResults);
         
@@ -1295,6 +1292,225 @@
         });
       }
 
+      function domToFormattedText(node) {
+        if (!node) return "";
+        function extract(curr, isBold) {
+          if (curr.nodeType === Node.TEXT_NODE) {
+            const txt = curr.textContent;
+            if (!txt) return "";
+            return isBold ? `<b>${txt}</b>` : txt;
+          }
+          if (curr.nodeType !== Node.ELEMENT_NODE) {
+            return "";
+          }
+          const tag = curr.tagName.toLowerCase();
+          if (tag === "br") {
+            return "\n";
+          }
+          const styleWeight = curr.style ? curr.style.fontWeight : "";
+          let isComputedBold = false;
+          if (curr !== node) {
+            try {
+              const comp = window.getComputedStyle(curr);
+              if (comp && (comp.fontWeight === "bold" || comp.fontWeight === "700" || Number(comp.fontWeight) >= 600)) {
+                isComputedBold = true;
+              }
+            } catch (err) {}
+          }
+          const nodeBold = isBold ||
+            tag === "b" ||
+            tag === "strong" ||
+            styleWeight === "bold" ||
+            styleWeight === "700" ||
+            Number(styleWeight) >= 600 ||
+            isComputedBold;
+
+          const isBlock = ["div", "p", "li"].includes(tag);
+          let inner = "";
+          for (const child of curr.childNodes) {
+            inner += extract(child, nodeBold);
+          }
+          if (isBlock) {
+            return (inner ? inner : "") + "\n";
+          }
+          return inner;
+        }
+
+        let text = "";
+        for (const child of node.childNodes) {
+          text += extract(child, false);
+        }
+
+        if (!text && node.innerText) {
+          text = node.innerText;
+        }
+
+        text = text.replace(/\r\n/g, "\n");
+        text = text.replace(/\n+$/, "");
+        text = text.replace(/<\/b><b>/gi, "");
+        text = text.replace(/<b>\s*<\/b>/gi, "");
+
+        return text;
+      }
+
+      function setFormattedTextToDom(node, text) {
+        if (!node) return;
+        if (!text || !text.trim()) {
+          node.innerHTML = "";
+          node.classList.add("is-empty");
+          return;
+        }
+        let html = text
+          .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+          .replace(/\n/g, "<br>");
+        node.innerHTML = html;
+        if (!node.innerText || node.innerText.trim() === "") {
+          node.classList.add("is-empty");
+        } else {
+          node.classList.remove("is-empty");
+        }
+      }
+
+      function wrapFormattedNotesLine(lineText, maxChars = 85) {
+        if (!lineText) return [""];
+        if (!lineText.includes("<b>") && !lineText.includes("<strong>") && !lineText.includes("**")) {
+          const res = [];
+          let currentLine = "";
+          const words = lineText.split(" ");
+          for (let word of words) {
+            while (word.length > maxChars) {
+              if (currentLine) {
+                res.push(`  ${currentLine.trimEnd()}`);
+                currentLine = "";
+              }
+              res.push(`  ${word.substring(0, maxChars)}`);
+              word = word.substring(maxChars);
+            }
+            if (!word) continue;
+            if (currentLine.length + word.length > maxChars) {
+              res.push(`  ${currentLine.trimEnd()}`);
+              currentLine = word + " ";
+            } else {
+              currentLine += word + " ";
+            }
+          }
+          if (currentLine) {
+            res.push(`  ${currentLine.trimEnd()}`);
+          }
+          return res;
+        }
+
+        let normalized = lineText.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+        normalized = normalized.replace(/<\/?strong>/gi, (m) => m.toLowerCase().includes("/") ? "</b>" : "<b>");
+
+        const parts = normalized.split(/(<\/?b>)/i);
+        const tokens = [];
+        let isBold = false;
+        for (const part of parts) {
+          if (!part) continue;
+          if (part.toLowerCase() === "<b>") {
+            isBold = true;
+          } else if (part.toLowerCase() === "</b>") {
+            isBold = false;
+          } else {
+            const words = part.split(" ");
+            for (let i = 0; i < words.length; i++) {
+              if (i > 0) {
+                tokens.push({ text: " ", isSpace: true, bold: isBold });
+              }
+              if (words[i].length > 0) {
+                tokens.push({ text: words[i], isSpace: false, bold: isBold });
+              }
+            }
+          }
+        }
+
+        function formatTokens(tokenList) {
+          if (!tokenList || tokenList.length === 0) return "";
+          let out = "  ";
+          let inBold = false;
+          for (const tok of tokenList) {
+            if (tok.bold && !inBold) {
+              out += "<b>";
+              inBold = true;
+            } else if (!tok.bold && inBold) {
+              out += "</b>";
+              inBold = false;
+            }
+            out += tok.text;
+          }
+          if (inBold) {
+            out += "</b>";
+          }
+          return out.trimEnd();
+        }
+
+        const res = [];
+        let curTokens = [];
+        let curVisibleLen = 0;
+
+        for (let i = 0; i < tokens.length; i++) {
+          const tok = tokens[i];
+          if (tok.isSpace) {
+            if (curVisibleLen > 0 && curVisibleLen + 1 <= maxChars) {
+              curTokens.push(tok);
+              curVisibleLen += 1;
+            }
+            continue;
+          }
+
+          let word = tok.text;
+          while (word.length > maxChars) {
+            if (curVisibleLen > 0) {
+              res.push(formatTokens(curTokens));
+              curTokens = [];
+              curVisibleLen = 0;
+            }
+            res.push(formatTokens([{ text: word.substring(0, maxChars), isSpace: false, bold: tok.bold }]));
+            word = word.substring(maxChars);
+          }
+          if (!word) continue;
+
+          const spaceNeeded = (curVisibleLen > 0 && !curTokens[curTokens.length - 1].isSpace) ? 1 : 0;
+          if (curVisibleLen + spaceNeeded + word.length > maxChars) {
+            res.push(formatTokens(curTokens));
+            curTokens = [{ text: word, isSpace: false, bold: tok.bold }];
+            curVisibleLen = word.length;
+          } else {
+            if (spaceNeeded > 0) {
+              curTokens.push({ text: " ", isSpace: true, bold: tok.bold });
+              curVisibleLen += 1;
+            }
+            curTokens.push({ text: word, isSpace: false, bold: tok.bold });
+            curVisibleLen += word.length;
+          }
+        }
+
+        if (curTokens.length > 0) {
+          res.push(formatTokens(curTokens));
+        }
+
+        return res;
+      }
+
+      function parseLineToSvgSegments(lineText) {
+        let normalized = lineText.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+        const parts = normalized.split(/(<\/?b>)/i);
+        const segments = [];
+        let isBold = false;
+        for (const part of parts) {
+          if (!part) continue;
+          if (part.toLowerCase() === "<b>") {
+            isBold = true;
+          } else if (part.toLowerCase() === "</b>") {
+            isBold = false;
+          } else {
+            segments.push({ text: part, bold: isBold });
+          }
+        }
+        return segments;
+      }
+
       function showRun(restore = false){
         state.currentScreen = "run";
         if (!restore) {
@@ -1305,26 +1521,20 @@
         const runTitle = document.getElementById("runTitle");
         const runContext = document.getElementById("runContext");
         const elapsedText = document.getElementById("elapsedText");
-        const otrTotalText = document.getElementById("otrTotalText");
-        const totalKicker = document.getElementById("totalKicker");
 
         const hintText = document.getElementById("hintText");
 
         if (state.mode === "Praise") {
           runTitle.textContent = "Social Emotional Learning Timer";
-          if (totalKicker) totalKicker.textContent = "Total Statements";
           if (hintText) hintText.textContent = "Press Start to begin. Then tap a Social Emotional Learning button for each observed response.";
         } else if (state.mode === "Lesson Structure") {
           runTitle.textContent = "Lesson Structure Timer";
-          if (totalKicker) totalKicker.textContent = "Total Events";
           if (hintText) hintText.textContent = "Press Start to begin. Then tap a Lesson Structure button for each observed event.";
         } else if (state.mode === "All") {
           runTitle.textContent = "All Timer";
-          if (totalKicker) totalKicker.textContent = "Total Events";
           if (hintText) hintText.textContent = "Press Start to begin. Tap any observation button for each observed event.";
         } else {
           runTitle.textContent = "Opportunities to Respond Timer";
-          if (totalKicker) totalKicker.textContent = "Total Opportunities to Respond";
           if (hintText) hintText.textContent = "Press Start to begin. Then tap an Opportunities to Respond button for each observed response.";
         }
 
@@ -1344,7 +1554,7 @@
         const otrSection3Label = document.getElementById("otrSection3Label");
         const otrButtons3 = document.getElementById("otrButtons3");
         
-        const praiseSectionLabel = document.getElementById("praiseSectionLabel");
+        const praiseContainer = document.getElementById("praiseContainer");
         const praiseSubLabel = document.getElementById("praiseSubLabel");
         const praiseButtons = document.getElementById("praiseButtons");
 
@@ -1363,7 +1573,7 @@
           otrSection3Label.style.display = "none";
           otrButtons3.style.display = "none";
           
-          praiseSectionLabel.style.display = "none";
+          if (praiseContainer) praiseContainer.style.display = "block";
           if (praiseSubLabel) praiseSubLabel.style.display = "block";
           praiseButtons.style.display = "grid";
         } else if (state.mode === "Lesson Structure") {
@@ -1381,7 +1591,7 @@
           otrSection3Label.style.display = "none";
           otrButtons3.style.display = "none";
           
-          praiseSectionLabel.style.display = "none";
+          if (praiseContainer) praiseContainer.style.display = "none";
           if (praiseSubLabel) praiseSubLabel.style.display = "none";
           praiseButtons.style.display = "none";
         } else if (state.mode === "All") {
@@ -1399,7 +1609,7 @@
           otrSection3Label.style.display = "block";
           otrButtons3.style.display = "flex";
           
-          praiseSectionLabel.style.display = "block";
+          if (praiseContainer) praiseContainer.style.display = "block";
           if (praiseSubLabel) praiseSubLabel.style.display = "block";
           praiseButtons.style.display = "grid";
         } else {
@@ -1418,7 +1628,7 @@
           otrSection3Label.style.display = "block";
           otrButtons3.style.display = "flex";
           
-          praiseSectionLabel.style.display = "none";
+          if (praiseContainer) praiseContainer.style.display = "none";
           if (praiseSubLabel) praiseSubLabel.style.display = "none";
           praiseButtons.style.display = "none";
         }
@@ -1460,21 +1670,25 @@
         const engTotalStudents = document.getElementById("engTotalStudents");
         const engOffTaskStudents = document.getElementById("engOffTaskStudents");
         const engRecordBtn = document.getElementById("engRecordBtn");
+        const engSkipBtn = document.getElementById("engSkipBtn");
 
         function updateUI(){
           const now = performance.now();
           const end = state.stoppedAt !== null ? state.stoppedAt : now;
           const elapsed = (typeof state.startedAt === "number") ? (end - state.startedAt) : 0;
           elapsedText.textContent = formatElapsed(Math.max(0, elapsed));
-          if (otrTotalText) otrTotalText.textContent = String(state.otrEvents.length);
 
           if ((state.mode === "Lesson Structure" || state.mode === "All") && state.startedAt !== null && state.stoppedAt === null) {
             const minutesElapsed = elapsed / 60000;
-            const checkTimes = [1, 5, 9];
-            for (const t of checkTimes) {
-              if (minutesElapsed >= t && !state.engagementPopupsShown[t]) {
-                state.engagementPopupsShown[t] = true;
-                showEngagementModal(t);
+            // Engagement checks begin at 1 minute and continue every 4 minutes (1, 5, 9, 13, 17, 21, 25, 29...)
+            // Pop up continues on this frequency throughout the entire observation
+            if (engagementModal && engagementModal.style.display === "none") {
+              for (let t = 1; t <= minutesElapsed; t += 4) {
+                if (!state.engagementPopupsShown[t]) {
+                  state.engagementPopupsShown[t] = true;
+                  showEngagementModal(t);
+                  break;
+                }
               }
             }
           }
@@ -1488,6 +1702,9 @@
           engOffTaskStudents.value = "";
           engRecordBtn.disabled = true;
           engagementModal.style.display = "flex";
+          setTimeout(() => {
+            if (engTotalStudents) engTotalStudents.focus();
+          }, 60);
         }
 
         function updateEngRecordBtn() {
@@ -1496,6 +1713,15 @@
 
         engTotalStudents.addEventListener("input", updateEngRecordBtn);
         engOffTaskStudents.addEventListener("input", updateEngRecordBtn);
+
+        const handleEngKey = (e) => {
+          if (e.key === "Enter" && !engRecordBtn.disabled) {
+            e.preventDefault();
+            engRecordBtn.click();
+          }
+        };
+        engTotalStudents.addEventListener("keydown", handleEngKey);
+        engOffTaskStudents.addEventListener("keydown", handleEngKey);
 
         engRecordBtn.addEventListener("click", () => {
           if (!engTotalStudents.value || !engOffTaskStudents.value) return;
@@ -1506,6 +1732,12 @@
           });
           engagementModal.style.display = "none";
         });
+
+        if (engSkipBtn) {
+          engSkipBtn.addEventListener("click", () => {
+            engagementModal.style.display = "none";
+          });
+        }
 
         function setOtrEnabled(on){
           structWholeBtn.disabled = !on;
@@ -1590,7 +1822,6 @@
         function doUndo() {
           if (state.startedAt === null || state.stoppedAt !== null || state.otrEvents.length === 0) return;
           state.otrEvents.pop();
-          if (otrTotalText) otrTotalText.textContent = String(state.otrEvents.length);
           updateUndoBtn();
           updateButtonBadges();
           setOtrEnabled(true);
@@ -1632,7 +1863,6 @@
           if (state.startedAt === null || state.stoppedAt !== null) return;
           const tMs = performance.now() - state.startedAt;
           state.otrEvents.push({ tMs, kind });
-          if (otrTotalText) otrTotalText.textContent = String(state.otrEvents.length);
           updateUndoBtn();
           updateButtonBadges(kind);
           setOtrEnabled(true);
@@ -1642,6 +1872,9 @@
           if (state.startedAt === null) return;
           if (state.stoppedAt !== null) return;
 
+          if (timerNotes) {
+            state.notes = domToFormattedText(timerNotes);
+          }
           setOtrEnabled(false);
           stopBtn.disabled = true;
 
@@ -1656,6 +1889,9 @@
 
         const nextBtn = document.getElementById("nextBtn");
         function doNext(){
+          if (timerNotes) {
+            state.notes = domToFormattedText(timerNotes);
+          }
           if (state.startedAt !== null && state.stoppedAt === null) {
             doStop();
           }
@@ -1700,31 +1936,106 @@
           timerNotes.style.height = "auto";
           timerNotes.style.height = Math.max(60, timerNotes.scrollHeight) + "px";
         };
-        timerNotes.value = state.notes;
-        requestAnimationFrame(autoResizeNotes);
-        timerNotes.addEventListener("input", (e) => {
-          state.notes = e.target.value;
-          autoResizeNotes();
-        });
-        timerNotes.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            requestAnimationFrame(autoResizeNotes);
-          }
-        });
-        timerNotes.addEventListener("keyup", autoResizeNotes);
-        timerNotes.addEventListener("change", autoResizeNotes);
-        window.addEventListener("resize", autoResizeNotes);
+
+        if (timerNotes) {
+          Object.defineProperty(timerNotes, "disabled", {
+            configurable: true,
+            get() {
+              return timerNotes.getAttribute("contenteditable") !== "true";
+            },
+            set(val) {
+              timerNotes.contentEditable = val ? "false" : "true";
+              timerNotes.setAttribute("aria-disabled", val ? "true" : "false");
+              timerNotes.style.opacity = val ? "0.6" : "1";
+              timerNotes.style.pointerEvents = val ? "none" : "auto";
+              timerNotes.style.backgroundColor = val ? "#f3f4f6" : "var(--bg)";
+            }
+          });
+
+          Object.defineProperty(timerNotes, "value", {
+            configurable: true,
+            get() {
+              return domToFormattedText(timerNotes);
+            },
+            set(val) {
+              setFormattedTextToDom(timerNotes, val);
+              autoResizeNotes();
+            }
+          });
+
+          setFormattedTextToDom(timerNotes, state.notes);
+          requestAnimationFrame(autoResizeNotes);
+
+          const syncNotes = () => {
+            state.notes = domToFormattedText(timerNotes);
+            if (!timerNotes.innerText || timerNotes.innerText.trim() === "") {
+              timerNotes.classList.add("is-empty");
+            } else {
+              timerNotes.classList.remove("is-empty");
+            }
+            autoResizeNotes();
+          };
+
+          timerNotes.addEventListener("input", syncNotes);
+          timerNotes.addEventListener("blur", syncNotes);
+          timerNotes.addEventListener("paste", () => {
+            requestAnimationFrame(syncNotes);
+          });
+
+          timerNotes.addEventListener("keydown", (e) => {
+            if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === "b" || e.key === "B" || e.code === "KeyB")) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+              try {
+                document.execCommand("styleWithCSS", false, false);
+              } catch (err) {}
+
+              let success = false;
+              try {
+                success = document.execCommand("bold", false, null);
+              } catch (err) {
+                success = false;
+              }
+
+              const sel = window.getSelection();
+              if (!success && sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+                const range = sel.getRangeAt(0);
+                if (timerNotes.contains(range.commonAncestorContainer)) {
+                  try {
+                    const b = document.createElement("b");
+                    b.appendChild(range.extractContents());
+                    range.insertNode(b);
+                    sel.removeAllRanges();
+                    const newRange = document.createRange();
+                    newRange.selectNodeContents(b);
+                    sel.addRange(newRange);
+                  } catch (err) {}
+                }
+              }
+
+              syncNotes();
+              return;
+            }
+            if (e.key === "Enter") {
+              requestAnimationFrame(autoResizeNotes);
+            }
+          });
+          timerNotes.addEventListener("keyup", autoResizeNotes);
+          timerNotes.addEventListener("change", autoResizeNotes);
+          window.addEventListener("resize", autoResizeNotes);
+        }
 
         if (state.startedAt === null) {
           startBtn.disabled = false;
           stopBtn.disabled = true;
           if (nextBtn) nextBtn.disabled = false;
-          timerNotes.disabled = true;
+          if (timerNotes) timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = true);
         } else if (state.stoppedAt !== null) {
           const durationMs = state.stoppedAt - state.startedAt;
           elapsedText.textContent = formatElapsed(durationMs);
-          if (otrTotalText) otrTotalText.textContent = String(state.otrEvents.length);
           
           startBtn.disabled = true;
           setOtrEnabled(false);
@@ -1733,14 +2044,14 @@
           stopBtn.disabled = true;
           if (nextBtn) nextBtn.disabled = false;
           
-          timerNotes.disabled = false;
+          if (timerNotes) timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
           hintText.textContent = "Timer stopped. You can edit your notes or tap Next to proceed.";
         } else {
           startBtn.disabled = true;
           stopBtn.disabled = false;
           if (nextBtn) nextBtn.disabled = false;
-          timerNotes.disabled = false;
+          if (timerNotes) timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
         }
 
@@ -1828,34 +2139,38 @@
         const svgNS = "http://www.w3.org/2000/svg";
         const fontSans = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
         
-        let strokeColor = "#2563eb";
-        let fillColor = "rgba(239, 246, 255, 0.95)";
-        let textColor = "#1d4ed8";
+        let strokeColor = "#6366f1";
+        let fillColor = "#eef2ff";
+        let textColor = "#312e81";
 
         if (customColors) {
           strokeColor = customColors.stroke;
           fillColor = customColors.fill;
           textColor = customColors.text;
         } else if (isGoalMet !== null) {
-          strokeColor = isGoalMet ? "#4ade80" : "#f87171";
-          fillColor = isGoalMet ? "rgba(240, 253, 244, 0.95)" : "rgba(254, 242, 242, 0.95)";
-          textColor = isGoalMet ? "#16a34a" : "#dc2626";
+          strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
+          fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
+          textColor = isGoalMet ? "#15803d" : "#991b1b";
         }
 
-        let labelW = 270;
-        let ratioW = 32;
+        let measuredLabelW = 0;
+        let measuredRatioW = 0;
         try {
           const mc = document.createElement("canvas").getContext("2d");
           mc.font = `bold 14px ${fontSans}`;
-          labelW = mc.measureText(labelText).width;
+          measuredLabelW = mc.measureText(labelText).width;
           mc.font = `bold 15px ${fontSans}`;
-          ratioW = mc.measureText(ratioText).width;
+          measuredRatioW = mc.measureText(ratioText).width;
         } catch (_) {}
 
-        const badgePadX = 12;
-        const badgeW = Math.max(ratioW + (badgePadX * 2), 48);
-        const badgeH = 24;
-        const gap = 10;
+        const charEstimateW = Math.ceil(labelText.length * 9.2);
+        const labelW = Math.max(measuredLabelW, charEstimateW, 280);
+        const ratioW = Math.max(measuredRatioW, Math.ceil(ratioText.length * 11), 32);
+
+        const badgePadX = 14;
+        const badgeW = Math.max(ratioW + (badgePadX * 2), 52);
+        const badgeH = 26;
+        const gap = 16;
         const totalW = labelW + gap + badgeW;
         const startX = centerX - (totalW / 2);
 
@@ -1872,7 +2187,7 @@
 
         // Circle/pill border
         const badgeX = startX + labelW + gap;
-        const badgeY = baselineY - 17;
+        const badgeY = baselineY - 18;
 
         svg.appendChild(el(svgNS, "rect", {
           x: badgeX,
@@ -1902,8 +2217,8 @@
         const svgNS = "http://www.w3.org/2000/svg";
         
         const W = 800;
-        const H = 510;
-        const pad = { l: 40, r: 200, t: 50, b: 140 };
+        const H = 530;
+        const pad = { l: 48, r: 200, t: 50, b: 155 };
         const innerW = W - pad.l - pad.r;
         const innerH = H - pad.t - pad.b;
 
@@ -1930,17 +2245,20 @@
         
         const x = (ms) => pad.l + (ms / (maxMinutes * 60000)) * innerW;
 
-        // X-axis 1-minute grid lines and labels
+        // X-axis 1-minute grid lines and labels (avoids number collision on longer observations)
         for (let m = 0; m <= maxMinutes; m++) {
           const tx = x(m * 60000);
           svg.appendChild(el(svgNS, "line", {
             x1: tx, y1: pad.t, x2: tx, y2: pad.t + innerH,
             stroke: "rgba(0,0,0,.05)", "stroke-width": 1
           }));
-          svg.appendChild(el(svgNS, "text", {
-            x: tx, y: pad.t + innerH + 16, "text-anchor": "middle",
-            "font-size": 13, fill: "rgba(0,0,0,.60)"
-          }, String(m)));
+          const shouldLabel = (maxMinutes <= 15) ? true : (m % 5 === 0 || m === 0 || m === maxMinutes);
+          if (shouldLabel) {
+            svg.appendChild(el(svgNS, "text", {
+              x: tx, y: pad.t + innerH + 16, "text-anchor": "middle",
+              "font-size": 13, fill: "rgba(0,0,0,.60)"
+            }, String(m)));
+          }
         }
 
         // Lighter grey lines at every 5-minute increment
@@ -1970,35 +2288,39 @@
           const effectiveDurationMs = bDurationMs > 0 ? bDurationMs : 300000;
           const bRatioText = formatOtrRatio(bEvents.length, effectiveDurationMs);
 
-          const pillW = Math.min(100, blockSpanW - 8);
-          const pillH = 34;
+          const pillW = Math.max(28, Math.min(125, blockSpanW - (blockSpanW > 70 ? 10 : 4)));
+          const pillH = 44;
           const pillX = bCenterX - (pillW / 2);
           const pillY = pad.t + innerH + 24;
 
           svg.appendChild(el(svgNS, "rect", {
             x: pillX, y: pillY, width: pillW, height: pillH,
-            rx: 6, ry: 6,
-            fill: "rgba(238, 242, 255, 0.95)",
-            stroke: "#c7d2fe",
-            "stroke-width": 1.5
+            rx: 8, ry: 8,
+            fill: "#eef2ff",
+            stroke: "#6366f1",
+            "stroke-width": 2
           }));
 
+          const timeLabel = pillW >= 85 ? `${bStartMin}–${bEndMin} min` : `${bStartMin}–${bEndMin}m`;
+          const timeFontSize = pillW >= 60 ? 12 : 10.5;
           svg.appendChild(el(svgNS, "text", {
-            x: bCenterX, y: pillY + 13, "text-anchor": "middle",
-            "font-size": 11, "font-weight": "600",
-            fill: "#4b5563"
-          }, `${bStartMin}–${bEndMin}m`));
+            x: bCenterX, y: pillY + 16, "text-anchor": "middle",
+            "font-size": timeFontSize, "font-weight": "700",
+            fill: "#1f2937"
+          }, timeLabel));
 
+          const ratioLabel = pillW >= 95 ? `Ratio: ${bRatioText}` : bRatioText;
+          const ratioFontSize = pillW >= 95 ? 14 : (pillW >= 60 ? 15 : 13);
           svg.appendChild(el(svgNS, "text", {
-            x: bCenterX, y: pillY + 28, "text-anchor": "middle",
-            "font-size": 12, "font-weight": "800",
-            fill: "#3730a3"
-          }, `Ratio: ${bRatioText}`));
+            x: bCenterX, y: pillY + 35, "text-anchor": "middle",
+            "font-size": ratioFontSize, "font-weight": "800",
+            fill: "#312e81"
+          }, ratioLabel));
         }
 
-        // X-axis label
+        // X-axis label with clear separation below pills
         svg.appendChild(el(svgNS, "text", {
-          x: pad.l + innerW / 2, y: pad.t + innerH + 74, "text-anchor": "middle",
+          x: pad.l + innerW / 2, y: pad.t + innerH + 90, "text-anchor": "middle",
           "font-size": 13, fill: "rgba(0,0,0,.60)"
         }, "Minutes"));
 
@@ -2084,19 +2406,19 @@
         renderCircledRatioBadge(
           svg,
           pad.l + innerW / 2,
-          pad.t + innerH + 104,
+          pad.t + innerH + 126,
           "Actual Lesson Structure per min (ratio):",
           ratioText,
           null,
-          { stroke: "#4f46e5", fill: "rgba(238, 242, 255, 0.95)", text: "#3730a3" }
+          { stroke: "#6366f1", fill: "#eef2ff", text: "#312e81" }
         );
 
         return svg;
       }
 
       function renderOtrMultiLineChartSVG(events, durationMs){
-        const W = 800, H = 510;
-        const pad = { l: 50, r: 200, t: 24, b: 140 };
+        const W = 800, H = 550;
+        const pad = { l: 58, r: 200, t: 28, b: 175 };
         const innerW = W - pad.l - pad.r;
         const innerH = H - pad.t - pad.b;
 
@@ -2209,9 +2531,9 @@
 
           let bRatioText = "";
           let bGoalMet = null;
-          let bFill = "rgba(239, 246, 255, 0.95)";
-          let bStroke = "#c7d2fe";
-          let bText = "#1d4ed8";
+          let bFill = "#eef2ff";
+          let bStroke = "#6366f1";
+          let bText = "#312e81";
 
           if (state.mode === "Praise") {
             const bPos = bEvents.filter(e => ["specific", "general", "corrective"].includes(e.kind)).length;
@@ -2219,45 +2541,49 @@
             bRatioText = formatPraiseRatio(bPos, bNeg, effectiveDurationMs);
             const rVal = bNeg === 0 ? bPos : Math.round(bPos / bNeg);
             bGoalMet = rVal >= 5;
-            bStroke = bGoalMet ? "#86efac" : "#fca5a5";
-            bFill = bGoalMet ? "rgba(240, 253, 244, 0.95)" : "rgba(254, 242, 242, 0.95)";
-            bText = bGoalMet ? "#22c55e" : "#ef4444";
+            bStroke = bGoalMet ? "#16a34a" : "#dc2626";
+            bFill = bGoalMet ? "#f0fdf4" : "#fef2f2";
+            bText = bGoalMet ? "#15803d" : "#991b1b";
           } else if (state.mode === "Lesson Structure") {
             bRatioText = formatOtrRatio(bEvents.length, effectiveDurationMs);
-            bStroke = "#c7d2fe";
-            bFill = "rgba(238, 242, 255, 0.95)";
-            bText = "#4f46e5";
+            bStroke = "#6366f1";
+            bFill = "#eef2ff";
+            bText = "#312e81";
           } else {
             bRatioText = formatOtrRatio(bEvents.length, effectiveDurationMs);
             const rNum = parseInt(bRatioText.split(":")[0], 10);
             bGoalMet = !isNaN(rNum) && rNum >= 3;
-            bStroke = bGoalMet ? "#86efac" : "#fca5a5";
-            bFill = bGoalMet ? "rgba(240, 253, 244, 0.95)" : "rgba(254, 242, 242, 0.95)";
-            bText = bGoalMet ? "#22c55e" : "#ef4444";
+            bStroke = bGoalMet ? "#16a34a" : "#dc2626";
+            bFill = bGoalMet ? "#f0fdf4" : "#fef2f2";
+            bText = bGoalMet ? "#15803d" : "#991b1b";
           }
 
-          const pillW = Math.min(100, blockSpanW - 8);
-          const pillH = 34;
+          const pillW = Math.max(28, Math.min(125, blockSpanW - (blockSpanW > 70 ? 10 : 4)));
+          const pillH = 44;
           const pillX = bCenterX - (pillW / 2);
           const pillY = pad.t + innerH + 24;
 
           svg.appendChild(el(svgNS, "rect", {
             x: pillX, y: pillY, width: pillW, height: pillH,
-            rx: 6, ry: 6,
-            fill: bFill, stroke: bStroke, "stroke-width": 1.5
+            rx: 8, ry: 8,
+            fill: bFill, stroke: bStroke, "stroke-width": 2
           }));
 
+          const timeLabel = pillW >= 85 ? `${bStartMin}–${bEndMin} min` : `${bStartMin}–${bEndMin}m`;
+          const timeFontSize = pillW >= 60 ? 12 : 10.5;
           svg.appendChild(el(svgNS, "text", {
-            x: bCenterX, y: pillY + 13, "text-anchor": "middle",
-            "font-size": 11, "font-weight": "600",
-            fill: "#4b5563"
-          }, `${bStartMin}–${bEndMin}m`));
+            x: bCenterX, y: pillY + 16, "text-anchor": "middle",
+            "font-size": timeFontSize, "font-weight": "700",
+            fill: "#1f2937"
+          }, timeLabel));
 
+          const ratioLabel = pillW >= 95 ? `Ratio: ${bRatioText}` : bRatioText;
+          const ratioFontSize = pillW >= 95 ? 14 : (pillW >= 60 ? 15 : 13);
           svg.appendChild(el(svgNS, "text", {
-            x: bCenterX, y: pillY + 28, "text-anchor": "middle",
-            "font-size": 12, "font-weight": "800",
+            x: bCenterX, y: pillY + 35, "text-anchor": "middle",
+            "font-size": ratioFontSize, "font-weight": "800",
             fill: bText
-          }, `Ratio: ${bRatioText}`));
+          }, ratioLabel));
         }
 
         function addSeries(series, stroke, strokeWidth, withPoints, dashArray){
@@ -2325,11 +2651,12 @@
           addSeries(bins.otrChoral, cOtrChoral, 3, false);
         }
 
+        // X-axis label with clear separation below pills
         svg.appendChild(el(svgNS, "text", {
-          x: pad.l + innerW / 2, y: pad.t + innerH + 72, "text-anchor": "middle",
+          x: pad.l + innerW / 2, y: pad.t + innerH + 90, "text-anchor": "middle",
           "font-size": 13, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
           fill: "rgba(0,0,0,.60)"
-        }, "Minute window"));
+        }, "Minutes"));
 
         if (state.mode === "Praise") {
           const totalSpecific = bins.specific.reduce((a, b) => a + b, 0);
@@ -2345,7 +2672,7 @@
           const isGoalMet = ratioValue >= 5;
 
           svg.appendChild(el(svgNS, "text", {
-            x: pad.l + innerW / 2, y: pad.t + innerH + 88, "text-anchor": "middle",
+            x: pad.l + innerW / 2, y: pad.t + innerH + 114, "text-anchor": "middle",
             "font-size": 13, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             "font-weight": "bold",
             fill: "#16a34a"
@@ -2354,8 +2681,8 @@
           renderCircledRatioBadge(
             svg,
             pad.l + innerW / 2,
-            pad.t + innerH + 112,
-            "Total Positive to Negative (ratio):",
+            pad.t + innerH + 146,
+            "Average Positive to Negative (ratio):",
             ratioText,
             isGoalMet
           );
@@ -2366,7 +2693,7 @@
           const isGoalMet = !isNaN(ratioNum) && ratioNum >= 3;
 
           svg.appendChild(el(svgNS, "text", {
-            x: pad.l + innerW / 2, y: pad.t + innerH + 88, "text-anchor": "middle",
+            x: pad.l + innerW / 2, y: pad.t + innerH + 114, "text-anchor": "middle",
             "font-size": 13, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
             "font-weight": "bold",
             fill: "#16a34a"
@@ -2375,7 +2702,7 @@
           renderCircledRatioBadge(
             svg,
             pad.l + innerW / 2,
-            pad.t + innerH + 112,
+            pad.t + innerH + 146,
             "Actual Opportunities to Respond (ratio):",
             ratioText,
             isGoalMet
@@ -2386,19 +2713,19 @@
           renderCircledRatioBadge(
             svg,
             pad.l + innerW / 2,
-            pad.t + innerH + 112,
+            pad.t + innerH + 126,
             "Actual Lesson Structure per min (ratio):",
             ratioText,
             null,
-            { stroke: "#4f46e5", fill: "rgba(238, 242, 255, 0.95)", text: "#3730a3" }
+            { stroke: "#6366f1", fill: "#eef2ff", text: "#312e81" }
           );
         }
 
         svg.appendChild(el(svgNS, "text", {
-          x: 16, y: pad.t + innerH / 2, "text-anchor": "middle",
+          x: 18, y: pad.t + innerH / 2, "text-anchor": "middle",
           "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
           fill: "rgba(0,0,0,.60)",
-          transform: `rotate(-90 16 ${pad.t + innerH / 2})`
+          transform: `rotate(-90 18 ${pad.t + innerH / 2})`
         }, state.mode === "Praise" ? "Social Emotional Learning per min" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "Opportunities to Respond per min"));
 
         const lx = pad.l + innerW + 18;
@@ -2525,7 +2852,40 @@
         return `${ratio}:1`;
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, selEvidence, notes, engagementChecks, praiseRatings, skipSELObservations }){
+      function addWrappedResultLine(targetLines, text, maxChars = 85) {
+        if (!text) {
+          targetLines.push("");
+          return;
+        }
+        if (text.length <= maxChars) {
+          targetLines.push(text);
+          return;
+        }
+        const words = text.split(" ");
+        let cur = "";
+        let isFirst = true;
+        for (const word of words) {
+          if (isFirst) {
+            if ((cur + (cur ? " " : "") + word).length > maxChars) {
+              if (cur) targetLines.push(cur);
+              cur = "  " + word;
+              isFirst = false;
+            } else {
+              cur += (cur ? " " : "") + word;
+            }
+          } else {
+            if ((cur + " " + word).length > maxChars) {
+              targetLines.push(cur);
+              cur = "  " + word;
+            } else {
+              cur += " " + word;
+            }
+          }
+        }
+        if (cur) targetLines.push(cur);
+      }
+
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations }){
         const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`,
@@ -2536,35 +2896,15 @@
           lines.push("Notes:");
           const trimmed = typeof notes === "string" ? notes.trim() : "";
           if (trimmed) {
-            const maxChars = 85;
             const nl = trimmed.split('\n');
             for (const n of nl) {
               if (!n) {
                 lines.push("");
                 continue;
               }
-              let currentLine = "";
-              const words = n.split(" ");
-              for (let word of words) {
-                while (word.length > maxChars) {
-                  if (currentLine) {
-                    lines.push(`  ${currentLine.trimEnd()}`);
-                    currentLine = "";
-                  }
-                  lines.push(`  ${word.substring(0, maxChars)}`);
-                  word = word.substring(maxChars);
-                }
-                if (!word) continue;
-                
-                if (currentLine.length + word.length > maxChars) {
-                  lines.push(`  ${currentLine.trimEnd()}`);
-                  currentLine = word + " ";
-                } else {
-                  currentLine += word + " ";
-                }
-              }
-              if (currentLine) {
-                lines.push(`  ${currentLine.trimEnd()}`);
+              const wrapped = wrapFormattedNotesLine(n, 85);
+              for (const w of wrapped) {
+                lines.push(w);
               }
             }
           } else {
@@ -2575,10 +2915,10 @@
         lines.push(
           `Recorded on: ${recordedOn}`,
           `Recorded from: ${recordedFrom}`,
-          `Time length: ${formatElapsed(durationMs)}`,
-          `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`,
-          `Lesson target referenced: ${lessonTargetPosted}`
+          `Time length: ${formatElapsed(durationMs)}`
         );
+        addWrappedResultLine(lines, `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`, 85);
+        addWrappedResultLine(lines, `Lesson target referenced: ${lessonTargetPosted}`, 85);
 
         if (state.mode === "Praise") {
           lines.push(`Specific Praise: ${specific}`);
@@ -2588,23 +2928,22 @@
           lines.push(`General Criticism: ${genCrit}`);
           lines.push(`Individual Criticism: ${indCrit}`);
           lines.push(`Total Statements: ${otrTotal}`);
-          lines.push(`Total Positive to Negative (ratio): ${ratioText}`);
+          lines.push(`Average Positive to Negative (ratio): ${ratioText}`);
           lines.push(`Goal: 5:1 positive to negative feedback`);
           
-          if (regulationSpace || characterTraitGraphic || selEvidence || (praiseRatings && !skipSELObservations)) {
+          if (regulationSpace || characterTraitGraphic || (praiseRatings && !skipSELObservations)) {
             const labels = ["0 - Not Present", "1 - Partial", "2 - Fully Implemented"];
             lines.push("");
             lines.push("Observations:");
-            if (regulationSpace) lines.push(`Is there a regulation space in the classroom?: ${regulationSpace}`);
-            if (characterTraitGraphic) lines.push(`Is there a graphic depicting the character trait of the month?: ${characterTraitGraphic}`);
-            if (selEvidence) lines.push(`Is there evidence the educator integrates SEL concepts and strategies into core subjects?: ${selEvidence}`);
+            if (regulationSpace) addWrappedResultLine(lines, `Is there a regulation space in the classroom?: ${regulationSpace}`, 85);
+            if (characterTraitGraphic) addWrappedResultLine(lines, `Is there a graphic depicting the character trait of the month?: ${characterTraitGraphic}`, 85);
             if (praiseRatings && !skipSELObservations) {
-              lines.push(`Educator models warm & respectful interactions: ${labels[praiseRatings[0]]}`);
-              lines.push(`Educator joins in community-building activities: ${labels[praiseRatings[1]]}`);
-              lines.push(`Educator leads activities with enthusiasm: ${labels[praiseRatings[2]]}`);
-              lines.push(`Students share their ideas and perspectives: ${labels[praiseRatings[3]]}`);
-              lines.push(`Overall atmosphere of safety and respect: ${labels[praiseRatings[4]]}`);
-              lines.push(`Evidence of class agreement with student input: ${labels[praiseRatings[5]]}`);
+              addWrappedResultLine(lines, `Educator models warm & respectful interactions: ${labels[praiseRatings[0]]}`, 85);
+              addWrappedResultLine(lines, `Educator joins in community-building activities: ${labels[praiseRatings[1]]}`, 85);
+              addWrappedResultLine(lines, `Educator leads activities with enthusiasm: ${labels[praiseRatings[2]]}`, 85);
+              addWrappedResultLine(lines, `Students share their ideas and perspectives: ${labels[praiseRatings[3]]}`, 85);
+              addWrappedResultLine(lines, `Overall atmosphere of safety and respect: ${labels[praiseRatings[4]]}`, 85);
+              addWrappedResultLine(lines, `Evidence of class agreement with student input: ${labels[praiseRatings[5]]}`, 85);
             }
           }
         } else if (state.mode === "Lesson Structure") {
@@ -2719,44 +3058,48 @@
             const lineText = block.lines[i];
             const yPos = currentYOffset + pad + (i + 1) * lineH;
 
-            // Ratio line with circled/bordered actual ratio
+            // Ratio line with circled/bordered actual ratio (safely spaced to never overlap label text)
             if (lineText.includes("(ratio):")) {
               const colonIdx = lineText.indexOf("(ratio):");
               const label = lineText.substring(0, colonIdx + 8).trim();
               const ratioVal = lineText.substring(colonIdx + 8).trim();
 
-              let labelW = 280;
-              let ratioW = 32;
+              let measuredLabelW = 0;
+              let measuredRatioW = 0;
               try {
                 if (measureCtx) {
                   measureCtx.font = `bold 14px ${fontSans}`;
-                  labelW = measureCtx.measureText(label).width;
+                  measuredLabelW = measureCtx.measureText(label).width;
                   measureCtx.font = `bold 15px ${fontSans}`;
-                  ratioW = measureCtx.measureText(ratioVal).width;
+                  measuredRatioW = measureCtx.measureText(ratioVal).width;
                 }
               } catch (_) {}
 
+              const charEstimateW = Math.ceil(label.length * 9.2);
+              const labelW = Math.max(measuredLabelW, charEstimateW, 310);
+              const ratioW = Math.max(measuredRatioW, Math.ceil(ratioVal.length * 11), 32);
+
               let isGoalMet = false;
-              let strokeColor = "#2563eb";
-              let fillColor = "rgba(239, 246, 255, 0.95)";
-              let textColor = "#1d4ed8";
+              let strokeColor = "#6366f1";
+              let fillColor = "#eef2ff";
+              let textColor = "#312e81";
 
               const ratioNum = parseInt(ratioVal.split(":")[0], 10);
               if (!isNaN(ratioNum)) {
                 if (lineText.includes("Positive to Negative")) {
                   isGoalMet = ratioNum >= 5;
-                  strokeColor = isGoalMet ? "#4ade80" : "#f87171";
-                  fillColor = isGoalMet ? "rgba(240, 253, 244, 0.95)" : "rgba(254, 242, 242, 0.95)";
-                  textColor = isGoalMet ? "#16a34a" : "#dc2626";
+                  strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
+                  fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
+                  textColor = isGoalMet ? "#15803d" : "#991b1b";
                 } else if (lineText.startsWith("Opportunities to Respond")) {
                   isGoalMet = ratioNum >= 3;
-                  strokeColor = isGoalMet ? "#4ade80" : "#f87171";
-                  fillColor = isGoalMet ? "rgba(240, 253, 244, 0.95)" : "rgba(254, 242, 242, 0.95)";
-                  textColor = isGoalMet ? "#16a34a" : "#dc2626";
+                  strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
+                  fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
+                  textColor = isGoalMet ? "#15803d" : "#991b1b";
                 } else {
-                  strokeColor = "#2563eb";
-                  fillColor = "rgba(239, 246, 255, 0.95)";
-                  textColor = "#1d4ed8";
+                  strokeColor = "#6366f1";
+                  fillColor = "#eef2ff";
+                  textColor = "#312e81";
                 }
               }
 
@@ -2784,11 +3127,11 @@
               }, label));
 
               // Circle/pill border around the actual ratio
-              const badgeH = 24;
-              const badgePadX = 12;
-              const badgeW = Math.max(ratioW + (badgePadX * 2), 48);
-              const badgeX = pad + labelW + 10;
-              const badgeY = yPos - 17;
+              const badgeH = 26;
+              const badgePadX = 14;
+              const badgeW = Math.max(ratioW + (badgePadX * 2), 52);
+              const badgeX = pad + labelW + 16;
+              const badgeY = yPos - 18;
 
               root.appendChild(el(svgNS, "rect", {
                 x: badgeX,
@@ -2860,15 +3203,31 @@
             }
 
             if (lineText.startsWith("  ")) {
-              root.appendChild(el(svgNS, "text", {
+              const textEl = el(svgNS, "text", {
                 x: pad + 4,
                 y: yPos,
                 "text-anchor": "start",
                 "font-size": 13.5,
                 "font-family": fontSans,
-                "font-weight": 500,
                 fill: "#334155"
-              }, lineText));
+              });
+              textEl.setAttribute("xml:space", "preserve");
+
+              if (lineText.includes("<b>") || lineText.includes("**")) {
+                const segments = parseLineToSvgSegments(lineText);
+                for (const seg of segments) {
+                  const tspan = el(svgNS, "tspan", {
+                    "font-weight": seg.bold ? 700 : 500,
+                    fill: seg.bold ? "#0f172a" : "#334155"
+                  }, seg.text);
+                  textEl.appendChild(tspan);
+                }
+              } else {
+                textEl.setAttribute("font-weight", "500");
+                textEl.textContent = lineText;
+              }
+
+              root.appendChild(textEl);
               continue;
             }
 
@@ -2988,7 +3347,6 @@
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
               regulationSpace: state.regulationSpace,
               characterTraitGraphic: state.characterTraitGraphic,
-              selEvidence: state.selEvidence,
               
               structWhole: totalStructWhole,
               structSmall: totalStructSmall,
@@ -3061,7 +3419,6 @@
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
               regulationSpace: state.regulationSpace,
               characterTraitGraphic: state.characterTraitGraphic,
-              selEvidence: state.selEvidence,
               structWhole: totalStructWhole, structSmall: totalStructSmall, structPartners: totalStructPartners, structIndividual: totalStructIndividual,
               otrChoral: totalOtrChoral, otrCloze: totalOtrCloze, otrWhiteboard: totalOtrWhiteboard,
               otrPrecision: totalOtrPrecision, otrElbow: totalOtrElbow, otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
@@ -3189,7 +3546,12 @@
         if (e.key === "Enter" && state.currentScreen === "run") {
           const startBtn = document.getElementById("startBtn");
           if (startBtn && !startBtn.disabled) {
-            if (document.activeElement && (document.activeElement.tagName.toLowerCase() === "textarea" || document.activeElement.tagName.toLowerCase() === "input")) {
+            if (document.activeElement && (
+              document.activeElement.tagName.toLowerCase() === "textarea" || 
+              document.activeElement.tagName.toLowerCase() === "input" ||
+              document.activeElement.isContentEditable ||
+              document.activeElement.getAttribute("contenteditable") === "true"
+            )) {
               return;
             }
             e.preventDefault();
