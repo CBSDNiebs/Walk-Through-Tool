@@ -2550,8 +2550,8 @@
             bFill = "#eef2ff";
             bText = "#312e81";
           } else {
-            bRatioText = formatOtrRatio(bEvents.length, effectiveDurationMs);
-            const rNum = parseInt(bRatioText.split(":")[0], 10);
+            bRatioText = formatOtrRate(bEvents.length, effectiveDurationMs);
+            const rNum = parseFloat(bRatioText);
             bGoalMet = !isNaN(rNum) && rNum >= 3;
             bStroke = bGoalMet ? "#16a34a" : "#dc2626";
             bFill = bGoalMet ? "#f0fdf4" : "#fef2f2";
@@ -2577,7 +2577,7 @@
             fill: "#1f2937"
           }, timeLabel));
 
-          const ratioLabel = pillW >= 95 ? `Ratio: ${bRatioText}` : bRatioText;
+          const ratioLabel = (state.mode === "OTRs" || state.mode === "All") ? bRatioText : (pillW >= 95 ? `Ratio: ${bRatioText}` : bRatioText);
           const ratioFontSize = pillW >= 95 ? 14 : (pillW >= 60 ? 15 : 13);
           svg.appendChild(el(svgNS, "text", {
             x: bCenterX, y: pillY + 35, "text-anchor": "middle",
@@ -2586,18 +2586,18 @@
           }, ratioLabel));
         }
 
-        function addSeries(series, stroke, strokeWidth, withPoints, dashArray){
+        function addSeries(series, stroke, strokeWidth, withPoints, dashArray, opacity = "0.6"){
           const pts = [];
           for (let i = 1; i <= n; i++){
             pts.push({ mx: x(i), my: y(series[i - 1]) });
           }
           const pathD = pts.map((p, idx) => `${idx === 0 ? "M" : "L"} ${p.mx.toFixed(2)} ${p.my.toFixed(2)}`).join(" ");
-          const attrs = { d: pathD, fill: "none", stroke, "stroke-width": strokeWidth, opacity: "0.6" };
+          const attrs = { d: pathD, fill: "none", stroke, "stroke-width": strokeWidth, opacity };
           if (dashArray) attrs["stroke-dasharray"] = dashArray;
           svg.appendChild(el(svgNS, "path", attrs));
           if (withPoints){
             for (const p of pts){
-              svg.appendChild(el(svgNS, "circle", { cx: p.mx, cy: p.my, r: 3.0, fill: stroke, opacity: "0.6" }));
+              svg.appendChild(el(svgNS, "circle", { cx: p.mx, cy: p.my, r: strokeWidth > 3 ? 4.0 : 3.0, fill: stroke, opacity }));
             }
           }
         }
@@ -2648,7 +2648,7 @@
           addSeries(bins.otrPrecision, cOtrPrecision, 2, false);
           addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2, false);
           addSeries(bins.otrCloze, cOtrCloze, 2, false);
-          addSeries(bins.otrChoral, cOtrChoral, 3, false);
+          addSeries(bins.otrChoral, cOtrChoral, 4.5, false, null, "0.5");
         }
 
         // X-axis label with clear separation below pills
@@ -2688,9 +2688,9 @@
           );
         } else if (state.mode === "OTRs") {
           const totalOtr = bins.total.reduce((a, b) => a + b, 0);
-          const ratioText = formatOtrRatio(totalOtr, durationMs);
-          const ratioNum = parseInt(ratioText.split(":")[0], 10);
-          const isGoalMet = !isNaN(ratioNum) && ratioNum >= 3;
+          const rateText = formatOtrRate(totalOtr, durationMs);
+          const rateNum = parseFloat(rateText);
+          const isGoalMet = !isNaN(rateNum) && rateNum >= 3;
 
           svg.appendChild(el(svgNS, "text", {
             x: pad.l + innerW / 2, y: pad.t + innerH + 114, "text-anchor": "middle",
@@ -2703,8 +2703,8 @@
             svg,
             pad.l + innerW / 2,
             pad.t + innerH + 146,
-            "Actual Opportunities to Respond (ratio):",
-            ratioText,
+            "Opportunities to Respond per minute:",
+            rateText,
             isGoalMet
           );
         } else if (state.mode === "Lesson Structure") {
@@ -2733,9 +2733,9 @@
         const lh = 22;
         const font = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
 
-        function legendRow(i, color, label, dashArray){
+        function legendRow(i, color, label, dashArray, strokeWidth = 3, opacity = "0.6"){
           const y0 = ly + i * lh;
-          const attrs = { x1: lx, y1: y0, x2: lx + 22, y2: y0, stroke: color, "stroke-width": 3, "stroke-linecap": "round", opacity: "0.6" };
+          const attrs = { x1: lx, y1: y0, x2: lx + 22, y2: y0, stroke: color, "stroke-width": strokeWidth, "stroke-linecap": "round", opacity };
           if (dashArray) attrs["stroke-dasharray"] = dashArray;
           svg.appendChild(el(svgNS, "line", attrs));
           svg.appendChild(el(svgNS, "text", {
@@ -2758,14 +2758,14 @@
           legendRow(2, cStructPartners, "Partners");
           legendRow(3, cStructIndividual, "Individual");
         } else {
-          legendRow(0, cOtrChoral, "Choral Response");
-          legendRow(1, cOtrCloze, "Cloze Reading");
-          legendRow(2, cOtrWhiteboard, "White Board Response");
-          legendRow(3, cOtrPrecision, "Precision Partner");
-          legendRow(4, cOtrElbow, "Elbow Partner");
-          legendRow(5, cOtrWarm, "Warm Call");
-          legendRow(6, cOtrCold, "Cold Call");
-          legendRow(7, cOtrVolunteer, "Volunteer");
+          legendRow(0, cOtrChoral, "Choral Response", null, 4.5, "0.5");
+          legendRow(1, cOtrCloze, "Cloze Reading", null, 2, "0.6");
+          legendRow(2, cOtrWhiteboard, "White Board Response", null, 2, "0.6");
+          legendRow(3, cOtrPrecision, "Precision Partner", null, 2, "0.6");
+          legendRow(4, cOtrElbow, "Elbow Partner", null, 2, "0.6");
+          legendRow(5, cOtrWarm, "Warm Call", null, 2, "0.6");
+          legendRow(6, cOtrCold, "Cold Call", null, 2, "0.6");
+          legendRow(7, cOtrVolunteer, "Volunteer", null, 2, "0.6");
         }
 
         return svg;
@@ -2836,6 +2836,15 @@
         const e = (state.educatorName || "Educator").replace(/[^\w]+/g, "_").replace(/^_+|_+$/g, "");
         const prefix = state.mode === 'Praise' ? 'SEL' : state.mode === 'Lesson Structure' ? 'Lesson_Structure' : state.mode === 'All' ? 'All' : 'Opportunities_to_Respond';
         return `${prefix}_${e}.png`;
+      }
+
+      function formatOtrRate(otrTotal, durationMs){
+        const minutesElapsed = durationMs / 60000;
+        if (minutesElapsed <= 0) return `0 / min`;
+        const rate = otrTotal / minutesElapsed;
+        const rounded = Math.round(rate * 10) / 10;
+        const display = (rounded % 1 === 0) ? String(rounded) : rounded.toFixed(1);
+        return `${display} / min`;
       }
 
       function formatOtrRatio(otrTotal, durationMs){
@@ -2969,7 +2978,7 @@
           lines.push(`Cold Call: ${otrCold}`);
           lines.push(`Volunteer: ${otrVolunteer}`);
           lines.push(`Opportunities to Respond Total: ${otrTotal}`);
-          lines.push(`Opportunities to Respond per min (ratio): ${ratioText}`);
+          lines.push(`Opportunities to Respond per minute: ${ratioText}`);
           lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
         }
         
@@ -3058,11 +3067,18 @@
             const lineText = block.lines[i];
             const yPos = currentYOffset + pad + (i + 1) * lineH;
 
-            // Ratio line with circled/bordered actual ratio (safely spaced to never overlap label text)
-            if (lineText.includes("(ratio):")) {
-              const colonIdx = lineText.indexOf("(ratio):");
-              const label = lineText.substring(0, colonIdx + 8).trim();
-              const ratioVal = lineText.substring(colonIdx + 8).trim();
+            // Ratio or rate line with circled/bordered actual value (safely spaced to never overlap label text)
+            if (lineText.includes("(ratio):") || lineText.startsWith("Opportunities to Respond per minute:") || lineText.startsWith("Opportunities to Respond per min:")) {
+              let label, ratioVal;
+              if (lineText.includes("(ratio):")) {
+                const colonIdx = lineText.indexOf("(ratio):");
+                label = lineText.substring(0, colonIdx + 8).trim();
+                ratioVal = lineText.substring(colonIdx + 8).trim();
+              } else {
+                const colonIdx = lineText.indexOf(":");
+                label = lineText.substring(0, colonIdx + 1).trim();
+                ratioVal = lineText.substring(colonIdx + 1).trim();
+              }
 
               let measuredLabelW = 0;
               let measuredRatioW = 0;
@@ -3084,15 +3100,15 @@
               let fillColor = "#eef2ff";
               let textColor = "#312e81";
 
-              const ratioNum = parseInt(ratioVal.split(":")[0], 10);
-              if (!isNaN(ratioNum)) {
+              const rateNum = parseFloat(ratioVal);
+              if (!isNaN(rateNum)) {
                 if (lineText.includes("Positive to Negative")) {
-                  isGoalMet = ratioNum >= 5;
+                  isGoalMet = rateNum >= 5;
                   strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
                   fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
                   textColor = isGoalMet ? "#15803d" : "#991b1b";
                 } else if (lineText.startsWith("Opportunities to Respond")) {
-                  isGoalMet = ratioNum >= 3;
+                  isGoalMet = rateNum >= 3;
                   strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
                   fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
                   textColor = isGoalMet ? "#15803d" : "#991b1b";
@@ -3336,7 +3352,7 @@
           }
           
           const curOtrTotal = renderMode === "Praise" ? totalPraise : renderMode === "Lesson Structure" ? totalEngagement : totalOtr;
-          const curRatioText = renderMode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRatio(curOtrTotal, durationMs);
+          const curRatioText = renderMode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : (renderMode === "OTRs" ? formatOtrRate(curOtrTotal, durationMs) : formatOtrRatio(curOtrTotal, durationMs));
           
           const lines = buildResultsLines({
               educator: state.educatorName,
@@ -3408,7 +3424,7 @@
           const oldStateMode = state.mode;
           state.mode = renderModes[0];
           const firstOtrTotal = state.mode === "Praise" ? totalPraise : state.mode === "Lesson Structure" ? totalEngagement : totalOtr;
-          const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRatio(firstOtrTotal, durationMs);
+          const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : (state.mode === "OTRs" ? formatOtrRate(firstOtrTotal, durationMs) : formatOtrRatio(firstOtrTotal, durationMs));
           
           sharedBlocks[0].lines = buildResultsLines({
               educator: state.educatorName,
