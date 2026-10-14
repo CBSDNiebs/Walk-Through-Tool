@@ -22,6 +22,7 @@
       --otr-choral:#0369a1; /* Section 1: Blue hue */
       --otr-cloze:#0284c7;
       --otr-whiteboard:#38bdf8;
+      --otr-written:#2563eb;
       --otr-nonverbal:#0ea5e9;
       
       --otr-precision:#16a34a; /* Section 2: Green hue */
@@ -152,6 +153,7 @@
     .btn.otr.otr-choral{background:var(--otr-choral); color:#fff;}
     .btn.otr.otr-cloze{background:var(--otr-cloze); color:#fff;}
     .btn.otr.otr-whiteboard{background:var(--otr-whiteboard); color:#0b1a3a;}
+    .btn.otr.otr-written{background:var(--otr-written); color:#fff;}
     .btn.otr.otr-nonverbal{background:var(--otr-nonverbal); color:#fff;}
     
     .btn.otr.otr-precision{background:var(--otr-precision); color:#fff;}
@@ -881,11 +883,9 @@
       </header>
       <section style="display: flex; justify-content: space-around; margin-top: 32px; margin-bottom: 32px; gap: 16px; flex-wrap: wrap;">
         <button id="modeOtrBtn" class="mode-btn" type="button">Opportunities to Respond</button>
-        <button id="modeOtrNonverbalBtn" class="mode-btn" type="button" style="border: 2px dashed #38bdf8;"><span style="font-size:11.5px; line-height:1.2;">Opportunities to Respond<br><strong style="font-size:10px; color:#38bdf8;">(+ Nonverbal)</strong></span></button>
         <button id="modePraiseBtn" class="mode-btn" type="button">Social Emotional Learning</button>
         <button id="modeEngagementBtn" class="mode-btn" type="button">Lesson Structure</button>
         <button id="modeAllBtn" class="mode-btn" type="button">All</button>
-        <button id="modeAllNonverbalBtn" class="mode-btn" type="button" style="border: 2px dashed #38bdf8;"><span style="font-size:12px; line-height:1.2;">All<br><strong style="font-size:10.5px; color:#38bdf8; display:block; margin-top:2px;">(+ Nonverbal)</strong></span></button>
       </section>
     </main>
   </template>
@@ -946,7 +946,8 @@
                 <button id="otrChoralBtn" class="btn otr otr-choral" type="button" disabled>Choral Response<span class="btn-badge" id="badge-otrChoral" aria-hidden="true">0</span></button>
                 <button id="otrClozeBtn" class="btn otr otr-cloze" type="button" disabled>Close Reading<span class="btn-badge" id="badge-otrCloze" aria-hidden="true">0</span></button>
                 <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response<span class="btn-badge" id="badge-otrWhiteboard" aria-hidden="true">0</span></button>
-                <button id="otrNonverbalBtn" class="btn otr otr-nonverbal" type="button" disabled style="display:none;">Nonverbal Response<span class="btn-badge" id="badge-otrNonverbal" aria-hidden="true">0</span></button>
+                <button id="otrWrittenBtn" class="btn otr otr-written" type="button" disabled>Written Responses<span class="btn-badge" id="badge-otrWritten" aria-hidden="true">0</span></button>
+                <button id="otrNonverbalBtn" class="btn otr otr-nonverbal" type="button" disabled>Nonverbal Response<span class="btn-badge" id="badge-otrNonverbal" aria-hidden="true">0</span></button>
               </div>
             </div>
 
@@ -1053,7 +1054,6 @@
         regulationSpace: null,
         characterTraitGraphic: null,
         skipSELObservations: false,
-        includeNonverbal: false,
         mode: "OTRs",
         notes: "",
         startedAt: null,
@@ -1282,40 +1282,20 @@
 
         document.getElementById("modeOtrBtn").addEventListener("click", () => {
           state.mode = "OTRs";
-          state.includeNonverbal = false;
           showRun();
         });
-        const modeOtrNonverbalBtn = document.getElementById("modeOtrNonverbalBtn");
-        if (modeOtrNonverbalBtn) {
-          modeOtrNonverbalBtn.addEventListener("click", () => {
-            state.mode = "OTRs";
-            state.includeNonverbal = true;
-            showRun();
-          });
-        }
         document.getElementById("modePraiseBtn").addEventListener("click", () => {
           state.mode = "Praise";
-          state.includeNonverbal = false;
           showRun();
         });
         document.getElementById("modeEngagementBtn").addEventListener("click", () => {
           state.mode = "Lesson Structure";
-          state.includeNonverbal = false;
           showRun();
         });
         document.getElementById("modeAllBtn").addEventListener("click", () => {
           state.mode = "All";
-          state.includeNonverbal = false;
           showRun();
         });
-        const modeAllNonverbalBtn = document.getElementById("modeAllNonverbalBtn");
-        if (modeAllNonverbalBtn) {
-          modeAllNonverbalBtn.addEventListener("click", () => {
-            state.mode = "All";
-            state.includeNonverbal = true;
-            showRun();
-          });
-        }
       }
 
       function domToFormattedText(node) {
@@ -1557,10 +1537,10 @@
           runTitle.textContent = "Lesson Structure Timer";
           if (hintText) hintText.textContent = "Press Start to begin. Then tap a Lesson Structure button for each observed event.";
         } else if (state.mode === "All") {
-          runTitle.textContent = state.includeNonverbal ? "All Timer (with Nonverbal)" : "All Timer";
+          runTitle.textContent = "All Timer";
           if (hintText) hintText.textContent = "Press Start to begin. Tap any observation button for each observed event.";
         } else {
-          runTitle.textContent = state.includeNonverbal ? "Opportunities to Respond Timer (with Nonverbal)" : "Opportunities to Respond Timer";
+          runTitle.textContent = "Opportunities to Respond Timer";
           if (hintText) hintText.textContent = "Press Start to begin. Then tap an Opportunities to Respond button for each observed response.";
         }
 
@@ -1667,10 +1647,8 @@
         const otrChoralBtn = document.getElementById("otrChoralBtn");
         const otrClozeBtn = document.getElementById("otrClozeBtn");
         const otrWhiteboardBtn = document.getElementById("otrWhiteboardBtn");
+        const otrWrittenBtn = document.getElementById("otrWrittenBtn");
         const otrNonverbalBtn = document.getElementById("otrNonverbalBtn");
-        if (otrNonverbalBtn) {
-          otrNonverbalBtn.style.display = state.includeNonverbal ? "flex" : "none";
-        }
         
         const otrPrecisionBtn = document.getElementById("otrPrecisionBtn");
         const otrElbowBtn = document.getElementById("otrElbowBtn");
@@ -1778,6 +1756,7 @@
           otrChoralBtn.disabled = !on;
           otrClozeBtn.disabled = !on;
           otrWhiteboardBtn.disabled = !on;
+          if (otrWrittenBtn) otrWrittenBtn.disabled = !on;
           if (otrNonverbalBtn) otrNonverbalBtn.disabled = !on;
           otrPrecisionBtn.disabled = !on;
           otrElbowBtn.disabled = !on;
@@ -1804,6 +1783,7 @@
           { kind: "otrChoral", badgeId: "badge-otrChoral" },
           { kind: "otrCloze", badgeId: "badge-otrCloze" },
           { kind: "otrWhiteboard", badgeId: "badge-otrWhiteboard" },
+          { kind: "otrWritten", badgeId: "badge-otrWritten" },
           { kind: "otrNonverbal", badgeId: "badge-otrNonverbal" },
 
           { kind: "otrPrecision", badgeId: "badge-otrPrecision" },
@@ -1945,6 +1925,7 @@
         otrChoralBtn.addEventListener("click", () => doOtr("otrChoral"));
         otrClozeBtn.addEventListener("click", () => doOtr("otrCloze"));
         otrWhiteboardBtn.addEventListener("click", () => doOtr("otrWhiteboard"));
+        if (otrWrittenBtn) otrWrittenBtn.addEventListener("click", () => doOtr("otrWritten"));
         if (otrNonverbalBtn) otrNonverbalBtn.addEventListener("click", () => doOtr("otrNonverbal"));
         
         otrPrecisionBtn.addEventListener("click", () => doOtr("otrPrecision"));
@@ -2104,6 +2085,7 @@
           otrChoral: new Array(minutes).fill(0),
           otrCloze: new Array(minutes).fill(0),
           otrWhiteboard: new Array(minutes).fill(0),
+          otrWritten: new Array(minutes).fill(0),
           otrNonverbal: new Array(minutes).fill(0),
           otrPrecision: new Array(minutes).fill(0),
           otrElbow: new Array(minutes).fill(0),
@@ -2131,6 +2113,7 @@
           if (e.kind === "otrChoral") bins.otrChoral[idx] += 1;
           if (e.kind === "otrCloze") bins.otrCloze[idx] += 1;
           if (e.kind === "otrWhiteboard") bins.otrWhiteboard[idx] += 1;
+          if (e.kind === "otrWritten") bins.otrWritten[idx] += 1;
           if (e.kind === "otrNonverbal") bins.otrNonverbal[idx] += 1;
           
           if (e.kind === "otrPrecision") bins.otrPrecision[idx] += 1;
@@ -2473,6 +2456,7 @@
           ...bins.otrChoral,
           ...bins.otrCloze,
           ...bins.otrWhiteboard,
+          ...bins.otrWritten,
           ...bins.otrNonverbal,
           ...bins.otrPrecision,
           ...bins.otrElbow,
@@ -2649,6 +2633,7 @@
         const cOtrChoral = css.getPropertyValue("--otr-choral").trim() || "#065f46";
         const cOtrCloze = css.getPropertyValue("--otr-cloze").trim() || "#047857";
         const cOtrWhiteboard = css.getPropertyValue("--otr-whiteboard").trim() || "#a7f3d0";
+        const cOtrWritten = css.getPropertyValue("--otr-written").trim() || "#2563eb";
         const cOtrNonverbal = css.getPropertyValue("--otr-nonverbal").trim() || "#0ea5e9";
         
         const cOtrPrecision = css.getPropertyValue("--otr-precision").trim() || "#4338ca";
@@ -2683,9 +2668,8 @@
           addSeries(bins.otrWarm, cOtrWarm, 2, false);
           addSeries(bins.otrElbow, cOtrElbow, 2, false);
           addSeries(bins.otrPrecision, cOtrPrecision, 2, false);
-          if (state.includeNonverbal || bins.otrNonverbal.some(v => v > 0)) {
-            addSeries(bins.otrNonverbal, cOtrNonverbal, 2, false);
-          }
+          addSeries(bins.otrNonverbal, cOtrNonverbal, 2, false);
+          addSeries(bins.otrWritten, cOtrWritten, 2, false);
           addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2, false);
           addSeries(bins.otrCloze, cOtrCloze, 2, false);
           addSeries(bins.otrChoral, cOtrChoral, 4.5, false, null, "0.5");
@@ -2801,15 +2785,13 @@
           legendRow(0, cOtrChoral, "Choral Response", null, 4.5, "0.5");
           legendRow(1, cOtrCloze, "Cloze Reading", null, 2, "0.6");
           legendRow(2, cOtrWhiteboard, "White Board Response", null, 2, "0.6");
-          let lIdx = 3;
-          if (state.includeNonverbal || bins.otrNonverbal.some(v => v > 0)) {
-            legendRow(lIdx++, cOtrNonverbal, "Nonverbal Response", null, 2, "0.6");
-          }
-          legendRow(lIdx++, cOtrPrecision, "Precision Partner", null, 2, "0.6");
-          legendRow(lIdx++, cOtrElbow, "Elbow Partner", null, 2, "0.6");
-          legendRow(lIdx++, cOtrWarm, "Warm Call", null, 2, "0.6");
-          legendRow(lIdx++, cOtrCold, "Cold Call", null, 2, "0.6");
-          legendRow(lIdx++, cOtrVolunteer, "Volunteer", null, 2, "0.6");
+          legendRow(3, cOtrWritten, "Written Responses", null, 2, "0.6");
+          legendRow(4, cOtrNonverbal, "Nonverbal Response", null, 2, "0.6");
+          legendRow(5, cOtrPrecision, "Precision Partner", null, 2, "0.6");
+          legendRow(6, cOtrElbow, "Elbow Partner", null, 2, "0.6");
+          legendRow(7, cOtrWarm, "Warm Call", null, 2, "0.6");
+          legendRow(8, cOtrCold, "Cold Call", null, 2, "0.6");
+          legendRow(9, cOtrVolunteer, "Volunteer", null, 2, "0.6");
         }
 
         return svg;
@@ -2938,8 +2920,8 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrNonverbal, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations }){
-        const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : (state.includeNonverbal ? 'Opportunities to Respond (with Nonverbal)' : 'Opportunities to Respond');
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations }){
+        const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`,
           `Observed Educator Name: ${educator}`
@@ -3016,9 +2998,8 @@
           lines.push(`Choral Response: ${otrChoral}`);
           lines.push(`Cloze Reading: ${otrCloze}`);
           lines.push(`White Board Response: ${otrWhiteboard}`);
-          if (state.includeNonverbal || (otrNonverbal && otrNonverbal > 0)) {
-            lines.push(`Nonverbal Response: ${otrNonverbal}`);
-          }
+          lines.push(`Written Responses: ${otrWritten}`);
+          lines.push(`Nonverbal Response: ${otrNonverbal}`);
           lines.push(`Precision Partner: ${otrPrecision}`);
           lines.push(`Elbow Partner: ${otrElbow}`);
           lines.push(`Warm Call: ${otrWarm}`);
@@ -3343,6 +3324,7 @@
         const totalOtrChoral = bins.otrChoral.reduce((a, b) => a + b, 0);
         const totalOtrCloze = bins.otrCloze.reduce((a, b) => a + b, 0);
         const totalOtrWhiteboard = bins.otrWhiteboard.reduce((a, b) => a + b, 0);
+        const totalOtrWritten = bins.otrWritten.reduce((a, b) => a + b, 0);
         const totalOtrNonverbal = bins.otrNonverbal.reduce((a, b) => a + b, 0);
         const totalOtrPrecision = bins.otrPrecision.reduce((a, b) => a + b, 0);
         const totalOtrElbow = bins.otrElbow.reduce((a, b) => a + b, 0);
@@ -3357,7 +3339,7 @@
         const totalGenCrit = bins.genCrit.reduce((a, b) => a + b, 0);
         const totalIndCrit = bins.indCrit.reduce((a, b) => a + b, 0);
 
-        const totalOtr = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrNonverbal","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind)).length;
+        const totalOtr = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind)).length;
         const totalPraise = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind)).length;
         const totalEngagement = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind)).length;
         
@@ -3371,9 +3353,9 @@
         } else if (state.mode === "Lesson Structure") {
           resultsTitle.textContent = "Lesson Structure Results";
         } else if (state.mode === "All") {
-          resultsTitle.textContent = state.includeNonverbal ? "All Results (with Nonverbal)" : "All Results";
+          resultsTitle.textContent = "All Results";
         } else {
-          resultsTitle.textContent = state.includeNonverbal ? "Opportunities to Respond Results (with Nonverbal)" : "Opportunities to Respond Results";
+          resultsTitle.textContent = "Opportunities to Respond Results";
         }
 
         document.getElementById("resultsContext").textContent = `Observed Educator Name: ${state.educatorName}`;
@@ -3395,7 +3377,7 @@
              modeEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
              chartSvg = renderEngagementStackedBarChartSVG(modeEvents, durationMs);
            } else {
-             modeEvents = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrNonverbal","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind));
+             modeEvents = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs);
           }
           
@@ -3420,6 +3402,7 @@
               otrChoral: totalOtrChoral,
               otrCloze: totalOtrCloze,
               otrWhiteboard: totalOtrWhiteboard,
+              otrWritten: totalOtrWritten,
               otrNonverbal: totalOtrNonverbal,
               otrPrecision: totalOtrPrecision,
               otrElbow: totalOtrElbow,
@@ -3486,6 +3469,7 @@
               characterTraitGraphic: state.characterTraitGraphic,
               structWhole: totalStructWhole, structSmall: totalStructSmall, structPartners: totalStructPartners, structIndividual: totalStructIndividual,
               otrChoral: totalOtrChoral, otrCloze: totalOtrCloze, otrWhiteboard: totalOtrWhiteboard,
+              otrWritten: totalOtrWritten,
               otrNonverbal: totalOtrNonverbal,
               otrPrecision: totalOtrPrecision, otrElbow: totalOtrElbow, otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
               specific: totalSpecific, general: totalGeneral, corrective: totalCorrective,
