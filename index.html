@@ -18,12 +18,12 @@
       --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       --lite:#e0e0e0;
 
-      /* Updated OTR colors */
-      --otr-choral:#0369a1; /* Section 1: Blue hue */
-      --otr-cloze:#0284c7;
-      --otr-whiteboard:#38bdf8;
-      --otr-written:#2563eb;
-      --otr-nonverbal:#0ea5e9;
+      /* Updated OTR colors - Whole Group descending dark to light */
+      --otr-choral:#075985; /* Darkest: Sky 800 */
+      --otr-cloze:#0284c7;  /* Sky 600 */
+      --otr-whiteboard:#0ea5e9; /* Sky 500 */
+      --otr-written:#38bdf8; /* Sky 400 */
+      --otr-nonverbal:#7dd3fc; /* Lightest: Sky 300 */
       
       --otr-precision:#16a34a; /* Section 2: Green hue */
       --otr-elbow:#4ade80;
@@ -41,10 +41,10 @@
       --praise-gen-crit: #ef4444; /* Red */
       --praise-ind-crit: #b91c1c; /* Dark Red */
 
-      --struct-whole: #e11d48; /* Red */
-      --struct-small: #ea580c; /* Orange */
-      --struct-partners: #0d9488; /* Teal */
-      --struct-individual: #4f46e5; /* Indigo */
+      --struct-whole: #94a3b8; /* Slate 400 - Medium Light Grey */
+      --struct-small: #cbd5e1; /* Slate 300 - Light Grey */
+      --struct-partners: #e2e8f0; /* Slate 200 - Soft Light Grey */
+      --struct-individual: #f1f5f9; /* Slate 100 - Lightest Grey */
     }
 
     *{box-sizing:border-box;}
@@ -152,9 +152,9 @@
     .btn.otr:disabled{opacity:.45;cursor:not-allowed;}
     .btn.otr.otr-choral{background:var(--otr-choral); color:#fff;}
     .btn.otr.otr-cloze{background:var(--otr-cloze); color:#fff;}
-    .btn.otr.otr-whiteboard{background:var(--otr-whiteboard); color:#0b1a3a;}
-    .btn.otr.otr-written{background:var(--otr-written); color:#fff;}
-    .btn.otr.otr-nonverbal{background:var(--otr-nonverbal); color:#fff;}
+    .btn.otr.otr-whiteboard{background:var(--otr-whiteboard); color:#fff;}
+    .btn.otr.otr-written{background:var(--otr-written); color:#082f49;}
+    .btn.otr.otr-nonverbal{background:var(--otr-nonverbal); color:#082f49;}
     
     .btn.otr.otr-precision{background:var(--otr-precision); color:#fff;}
     .btn.otr.otr-elbow{background:var(--otr-elbow); color:#064e3b;}
@@ -170,10 +170,10 @@
     .btn.otr.gen-crit{background:var(--praise-gen-crit); color:#fff;}
     .btn.otr.ind-crit{background:var(--praise-ind-crit); color:#fff;}
 
-    .btn.otr.struct-whole{background:var(--struct-whole); color:#fff;}
-    .btn.otr.struct-small{background:var(--struct-small); color:#fff;}
-    .btn.otr.struct-partners{background:var(--struct-partners); color:#fff;}
-    .btn.otr.struct-individual{background:var(--struct-individual); color:#fff;}
+    .btn.otr.struct-whole{background:var(--struct-whole); color:#0f172a; border-color:#64748b;}
+    .btn.otr.struct-small{background:var(--struct-small); color:#0f172a; border-color:#94a3b8;}
+    .btn.otr.struct-partners{background:var(--struct-partners); color:#0f172a; border-color:#cbd5e1;}
+    .btn.otr.struct-individual{background:var(--struct-individual); color:#0f172a; border-color:#cbd5e1;}
 
     .btn.otr .btn-badge{
       position:absolute;
@@ -575,11 +575,11 @@
     .mode-btn:hover {
       opacity: 0.9;
     }
-    #modePraiseBtn {
+    #modeOtrBtn {
       border: 4px solid #2563eb;
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25), var(--shadow);
     }
-    #modePraiseBtn:hover {
+    #modeOtrBtn:hover {
       border-color: #1d4ed8;
       box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.35), var(--shadow);
     }
@@ -754,7 +754,10 @@
           <h1>Observation Details</h1>
           <p class="subhead">Please answer the following questions.</p>
         </div>
-        <button id="questionsBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button id="questionsSkipBtnHeader" class="btn" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; cursor: pointer; font-weight: 600;" type="button">Skip</button>
+          <button id="questionsBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
+        </div>
       </header>
 
       <section class="form" style="margin-top: 16px; display: flex; flex-direction: column; gap: 4px; align-items: stretch;">
@@ -789,12 +792,14 @@
             <button id="q4NoBtn" class="btn yn no" type="button">No</button>
           </div>
         </div>
+      </section>
 
-        <section class="actions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
-          <button id="questionsNextBtn" class="btn primary" type="button" disabled style="flex: 1;">Next</button>
-        </section>
-      </main>
-    </template>
+      <section class="actions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
+        <button id="questionsSkipBtn" class="btn" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; cursor: pointer;">Skip</button>
+        <button id="questionsNextBtn" class="btn primary" type="button" disabled style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px;">Next</button>
+      </section>
+    </main>
+  </template>
 
   <template id="screen-character-strong">
     <main class="card" id="characterStrongCard">
@@ -884,7 +889,6 @@
       <section style="display: flex; justify-content: space-around; margin-top: 32px; margin-bottom: 32px; gap: 16px; flex-wrap: wrap;">
         <button id="modeOtrBtn" class="mode-btn" type="button">Opportunities to Respond</button>
         <button id="modePraiseBtn" class="mode-btn" type="button">Social Emotional Learning</button>
-        <button id="modeEngagementBtn" class="mode-btn" type="button">Lesson Structure</button>
         <button id="modeAllBtn" class="mode-btn" type="button">All</button>
       </section>
     </main>
@@ -1054,6 +1058,7 @@
         regulationSpace: null,
         characterTraitGraphic: null,
         skipSELObservations: false,
+        skipQuestions: false,
         mode: "OTRs",
         notes: "",
         startedAt: null,
@@ -1098,6 +1103,7 @@
         state.regulationSpace = null;
         state.characterTraitGraphic = null;
         state.skipSELObservations = false;
+        state.skipQuestions = false;
         state.engagementChecks = [];
         state.engagementPopupsShown = {};
         state.praiseRatings = [0, 0, 0, 0, 0, 0];
@@ -1127,6 +1133,7 @@
         state.educatorName = "";
         state.lessonTargetPosted = null;
         state.curriculaMaterialsUsed = null;
+        state.skipQuestions = false;
         updateBeginEnabled();
 
         educatorInput.addEventListener("input", (e) => {
@@ -1258,7 +1265,20 @@
         q4YesBtn.addEventListener("click", () => { state.characterTraitGraphic = "Yes"; updateUI(); });
         q4NoBtn.addEventListener("click", () => { state.characterTraitGraphic = "No"; updateUI(); });
 
-        nextBtn.addEventListener("click", showResults);
+        const handleQuestionsSkip = () => {
+          state.skipQuestions = true;
+          showResults();
+        };
+
+        const questionsSkipBtn = document.getElementById("questionsSkipBtn");
+        if (questionsSkipBtn) questionsSkipBtn.addEventListener("click", handleQuestionsSkip);
+        const questionsSkipBtnHeader = document.getElementById("questionsSkipBtnHeader");
+        if (questionsSkipBtnHeader) questionsSkipBtnHeader.addEventListener("click", handleQuestionsSkip);
+
+        nextBtn.addEventListener("click", () => {
+          state.skipQuestions = false;
+          showResults();
+        });
         
         const backBtn = document.getElementById("questionsBackBtn");
         backBtn.addEventListener("click", () => {
@@ -1286,10 +1306,6 @@
         });
         document.getElementById("modePraiseBtn").addEventListener("click", () => {
           state.mode = "Praise";
-          showRun();
-        });
-        document.getElementById("modeEngagementBtn").addEventListener("click", () => {
-          state.mode = "Lesson Structure";
           showRun();
         });
         document.getElementById("modeAllBtn").addEventListener("click", () => {
@@ -1532,16 +1548,13 @@
 
         if (state.mode === "Praise") {
           runTitle.textContent = "Social Emotional Learning Timer";
-          if (hintText) hintText.textContent = "Press Start to begin. Then tap a Social Emotional Learning button for each observed response.";
-        } else if (state.mode === "Lesson Structure") {
-          runTitle.textContent = "Lesson Structure Timer";
-          if (hintText) hintText.textContent = "Press Start to begin. Then tap a Lesson Structure button for each observed event.";
+          if (hintText) hintText.textContent = "Press Start to begin. Tap a Social Emotional Learning or Lesson Structure button for each observed event.";
         } else if (state.mode === "All") {
           runTitle.textContent = "All Timer";
           if (hintText) hintText.textContent = "Press Start to begin. Tap any observation button for each observed event.";
         } else {
           runTitle.textContent = "Opportunities to Respond Timer";
-          if (hintText) hintText.textContent = "Press Start to begin. Then tap an Opportunities to Respond button for each observed response.";
+          if (hintText) hintText.textContent = "Press Start to begin. Tap an Opportunities to Respond or Lesson Structure button for each observed response.";
         }
 
         const startBtn = document.getElementById("startBtn");
@@ -1565,10 +1578,10 @@
         const praiseButtons = document.getElementById("praiseButtons");
 
         if (state.mode === "Praise") {
-          if (structContainer) structContainer.style.display = "none";
-          structSectionLabel.style.display = "none";
-          structButtons1.style.display = "none";
-          structButtons2.style.display = "none";
+          if (structContainer) structContainer.style.display = "block";
+          structSectionLabel.style.display = "block";
+          structButtons1.style.display = "grid";
+          structButtons2.style.display = "grid";
           
           if (otrContainer) otrContainer.style.display = "none";
           otrSectionLabel.style.display = "none";
@@ -1582,24 +1595,6 @@
           if (praiseContainer) praiseContainer.style.display = "block";
           if (praiseSubLabel) praiseSubLabel.style.display = "block";
           praiseButtons.style.display = "grid";
-        } else if (state.mode === "Lesson Structure") {
-          if (structContainer) structContainer.style.display = "block";
-          structSectionLabel.style.display = "none";
-          structButtons1.style.display = "grid";
-          structButtons2.style.display = "grid";
-          
-          if (otrContainer) otrContainer.style.display = "none";
-          otrSectionLabel.style.display = "none";
-          otrSection1Label.style.display = "none";
-          otrButtons1.style.display = "none";
-          otrSection2Label.style.display = "none";
-          otrButtons2.style.display = "none";
-          otrSection3Label.style.display = "none";
-          otrButtons3.style.display = "none";
-          
-          if (praiseContainer) praiseContainer.style.display = "none";
-          if (praiseSubLabel) praiseSubLabel.style.display = "none";
-          praiseButtons.style.display = "none";
         } else if (state.mode === "All") {
           if (structContainer) structContainer.style.display = "block";
           structSectionLabel.style.display = "block";
@@ -1620,13 +1615,13 @@
           praiseButtons.style.display = "grid";
         } else {
           // OTR
-          if (structContainer) structContainer.style.display = "none";
-          structSectionLabel.style.display = "none";
-          structButtons1.style.display = "none";
-          structButtons2.style.display = "none";
+          if (structContainer) structContainer.style.display = "block";
+          structSectionLabel.style.display = "block";
+          structButtons1.style.display = "grid";
+          structButtons2.style.display = "grid";
           
           if (otrContainer) otrContainer.style.display = "block";
-          otrSectionLabel.style.display = "none";
+          otrSectionLabel.style.display = "block";
           otrSection1Label.style.display = "block";
           otrButtons1.style.display = "flex";
           otrSection2Label.style.display = "block";
@@ -1686,7 +1681,7 @@
           const elapsed = (typeof state.startedAt === "number") ? (end - state.startedAt) : 0;
           elapsedText.textContent = formatElapsed(Math.max(0, elapsed));
 
-          if ((state.mode === "Lesson Structure" || state.mode === "All") && state.startedAt !== null && state.stoppedAt === null) {
+          if (state.mode === "All" && state.startedAt !== null && state.stoppedAt === null) {
             const minutesElapsed = elapsed / 60000;
             // Engagement checks begin at 1 minute and continue every 4 minutes (1, 5, 9, 13, 17, 21, 25, 29...)
             // Pop up continues on this frequency throughout the entire observation
@@ -1859,13 +1854,11 @@
           if (timerNotes) timerNotes.disabled = false;
 
           if (state.mode === "Praise") {
-            hintText.textContent = "Recording... Tap a Social Emotional Learning button for each observed response.";
-          } else if (state.mode === "Lesson Structure") {
-            hintText.textContent = "Recording... Tap a Lesson Structure button for each observed response.";
+            hintText.textContent = "Recording... Tap a Social Emotional Learning or Lesson Structure button for each observed response.";
           } else if (state.mode === "All") {
             hintText.textContent = "Recording... Tap an observation button for each response.";
           } else {
-            hintText.textContent = "Recording... Tap an Opportunities to Respond button for each observed response.";
+            hintText.textContent = "Recording... Tap an Opportunities to Respond or Lesson Structure button for each observed response.";
           }
           state.tickerId = setInterval(updateUI, 100);
           updateUI();
@@ -2250,10 +2243,10 @@
         svg.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: H, fill: "#fff" }));
 
         const categories = [
-          { key: "structWhole", color: "#fecdd3", lineColor: "#e11d48", label: "Whole Group" },
-          { key: "structSmall", color: "#ffedd5", lineColor: "#ea580c", label: "Small Group" },
-          { key: "structPartners", color: "#ccfbf1", lineColor: "#0d9488", label: "Partners" },
-          { key: "structIndividual", color: "#e0e7ff", lineColor: "#4f46e5", label: "Individual" }
+          { key: "structWhole", color: "#94a3b8", lineColor: "#475569", label: "Whole Group" },
+          { key: "structSmall", color: "#cbd5e1", lineColor: "#64748b", label: "Small Group" },
+          { key: "structPartners", color: "#e2e8f0", lineColor: "#94a3b8", label: "Partners" },
+          { key: "structIndividual", color: "#f1f5f9", lineColor: "#cbd5e1", label: "Individual" }
         ];
 
         const maxMs = Math.max(durationMs, 60000);
@@ -2434,7 +2427,7 @@
         return svg;
       }
 
-      function renderOtrMultiLineChartSVG(events, durationMs){
+      function renderOtrMultiLineChartSVG(events, durationMs, structEvents = []){
         const W = 800, H = 550;
         const pad = { l: 58, r: 200, t: 28, b: 175 };
         const innerW = W - pad.l - pad.r;
@@ -2485,6 +2478,114 @@
         svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
         svg.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: H, fill: "#fff" }));
+
+        // Draw Lesson Structure progression as transparent light grey background bands
+        const lsCategories = [
+          { key: "structWhole", fill: "rgba(148, 163, 184, 0.22)", stroke: "#64748b", label: "Whole Group" },
+          { key: "structSmall", fill: "rgba(203, 213, 225, 0.28)", stroke: "#94a3b8", label: "Small Group" },
+          { key: "structPartners", fill: "rgba(226, 232, 240, 0.36)", stroke: "#cbd5e1", label: "Partners" },
+          { key: "structIndividual", fill: "rgba(241, 245, 249, 0.46)", stroke: "#cbd5e1", label: "Individual" }
+        ];
+
+        const sEvents = (structEvents && structEvents.length > 0)
+          ? structEvents
+          : state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
+
+        if (sEvents.length > 0) {
+          const xMs = (ms) => pad.l + (ms / (maxMinutes * 60000)) * innerW;
+          for (let j = 0; j < sEvents.length; j++) {
+            const ev = sEvents[j];
+            const cat = lsCategories.find(c => c.key === ev.kind);
+            if (cat) {
+              const startMs = (j === 0) ? 0 : ev.tMs;
+              const endMs = (j + 1 < sEvents.length) ? sEvents[j + 1].tMs : durationMs;
+              const ex1 = Math.max(pad.l, xMs(startMs));
+              const ex2 = Math.min(pad.l + innerW, xMs(endMs));
+              const bandW = Math.max(0, ex2 - ex1);
+
+              if (bandW > 0) {
+                // Transparent grey band
+                svg.appendChild(el(svgNS, "rect", {
+                  x: ex1,
+                  y: pad.t,
+                  width: bandW,
+                  height: innerH,
+                  fill: cat.fill
+                }));
+
+                // Demarcation line at start of phase
+                if (ex1 > pad.l) {
+                  svg.appendChild(el(svgNS, "line", {
+                    x1: ex1, y1: pad.t,
+                    x2: ex1, y2: pad.t + innerH,
+                    stroke: cat.stroke,
+                    "stroke-width": 1.5,
+                    "stroke-dasharray": "3 2"
+                  }));
+                }
+
+                // Crisp, highly readable label indicating group structure (e.g. Whole Group vs Small Group)
+                let labelText = cat.label;
+                if (bandW < 75 && bandW >= 42) {
+                  labelText = cat.label === "Whole Group" ? "Whole Group" : (cat.label === "Small Group" ? "Small Group" : (cat.label === "Individual" ? "Individual" : "Partners"));
+                } else if (bandW < 42 && bandW >= 24) {
+                  labelText = cat.label === "Whole Group" ? "Whole" : (cat.label === "Small Group" ? "Small" : (cat.label === "Individual" ? "Indiv." : "Partners"));
+                } else if (bandW < 24) {
+                  labelText = cat.label === "Whole Group" ? "WG" : (cat.label === "Small Group" ? "SG" : (cat.label === "Individual" ? "Ind." : "P"));
+                }
+
+                if (bandW >= 18) {
+                  const badgeW = Math.min(bandW - 2, Math.max(22, labelText.length * 6.5 + 10));
+                  const badgeH = 17;
+                  const badgeX = ex1 + (bandW - badgeW) / 2;
+                  const badgeY = pad.t + 3;
+
+                  // High-contrast clean pill tag behind text
+                  svg.appendChild(el(svgNS, "rect", {
+                    x: badgeX,
+                    y: badgeY,
+                    width: badgeW,
+                    height: badgeH,
+                    rx: 3.5,
+                    fill: "rgba(255, 255, 255, 0.92)",
+                    stroke: cat.stroke,
+                    "stroke-width": 1
+                  }));
+
+                  svg.appendChild(el(svgNS, "text", {
+                    x: badgeX + (badgeW / 2),
+                    y: badgeY + 12,
+                    "text-anchor": "middle",
+                    "font-size": (bandW >= 60) ? 10.5 : 9.5,
+                    "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+                    "font-weight": "700",
+                    fill: "#1e293b"
+                  }, labelText));
+                }
+              }
+            }
+          }
+        }
+
+        // Draw engagement check vertical indicators if present
+        if (state.engagementChecks && state.engagementChecks.length > 0) {
+          const xMs = (ms) => pad.l + (ms / (maxMinutes * 60000)) * innerW;
+          for (const check of state.engagementChecks) {
+            const cx = xMs(check.timeMin * 60000);
+            svg.appendChild(el(svgNS, "line", {
+              x1: cx, y1: pad.t, x2: cx, y2: pad.t + innerH,
+              stroke: "#e11d48", "stroke-width": 1.5, "stroke-dasharray": "4 3"
+            }));
+            svg.appendChild(el(svgNS, "circle", {
+              cx: cx, cy: pad.t - 5, r: 5,
+              fill: "#e11d48"
+            }));
+            svg.appendChild(el(svgNS, "text", {
+              x: cx, y: pad.t - 14, "text-anchor": "middle",
+              "font-size": 12, "font-weight": "bold", fill: "#e11d48"
+            }, `${check.offTaskStudents}/${check.totalStudents}`));
+          }
+        }
 
         for (const t of yTicks){
           const gy = y(t);
@@ -2606,18 +2707,37 @@
           }, ratioLabel));
         }
 
-        function addSeries(series, stroke, strokeWidth, withPoints, dashArray, opacity = "0.6"){
+        function addSeries(series, stroke, strokeWidth, withPoints, dashArray, opacity = "1"){
           const pts = [];
           for (let i = 1; i <= n; i++){
-            pts.push({ mx: x(i), my: y(series[i - 1]) });
+            const val = series[i - 1];
+            pts.push({ mx: x(i), my: y(val), val });
           }
           const pathD = pts.map((p, idx) => `${idx === 0 ? "M" : "L"} ${p.mx.toFixed(2)} ${p.my.toFixed(2)}`).join(" ");
-          const attrs = { d: pathD, fill: "none", stroke, "stroke-width": strokeWidth, opacity };
+          const attrs = {
+            d: pathD,
+            fill: "none",
+            stroke,
+            "stroke-width": strokeWidth,
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            opacity: String(opacity)
+          };
           if (dashArray) attrs["stroke-dasharray"] = dashArray;
           svg.appendChild(el(svgNS, "path", attrs));
-          if (withPoints){
-            for (const p of pts){
-              svg.appendChild(el(svgNS, "circle", { cx: p.mx, cy: p.my, r: strokeWidth > 3 ? 4.0 : 3.0, fill: stroke, opacity }));
+
+          // Draw distinct data points for any minutes with observations to maximize visibility over the lesson structure
+          for (const p of pts){
+            if (p.val > 0 || withPoints){
+              svg.appendChild(el(svgNS, "circle", {
+                cx: p.mx,
+                cy: p.my,
+                r: strokeWidth >= 3.5 ? 4.5 : 3.5,
+                fill: stroke,
+                stroke: "#ffffff",
+                "stroke-width": 1.5,
+                opacity: String(opacity)
+              }));
             }
           }
         }
@@ -2625,14 +2745,14 @@
         const css = getComputedStyle(document.documentElement);
         const cTotal = css.getPropertyValue("--otr-total").trim() || "rgba(0,0,0,0.2)";
         
-        const cStructWhole = css.getPropertyValue("--struct-whole").trim() || "#e11d48";
-        const cStructSmall = css.getPropertyValue("--struct-small").trim() || "#ea580c";
-        const cStructPartners = css.getPropertyValue("--struct-partners").trim() || "#0d9488";
-        const cStructIndividual = css.getPropertyValue("--struct-individual").trim() || "#4f46e5";
+        const cStructWhole = css.getPropertyValue("--struct-whole").trim() || "#94a3b8";
+        const cStructSmall = css.getPropertyValue("--struct-small").trim() || "#cbd5e1";
+        const cStructPartners = css.getPropertyValue("--struct-partners").trim() || "#e2e8f0";
+        const cStructIndividual = css.getPropertyValue("--struct-individual").trim() || "#f1f5f9";
 
-        const cOtrChoral = css.getPropertyValue("--otr-choral").trim() || "#065f46";
-        const cOtrCloze = css.getPropertyValue("--otr-cloze").trim() || "#047857";
-        const cOtrWhiteboard = css.getPropertyValue("--otr-whiteboard").trim() || "#a7f3d0";
+        const cOtrChoral = css.getPropertyValue("--otr-choral").trim() || "#075985";
+        const cOtrCloze = css.getPropertyValue("--otr-cloze").trim() || "#0284c7";
+        const cOtrWhiteboard = css.getPropertyValue("--otr-whiteboard").trim() || "#0ea5e9";
         const cOtrWritten = css.getPropertyValue("--otr-written").trim() || "#2563eb";
         const cOtrNonverbal = css.getPropertyValue("--otr-nonverbal").trim() || "#0ea5e9";
         
@@ -2651,28 +2771,28 @@
         const cIndCrit = css.getPropertyValue("--praise-ind-crit").trim() || "#b91c1c";
 
         if (state.mode === "Praise") {
-          addSeries(bins.indCrit, cIndCrit, 2, false);
-          addSeries(bins.genCrit, cGenCrit, 2, false);
-          addSeries(bins.redirect, cRedirect, 2, false);
-          addSeries(bins.corrective, cCorrective, 2, false);
-          addSeries(bins.general, cGeneral, 2, false);
-          addSeries(bins.specific, cSpecific, 3, false);
+          addSeries(bins.indCrit, cIndCrit, 2.6, false, null, "1");
+          addSeries(bins.genCrit, cGenCrit, 2.6, false, null, "1");
+          addSeries(bins.redirect, cRedirect, 2.6, false, null, "1");
+          addSeries(bins.corrective, cCorrective, 2.8, false, null, "1");
+          addSeries(bins.general, cGeneral, 2.8, false, null, "1");
+          addSeries(bins.specific, cSpecific, 3.8, false, null, "1");
         } else if (state.mode === "Lesson Structure") {
-          addSeries(bins.structIndividual, cStructIndividual, 2, false);
-          addSeries(bins.structPartners, cStructPartners, 2, false);
-          addSeries(bins.structSmall, cStructSmall, 2, false);
-          addSeries(bins.structWhole, cStructWhole, 3, false);
+          addSeries(bins.structIndividual, cStructIndividual, 2.6, false, null, "1");
+          addSeries(bins.structPartners, cStructPartners, 2.6, false, null, "1");
+          addSeries(bins.structSmall, cStructSmall, 2.8, false, null, "1");
+          addSeries(bins.structWhole, cStructWhole, 3.8, false, null, "1");
         } else {
-          addSeries(bins.otrVolunteer, cOtrVolunteer, 2, false);
-          addSeries(bins.otrCold, cOtrCold, 2, false);
-          addSeries(bins.otrWarm, cOtrWarm, 2, false);
-          addSeries(bins.otrElbow, cOtrElbow, 2, false);
-          addSeries(bins.otrPrecision, cOtrPrecision, 2, false);
-          addSeries(bins.otrNonverbal, cOtrNonverbal, 2, false);
-          addSeries(bins.otrWritten, cOtrWritten, 2, false);
-          addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2, false);
-          addSeries(bins.otrCloze, cOtrCloze, 2, false);
-          addSeries(bins.otrChoral, cOtrChoral, 4.5, false, null, "0.5");
+          addSeries(bins.otrVolunteer, cOtrVolunteer, 2.6, false, null, "1");
+          addSeries(bins.otrCold, cOtrCold, 2.6, false, null, "1");
+          addSeries(bins.otrWarm, cOtrWarm, 2.6, false, null, "1");
+          addSeries(bins.otrElbow, cOtrElbow, 2.6, false, null, "1");
+          addSeries(bins.otrPrecision, cOtrPrecision, 2.6, false, null, "1");
+          addSeries(bins.otrNonverbal, cOtrNonverbal, 2.6, false, null, "1");
+          addSeries(bins.otrWritten, cOtrWritten, 2.6, false, null, "1");
+          addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2.6, false, null, "1");
+          addSeries(bins.otrCloze, cOtrCloze, 2.8, false, null, "1");
+          addSeries(bins.otrChoral, cOtrChoral, 4.0, false, null, "1");
         }
 
         // X-axis label with clear separation below pills
@@ -2753,45 +2873,81 @@
         }, state.mode === "Praise" ? "Social Emotional Learning per min" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "Opportunities to Respond per min"));
 
         const lx = pad.l + innerW + 18;
-        const ly = pad.t + 8;
-        const lh = 22;
+        const ly = pad.t + 6;
+        const lh = 20;
         const font = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
 
-        function legendRow(i, color, label, dashArray, strokeWidth = 3, opacity = "0.6"){
+        function legendRow(i, color, label, dashArray, strokeWidth = 3, opacity = "1"){
           const y0 = ly + i * lh;
-          const attrs = { x1: lx, y1: y0, x2: lx + 22, y2: y0, stroke: color, "stroke-width": strokeWidth, "stroke-linecap": "round", opacity };
+          const attrs = { x1: lx, y1: y0, x2: lx + 22, y2: y0, stroke: color, "stroke-width": strokeWidth, "stroke-linecap": "round", opacity: String(opacity) };
           if (dashArray) attrs["stroke-dasharray"] = dashArray;
           svg.appendChild(el(svgNS, "line", attrs));
           svg.appendChild(el(svgNS, "text", {
             x: lx + 30, y: y0 + 5, "text-anchor": "start",
-            "font-size": 14, "font-family": font,
-            fill: "rgba(0,0,0,.75)"
+            "font-size": 13.5, "font-family": font,
+            fill: "rgba(0,0,0,.85)"
           }, label));
         }
 
+        let nextLegendY = ly;
+
         if (state.mode === "Praise") {
-          legendRow(0, cSpecific, "Specific Praise");
-          legendRow(1, cGeneral, "General Praise");
-          legendRow(2, cCorrective, "Corrective Feedback");
-          legendRow(3, cRedirect, "Redirective Statements");
-          legendRow(4, cGenCrit, "General Criticism");
-          legendRow(5, cIndCrit, "Individual Criticism");
+          legendRow(0, cSpecific, "Specific Praise", null, 3.8, "1");
+          legendRow(1, cGeneral, "General Praise", null, 2.8, "1");
+          legendRow(2, cCorrective, "Corrective Feedback", null, 2.8, "1");
+          legendRow(3, cRedirect, "Redirective Statements", null, 2.6, "1");
+          legendRow(4, cGenCrit, "General Criticism", null, 2.6, "1");
+          legendRow(5, cIndCrit, "Individual Criticism", null, 2.6, "1");
+          nextLegendY = ly + 6 * lh + 14;
         } else if (state.mode === "Lesson Structure") {
-          legendRow(0, cStructWhole, "Whole Group");
-          legendRow(1, cStructSmall, "Small Group");
-          legendRow(2, cStructPartners, "Partners");
-          legendRow(3, cStructIndividual, "Individual");
+          legendRow(0, cStructWhole, "Whole Group", null, 3.8, "1");
+          legendRow(1, cStructSmall, "Small Group", null, 2.8, "1");
+          legendRow(2, cStructPartners, "Partners", null, 2.6, "1");
+          legendRow(3, cStructIndividual, "Individual", null, 2.6, "1");
+          nextLegendY = ly + 4 * lh + 14;
         } else {
-          legendRow(0, cOtrChoral, "Choral Response", null, 4.5, "0.5");
-          legendRow(1, cOtrCloze, "Cloze Reading", null, 2, "0.6");
-          legendRow(2, cOtrWhiteboard, "White Board Response", null, 2, "0.6");
-          legendRow(3, cOtrWritten, "Written Responses", null, 2, "0.6");
-          legendRow(4, cOtrNonverbal, "Nonverbal Response", null, 2, "0.6");
-          legendRow(5, cOtrPrecision, "Precision Partner", null, 2, "0.6");
-          legendRow(6, cOtrElbow, "Elbow Partner", null, 2, "0.6");
-          legendRow(7, cOtrWarm, "Warm Call", null, 2, "0.6");
-          legendRow(8, cOtrCold, "Cold Call", null, 2, "0.6");
-          legendRow(9, cOtrVolunteer, "Volunteer", null, 2, "0.6");
+          legendRow(0, cOtrChoral, "Choral Response", null, 4.0, "1");
+          legendRow(1, cOtrCloze, "Cloze Reading", null, 2.8, "1");
+          legendRow(2, cOtrWhiteboard, "White Board Response", null, 2.6, "1");
+          legendRow(3, cOtrWritten, "Written Responses", null, 2.6, "1");
+          legendRow(4, cOtrNonverbal, "Nonverbal Response", null, 2.6, "1");
+          legendRow(5, cOtrPrecision, "Precision Partner", null, 2.6, "1");
+          legendRow(6, cOtrElbow, "Elbow Partner", null, 2.6, "1");
+          legendRow(7, cOtrWarm, "Warm Call", null, 2.6, "1");
+          legendRow(8, cOtrCold, "Cold Call", null, 2.6, "1");
+          legendRow(9, cOtrVolunteer, "Volunteer", null, 2.6, "1");
+          nextLegendY = ly + 10 * lh + 14;
+        }
+
+        if (state.mode !== "Lesson Structure") {
+          svg.appendChild(el(svgNS, "text", {
+            x: lx, y: nextLegendY,
+            "text-anchor": "start",
+            "font-size": 11.5,
+            "font-weight": "700",
+            "font-family": font,
+            fill: "#475569"
+          }, "Lesson Structure:"));
+
+          const lsLh = 19;
+          lsCategories.forEach((cat, k) => {
+            const itemY = nextLegendY + 14 + (k * lsLh);
+            svg.appendChild(el(svgNS, "rect", {
+              x: lx, y: itemY - 9,
+              width: 16, height: 11,
+              rx: 2,
+              fill: cat.fill,
+              stroke: cat.stroke,
+              "stroke-width": 1.2
+            }));
+            svg.appendChild(el(svgNS, "text", {
+              x: lx + 24, y: itemY,
+              "text-anchor": "start",
+              "font-size": 12,
+              "font-family": font,
+              fill: "rgba(0,0,0,.70)"
+            }, cat.label));
+          });
         }
 
         return svg;
@@ -2920,40 +3076,46 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations }){
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
         const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : 'Opportunities to Respond';
         const lines = [
-          `${titlePrefix} Timer Results`,
-          `Observed Educator Name: ${educator}`
+          `${titlePrefix} Timer Results`
         ];
 
-        if (notes !== undefined && notes !== null) {
-          lines.push("Notes:");
-          const trimmed = typeof notes === "string" ? notes.trim() : "";
-          if (trimmed) {
-            const nl = trimmed.split('\n');
-            for (const n of nl) {
-              if (!n) {
-                lines.push("");
-                continue;
+        if (!isSubsequentBlock) {
+          lines.push(`Observed Educator Name: ${educator}`);
+
+          if (notes !== undefined && notes !== null) {
+            lines.push("Notes:");
+            const trimmed = typeof notes === "string" ? notes.trim() : "";
+            if (trimmed) {
+              const nl = trimmed.split('\n');
+              for (const n of nl) {
+                if (!n) {
+                  lines.push("");
+                  continue;
+                }
+                const wrapped = wrapFormattedNotesLine(n, 85);
+                for (const w of wrapped) {
+                  lines.push(w);
+                }
               }
-              const wrapped = wrapFormattedNotesLine(n, 85);
-              for (const w of wrapped) {
-                lines.push(w);
-              }
+            } else {
+              lines.push("  (No notes entered)");
             }
-          } else {
-            lines.push("  (No notes entered)");
+          }
+
+          lines.push(
+            `Recorded on: ${recordedOn}`,
+            `Recorded from: ${recordedFrom}`,
+            `Time length: ${formatElapsed(durationMs)}`
+          );
+
+          if (!skipQuestions) {
+            if (curriculaMaterialsUsed) addWrappedResultLine(lines, `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`, 85);
+            if (lessonTargetPosted) addWrappedResultLine(lines, `Lesson target referenced: ${lessonTargetPosted}`, 85);
           }
         }
-
-        lines.push(
-          `Recorded on: ${recordedOn}`,
-          `Recorded from: ${recordedFrom}`,
-          `Time length: ${formatElapsed(durationMs)}`
-        );
-        addWrappedResultLine(lines, `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`, 85);
-        addWrappedResultLine(lines, `Lesson target referenced: ${lessonTargetPosted}`, 85);
 
         if (state.mode === "Praise") {
           lines.push(`Specific Praise: ${specific}`);
@@ -2966,12 +3128,12 @@
           lines.push(`Average Positive to Negative (ratio): ${ratioText}`);
           lines.push(`Goal: 5:1 positive to negative feedback`);
           
-          if (regulationSpace || characterTraitGraphic || (praiseRatings && !skipSELObservations)) {
+          if ((!skipQuestions && (regulationSpace || characterTraitGraphic)) || (praiseRatings && !skipSELObservations)) {
             const labels = ["0 - Not Present", "1 - Partial", "2 - Fully Implemented"];
             lines.push("");
             lines.push("Observations:");
-            if (regulationSpace) addWrappedResultLine(lines, `Is there a regulation space in the classroom?: ${regulationSpace}`, 85);
-            if (characterTraitGraphic) addWrappedResultLine(lines, `Is there a graphic depicting the character trait of the month?: ${characterTraitGraphic}`, 85);
+            if (!skipQuestions && regulationSpace) addWrappedResultLine(lines, `Is there a regulation space in the classroom?: ${regulationSpace}`, 85);
+            if (!skipQuestions && characterTraitGraphic) addWrappedResultLine(lines, `Is there a graphic depicting the character trait of the month?: ${characterTraitGraphic}`, 85);
             if (praiseRatings && !skipSELObservations) {
               addWrappedResultLine(lines, `Educator models warm & respectful interactions: ${labels[praiseRatings[0]]}`, 85);
               addWrappedResultLine(lines, `Educator joins in community-building activities: ${labels[praiseRatings[1]]}`, 85);
@@ -2979,6 +3141,21 @@
               addWrappedResultLine(lines, `Students share their ideas and perspectives: ${labels[praiseRatings[3]]}`, 85);
               addWrappedResultLine(lines, `Overall atmosphere of safety and respect: ${labels[praiseRatings[4]]}`, 85);
               addWrappedResultLine(lines, `Evidence of class agreement with student input: ${labels[praiseRatings[5]]}`, 85);
+            }
+          }
+
+          if (structWhole > 0 || structSmall > 0 || structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
+            lines.push("");
+            lines.push("Lesson Structure:");
+            lines.push(`  Whole Group: ${structWhole}`);
+            lines.push(`  Small Group: ${structSmall}`);
+            lines.push(`  Partners: ${structPartners}`);
+            lines.push(`  Individual: ${structIndividual}`);
+            if (engagementChecks && engagementChecks.length > 0) {
+              for (const check of engagementChecks) {
+                const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
+                lines.push(`  Engagement Check (${check.timeMin} min): ${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`);
+              }
             }
           }
         } else if (state.mode === "Lesson Structure") {
@@ -3008,6 +3185,21 @@
           lines.push(`Opportunities to Respond Total: ${otrTotal}`);
           lines.push(`Opportunities to Respond per minute: ${ratioText}`);
           lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
+
+          if (structWhole > 0 || structSmall > 0 || structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
+            lines.push("");
+            lines.push("Lesson Structure:");
+            lines.push(`  Whole Group: ${structWhole}`);
+            lines.push(`  Small Group: ${structSmall}`);
+            lines.push(`  Partners: ${structPartners}`);
+            lines.push(`  Individual: ${structIndividual}`);
+            if (engagementChecks && engagementChecks.length > 0) {
+              for (const check of engagementChecks) {
+                const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
+                lines.push(`  Engagement Check (${check.timeMin} min): ${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`);
+              }
+            }
+          }
         }
         
         if (notes) {
@@ -3233,7 +3425,7 @@
               }
             }
 
-            if (lineText === "Notes:") {
+            if (lineText === "Notes:" || lineText === "Observations:" || lineText === "Lesson Structure:") {
               root.appendChild(el(svgNS, "text", {
                 x: pad + 4,
                 y: yPos,
@@ -3350,8 +3542,6 @@
         
         if (state.mode === "Praise") {
           resultsTitle.textContent = "Social Emotional Learning Results";
-        } else if (state.mode === "Lesson Structure") {
-          resultsTitle.textContent = "Lesson Structure Results";
         } else if (state.mode === "All") {
           resultsTitle.textContent = "All Results";
         } else {
@@ -3360,7 +3550,9 @@
 
         document.getElementById("resultsContext").textContent = `Observed Educator Name: ${state.educatorName}`;
         
-        const renderModes = state.mode === "All" ? ["Lesson Structure", "OTRs", "Praise"] : [state.mode];
+        const renderModes = state.mode === "All"
+          ? ["OTRs", "Praise"]
+          : [state.mode];
         const sharedBlocks = [];
         
         for (const renderMode of renderModes) {
@@ -3370,15 +3562,16 @@
           
           let chartSvg;
           let modeEvents = [];
+          const structEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
           if (renderMode === "Praise") {
              modeEvents = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind));
-             chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs);
+             chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
           } else if (renderMode === "Lesson Structure") {
              modeEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
              chartSvg = renderEngagementStackedBarChartSVG(modeEvents, durationMs);
            } else {
              modeEvents = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind));
-             chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs);
+             chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
           }
           
           const curOtrTotal = renderMode === "Praise" ? totalPraise : renderMode === "Lesson Structure" ? totalEngagement : totalOtr;
@@ -3422,13 +3615,11 @@
               notes: renderMode === renderModes[0] ? state.notes : null,
               engagementChecks: state.engagementChecks,
               praiseRatings: state.praiseRatings,
-              skipSELObservations: state.skipSELObservations
+              skipSELObservations: state.skipSELObservations,
+              skipQuestions: state.skipQuestions,
+              isSubsequentBlock: renderMode !== renderModes[0]
           });
           state.mode = oldStateMode;
-          // Strip top common info if not first
-          if (renderMode !== renderModes[0]) {
-             lines.splice(1, 6); // remove educator, date, time, duration, materials, target
-          }
           
           sharedBlocks.push({ lines, chartSvg });
         }
@@ -3455,8 +3646,8 @@
         const updateFirstBlockLines = () => {
           const oldStateMode = state.mode;
           state.mode = renderModes[0];
-          const firstOtrTotal = state.mode === "Praise" ? totalPraise : state.mode === "Lesson Structure" ? totalEngagement : totalOtr;
-          const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : (state.mode === "OTRs" ? formatOtrRate(firstOtrTotal, durationMs) : formatOtrRatio(firstOtrTotal, durationMs));
+          const firstOtrTotal = state.mode === "Praise" ? totalPraise : totalOtr;
+          const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRate(firstOtrTotal, durationMs);
           
           sharedBlocks[0].lines = buildResultsLines({
               educator: state.educatorName,
@@ -3479,7 +3670,9 @@
               notes: state.notes,
               engagementChecks: state.engagementChecks,
               praiseRatings: state.praiseRatings,
-              skipSELObservations: state.skipSELObservations
+              skipSELObservations: state.skipSELObservations,
+              skipQuestions: state.skipQuestions,
+              isSubsequentBlock: false
           });
           state.mode = oldStateMode;
         };
