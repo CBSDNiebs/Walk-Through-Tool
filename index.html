@@ -23,14 +23,23 @@
       --otr-cloze:#0284c7;  /* Sky 600 */
       --otr-whiteboard:#0ea5e9; /* Sky 500 */
       --otr-written:#38bdf8; /* Sky 400 */
-      --otr-nonverbal:#7dd3fc; /* Lightest: Sky 300 */
+      --otr-nonverbal:#7dd3fc; /* Sky 300 */
+      --otr-other-whole:#bae6fd; /* Sky 200 */
       
-      --otr-precision:#16a34a; /* Section 2: Green hue */
+      /* Small Group - Teal hue */
+      --otr-group-disc:#0f766e; /* Darkest: Teal 700 */
+      --otr-numbered-heads:#0d9488; /* Teal 600 */
+      --otr-team-share:#14b8a6; /* Teal 500 */
+      --otr-other-small:#5eead4; /* Teal 300 */
+
+      --otr-precision:#16a34a; /* Partner: Green hue */
       --otr-elbow:#4ade80;
+      --otr-other-partner:#86efac; /* Green 300 */
       
-      --otr-warm:#7e22ce; /* Section 3: Purple hue */
+      --otr-warm:#7e22ce; /* Individual: Purple hue */
       --otr-cold:#a855f7;
       --otr-volunteer:#d8b4fe;
+      --otr-other-individual:#e9d5ff; /* Purple 200 */
 
       --otr-total:rgba(0,0,0,0.2); /* transparent grey */
 
@@ -155,13 +164,21 @@
     .btn.otr.otr-whiteboard{background:var(--otr-whiteboard); color:#fff;}
     .btn.otr.otr-written{background:var(--otr-written); color:#082f49;}
     .btn.otr.otr-nonverbal{background:var(--otr-nonverbal); color:#082f49;}
+    .btn.otr.otr-other-whole{background:var(--otr-other-whole); color:#082f49;}
     
+    .btn.otr.otr-group-disc{background:var(--otr-group-disc); color:#fff;}
+    .btn.otr.otr-numbered-heads{background:var(--otr-numbered-heads); color:#fff;}
+    .btn.otr.otr-team-share{background:var(--otr-team-share); color:#fff;}
+    .btn.otr.otr-other-small{background:var(--otr-other-small); color:#134e4a;}
+
     .btn.otr.otr-precision{background:var(--otr-precision); color:#fff;}
     .btn.otr.otr-elbow{background:var(--otr-elbow); color:#064e3b;}
+    .btn.otr.otr-other-partner{background:var(--otr-other-partner); color:#064e3b;}
     
     .btn.otr.otr-warm{background:var(--otr-warm); color:#fff;}
     .btn.otr.otr-cold{background:var(--otr-cold); color:#fff;}
     .btn.otr.otr-volunteer{background:var(--otr-volunteer); color:#2e1065;}
+    .btn.otr.otr-other-indiv{background:var(--otr-other-individual); color:#581c87;}
 
     .btn.otr.specific{background:var(--praise-specific); color:#fff;}
     .btn.otr.general{background:var(--praise-general); color:#064e3b;}
@@ -369,10 +386,10 @@
       align-items:stretch;
     }
 
-    /* OTR 3-Column Layout */
+    /* OTR 4-Column Layout: Whole Group, Small Group, Partner, Individual */
     .otr-columns {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       align-items: start;
     }
@@ -380,6 +397,7 @@
       display: flex;
       flex-direction: column;
       min-width: 0;
+      transition: all 0.2s ease;
     }
     .otr-col-title {
       font-size: 13px;
@@ -389,6 +407,14 @@
       margin-bottom: 10px;
       line-height: 1.3;
       white-space: nowrap;
+      padding: 4px 6px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .otr-column.is-active-col .otr-col-title {
+      color: var(--brand);
+      background: rgba(99, 102, 241, 0.14);
+      box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.3);
     }
     .otr-col-buttons {
       display: flex;
@@ -409,6 +435,83 @@
       align-items: center;
       justify-content: center;
       text-align: center;
+    }
+
+    /* Apple-style Grayscale Toggle Switch */
+    .apple-toggle-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      background: none !important;
+      border: none !important;
+      padding: 0 2px !important;
+      margin: 0 !important;
+      min-height: 20px !important;
+      height: 20px !important;
+      cursor: pointer !important;
+      touch-action: manipulation;
+      user-select: none;
+      vertical-align: middle;
+      border-radius: 9999px !important;
+      transition: opacity 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .apple-toggle-btn:hover {
+      opacity: 0.85;
+    }
+    .apple-toggle-btn:focus-visible {
+      outline: 2px solid #0f172a;
+      outline-offset: 2px;
+    }
+    .apple-switch-track {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 20px;
+      border-radius: 9999px;
+      background-color: #cbd5e1;
+      border: 1px solid #94a3b8;
+      transition: background-color 0.22s ease, border-color 0.22s ease;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+    .apple-switch-thumb {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28), 0 0 1px rgba(0, 0, 0, 0.15);
+      transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .apple-toggle-btn.is-on .apple-switch-track {
+      background-color: #0f172a;
+      border-color: #0f172a;
+    }
+    .apple-toggle-btn.is-on .apple-switch-thumb {
+      transform: translateX(16px);
+    }
+    .apple-toggle-btn.is-off .apple-switch-track {
+      background-color: #e2e8f0;
+      border-color: #cbd5e1;
+    }
+    .apple-toggle-btn.is-off .apple-switch-thumb {
+      transform: translateX(0px);
+    }
+    .apple-toggle-label {
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.4px;
+      color: #0f172a;
+      font-family: inherit;
+      transition: color 0.15s ease;
+    }
+    .apple-toggle-btn.is-off .apple-toggle-label {
+      color: #64748b;
+      font-weight: 500;
     }
     .bottomControls{
       display:flex;
@@ -575,14 +678,7 @@
     .mode-btn:hover {
       opacity: 0.9;
     }
-    #modeOtrBtn {
-      border: 4px solid #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25), var(--shadow);
-    }
-    #modeOtrBtn:hover {
-      border-color: #1d4ed8;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.35), var(--shadow);
-    }
+
 
     #shareBtn, #restartBtn {
       min-height: 52px;
@@ -679,8 +775,15 @@
       font-family: inherit;
       flex-shrink: 0;
     }
+    @media (max-width: 640px) {
+      .otr-columns {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+    }
     @media (max-width: 480px) {
       .otr-columns {
+        grid-template-columns: repeat(2, 1fr);
         gap: 6px;
       }
       .otr-col-title {
@@ -940,8 +1043,16 @@
         </div>
 
         <!-- 3. Opportunities to Respond (OTR) -->
-        <div id="otrContainer" style="display:none; margin-top:12px;">
-          <div id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; color:var(--ink);">Opportunities to Respond</div>
+        <div id="otrContainer" style="display:none; margin-top:14px;">
+          <div id="otrHeaderRow" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 12px;">
+            <span id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Opportunities to Respond</span>
+            <button id="toggleAllOtrBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Opportunities to Respond timer" title="Opportunities to Respond: ON" style="display: none;">
+              <span class="apple-switch-track">
+                <span class="apple-switch-thumb"></span>
+              </span>
+              <span id="toggleAllOtrStateText" class="apple-toggle-label">ON</span>
+            </button>
+          </div>
           <div id="otrColumnsContainer" class="otr-columns">
             <!-- Column 1: Whole Group -->
             <div class="otr-column" id="otrColWhole">
@@ -952,15 +1063,28 @@
                 <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response<span class="btn-badge" id="badge-otrWhiteboard" aria-hidden="true">0</span></button>
                 <button id="otrWrittenBtn" class="btn otr otr-written" type="button" disabled>Written Responses<span class="btn-badge" id="badge-otrWritten" aria-hidden="true">0</span></button>
                 <button id="otrNonverbalBtn" class="btn otr otr-nonverbal" type="button" disabled>Nonverbal Response<span class="btn-badge" id="badge-otrNonverbal" aria-hidden="true">0</span></button>
+                <button id="otrOtherWholeBtn" class="btn otr otr-other-whole" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherWhole" aria-hidden="true">0</span></button>
               </div>
             </div>
 
-            <!-- Column 2: Partner -->
+            <!-- Column 2: Small Group -->
+            <div class="otr-column" id="otrColSmall">
+              <div id="otrSectionSmallLabel" class="otr-col-title">Small Group</div>
+              <div id="otrButtonsSmall" class="otr-col-buttons" aria-label="Small Group Opportunities to Respond">
+                <button id="otrGroupDiscBtn" class="btn otr otr-group-disc" type="button" disabled>Group Discussion<span class="btn-badge" id="badge-otrGroupDisc" aria-hidden="true">0</span></button>
+                <button id="otrNumberedHeadsBtn" class="btn otr otr-numbered-heads" type="button" disabled>Numbered Heads<span class="btn-badge" id="badge-otrNumberedHeads" aria-hidden="true">0</span></button>
+                <button id="otrTeamShareBtn" class="btn otr otr-team-share" type="button" disabled>Team Share<span class="btn-badge" id="badge-otrTeamShare" aria-hidden="true">0</span></button>
+                <button id="otrOtherSmallBtn" class="btn otr otr-other-small" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherSmall" aria-hidden="true">0</span></button>
+              </div>
+            </div>
+
+            <!-- Column 3: Partner -->
             <div class="otr-column" id="otrColPartner">
               <div id="otrSection2Label" class="otr-col-title">Partner</div>
               <div id="otrButtons2" class="otr-col-buttons" aria-label="Partner Opportunities to Respond">
                 <button id="otrPrecisionBtn" class="btn otr otr-precision" type="button" disabled>Precision Partner<span class="btn-badge" id="badge-otrPrecision" aria-hidden="true">0</span></button>
                 <button id="otrElbowBtn" class="btn otr otr-elbow" type="button" disabled>Elbow Partner<span class="btn-badge" id="badge-otrElbow" aria-hidden="true">0</span></button>
+                <button id="otrOtherPartnerBtn" class="btn otr otr-other-partner" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherPartner" aria-hidden="true">0</span></button>
               </div>
             </div>
 
@@ -971,14 +1095,23 @@
                 <button id="otrWarmBtn" class="btn otr otr-warm" type="button" disabled>Warm Call<span class="btn-badge" id="badge-otrWarm" aria-hidden="true">0</span></button>
                 <button id="otrColdBtn" class="btn otr otr-cold" type="button" disabled>Cold Call<span class="btn-badge" id="badge-otrCold" aria-hidden="true">0</span></button>
                 <button id="otrVolunteerBtn" class="btn otr otr-volunteer" type="button" disabled>Volunteer<span class="btn-badge" id="badge-otrVolunteer" aria-hidden="true">0</span></button>
+                <button id="otrOtherIndividualBtn" class="btn otr otr-other-indiv" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherIndividual" aria-hidden="true">0</span></button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- 4. Praise buttons -->
-        <div id="praiseContainer" style="display:none; margin-top:12px;">
-          <div id="praiseSubLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; margin-top:0; color:var(--ink);">Praise</div>
+        <div id="praiseContainer" style="display:none; margin-top:16px;">
+          <div id="praiseHeaderRow" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 12px; margin-top: 0;">
+            <span id="praiseSubLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Social Emotional Learning</span>
+            <button id="toggleAllSelBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Social Emotional Learning timer" title="Social Emotional Learning: ON" style="display: none;">
+              <span class="apple-switch-track">
+                <span class="apple-switch-thumb"></span>
+              </span>
+              <span id="toggleAllSelStateText" class="apple-toggle-label">ON</span>
+            </button>
+          </div>
           <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Praise buttons">
             <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise<span class="btn-badge" id="badge-praiseSpecific" aria-hidden="true">0</span></button>
             <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
@@ -1070,7 +1203,9 @@
         engagementPopupsShown: {},
         praiseRatings: [0, 0, 0, 0, 0, 0], // Store slider values 0-4
         tickerId: null,
-        currentScreen: "setup"
+        currentScreen: "setup",
+        allIncludeOtr: true,
+        allIncludeSel: true
       };
 
       function pad2(n){ return String(n).padStart(2, "0"); }
@@ -1107,6 +1242,8 @@
         state.engagementChecks = [];
         state.engagementPopupsShown = {};
         state.praiseRatings = [0, 0, 0, 0, 0, 0];
+        state.allIncludeOtr = true;
+        state.allIncludeSel = true;
       }
 
       function mountTemplate(id){
@@ -1222,7 +1359,7 @@
 
         const nextBtn = document.getElementById("questionsNextBtn");
         
-        const isPraiseOrAll = state.mode === "Praise" || state.mode === "All";
+        const isPraiseOrAll = state.mode === "Praise" || (state.mode === "All" && state.allIncludeSel);
         if (isPraiseOrAll) {
           qRegulationSpaceGroup.style.display = "flex";
           qZonesGraphicGroup.style.display = "flex";
@@ -1282,7 +1419,7 @@
         
         const backBtn = document.getElementById("questionsBackBtn");
         backBtn.addEventListener("click", () => {
-          if (state.mode === "Praise" || state.mode === "All") {
+          if (state.mode === "Praise" || (state.mode === "All" && state.allIncludeSel)) {
             showCharacterStrong();
           } else {
             showRun(true);
@@ -1551,10 +1688,10 @@
           if (hintText) hintText.textContent = "Press Start to begin. Tap a Social Emotional Learning or Lesson Structure button for each observed event.";
         } else if (state.mode === "All") {
           runTitle.textContent = "All Timer";
-          if (hintText) hintText.textContent = "Press Start to begin. Tap any observation button for each observed event.";
+          if (hintText) hintText.textContent = "Press Start to begin. Tap an Opportunities to Respond or Social Emotional Learning button for each observed response.";
         } else {
           runTitle.textContent = "Opportunities to Respond Timer";
-          if (hintText) hintText.textContent = "Press Start to begin. Tap an Opportunities to Respond or Lesson Structure button for each observed response.";
+          if (hintText) hintText.textContent = "Press Start to begin. Tap an Opportunities to Respond button for each observed response.";
         }
 
         const startBtn = document.getElementById("startBtn");
@@ -1566,8 +1703,11 @@
         
         const otrContainer = document.getElementById("otrContainer");
         const otrSectionLabel = document.getElementById("otrSectionLabel");
+        const otrColumnsContainer = document.getElementById("otrColumnsContainer");
         const otrSection1Label = document.getElementById("otrSection1Label");
         const otrButtons1 = document.getElementById("otrButtons1");
+        const otrSectionSmallLabel = document.getElementById("otrSectionSmallLabel");
+        const otrButtonsSmall = document.getElementById("otrButtonsSmall");
         const otrSection2Label = document.getElementById("otrSection2Label");
         const otrButtons2 = document.getElementById("otrButtons2");
         const otrSection3Label = document.getElementById("otrSection3Label");
@@ -1577,61 +1717,141 @@
         const praiseSubLabel = document.getElementById("praiseSubLabel");
         const praiseButtons = document.getElementById("praiseButtons");
 
+        const toggleAllOtrBtn = document.getElementById("toggleAllOtrBtn");
+        const toggleAllSelBtn = document.getElementById("toggleAllSelBtn");
+        const toggleAllOtrStateText = document.getElementById("toggleAllOtrStateText");
+        const toggleAllSelStateText = document.getElementById("toggleAllSelStateText");
+
         if (state.mode === "Praise") {
           if (structContainer) structContainer.style.display = "block";
-          structSectionLabel.style.display = "block";
-          structButtons1.style.display = "grid";
-          structButtons2.style.display = "grid";
+          if (structSectionLabel) structSectionLabel.style.display = "block";
+          if (structButtons1) structButtons1.style.display = "grid";
+          if (structButtons2) structButtons2.style.display = "grid";
           
           if (otrContainer) otrContainer.style.display = "none";
-          otrSectionLabel.style.display = "none";
-          otrSection1Label.style.display = "none";
-          otrButtons1.style.display = "none";
-          otrSection2Label.style.display = "none";
-          otrButtons2.style.display = "none";
-          otrSection3Label.style.display = "none";
-          otrButtons3.style.display = "none";
+          if (otrSectionLabel) otrSectionLabel.style.display = "none";
+          if (otrColumnsContainer) otrColumnsContainer.style.display = "none";
+          if (otrSection1Label) otrSection1Label.style.display = "none";
+          if (otrButtons1) otrButtons1.style.display = "none";
+          if (otrSectionSmallLabel) otrSectionSmallLabel.style.display = "none";
+          if (otrButtonsSmall) otrButtonsSmall.style.display = "none";
+          if (otrSection2Label) otrSection2Label.style.display = "none";
+          if (otrButtons2) otrButtons2.style.display = "none";
+          if (otrSection3Label) otrSection3Label.style.display = "none";
+          if (otrButtons3) otrButtons3.style.display = "none";
           
           if (praiseContainer) praiseContainer.style.display = "block";
-          if (praiseSubLabel) praiseSubLabel.style.display = "block";
-          praiseButtons.style.display = "grid";
+          if (praiseSubLabel) {
+            praiseSubLabel.style.display = "inline-block";
+            praiseSubLabel.textContent = "Social Emotional Learning";
+          }
+          if (praiseButtons) praiseButtons.style.display = "grid";
         } else if (state.mode === "All") {
-          if (structContainer) structContainer.style.display = "block";
-          structSectionLabel.style.display = "block";
-          structButtons1.style.display = "grid";
-          structButtons2.style.display = "grid";
+          // On OTR and ALL timers, remove lesson structure buttons; data is automatically collected from OTR column clicks
+          if (structContainer) structContainer.style.display = "none";
+          if (structSectionLabel) structSectionLabel.style.display = "none";
+          if (structButtons1) structButtons1.style.display = "none";
+          if (structButtons2) structButtons2.style.display = "none";
           
           if (otrContainer) otrContainer.style.display = "block";
-          otrSectionLabel.style.display = "block";
-          otrSection1Label.style.display = "block";
-          otrButtons1.style.display = "flex";
-          otrSection2Label.style.display = "block";
-          otrButtons2.style.display = "flex";
-          otrSection3Label.style.display = "block";
-          otrButtons3.style.display = "flex";
+          if (otrSectionLabel) otrSectionLabel.style.display = "inline-block";
+          if (otrSection1Label) otrSection1Label.style.display = "block";
+          if (otrButtons1) otrButtons1.style.display = "flex";
+          if (otrSectionSmallLabel) otrSectionSmallLabel.style.display = "block";
+          if (otrButtonsSmall) otrButtonsSmall.style.display = "flex";
+          if (otrSection2Label) otrSection2Label.style.display = "block";
+          if (otrButtons2) otrButtons2.style.display = "flex";
+          if (otrSection3Label) otrSection3Label.style.display = "block";
+          if (otrButtons3) otrButtons3.style.display = "flex";
           
           if (praiseContainer) praiseContainer.style.display = "block";
-          if (praiseSubLabel) praiseSubLabel.style.display = "block";
-          praiseButtons.style.display = "grid";
+          if (praiseSubLabel) {
+            praiseSubLabel.style.display = "inline-block";
+            praiseSubLabel.textContent = "Social Emotional Learning";
+          }
         } else {
-          // OTR
-          if (structContainer) structContainer.style.display = "block";
-          structSectionLabel.style.display = "block";
-          structButtons1.style.display = "grid";
-          structButtons2.style.display = "grid";
+          // OTR timer: remove lesson structure buttons; data is automatically collected from OTR column clicks
+          if (structContainer) structContainer.style.display = "none";
+          if (structSectionLabel) structSectionLabel.style.display = "none";
+          if (structButtons1) structButtons1.style.display = "none";
+          if (structButtons2) structButtons2.style.display = "none";
           
           if (otrContainer) otrContainer.style.display = "block";
-          otrSectionLabel.style.display = "block";
-          otrSection1Label.style.display = "block";
-          otrButtons1.style.display = "flex";
-          otrSection2Label.style.display = "block";
-          otrButtons2.style.display = "flex";
-          otrSection3Label.style.display = "block";
-          otrButtons3.style.display = "flex";
+          if (otrSectionLabel) otrSectionLabel.style.display = "inline-block";
+          if (otrColumnsContainer) otrColumnsContainer.style.display = "grid";
+          if (otrSection1Label) otrSection1Label.style.display = "block";
+          if (otrButtons1) otrButtons1.style.display = "flex";
+          if (otrSectionSmallLabel) otrSectionSmallLabel.style.display = "block";
+          if (otrButtonsSmall) otrButtonsSmall.style.display = "flex";
+          if (otrSection2Label) otrSection2Label.style.display = "block";
+          if (otrButtons2) otrButtons2.style.display = "flex";
+          if (otrSection3Label) otrSection3Label.style.display = "block";
+          if (otrButtons3) otrButtons3.style.display = "flex";
           
           if (praiseContainer) praiseContainer.style.display = "none";
           if (praiseSubLabel) praiseSubLabel.style.display = "none";
-          praiseButtons.style.display = "none";
+          if (praiseButtons) praiseButtons.style.display = "none";
+        }
+
+        function updateAllTogglesUI() {
+          if (state.mode !== "All") {
+            if (toggleAllOtrBtn) toggleAllOtrBtn.style.setProperty("display", "none", "important");
+            if (toggleAllSelBtn) toggleAllSelBtn.style.setProperty("display", "none", "important");
+            return;
+          }
+
+          if (toggleAllOtrBtn) {
+            toggleAllOtrBtn.style.setProperty("display", "inline-flex", "important");
+            if (state.allIncludeOtr) {
+              toggleAllOtrBtn.classList.remove("is-off");
+              toggleAllOtrBtn.classList.add("is-on");
+              toggleAllOtrBtn.setAttribute("aria-checked", "true");
+              toggleAllOtrBtn.setAttribute("title", "Opportunities to Respond: ON");
+              if (toggleAllOtrStateText) toggleAllOtrStateText.textContent = "ON";
+              if (otrColumnsContainer) otrColumnsContainer.style.display = "grid";
+            } else {
+              toggleAllOtrBtn.classList.remove("is-on");
+              toggleAllOtrBtn.classList.add("is-off");
+              toggleAllOtrBtn.setAttribute("aria-checked", "false");
+              toggleAllOtrBtn.setAttribute("title", "Opportunities to Respond: OFF");
+              if (toggleAllOtrStateText) toggleAllOtrStateText.textContent = "OFF";
+              if (otrColumnsContainer) otrColumnsContainer.style.display = "none";
+            }
+          }
+
+          if (toggleAllSelBtn) {
+            toggleAllSelBtn.style.setProperty("display", "inline-flex", "important");
+            if (state.allIncludeSel) {
+              toggleAllSelBtn.classList.remove("is-off");
+              toggleAllSelBtn.classList.add("is-on");
+              toggleAllSelBtn.setAttribute("aria-checked", "true");
+              toggleAllSelBtn.setAttribute("title", "Social Emotional Learning: ON");
+              if (toggleAllSelStateText) toggleAllSelStateText.textContent = "ON";
+              if (praiseButtons) praiseButtons.style.display = "grid";
+            } else {
+              toggleAllSelBtn.classList.remove("is-on");
+              toggleAllSelBtn.classList.add("is-off");
+              toggleAllSelBtn.setAttribute("aria-checked", "false");
+              toggleAllSelBtn.setAttribute("title", "Social Emotional Learning: OFF");
+              if (toggleAllSelStateText) toggleAllSelStateText.textContent = "OFF";
+              if (praiseButtons) praiseButtons.style.display = "none";
+            }
+          }
+        }
+
+        updateAllTogglesUI();
+
+        if (toggleAllOtrBtn) {
+          toggleAllOtrBtn.addEventListener("click", () => {
+            state.allIncludeOtr = !state.allIncludeOtr;
+            updateAllTogglesUI();
+          });
+        }
+        if (toggleAllSelBtn) {
+          toggleAllSelBtn.addEventListener("click", () => {
+            state.allIncludeSel = !state.allIncludeSel;
+            updateAllTogglesUI();
+          });
         }
 
         const structWholeBtn = document.getElementById("structWholeBtn");
@@ -1644,13 +1864,21 @@
         const otrWhiteboardBtn = document.getElementById("otrWhiteboardBtn");
         const otrWrittenBtn = document.getElementById("otrWrittenBtn");
         const otrNonverbalBtn = document.getElementById("otrNonverbalBtn");
+        const otrOtherWholeBtn = document.getElementById("otrOtherWholeBtn");
         
+        const otrGroupDiscBtn = document.getElementById("otrGroupDiscBtn");
+        const otrNumberedHeadsBtn = document.getElementById("otrNumberedHeadsBtn");
+        const otrTeamShareBtn = document.getElementById("otrTeamShareBtn");
+        const otrOtherSmallBtn = document.getElementById("otrOtherSmallBtn");
+
         const otrPrecisionBtn = document.getElementById("otrPrecisionBtn");
         const otrElbowBtn = document.getElementById("otrElbowBtn");
+        const otrOtherPartnerBtn = document.getElementById("otrOtherPartnerBtn");
         
         const otrWarmBtn = document.getElementById("otrWarmBtn");
         const otrColdBtn = document.getElementById("otrColdBtn");
         const otrVolunteerBtn = document.getElementById("otrVolunteerBtn");
+        const otrOtherIndividualBtn = document.getElementById("otrOtherIndividualBtn");
 
         const praiseSpecificBtn = document.getElementById("praiseSpecificBtn");
         const praiseGeneralBtn = document.getElementById("praiseGeneralBtn");
@@ -1753,11 +1981,21 @@
           otrWhiteboardBtn.disabled = !on;
           if (otrWrittenBtn) otrWrittenBtn.disabled = !on;
           if (otrNonverbalBtn) otrNonverbalBtn.disabled = !on;
+          if (otrOtherWholeBtn) otrOtherWholeBtn.disabled = !on;
+
+          if (otrGroupDiscBtn) otrGroupDiscBtn.disabled = !on;
+          if (otrNumberedHeadsBtn) otrNumberedHeadsBtn.disabled = !on;
+          if (otrTeamShareBtn) otrTeamShareBtn.disabled = !on;
+          if (otrOtherSmallBtn) otrOtherSmallBtn.disabled = !on;
+
           otrPrecisionBtn.disabled = !on;
           otrElbowBtn.disabled = !on;
+          if (otrOtherPartnerBtn) otrOtherPartnerBtn.disabled = !on;
+
           otrWarmBtn.disabled = !on;
           otrColdBtn.disabled = !on;
           otrVolunteerBtn.disabled = !on;
+          if (otrOtherIndividualBtn) otrOtherIndividualBtn.disabled = !on;
 
           praiseSpecificBtn.disabled = !on;
           praiseGeneralBtn.disabled = !on;
@@ -1780,13 +2018,21 @@
           { kind: "otrWhiteboard", badgeId: "badge-otrWhiteboard" },
           { kind: "otrWritten", badgeId: "badge-otrWritten" },
           { kind: "otrNonverbal", badgeId: "badge-otrNonverbal" },
+          { kind: "otrOtherWhole", badgeId: "badge-otrOtherWhole" },
+
+          { kind: "otrGroupDisc", badgeId: "badge-otrGroupDisc" },
+          { kind: "otrNumberedHeads", badgeId: "badge-otrNumberedHeads" },
+          { kind: "otrTeamShare", badgeId: "badge-otrTeamShare" },
+          { kind: "otrOtherSmall", badgeId: "badge-otrOtherSmall" },
 
           { kind: "otrPrecision", badgeId: "badge-otrPrecision" },
           { kind: "otrElbow", badgeId: "badge-otrElbow" },
+          { kind: "otrOtherPartner", badgeId: "badge-otrOtherPartner" },
 
           { kind: "otrWarm", badgeId: "badge-otrWarm" },
           { kind: "otrCold", badgeId: "badge-otrCold" },
           { kind: "otrVolunteer", badgeId: "badge-otrVolunteer" },
+          { kind: "otrOtherIndividual", badgeId: "badge-otrOtherIndividual" },
 
           { kind: "specific", badgeId: "badge-praiseSpecific" },
           { kind: "general", badgeId: "badge-praiseGeneral" },
@@ -1795,6 +2041,28 @@
           { kind: "genCrit", badgeId: "badge-praiseGenCrit" },
           { kind: "indCrit", badgeId: "badge-praiseIndCrit" }
         ];
+
+        function getActiveStructure(events) {
+          for (let i = events.length - 1; i >= 0; i--) {
+            const k = events[i].kind;
+            if (["structWhole", "structSmall", "structPartners", "structIndividual"].includes(k)) {
+              return k;
+            }
+            if (["otrChoral", "otrCloze", "otrWhiteboard", "otrWritten", "otrNonverbal", "otrOtherWhole"].includes(k)) {
+              return "structWhole";
+            }
+            if (["otrGroupDisc", "otrNumberedHeads", "otrTeamShare", "otrOtherSmall"].includes(k)) {
+              return "structSmall";
+            }
+            if (["otrPrecision", "otrElbow", "otrOtherPartner"].includes(k)) {
+              return "structPartners";
+            }
+            if (["otrWarm", "otrCold", "otrVolunteer", "otrOtherIndividual"].includes(k)) {
+              return "structIndividual";
+            }
+          }
+          return null;
+        }
 
         function updateButtonBadges(pulsedKind) {
           const counts = {};
@@ -1820,6 +2088,17 @@
               }, 160);
             }
           }
+
+          // Automatically highlight the active lesson structure column based on OTR button clicks
+          const activeStruct = getActiveStructure(state.otrEvents);
+          const colWhole = document.getElementById("otrColWhole");
+          const colSmall = document.getElementById("otrColSmall");
+          const colPartner = document.getElementById("otrColPartner");
+          const colIndiv = document.getElementById("otrColIndividual");
+          if (colWhole) colWhole.classList.toggle("is-active-col", activeStruct === "structWhole");
+          if (colSmall) colSmall.classList.toggle("is-active-col", activeStruct === "structSmall");
+          if (colPartner) colPartner.classList.toggle("is-active-col", activeStruct === "structPartners");
+          if (colIndiv) colIndiv.classList.toggle("is-active-col", activeStruct === "structIndividual");
         }
 
         function updateUndoBtn() {
@@ -1856,9 +2135,9 @@
           if (state.mode === "Praise") {
             hintText.textContent = "Recording... Tap a Social Emotional Learning or Lesson Structure button for each observed response.";
           } else if (state.mode === "All") {
-            hintText.textContent = "Recording... Tap an observation button for each response.";
+            hintText.textContent = "Recording... Tap an Opportunities to Respond or Social Emotional Learning button for each observed response.";
           } else {
-            hintText.textContent = "Recording... Tap an Opportunities to Respond or Lesson Structure button for each observed response.";
+            hintText.textContent = "Recording... Tap an Opportunities to Respond button for each observed response.";
           }
           state.tickerId = setInterval(updateUI, 100);
           updateUI();
@@ -1900,7 +2179,7 @@
           if (state.startedAt !== null && state.stoppedAt === null) {
             doStop();
           }
-          if (state.mode === "Praise" || state.mode === "All") {
+          if (state.mode === "Praise" || (state.mode === "All" && state.allIncludeSel)) {
             showCharacterStrong();
           } else {
             showQuestions();
@@ -1920,13 +2199,21 @@
         otrWhiteboardBtn.addEventListener("click", () => doOtr("otrWhiteboard"));
         if (otrWrittenBtn) otrWrittenBtn.addEventListener("click", () => doOtr("otrWritten"));
         if (otrNonverbalBtn) otrNonverbalBtn.addEventListener("click", () => doOtr("otrNonverbal"));
+        if (otrOtherWholeBtn) otrOtherWholeBtn.addEventListener("click", () => doOtr("otrOtherWhole"));
         
+        if (otrGroupDiscBtn) otrGroupDiscBtn.addEventListener("click", () => doOtr("otrGroupDisc"));
+        if (otrNumberedHeadsBtn) otrNumberedHeadsBtn.addEventListener("click", () => doOtr("otrNumberedHeads"));
+        if (otrTeamShareBtn) otrTeamShareBtn.addEventListener("click", () => doOtr("otrTeamShare"));
+        if (otrOtherSmallBtn) otrOtherSmallBtn.addEventListener("click", () => doOtr("otrOtherSmall"));
+
         otrPrecisionBtn.addEventListener("click", () => doOtr("otrPrecision"));
         otrElbowBtn.addEventListener("click", () => doOtr("otrElbow"));
+        if (otrOtherPartnerBtn) otrOtherPartnerBtn.addEventListener("click", () => doOtr("otrOtherPartner"));
 
         otrWarmBtn.addEventListener("click", () => doOtr("otrWarm"));
         otrColdBtn.addEventListener("click", () => doOtr("otrCold"));
         otrVolunteerBtn.addEventListener("click", () => doOtr("otrVolunteer"));
+        if (otrOtherIndividualBtn) otrOtherIndividualBtn.addEventListener("click", () => doOtr("otrOtherIndividual"));
 
         praiseSpecificBtn.addEventListener("click", () => doOtr("specific"));
         praiseGeneralBtn.addEventListener("click", () => doOtr("general"));
@@ -2080,11 +2367,21 @@
           otrWhiteboard: new Array(minutes).fill(0),
           otrWritten: new Array(minutes).fill(0),
           otrNonverbal: new Array(minutes).fill(0),
+          otrOtherWhole: new Array(minutes).fill(0),
+
+          otrGroupDisc: new Array(minutes).fill(0),
+          otrNumberedHeads: new Array(minutes).fill(0),
+          otrTeamShare: new Array(minutes).fill(0),
+          otrOtherSmall: new Array(minutes).fill(0),
+
           otrPrecision: new Array(minutes).fill(0),
           otrElbow: new Array(minutes).fill(0),
+          otrOtherPartner: new Array(minutes).fill(0),
+
           otrWarm: new Array(minutes).fill(0),
           otrCold: new Array(minutes).fill(0),
           otrVolunteer: new Array(minutes).fill(0),
+          otrOtherIndividual: new Array(minutes).fill(0),
           
           specific: new Array(minutes).fill(0),
           general: new Array(minutes).fill(0),
@@ -2103,18 +2400,26 @@
           if (e.kind === "structPartners") bins.structPartners[idx] += 1;
           if (e.kind === "structIndividual") bins.structIndividual[idx] += 1;
 
-          if (e.kind === "otrChoral") bins.otrChoral[idx] += 1;
-          if (e.kind === "otrCloze") bins.otrCloze[idx] += 1;
-          if (e.kind === "otrWhiteboard") bins.otrWhiteboard[idx] += 1;
-          if (e.kind === "otrWritten") bins.otrWritten[idx] += 1;
-          if (e.kind === "otrNonverbal") bins.otrNonverbal[idx] += 1;
+          if (e.kind === "otrChoral") { bins.otrChoral[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrCloze") { bins.otrCloze[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrWhiteboard") { bins.otrWhiteboard[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrWritten") { bins.otrWritten[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrNonverbal") { bins.otrNonverbal[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrOtherWhole") { bins.otrOtherWhole[idx] += 1; bins.structWhole[idx] += 1; }
+
+          if (e.kind === "otrGroupDisc") { bins.otrGroupDisc[idx] += 1; bins.structSmall[idx] += 1; }
+          if (e.kind === "otrNumberedHeads") { bins.otrNumberedHeads[idx] += 1; bins.structSmall[idx] += 1; }
+          if (e.kind === "otrTeamShare") { bins.otrTeamShare[idx] += 1; bins.structSmall[idx] += 1; }
+          if (e.kind === "otrOtherSmall") { bins.otrOtherSmall[idx] += 1; bins.structSmall[idx] += 1; }
           
-          if (e.kind === "otrPrecision") bins.otrPrecision[idx] += 1;
-          if (e.kind === "otrElbow") bins.otrElbow[idx] += 1;
+          if (e.kind === "otrPrecision") { bins.otrPrecision[idx] += 1; bins.structPartners[idx] += 1; }
+          if (e.kind === "otrElbow") { bins.otrElbow[idx] += 1; bins.structPartners[idx] += 1; }
+          if (e.kind === "otrOtherPartner") { bins.otrOtherPartner[idx] += 1; bins.structPartners[idx] += 1; }
           
-          if (e.kind === "otrWarm") bins.otrWarm[idx] += 1;
-          if (e.kind === "otrCold") bins.otrCold[idx] += 1;
-          if (e.kind === "otrVolunteer") bins.otrVolunteer[idx] += 1;
+          if (e.kind === "otrWarm") { bins.otrWarm[idx] += 1; bins.structIndividual[idx] += 1; }
+          if (e.kind === "otrCold") { bins.otrCold[idx] += 1; bins.structIndividual[idx] += 1; }
+          if (e.kind === "otrVolunteer") { bins.otrVolunteer[idx] += 1; bins.structIndividual[idx] += 1; }
+          if (e.kind === "otrOtherIndividual") { bins.otrOtherIndividual[idx] += 1; bins.structIndividual[idx] += 1; }
           
           if (e.kind === "specific") bins.specific[idx] += 1;
           if (e.kind === "general") bins.general[idx] += 1;
@@ -2125,6 +2430,31 @@
         }
 
         return bins;
+      }
+
+      function getStructEvents(events) {
+        const result = [];
+        let cur = null;
+        for (const e of events) {
+          let sk = null;
+          if (["structWhole", "structSmall", "structPartners", "structIndividual"].includes(e.kind)) {
+            sk = e.kind;
+          } else if (["otrChoral", "otrCloze", "otrWhiteboard", "otrWritten", "otrNonverbal", "otrOtherWhole"].includes(e.kind)) {
+            sk = "structWhole";
+          } else if (["otrGroupDisc", "otrNumberedHeads", "otrTeamShare", "otrOtherSmall"].includes(e.kind)) {
+            sk = "structSmall";
+          } else if (["otrPrecision", "otrElbow", "otrOtherPartner"].includes(e.kind)) {
+            sk = "structPartners";
+          } else if (["otrWarm", "otrCold", "otrVolunteer", "otrOtherIndividual"].includes(e.kind)) {
+            sk = "structIndividual";
+          }
+
+          if (sk && sk !== cur) {
+            cur = sk;
+            result.push({ tMs: e.tMs, kind: sk });
+          }
+        }
+        return result;
       }
 
       function el(ns, tag, attrs, text){
@@ -2451,11 +2781,18 @@
           ...bins.otrWhiteboard,
           ...bins.otrWritten,
           ...bins.otrNonverbal,
+          ...bins.otrOtherWhole,
+          ...bins.otrGroupDisc,
+          ...bins.otrNumberedHeads,
+          ...bins.otrTeamShare,
+          ...bins.otrOtherSmall,
           ...bins.otrPrecision,
           ...bins.otrElbow,
+          ...bins.otrOtherPartner,
           ...bins.otrWarm,
           ...bins.otrCold,
           ...bins.otrVolunteer,
+          ...bins.otrOtherIndividual,
           ...bins.specific,
           ...bins.general,
           ...bins.corrective,
@@ -2489,7 +2826,7 @@
 
         const sEvents = (structEvents && structEvents.length > 0)
           ? structEvents
-          : state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
+          : getStructEvents(state.otrEvents);
 
         if (sEvents.length > 0) {
           const xMs = (ms) => pad.l + (ms / (maxMinutes * 60000)) * innerW;
@@ -2755,13 +3092,21 @@
         const cOtrWhiteboard = css.getPropertyValue("--otr-whiteboard").trim() || "#0ea5e9";
         const cOtrWritten = css.getPropertyValue("--otr-written").trim() || "#2563eb";
         const cOtrNonverbal = css.getPropertyValue("--otr-nonverbal").trim() || "#0ea5e9";
+        const cOtrOtherWhole = css.getPropertyValue("--otr-other-whole").trim() || "#bae6fd";
         
+        const cOtrGroupDisc = css.getPropertyValue("--otr-group-disc").trim() || "#0f766e";
+        const cOtrNumberedHeads = css.getPropertyValue("--otr-numbered-heads").trim() || "#0d9488";
+        const cOtrTeamShare = css.getPropertyValue("--otr-team-share").trim() || "#14b8a6";
+        const cOtrOtherSmall = css.getPropertyValue("--otr-other-small").trim() || "#5eead4";
+
         const cOtrPrecision = css.getPropertyValue("--otr-precision").trim() || "#4338ca";
         const cOtrElbow = css.getPropertyValue("--otr-elbow").trim() || "#a5b4fc";
+        const cOtrOtherPartner = css.getPropertyValue("--otr-other-partner").trim() || "#86efac";
         
         const cOtrWarm = css.getPropertyValue("--otr-warm").trim() || "#6b21a8";
         const cOtrCold = css.getPropertyValue("--otr-cold").trim() || "#9333ea";
         const cOtrVolunteer = css.getPropertyValue("--otr-volunteer").trim() || "#e9d5ff";
+        const cOtrOtherIndividual = css.getPropertyValue("--otr-other-individual").trim() || "#e9d5ff";
 
         const cSpecific = css.getPropertyValue("--praise-specific").trim() || "#1f9d55";
         const cGeneral = css.getPropertyValue("--praise-general").trim() || "#86efac";
@@ -2783,11 +3128,18 @@
           addSeries(bins.structSmall, cStructSmall, 2.8, false, null, "1");
           addSeries(bins.structWhole, cStructWhole, 3.8, false, null, "1");
         } else {
+          addSeries(bins.otrOtherIndividual, cOtrOtherIndividual, 2.6, false, null, "1");
           addSeries(bins.otrVolunteer, cOtrVolunteer, 2.6, false, null, "1");
           addSeries(bins.otrCold, cOtrCold, 2.6, false, null, "1");
           addSeries(bins.otrWarm, cOtrWarm, 2.6, false, null, "1");
+          addSeries(bins.otrOtherPartner, cOtrOtherPartner, 2.6, false, null, "1");
           addSeries(bins.otrElbow, cOtrElbow, 2.6, false, null, "1");
           addSeries(bins.otrPrecision, cOtrPrecision, 2.6, false, null, "1");
+          addSeries(bins.otrOtherSmall, cOtrOtherSmall, 2.6, false, null, "1");
+          addSeries(bins.otrTeamShare, cOtrTeamShare, 2.6, false, null, "1");
+          addSeries(bins.otrNumberedHeads, cOtrNumberedHeads, 2.6, false, null, "1");
+          addSeries(bins.otrGroupDisc, cOtrGroupDisc, 2.8, false, null, "1");
+          addSeries(bins.otrOtherWhole, cOtrOtherWhole, 2.6, false, null, "1");
           addSeries(bins.otrNonverbal, cOtrNonverbal, 2.6, false, null, "1");
           addSeries(bins.otrWritten, cOtrWritten, 2.6, false, null, "1");
           addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2.6, false, null, "1");
@@ -2873,18 +3225,18 @@
         }, state.mode === "Praise" ? "Social Emotional Learning per min" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "Opportunities to Respond per min"));
 
         const lx = pad.l + innerW + 18;
-        const ly = pad.t + 6;
-        const lh = 20;
+        const ly = pad.t + 4;
+        const lh = 18;
         const font = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
 
-        function legendRow(i, color, label, dashArray, strokeWidth = 3, opacity = "1"){
-          const y0 = ly + i * lh;
-          const attrs = { x1: lx, y1: y0, x2: lx + 22, y2: y0, stroke: color, "stroke-width": strokeWidth, "stroke-linecap": "round", opacity: String(opacity) };
+        function legendRow(i, color, label, dashArray, strokeWidth = 3, opacity = "1", lineSpacing = lh){
+          const y0 = ly + i * lineSpacing;
+          const attrs = { x1: lx, y1: y0, x2: lx + 20, y2: y0, stroke: color, "stroke-width": strokeWidth, "stroke-linecap": "round", opacity: String(opacity) };
           if (dashArray) attrs["stroke-dasharray"] = dashArray;
           svg.appendChild(el(svgNS, "line", attrs));
           svg.appendChild(el(svgNS, "text", {
-            x: lx + 30, y: y0 + 5, "text-anchor": "start",
-            "font-size": 13.5, "font-family": font,
+            x: lx + 28, y: y0 + 4.5, "text-anchor": "start",
+            "font-size": 12, "font-family": font,
             fill: "rgba(0,0,0,.85)"
           }, label));
         }
@@ -2898,52 +3250,60 @@
           legendRow(3, cRedirect, "Redirective Statements", null, 2.6, "1");
           legendRow(4, cGenCrit, "General Criticism", null, 2.6, "1");
           legendRow(5, cIndCrit, "Individual Criticism", null, 2.6, "1");
-          nextLegendY = ly + 6 * lh + 14;
+          nextLegendY = ly + 6 * lh + 12;
         } else if (state.mode === "Lesson Structure") {
           legendRow(0, cStructWhole, "Whole Group", null, 3.8, "1");
           legendRow(1, cStructSmall, "Small Group", null, 2.8, "1");
           legendRow(2, cStructPartners, "Partners", null, 2.6, "1");
           legendRow(3, cStructIndividual, "Individual", null, 2.6, "1");
-          nextLegendY = ly + 4 * lh + 14;
+          nextLegendY = ly + 4 * lh + 12;
         } else {
-          legendRow(0, cOtrChoral, "Choral Response", null, 4.0, "1");
-          legendRow(1, cOtrCloze, "Cloze Reading", null, 2.8, "1");
-          legendRow(2, cOtrWhiteboard, "White Board Response", null, 2.6, "1");
-          legendRow(3, cOtrWritten, "Written Responses", null, 2.6, "1");
-          legendRow(4, cOtrNonverbal, "Nonverbal Response", null, 2.6, "1");
-          legendRow(5, cOtrPrecision, "Precision Partner", null, 2.6, "1");
-          legendRow(6, cOtrElbow, "Elbow Partner", null, 2.6, "1");
-          legendRow(7, cOtrWarm, "Warm Call", null, 2.6, "1");
-          legendRow(8, cOtrCold, "Cold Call", null, 2.6, "1");
-          legendRow(9, cOtrVolunteer, "Volunteer", null, 2.6, "1");
-          nextLegendY = ly + 10 * lh + 14;
+          const otrLh = 16;
+          legendRow(0, cOtrChoral, "Choral Response", null, 4.0, "1", otrLh);
+          legendRow(1, cOtrCloze, "Cloze Reading", null, 2.8, "1", otrLh);
+          legendRow(2, cOtrWhiteboard, "White Board Response", null, 2.6, "1", otrLh);
+          legendRow(3, cOtrWritten, "Written Responses", null, 2.6, "1", otrLh);
+          legendRow(4, cOtrNonverbal, "Nonverbal Response", null, 2.6, "1", otrLh);
+          legendRow(5, cOtrOtherWhole, "Other (Whole Group)", null, 2.6, "1", otrLh);
+          legendRow(6, cOtrGroupDisc, "Group Discussion", null, 2.8, "1", otrLh);
+          legendRow(7, cOtrNumberedHeads, "Numbered Heads", null, 2.6, "1", otrLh);
+          legendRow(8, cOtrTeamShare, "Team Share", null, 2.6, "1", otrLh);
+          legendRow(9, cOtrOtherSmall, "Other (Small Group)", null, 2.6, "1", otrLh);
+          legendRow(10, cOtrPrecision, "Precision Partner", null, 2.6, "1", otrLh);
+          legendRow(11, cOtrElbow, "Elbow Partner", null, 2.6, "1", otrLh);
+          legendRow(12, cOtrOtherPartner, "Other (Partner)", null, 2.6, "1", otrLh);
+          legendRow(13, cOtrWarm, "Warm Call", null, 2.6, "1", otrLh);
+          legendRow(14, cOtrCold, "Cold Call", null, 2.6, "1", otrLh);
+          legendRow(15, cOtrVolunteer, "Volunteer", null, 2.6, "1", otrLh);
+          legendRow(16, cOtrOtherIndividual, "Other (Individual)", null, 2.6, "1", otrLh);
+          nextLegendY = ly + 17 * otrLh + 10;
         }
 
         if (state.mode !== "Lesson Structure") {
           svg.appendChild(el(svgNS, "text", {
             x: lx, y: nextLegendY,
             "text-anchor": "start",
-            "font-size": 11.5,
+            "font-size": 11,
             "font-weight": "700",
             "font-family": font,
             fill: "#475569"
           }, "Lesson Structure:"));
 
-          const lsLh = 19;
+          const lsLh = 17;
           lsCategories.forEach((cat, k) => {
-            const itemY = nextLegendY + 14 + (k * lsLh);
+            const itemY = nextLegendY + 13 + (k * lsLh);
             svg.appendChild(el(svgNS, "rect", {
-              x: lx, y: itemY - 9,
-              width: 16, height: 11,
+              x: lx, y: itemY - 8,
+              width: 15, height: 10,
               rx: 2,
               fill: cat.fill,
               stroke: cat.stroke,
               "stroke-width": 1.2
             }));
             svg.appendChild(el(svgNS, "text", {
-              x: lx + 24, y: itemY,
+              x: lx + 22, y: itemY,
               "text-anchor": "start",
-              "font-size": 12,
+              "font-size": 11.5,
               "font-family": font,
               fill: "rgba(0,0,0,.70)"
             }, cat.label));
@@ -3076,8 +3436,8 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrPrecision, otrElbow, otrWarm, otrCold, otrVolunteer, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
-        const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : 'Opportunities to Respond';
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrOtherWhole, otrGroupDisc, otrNumberedHeads, otrTeamShare, otrOtherSmall, otrPrecision, otrElbow, otrOtherPartner, otrWarm, otrCold, otrVolunteer, otrOtherIndividual, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
+        const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : state.mode === 'NotesOnly' ? 'Observation' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`
         ];
@@ -3117,7 +3477,10 @@
           }
         }
 
-        if (state.mode === "Praise") {
+        if (state.mode === "NotesOnly") {
+          lines.push("");
+          lines.push("Note: Both OTR and SEL observation timers were turned off during this observation.");
+        } else if (state.mode === "Praise") {
           lines.push(`Specific Praise: ${specific}`);
           lines.push(`General Praise: ${general}`);
           lines.push(`Corrective Feedback: ${corrective}`);
@@ -3177,11 +3540,18 @@
           lines.push(`White Board Response: ${otrWhiteboard}`);
           lines.push(`Written Responses: ${otrWritten}`);
           lines.push(`Nonverbal Response: ${otrNonverbal}`);
+          lines.push(`Other (Whole Group): ${otrOtherWhole || 0}`);
+          lines.push(`Group Discussion: ${otrGroupDisc}`);
+          lines.push(`Numbered Heads: ${otrNumberedHeads}`);
+          lines.push(`Team Share: ${otrTeamShare}`);
+          lines.push(`Other (Small Group): ${otrOtherSmall || 0}`);
           lines.push(`Precision Partner: ${otrPrecision}`);
           lines.push(`Elbow Partner: ${otrElbow}`);
+          lines.push(`Other (Partner): ${otrOtherPartner || 0}`);
           lines.push(`Warm Call: ${otrWarm}`);
           lines.push(`Cold Call: ${otrCold}`);
           lines.push(`Volunteer: ${otrVolunteer}`);
+          lines.push(`Other (Individual): ${otrOtherIndividual || 0}`);
           lines.push(`Opportunities to Respond Total: ${otrTotal}`);
           lines.push(`Opportunities to Respond per minute: ${ratioText}`);
           lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
@@ -3518,11 +3888,18 @@
         const totalOtrWhiteboard = bins.otrWhiteboard.reduce((a, b) => a + b, 0);
         const totalOtrWritten = bins.otrWritten.reduce((a, b) => a + b, 0);
         const totalOtrNonverbal = bins.otrNonverbal.reduce((a, b) => a + b, 0);
+        const totalOtrOtherWhole = bins.otrOtherWhole.reduce((a, b) => a + b, 0);
+        const totalOtrGroupDisc = bins.otrGroupDisc.reduce((a, b) => a + b, 0);
+        const totalOtrNumberedHeads = bins.otrNumberedHeads.reduce((a, b) => a + b, 0);
+        const totalOtrTeamShare = bins.otrTeamShare.reduce((a, b) => a + b, 0);
+        const totalOtrOtherSmall = bins.otrOtherSmall.reduce((a, b) => a + b, 0);
         const totalOtrPrecision = bins.otrPrecision.reduce((a, b) => a + b, 0);
         const totalOtrElbow = bins.otrElbow.reduce((a, b) => a + b, 0);
+        const totalOtrOtherPartner = bins.otrOtherPartner.reduce((a, b) => a + b, 0);
         const totalOtrWarm = bins.otrWarm.reduce((a, b) => a + b, 0);
         const totalOtrCold = bins.otrCold.reduce((a, b) => a + b, 0);
         const totalOtrVolunteer = bins.otrVolunteer.reduce((a, b) => a + b, 0);
+        const totalOtrOtherIndividual = bins.otrOtherIndividual.reduce((a, b) => a + b, 0);
 
         const totalSpecific = bins.specific.reduce((a, b) => a + b, 0);
         const totalGeneral = bins.general.reduce((a, b) => a + b, 0);
@@ -3531,7 +3908,12 @@
         const totalGenCrit = bins.genCrit.reduce((a, b) => a + b, 0);
         const totalIndCrit = bins.indCrit.reduce((a, b) => a + b, 0);
 
-        const totalOtr = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind)).length;
+        const totalOtr = state.otrEvents.filter(e => [
+          "otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrOtherWhole",
+          "otrGroupDisc","otrNumberedHeads","otrTeamShare","otrOtherSmall",
+          "otrPrecision","otrElbow","otrOtherPartner",
+          "otrWarm","otrCold","otrVolunteer","otrOtherIndividual"
+        ].includes(e.kind)).length;
         const totalPraise = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind)).length;
         const totalEngagement = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind)).length;
         
@@ -3543,16 +3925,31 @@
         if (state.mode === "Praise") {
           resultsTitle.textContent = "Social Emotional Learning Results";
         } else if (state.mode === "All") {
-          resultsTitle.textContent = "All Results";
+          if (state.allIncludeOtr && state.allIncludeSel) {
+            resultsTitle.textContent = "All Results";
+          } else if (state.allIncludeOtr) {
+            resultsTitle.textContent = "All Results (OTR Only)";
+          } else if (state.allIncludeSel) {
+            resultsTitle.textContent = "All Results (SEL Only)";
+          } else {
+            resultsTitle.textContent = "All Results (Timers Off)";
+          }
         } else {
           resultsTitle.textContent = "Opportunities to Respond Results";
         }
 
         document.getElementById("resultsContext").textContent = `Observed Educator Name: ${state.educatorName}`;
         
-        const renderModes = state.mode === "All"
-          ? ["OTRs", "Praise"]
-          : [state.mode];
+        const renderModes = [];
+        if (state.mode === "All") {
+          if (state.allIncludeOtr) renderModes.push("OTRs");
+          if (state.allIncludeSel) renderModes.push("Praise");
+          if (renderModes.length === 0) {
+            renderModes.push("NotesOnly");
+          }
+        } else {
+          renderModes.push(state.mode);
+        }
         const sharedBlocks = [];
         
         for (const renderMode of renderModes) {
@@ -3560,18 +3957,25 @@
           const oldStateMode = state.mode;
           state.mode = renderMode;
           
-          let chartSvg;
+          let chartSvg = null;
           let modeEvents = [];
-          const structEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
+          const structEvents = getStructEvents(state.otrEvents);
           if (renderMode === "Praise") {
              modeEvents = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
           } else if (renderMode === "Lesson Structure") {
              modeEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
              chartSvg = renderEngagementStackedBarChartSVG(modeEvents, durationMs);
-           } else {
-             modeEvents = state.otrEvents.filter(e => ["otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrPrecision","otrElbow","otrWarm","otrCold","otrVolunteer"].includes(e.kind));
+          } else if (renderMode === "OTRs") {
+             modeEvents = state.otrEvents.filter(e => [
+               "otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrOtherWhole",
+               "otrGroupDisc","otrNumberedHeads","otrTeamShare","otrOtherSmall",
+               "otrPrecision","otrElbow","otrOtherPartner",
+               "otrWarm","otrCold","otrVolunteer","otrOtherIndividual"
+             ].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
+          } else {
+             chartSvg = null;
           }
           
           const curOtrTotal = renderMode === "Praise" ? totalPraise : renderMode === "Lesson Structure" ? totalEngagement : totalOtr;
@@ -3597,11 +4001,18 @@
               otrWhiteboard: totalOtrWhiteboard,
               otrWritten: totalOtrWritten,
               otrNonverbal: totalOtrNonverbal,
+              otrOtherWhole: totalOtrOtherWhole,
+              otrGroupDisc: totalOtrGroupDisc,
+              otrNumberedHeads: totalOtrNumberedHeads,
+              otrTeamShare: totalOtrTeamShare,
+              otrOtherSmall: totalOtrOtherSmall,
               otrPrecision: totalOtrPrecision,
               otrElbow: totalOtrElbow,
+              otrOtherPartner: totalOtrOtherPartner,
               otrWarm: totalOtrWarm,
               otrCold: totalOtrCold,
               otrVolunteer: totalOtrVolunteer,
+              otrOtherIndividual: totalOtrOtherIndividual,
 
               specific: totalSpecific,
               general: totalGeneral,
@@ -3644,6 +4055,7 @@
         const shareStatus = document.getElementById("shareStatus");
 
         const updateFirstBlockLines = () => {
+          if (!sharedBlocks || sharedBlocks.length === 0) return;
           const oldStateMode = state.mode;
           state.mode = renderModes[0];
           const firstOtrTotal = state.mode === "Praise" ? totalPraise : totalOtr;
@@ -3662,7 +4074,15 @@
               otrChoral: totalOtrChoral, otrCloze: totalOtrCloze, otrWhiteboard: totalOtrWhiteboard,
               otrWritten: totalOtrWritten,
               otrNonverbal: totalOtrNonverbal,
-              otrPrecision: totalOtrPrecision, otrElbow: totalOtrElbow, otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
+              otrOtherWhole: totalOtrOtherWhole,
+              otrGroupDisc: totalOtrGroupDisc,
+              otrNumberedHeads: totalOtrNumberedHeads,
+              otrTeamShare: totalOtrTeamShare,
+              otrOtherSmall: totalOtrOtherSmall,
+              otrPrecision: totalOtrPrecision, otrElbow: totalOtrElbow,
+              otrOtherPartner: totalOtrOtherPartner,
+              otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
+              otrOtherIndividual: totalOtrOtherIndividual,
               specific: totalSpecific, general: totalGeneral, corrective: totalCorrective,
               redirect: totalRedirect, genCrit: totalGenCrit, indCrit: totalIndCrit,
               otrTotal: firstOtrTotal,
