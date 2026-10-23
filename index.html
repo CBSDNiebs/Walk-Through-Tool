@@ -192,6 +192,80 @@
     .btn.otr.struct-partners{background:var(--struct-partners); color:#0f172a; border-color:#cbd5e1;}
     .btn.otr.struct-individual{background:var(--struct-individual); color:#0f172a; border-color:#cbd5e1;}
 
+    .btn.otr.otr-custom-whole{background:var(--otr-other-whole); color:#082f49;}
+    .btn.otr.otr-custom-small{background:var(--otr-other-small); color:#134e4a;}
+    .btn.otr.otr-custom-partner{background:var(--otr-other-partner); color:#064e3b;}
+    .btn.otr.otr-custom-individual{background:var(--otr-other-individual); color:#581c87;}
+    .btn.otr.praise-custom{background:#0d9488; color:#ffffff; border-color:#0f766e;}
+
+    /* Add Buttons at bottom of OTR columns and Praise timer */
+    .otr-add-container {
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc; /* very lightly colored grey */
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 6px 8px 6px 10px;
+      box-sizing: border-box;
+      transition: all 0.15s ease;
+    }
+    .otr-add-container:focus-within {
+      background: #ffffff;
+      border-color: #94a3b8;
+      box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.25);
+    }
+    .otr-add-input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1e293b;
+      outline: none;
+      padding: 0;
+      margin: 0;
+    }
+    .otr-add-input::placeholder {
+      color: #94a3b8;
+      font-weight: 500;
+      font-size: 11.5px;
+    }
+    .otr-add-plus-btn {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      min-height: 28px;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid #cbd5e1;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .otr-add-plus-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-color: #94a3b8;
+      transform: scale(1.05);
+    }
+    .otr-add-plus-btn:active {
+      transform: scale(0.95);
+    }
+
     .btn.otr .btn-badge{
       position:absolute;
       top:4px;
@@ -1063,7 +1137,10 @@
                 <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response<span class="btn-badge" id="badge-otrWhiteboard" aria-hidden="true">0</span></button>
                 <button id="otrWrittenBtn" class="btn otr otr-written" type="button" disabled>Written Responses<span class="btn-badge" id="badge-otrWritten" aria-hidden="true">0</span></button>
                 <button id="otrNonverbalBtn" class="btn otr otr-nonverbal" type="button" disabled>Nonverbal Response<span class="btn-badge" id="badge-otrNonverbal" aria-hidden="true">0</span></button>
-                <button id="otrOtherWholeBtn" class="btn otr otr-other-whole" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherWhole" aria-hidden="true">0</span></button>
+                <div class="otr-add-container" id="otrAddWholeContainer">
+                  <input type="text" id="otrAddWholeInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Whole Group" maxlength="35" />
+                  <button type="button" id="otrAddWholeBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
+                </div>
               </div>
             </div>
 
@@ -1074,7 +1151,10 @@
                 <button id="otrGroupDiscBtn" class="btn otr otr-group-disc" type="button" disabled>Group Discussion<span class="btn-badge" id="badge-otrGroupDisc" aria-hidden="true">0</span></button>
                 <button id="otrNumberedHeadsBtn" class="btn otr otr-numbered-heads" type="button" disabled>Numbered Heads<span class="btn-badge" id="badge-otrNumberedHeads" aria-hidden="true">0</span></button>
                 <button id="otrTeamShareBtn" class="btn otr otr-team-share" type="button" disabled>Team Share<span class="btn-badge" id="badge-otrTeamShare" aria-hidden="true">0</span></button>
-                <button id="otrOtherSmallBtn" class="btn otr otr-other-small" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherSmall" aria-hidden="true">0</span></button>
+                <div class="otr-add-container" id="otrAddSmallContainer">
+                  <input type="text" id="otrAddSmallInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Small Group" maxlength="35" />
+                  <button type="button" id="otrAddSmallBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
+                </div>
               </div>
             </div>
 
@@ -1084,7 +1164,10 @@
               <div id="otrButtons2" class="otr-col-buttons" aria-label="Partner Opportunities to Respond">
                 <button id="otrPrecisionBtn" class="btn otr otr-precision" type="button" disabled>Precision Partner<span class="btn-badge" id="badge-otrPrecision" aria-hidden="true">0</span></button>
                 <button id="otrElbowBtn" class="btn otr otr-elbow" type="button" disabled>Elbow Partner<span class="btn-badge" id="badge-otrElbow" aria-hidden="true">0</span></button>
-                <button id="otrOtherPartnerBtn" class="btn otr otr-other-partner" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherPartner" aria-hidden="true">0</span></button>
+                <div class="otr-add-container" id="otrAddPartnerContainer">
+                  <input type="text" id="otrAddPartnerInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Partner" maxlength="35" />
+                  <button type="button" id="otrAddPartnerBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
+                </div>
               </div>
             </div>
 
@@ -1095,7 +1178,10 @@
                 <button id="otrWarmBtn" class="btn otr otr-warm" type="button" disabled>Warm Call<span class="btn-badge" id="badge-otrWarm" aria-hidden="true">0</span></button>
                 <button id="otrColdBtn" class="btn otr otr-cold" type="button" disabled>Cold Call<span class="btn-badge" id="badge-otrCold" aria-hidden="true">0</span></button>
                 <button id="otrVolunteerBtn" class="btn otr otr-volunteer" type="button" disabled>Volunteer<span class="btn-badge" id="badge-otrVolunteer" aria-hidden="true">0</span></button>
-                <button id="otrOtherIndividualBtn" class="btn otr otr-other-indiv" type="button" disabled>Other<span class="btn-badge" id="badge-otrOtherIndividual" aria-hidden="true">0</span></button>
+                <div class="otr-add-container" id="otrAddIndividualContainer">
+                  <input type="text" id="otrAddIndividualInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Individual" maxlength="35" />
+                  <button type="button" id="otrAddIndividualBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1119,6 +1205,10 @@
             <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements<span class="btn-badge" id="badge-praiseRedirect" aria-hidden="true">0</span></button>
             <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism<span class="btn-badge" id="badge-praiseGenCrit" aria-hidden="true">0</span></button>
             <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism<span class="btn-badge" id="badge-praiseIndCrit" aria-hidden="true">0</span></button>
+            <div class="otr-add-container praise-add-container" id="praiseAddContainer" style="grid-column: 1 / -1; margin-top: 4px;">
+              <input type="text" id="praiseAddInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Praise timer" maxlength="35" />
+              <button type="button" id="praiseAddBtn" class="otr-add-plus-btn" aria-label="Add Praise observation button" title="Add Praise observation button">+</button>
+            </div>
           </div>
         </div>
 
@@ -1205,7 +1295,9 @@
         tickerId: null,
         currentScreen: "setup",
         allIncludeOtr: true,
-        allIncludeSel: true
+        allIncludeSel: true,
+        customOtrButtons: [],
+        customPraiseButtons: []
       };
 
       function pad2(n){ return String(n).padStart(2, "0"); }
@@ -1234,6 +1326,8 @@
         state.startWall = null;
         state.stopWall = null;
         state.otrEvents = [];
+        state.customOtrButtons = [];
+        state.customPraiseButtons = [];
         state.notes = "";
         state.regulationSpace = null;
         state.characterTraitGraphic = null;
@@ -2003,6 +2097,11 @@
           praiseRedirectBtn.disabled = !on;
           praiseGenCritBtn.disabled = !on;
           praiseIndCritBtn.disabled = !on;
+
+          const customBtns = document.querySelectorAll(".btn.otr-custom-btn");
+          customBtns.forEach(btn => {
+            btn.disabled = !on;
+          });
         }
 
         const undoBtn = document.getElementById("undoBtn");
@@ -2060,6 +2159,13 @@
             if (["otrWarm", "otrCold", "otrVolunteer", "otrOtherIndividual"].includes(k)) {
               return "structIndividual";
             }
+            const customMatch = (state.customOtrButtons || []).find(c => c.id === k);
+            if (customMatch) {
+              if (customMatch.column === "whole") return "structWhole";
+              if (customMatch.column === "small") return "structSmall";
+              if (customMatch.column === "partner") return "structPartners";
+              if (customMatch.column === "individual") return "structIndividual";
+            }
           }
           return null;
         }
@@ -2080,6 +2186,26 @@
               badge.classList.remove("has-count");
             }
             if (pulsedKind && item.kind === pulsedKind) {
+              badge.classList.remove("pulse");
+              void badge.offsetWidth;
+              badge.classList.add("pulse");
+              setTimeout(() => {
+                badge.classList.remove("pulse");
+              }, 160);
+            }
+          }
+
+          for (const custom of [...(state.customOtrButtons || []), ...(state.customPraiseButtons || [])]) {
+            const badge = document.getElementById("badge-" + custom.id);
+            if (!badge) continue;
+            const count = counts[custom.id] || 0;
+            badge.textContent = String(count);
+            if (count > 0) {
+              badge.classList.add("has-count");
+            } else {
+              badge.classList.remove("has-count");
+            }
+            if (pulsedKind && custom.id === pulsedKind) {
               badge.classList.remove("pulse");
               void badge.offsetWidth;
               badge.classList.add("pulse");
@@ -2221,6 +2347,90 @@
         praiseRedirectBtn.addEventListener("click", () => doOtr("redirect"));
         praiseGenCritBtn.addEventListener("click", () => doOtr("genCrit"));
         praiseIndCritBtn.addEventListener("click", () => doOtr("indCrit"));
+
+        function renderSingleCustomButton(customItem, buttonsContainer, addRow, customClass) {
+          const btn = document.createElement("button");
+          btn.id = customItem.id;
+          btn.type = "button";
+          btn.className = `btn otr otr-custom-btn ${customClass}`;
+          btn.disabled = !(state.startedAt !== null && state.stoppedAt === null);
+          btn.textContent = customItem.label;
+
+          const badge = document.createElement("span");
+          badge.className = "btn-badge";
+          badge.id = "badge-" + customItem.id;
+          badge.setAttribute("aria-hidden", "true");
+          badge.textContent = "0";
+          btn.appendChild(badge);
+
+          btn.addEventListener("click", () => doOtr(customItem.id));
+
+          buttonsContainer.insertBefore(btn, addRow);
+        }
+
+        function attachAddHandler(colKey, inputId, plusBtnId, containerId, buttonsContainerId, customClass) {
+          const input = document.getElementById(inputId);
+          const plusBtn = document.getElementById(plusBtnId);
+          const addRow = document.getElementById(containerId);
+          const buttonsContainer = document.getElementById(buttonsContainerId);
+          if (!input || !plusBtn || !addRow || !buttonsContainer) return;
+
+          function doAdd() {
+            const label = input.value.trim();
+            if (!label) return;
+            input.value = "";
+            const id = "custom_" + colKey + "_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+            const customItem = { id, column: colKey, label };
+            if (colKey === "praise") {
+              state.customPraiseButtons.push(customItem);
+            } else {
+              state.customOtrButtons.push(customItem);
+            }
+
+            renderSingleCustomButton(customItem, buttonsContainer, addRow, customClass);
+            updateButtonBadges();
+            input.focus();
+          }
+
+          plusBtn.addEventListener("click", doAdd);
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              doAdd();
+            }
+          });
+        }
+
+        attachAddHandler("whole", "otrAddWholeInput", "otrAddWholeBtn", "otrAddWholeContainer", "otrButtons1", "otr-custom-whole");
+        attachAddHandler("small", "otrAddSmallInput", "otrAddSmallBtn", "otrAddSmallContainer", "otrButtonsSmall", "otr-custom-small");
+        attachAddHandler("partner", "otrAddPartnerInput", "otrAddPartnerBtn", "otrAddPartnerContainer", "otrButtons2", "otr-custom-partner");
+        attachAddHandler("individual", "otrAddIndividualInput", "otrAddIndividualBtn", "otrAddIndividualContainer", "otrButtons3", "otr-custom-individual");
+        attachAddHandler("praise", "praiseAddInput", "praiseAddBtn", "praiseAddContainer", "praiseButtons", "praise-custom");
+
+        if (state.customOtrButtons && state.customOtrButtons.length > 0) {
+          const colMap = {
+            whole: { buttons: document.getElementById("otrButtons1"), addRow: document.getElementById("otrAddWholeContainer"), cls: "otr-custom-whole" },
+            small: { buttons: document.getElementById("otrButtonsSmall"), addRow: document.getElementById("otrAddSmallContainer"), cls: "otr-custom-small" },
+            partner: { buttons: document.getElementById("otrButtons2"), addRow: document.getElementById("otrAddPartnerContainer"), cls: "otr-custom-partner" },
+            individual: { buttons: document.getElementById("otrButtons3"), addRow: document.getElementById("otrAddIndividualContainer"), cls: "otr-custom-individual" }
+          };
+          for (const item of state.customOtrButtons) {
+            const col = colMap[item.column];
+            if (col && col.buttons && col.addRow) {
+              renderSingleCustomButton(item, col.buttons, col.addRow, col.cls);
+            }
+          }
+        }
+
+        if (state.customPraiseButtons && state.customPraiseButtons.length > 0) {
+          const pBtns = document.getElementById("praiseButtons");
+          const pAddRow = document.getElementById("praiseAddContainer");
+          if (pBtns && pAddRow) {
+            for (const item of state.customPraiseButtons) {
+              renderSingleCustomButton(item, pBtns, pAddRow, "praise-custom");
+            }
+          }
+        }
 
         stopBtn.addEventListener("click", doStop);
 
@@ -2391,6 +2601,17 @@
           indCrit: new Array(minutes).fill(0)
         };
 
+        if (state.customOtrButtons && state.customOtrButtons.length > 0) {
+          for (const cb of state.customOtrButtons) {
+            bins[cb.id] = new Array(minutes).fill(0);
+          }
+        }
+        if (state.customPraiseButtons && state.customPraiseButtons.length > 0) {
+          for (const cb of state.customPraiseButtons) {
+            bins[cb.id] = new Array(minutes).fill(0);
+          }
+        }
+
         for (const e of events){
           const idx = Math.min(minutes - 1, Math.max(0, Math.floor(e.tMs / 60000)));
           bins.total[idx] += 1;
@@ -2420,6 +2641,26 @@
           if (e.kind === "otrCold") { bins.otrCold[idx] += 1; bins.structIndividual[idx] += 1; }
           if (e.kind === "otrVolunteer") { bins.otrVolunteer[idx] += 1; bins.structIndividual[idx] += 1; }
           if (e.kind === "otrOtherIndividual") { bins.otrOtherIndividual[idx] += 1; bins.structIndividual[idx] += 1; }
+
+          if (state.customOtrButtons && state.customOtrButtons.length > 0) {
+            const cb = state.customOtrButtons.find(c => c.id === e.kind);
+            if (cb) {
+              if (!bins[cb.id]) bins[cb.id] = new Array(minutes).fill(0);
+              bins[cb.id][idx] += 1;
+              if (cb.column === "whole") bins.structWhole[idx] += 1;
+              else if (cb.column === "small") bins.structSmall[idx] += 1;
+              else if (cb.column === "partner") bins.structPartners[idx] += 1;
+              else if (cb.column === "individual") bins.structIndividual[idx] += 1;
+            }
+          }
+
+          if (state.customPraiseButtons && state.customPraiseButtons.length > 0) {
+            const cb = state.customPraiseButtons.find(c => c.id === e.kind);
+            if (cb) {
+              if (!bins[cb.id]) bins[cb.id] = new Array(minutes).fill(0);
+              bins[cb.id][idx] += 1;
+            }
+          }
           
           if (e.kind === "specific") bins.specific[idx] += 1;
           if (e.kind === "general") bins.general[idx] += 1;
@@ -2447,6 +2688,14 @@
             sk = "structPartners";
           } else if (["otrWarm", "otrCold", "otrVolunteer", "otrOtherIndividual"].includes(e.kind)) {
             sk = "structIndividual";
+          } else if (state.customOtrButtons && state.customOtrButtons.length > 0) {
+            const cb = state.customOtrButtons.find(c => c.id === e.kind);
+            if (cb) {
+              if (cb.column === "whole") sk = "structWhole";
+              else if (cb.column === "small") sk = "structSmall";
+              else if (cb.column === "partner") sk = "structPartners";
+              else if (cb.column === "individual") sk = "structIndividual";
+            }
           }
 
           if (sk && sk !== cur) {
@@ -2769,9 +3018,14 @@
         const numBlocks = Math.max(1, Math.ceil(rawMinutes / 5));
         const maxMinutes = numBlocks * 5;
 
+        const customBinsValues = [
+          ...(state.customOtrButtons || []).flatMap(c => bins[c.id] || []),
+          ...(state.customPraiseButtons || []).flatMap(c => bins[c.id] || [])
+        ];
         const allMax = Math.max(
           5,
           ...bins.total,
+          ...customBinsValues,
           ...bins.structWhole,
           ...bins.structSmall,
           ...bins.structPartners,
@@ -2994,7 +3248,8 @@
           let bText = "#312e81";
 
           if (state.mode === "Praise") {
-            const bPos = bEvents.filter(e => ["specific", "general", "corrective"].includes(e.kind)).length;
+            const customPraiseIds = (state.customPraiseButtons || []).map(c => c.id);
+            const bPos = bEvents.filter(e => ["specific", "general", "corrective", ...customPraiseIds].includes(e.kind)).length;
             const bNeg = bEvents.filter(e => ["redirect", "genCrit", "indCrit"].includes(e.kind)).length;
             bRatioText = formatPraiseRatio(bPos, bNeg, effectiveDurationMs);
             const rVal = bNeg === 0 ? bPos : Math.round(bPos / bNeg);
@@ -3122,6 +3377,14 @@
           addSeries(bins.corrective, cCorrective, 2.8, false, null, "1");
           addSeries(bins.general, cGeneral, 2.8, false, null, "1");
           addSeries(bins.specific, cSpecific, 3.8, false, null, "1");
+
+          if (state.customPraiseButtons && state.customPraiseButtons.length > 0) {
+            for (const cb of state.customPraiseButtons) {
+              if (bins[cb.id]) {
+                addSeries(bins[cb.id], "#0d9488", 2.6, false, "3 2", "1");
+              }
+            }
+          }
         } else if (state.mode === "Lesson Structure") {
           addSeries(bins.structIndividual, cStructIndividual, 2.6, false, null, "1");
           addSeries(bins.structPartners, cStructPartners, 2.6, false, null, "1");
@@ -3145,6 +3408,20 @@
           addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2.6, false, null, "1");
           addSeries(bins.otrCloze, cOtrCloze, 2.8, false, null, "1");
           addSeries(bins.otrChoral, cOtrChoral, 4.0, false, null, "1");
+
+          if (state.customOtrButtons && state.customOtrButtons.length > 0) {
+            const colColors = {
+              whole: "#0284c7",
+              small: "#0d9488",
+              partner: "#16a34a",
+              individual: "#7e22ce"
+            };
+            for (const cb of state.customOtrButtons) {
+              if (bins[cb.id]) {
+                addSeries(bins[cb.id], colColors[cb.column] || "#64748b", 2.6, false, "3 2", "1");
+              }
+            }
+          }
         }
 
         // X-axis label with clear separation below pills
@@ -3161,7 +3438,13 @@
           const totalRedirect = bins.redirect.reduce((a, b) => a + b, 0);
           const totalGenCrit = bins.genCrit.reduce((a, b) => a + b, 0);
           const totalIndCrit = bins.indCrit.reduce((a, b) => a + b, 0);
-          const positive = totalSpecific + totalGeneral + totalCorrective;
+          let totalCustomP = 0;
+          if (state.customPraiseButtons) {
+            for (const cb of state.customPraiseButtons) {
+              if (bins[cb.id]) totalCustomP += bins[cb.id].reduce((a, b) => a + b, 0);
+            }
+          }
+          const positive = totalSpecific + totalGeneral + totalCorrective + totalCustomP;
           const negative = totalRedirect + totalGenCrit + totalIndCrit;
           const ratioText = formatPraiseRatio(positive, negative, durationMs);
           const ratioValue = negative === 0 ? positive : Math.round(positive / negative);
@@ -3250,7 +3533,13 @@
           legendRow(3, cRedirect, "Redirective Statements", null, 2.6, "1");
           legendRow(4, cGenCrit, "General Criticism", null, 2.6, "1");
           legendRow(5, cIndCrit, "Individual Criticism", null, 2.6, "1");
-          nextLegendY = ly + 6 * lh + 12;
+          let pIdx = 6;
+          if (state.customPraiseButtons && state.customPraiseButtons.length > 0) {
+            for (const cb of state.customPraiseButtons) {
+              legendRow(pIdx++, "#0d9488", cb.label, "3 2", 2.6, "1", lh);
+            }
+          }
+          nextLegendY = ly + pIdx * lh + 12;
         } else if (state.mode === "Lesson Structure") {
           legendRow(0, cStructWhole, "Whole Group", null, 3.8, "1");
           legendRow(1, cStructSmall, "Small Group", null, 2.8, "1");
@@ -3258,25 +3547,91 @@
           legendRow(3, cStructIndividual, "Individual", null, 2.6, "1");
           nextLegendY = ly + 4 * lh + 12;
         } else {
-          const otrLh = 16;
-          legendRow(0, cOtrChoral, "Choral Response", null, 4.0, "1", otrLh);
-          legendRow(1, cOtrCloze, "Cloze Reading", null, 2.8, "1", otrLh);
-          legendRow(2, cOtrWhiteboard, "White Board Response", null, 2.6, "1", otrLh);
-          legendRow(3, cOtrWritten, "Written Responses", null, 2.6, "1", otrLh);
-          legendRow(4, cOtrNonverbal, "Nonverbal Response", null, 2.6, "1", otrLh);
-          legendRow(5, cOtrOtherWhole, "Other (Whole Group)", null, 2.6, "1", otrLh);
-          legendRow(6, cOtrGroupDisc, "Group Discussion", null, 2.8, "1", otrLh);
-          legendRow(7, cOtrNumberedHeads, "Numbered Heads", null, 2.6, "1", otrLh);
-          legendRow(8, cOtrTeamShare, "Team Share", null, 2.6, "1", otrLh);
-          legendRow(9, cOtrOtherSmall, "Other (Small Group)", null, 2.6, "1", otrLh);
-          legendRow(10, cOtrPrecision, "Precision Partner", null, 2.6, "1", otrLh);
-          legendRow(11, cOtrElbow, "Elbow Partner", null, 2.6, "1", otrLh);
-          legendRow(12, cOtrOtherPartner, "Other (Partner)", null, 2.6, "1", otrLh);
-          legendRow(13, cOtrWarm, "Warm Call", null, 2.6, "1", otrLh);
-          legendRow(14, cOtrCold, "Cold Call", null, 2.6, "1", otrLh);
-          legendRow(15, cOtrVolunteer, "Volunteer", null, 2.6, "1", otrLh);
-          legendRow(16, cOtrOtherIndividual, "Other (Individual)", null, 2.6, "1", otrLh);
-          nextLegendY = ly + 17 * otrLh + 10;
+          // OTR legend: grouped by Whole Group, Small Group, Partner, Individual
+          const wholeCustom = (state.customOtrButtons || []).filter(c => c.column === "whole");
+          const smallCustom = (state.customOtrButtons || []).filter(c => c.column === "small");
+          const partnerCustom = (state.customOtrButtons || []).filter(c => c.column === "partner");
+          const individualCustom = (state.customOtrButtons || []).filter(c => c.column === "individual");
+
+          let curY = ly;
+          const groupHeaderH = 14;
+          const itemH = 15;
+          const groupGap = 6;
+
+          function renderGroupHeader(title) {
+            svg.appendChild(el(svgNS, "text", {
+              x: lx, y: curY,
+              "text-anchor": "start",
+              "font-size": 11,
+              "font-weight": "800",
+              "font-family": font,
+              fill: "#0f172a"
+            }, title));
+            curY += groupHeaderH;
+          }
+
+          function renderGroupItem(color, label, dashArray, strokeWidth = 2.8) {
+            const attrs = {
+              x1: lx + 4, y1: curY - 3.5,
+              x2: lx + 20, y2: curY - 3.5,
+              stroke: color,
+              "stroke-width": strokeWidth,
+              "stroke-linecap": "round",
+              opacity: "1"
+            };
+            if (dashArray) attrs["stroke-dasharray"] = dashArray;
+            svg.appendChild(el(svgNS, "line", attrs));
+            svg.appendChild(el(svgNS, "text", {
+              x: lx + 26, y: curY,
+              "text-anchor": "start",
+              "font-size": 11,
+              "font-family": font,
+              fill: "rgba(0,0,0,.85)"
+            }, label));
+            curY += itemH;
+          }
+
+          // 1. Whole Group
+          renderGroupHeader("Whole Group:");
+          renderGroupItem(cOtrChoral, "Choral Response", null, 3.8);
+          renderGroupItem(cOtrCloze, "Cloze Reading", null, 2.8);
+          renderGroupItem(cOtrWhiteboard, "White Board Response", null, 2.6);
+          renderGroupItem(cOtrWritten, "Written Responses", null, 2.6);
+          renderGroupItem(cOtrNonverbal, "Nonverbal Response", null, 2.6);
+          for (const cb of wholeCustom) {
+            renderGroupItem("#0284c7", cb.label, "3 2", 2.6);
+          }
+          curY += groupGap;
+
+          // 2. Small Group
+          renderGroupHeader("Small Group:");
+          renderGroupItem(cOtrGroupDisc, "Group Discussion", null, 2.8);
+          renderGroupItem(cOtrNumberedHeads, "Numbered Heads", null, 2.6);
+          renderGroupItem(cOtrTeamShare, "Team Share", null, 2.6);
+          for (const cb of smallCustom) {
+            renderGroupItem("#0d9488", cb.label, "3 2", 2.6);
+          }
+          curY += groupGap;
+
+          // 3. Partner
+          renderGroupHeader("Partner:");
+          renderGroupItem(cOtrPrecision, "Precision Partner", null, 2.6);
+          renderGroupItem(cOtrElbow, "Elbow Partner", null, 2.6);
+          for (const cb of partnerCustom) {
+            renderGroupItem("#16a34a", cb.label, "3 2", 2.6);
+          }
+          curY += groupGap;
+
+          // 4. Individual
+          renderGroupHeader("Individual:");
+          renderGroupItem(cOtrWarm, "Warm Call", null, 2.6);
+          renderGroupItem(cOtrCold, "Cold Call", null, 2.6);
+          renderGroupItem(cOtrVolunteer, "Volunteer", null, 2.6);
+          for (const cb of individualCustom) {
+            renderGroupItem("#7e22ce", cb.label, "3 2", 2.6);
+          }
+
+          nextLegendY = curY + 10;
         }
 
         if (state.mode !== "Lesson Structure") {
@@ -3436,7 +3791,7 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrOtherWhole, otrGroupDisc, otrNumberedHeads, otrTeamShare, otrOtherSmall, otrPrecision, otrElbow, otrOtherPartner, otrWarm, otrCold, otrVolunteer, otrOtherIndividual, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrOtherWhole, otrGroupDisc, otrNumberedHeads, otrTeamShare, otrOtherSmall, otrPrecision, otrElbow, otrOtherPartner, otrWarm, otrCold, otrVolunteer, otrOtherIndividual, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
         const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : state.mode === 'NotesOnly' ? 'Observation' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`
@@ -3484,6 +3839,11 @@
           lines.push(`Specific Praise: ${specific}`);
           lines.push(`General Praise: ${general}`);
           lines.push(`Corrective Feedback: ${corrective}`);
+          if (customPraiseTotals && customPraiseTotals.length > 0) {
+            for (const item of customPraiseTotals) {
+              lines.push(`${item.label}: ${item.count}`);
+            }
+          }
           lines.push(`Redirective Statements: ${redirect}`);
           lines.push(`General Criticism: ${genCrit}`);
           lines.push(`Individual Criticism: ${indCrit}`);
@@ -3540,18 +3900,38 @@
           lines.push(`White Board Response: ${otrWhiteboard}`);
           lines.push(`Written Responses: ${otrWritten}`);
           lines.push(`Nonverbal Response: ${otrNonverbal}`);
-          lines.push(`Other (Whole Group): ${otrOtherWhole || 0}`);
+          if (otrOtherWhole > 0) lines.push(`Other (Whole Group): ${otrOtherWhole}`);
+          if (customOtrTotals && customOtrTotals.whole) {
+            for (const item of customOtrTotals.whole) {
+              lines.push(`${item.label}: ${item.count}`);
+            }
+          }
           lines.push(`Group Discussion: ${otrGroupDisc}`);
           lines.push(`Numbered Heads: ${otrNumberedHeads}`);
           lines.push(`Team Share: ${otrTeamShare}`);
-          lines.push(`Other (Small Group): ${otrOtherSmall || 0}`);
+          if (otrOtherSmall > 0) lines.push(`Other (Small Group): ${otrOtherSmall}`);
+          if (customOtrTotals && customOtrTotals.small) {
+            for (const item of customOtrTotals.small) {
+              lines.push(`${item.label}: ${item.count}`);
+            }
+          }
           lines.push(`Precision Partner: ${otrPrecision}`);
           lines.push(`Elbow Partner: ${otrElbow}`);
-          lines.push(`Other (Partner): ${otrOtherPartner || 0}`);
+          if (otrOtherPartner > 0) lines.push(`Other (Partner): ${otrOtherPartner}`);
+          if (customOtrTotals && customOtrTotals.partner) {
+            for (const item of customOtrTotals.partner) {
+              lines.push(`${item.label}: ${item.count}`);
+            }
+          }
           lines.push(`Warm Call: ${otrWarm}`);
           lines.push(`Cold Call: ${otrCold}`);
           lines.push(`Volunteer: ${otrVolunteer}`);
-          lines.push(`Other (Individual): ${otrOtherIndividual || 0}`);
+          if (otrOtherIndividual > 0) lines.push(`Other (Individual): ${otrOtherIndividual}`);
+          if (customOtrTotals && customOtrTotals.individual) {
+            for (const item of customOtrTotals.individual) {
+              lines.push(`${item.label}: ${item.count}`);
+            }
+          }
           lines.push(`Opportunities to Respond Total: ${otrTotal}`);
           lines.push(`Opportunities to Respond per minute: ${ratioText}`);
           lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
@@ -3908,16 +4288,42 @@
         const totalGenCrit = bins.genCrit.reduce((a, b) => a + b, 0);
         const totalIndCrit = bins.indCrit.reduce((a, b) => a + b, 0);
 
+        const customIds = (state.customOtrButtons || []).map(c => c.id);
+        const customOtrTotals = { whole: [], small: [], partner: [], individual: [] };
+        if (state.customOtrButtons) {
+          for (const cb of state.customOtrButtons) {
+            const count = state.otrEvents.filter(e => e.kind === cb.id).length;
+            if (customOtrTotals[cb.column]) {
+              customOtrTotals[cb.column].push({ label: cb.label, count });
+            }
+          }
+        }
+
+        const customPraiseIds = (state.customPraiseButtons || []).map(c => c.id);
+        const customPraiseTotals = [];
+        let totalCustomPraiseCount = 0;
+        if (state.customPraiseButtons) {
+          for (const cb of state.customPraiseButtons) {
+            const count = state.otrEvents.filter(e => e.kind === cb.id).length;
+            customPraiseTotals.push({ label: cb.label, count });
+            totalCustomPraiseCount += count;
+          }
+        }
+
         const totalOtr = state.otrEvents.filter(e => [
           "otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrOtherWhole",
           "otrGroupDisc","otrNumberedHeads","otrTeamShare","otrOtherSmall",
           "otrPrecision","otrElbow","otrOtherPartner",
-          "otrWarm","otrCold","otrVolunteer","otrOtherIndividual"
+          "otrWarm","otrCold","otrVolunteer","otrOtherIndividual",
+          ...customIds
         ].includes(e.kind)).length;
-        const totalPraise = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind)).length;
+        const totalPraise = state.otrEvents.filter(e => [
+          "specific","general","corrective","redirect","genCrit","indCrit",
+          ...customPraiseIds
+        ].includes(e.kind)).length;
         const totalEngagement = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind)).length;
         
-        const positivePraise = totalSpecific + totalGeneral + totalCorrective;
+        const positivePraise = totalSpecific + totalGeneral + totalCorrective + totalCustomPraiseCount;
         const negativePraise = totalRedirect + totalGenCrit + totalIndCrit;
 
         const resultsTitle = document.getElementById("resultsTitle");
@@ -3961,7 +4367,10 @@
           let modeEvents = [];
           const structEvents = getStructEvents(state.otrEvents);
           if (renderMode === "Praise") {
-             modeEvents = state.otrEvents.filter(e => ["specific","general","corrective","redirect","genCrit","indCrit"].includes(e.kind));
+             modeEvents = state.otrEvents.filter(e => [
+               "specific","general","corrective","redirect","genCrit","indCrit",
+               ...customPraiseIds
+             ].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
           } else if (renderMode === "Lesson Structure") {
              modeEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
@@ -3971,7 +4380,8 @@
                "otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrOtherWhole",
                "otrGroupDisc","otrNumberedHeads","otrTeamShare","otrOtherSmall",
                "otrPrecision","otrElbow","otrOtherPartner",
-               "otrWarm","otrCold","otrVolunteer","otrOtherIndividual"
+               "otrWarm","otrCold","otrVolunteer","otrOtherIndividual",
+               ...customIds
              ].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
           } else {
@@ -4013,6 +4423,8 @@
               otrCold: totalOtrCold,
               otrVolunteer: totalOtrVolunteer,
               otrOtherIndividual: totalOtrOtherIndividual,
+              customOtrTotals: customOtrTotals,
+              customPraiseTotals: customPraiseTotals,
 
               specific: totalSpecific,
               general: totalGeneral,
@@ -4083,6 +4495,8 @@
               otrOtherPartner: totalOtrOtherPartner,
               otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
               otrOtherIndividual: totalOtrOtherIndividual,
+              customOtrTotals: customOtrTotals,
+              customPraiseTotals: customPraiseTotals,
               specific: totalSpecific, general: totalGeneral, corrective: totalCorrective,
               redirect: totalRedirect, genCrit: totalGenCrit, indCrit: totalIndCrit,
               otrTotal: firstOtrTotal,
