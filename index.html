@@ -18,33 +18,66 @@
       --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       --lite:#e0e0e0;
 
-      /* Updated OTR colors - Whole Group descending dark to light */
-      --otr-choral:#075985; /* Darkest: Sky 800 */
-      --otr-cloze:#0284c7;  /* Sky 600 */
-      --otr-whiteboard:#0ea5e9; /* Sky 500 */
-      --otr-written:#38bdf8; /* Sky 400 */
-      --otr-nonverbal:#7dd3fc; /* Sky 300 */
-      --otr-other-whole:#bae6fd; /* Sky 200 */
-      
-      /* Small Group - Teal hue */
-      --otr-group-disc:#0f766e; /* Darkest: Teal 700 */
-      --otr-numbered-heads:#0d9488; /* Teal 600 */
-      --otr-team-share:#14b8a6; /* Teal 500 */
-      --otr-other-small:#5eead4; /* Teal 300 */
+      /* Whole Group - 3 Columns (Descending Brightest to Lightest on Each Column) */
+      /* Column 1: Choral, Written, Nonverbal, Cloze */
+      --otr-wg-choral:#2e0750;     /* Deepest Royal Purple */
+      --otr-wg-written:#4c0f81;    /* Deep Purple */
+      --otr-wg-nonverbal:#741dbf;  /* Medium Rich Purple */
+      --otr-wg-cloze:#9d4edd;      /* Light Lilac Purple */
+      /* Column 2: Precision, Elbow, Think Pair Share */
+      --otr-wg-precision:#3b0764;  /* Deep Plum Purple */
+      --otr-wg-elbow:#6b21a8;      /* Medium Violet */
+      --otr-wg-tps:#a855f7;        /* Bright Light Violet */
+      /* Column 3: Warm Call, Cold Call, Volunteer */
+      --otr-wg-warm:#311068;       /* Deep Indigo Purple */
+      --otr-wg-cold:#5b21b6;       /* Medium Indigo Purple */
+      --otr-wg-volunteer:#8b5cf6;  /* Light Lavender Indigo */
+      --otr-wg-whiteboard:#4c0f81; /* Legacy fallback */
+      --otr-wg-groupdisc:#6a19b0;  /* Legacy fallback */
+      --otr-wg-teamshare:#741dbf;  /* Legacy fallback */
+      --otr-wg-custom:#ab6fe0;     /* Custom Purple */
 
-      --otr-precision:#16a34a; /* Partner: Green hue */
-      --otr-elbow:#4ade80;
-      --otr-other-partner:#86efac; /* Green 300 */
-      
-      --otr-warm:#7e22ce; /* Individual: Purple hue */
-      --otr-cold:#a855f7;
-      --otr-volunteer:#d8b4fe;
-      --otr-other-individual:#e9d5ff; /* Purple 200 */
+      /* Small Group - 3 Columns (Descending Brightest to Lightest on Each Column) */
+      /* Column 1: Choral, Written, Nonverbal, Cloze */
+      --otr-sg-choral:#04234e;     /* Deepest Navy Blue */
+      --otr-sg-written:#0a4282;    /* Deep Sapphire Blue */
+      --otr-sg-nonverbal:#1565c0;  /* Medium Rich Blue */
+      --otr-sg-cloze:#0284c7;      /* Vivid Sky Blue */
+      /* Column 2: Precision, Elbow, Think Pair Share */
+      --otr-sg-precision:#032b43;  /* Deep Ocean Blue */
+      --otr-sg-elbow:#0369a1;      /* Medium Ocean Blue */
+      --otr-sg-tps:#38bdf8;        /* Bright Light Cyan-Blue */
+      /* Column 3: Warm Call, Cold Call, Volunteer */
+      --otr-sg-warm:#1e3a8a;       /* Deep Cobalt Blue */
+      --otr-sg-cold:#2563eb;       /* Medium Royal Blue */
+      --otr-sg-volunteer:#60a5fa;  /* Light Periwinkle Blue */
+      --otr-sg-whiteboard:#0a3c81; /* Legacy fallback */
+      --otr-sg-groupdisc:#1355b2;  /* Legacy fallback */
+      --otr-sg-teamshare:#165dc1;  /* Legacy fallback */
+      --otr-sg-custom:#669be4;     /* Custom Blue */
+
+      /* Legacy fallbacks */
+      --otr-choral:#581c87;
+      --otr-cloze:#6b21a8;
+      --otr-whiteboard:#7e22ce;
+      --otr-written:#9333ea;
+      --otr-nonverbal:#a855f7;
+      --otr-other-whole:#9d4edd;
+      --otr-group-disc:#172554;
+      --otr-team-share:#1e3a8a;
+      --otr-other-small:#0284c7;
+      --otr-precision:#1d4ed8;
+      --otr-elbow:#2563eb;
+      --otr-other-partner:#3b82f6;
+      --otr-warm:#1e40af;
+      --otr-cold:#3b82f6;
+      --otr-volunteer:#4f46e5;
+      --otr-other-individual:#60a5fa;
 
       --otr-total:rgba(0,0,0,0.2); /* transparent grey */
 
-      --praise-specific: #1f9d55; /* Green */
-      --praise-general: #86efac; /* Light Green */
+      --praise-specific: #1f9d55; /* Darker Green */
+      --praise-general: #27ae60;  /* Lighter Green, nicely contrasting with white text */
       --praise-corrective: #3b82f6; /* Blue */
       --praise-redirect: #f97316; /* Orange */
       --praise-gen-crit: #ef4444; /* Red */
@@ -147,7 +180,7 @@
       border-radius:12px;
     }
 
-    /* Updated OTR buttons: distinct blues */
+    /* OTR Buttons: Whole Group = Shades of Purple, Small Group = Shades of Blue */
     .btn.otr{
       position:relative;
       color:#fff;
@@ -156,32 +189,60 @@
       border-radius:14px;
       padding:14px 10px;
       font-size:14px;
+      font-weight:600;
+      text-shadow:0 1px 2px rgba(0,0,0,.45);
       letter-spacing:.1px;
     }
     .btn.otr:disabled{opacity:.45;cursor:not-allowed;}
-    .btn.otr.otr-choral{background:var(--otr-choral); color:#fff;}
-    .btn.otr.otr-cloze{background:var(--otr-cloze); color:#fff;}
-    .btn.otr.otr-whiteboard{background:var(--otr-whiteboard); color:#fff;}
-    .btn.otr.otr-written{background:var(--otr-written); color:#082f49;}
-    .btn.otr.otr-nonverbal{background:var(--otr-nonverbal); color:#082f49;}
-    .btn.otr.otr-other-whole{background:var(--otr-other-whole); color:#082f49;}
-    
-    .btn.otr.otr-group-disc{background:var(--otr-group-disc); color:#fff;}
-    .btn.otr.otr-numbered-heads{background:var(--otr-numbered-heads); color:#fff;}
-    .btn.otr.otr-team-share{background:var(--otr-team-share); color:#fff;}
-    .btn.otr.otr-other-small{background:var(--otr-other-small); color:#134e4a;}
 
-    .btn.otr.otr-precision{background:var(--otr-precision); color:#fff;}
-    .btn.otr.otr-elbow{background:var(--otr-elbow); color:#064e3b;}
-    .btn.otr.otr-other-partner{background:var(--otr-other-partner); color:#064e3b;}
-    
-    .btn.otr.otr-warm{background:var(--otr-warm); color:#fff;}
-    .btn.otr.otr-cold{background:var(--otr-cold); color:#fff;}
-    .btn.otr.otr-volunteer{background:var(--otr-volunteer); color:#2e1065;}
-    .btn.otr.otr-other-indiv{background:var(--otr-other-individual); color:#581c87;}
+    /* Whole Group Buttons (shades of purple) */
+    .btn.otr.otr-wg-tps{background:var(--otr-wg-tps); color:#fff;}
+    .btn.otr.otr-wg-choral{background:var(--otr-wg-choral); color:#fff;}
+    .btn.otr.otr-wg-cloze{background:var(--otr-wg-cloze); color:#fff;}
+    .btn.otr.otr-wg-whiteboard{background:var(--otr-wg-whiteboard); color:#fff;}
+    .btn.otr.otr-wg-written{background:var(--otr-wg-written); color:#fff;}
+    .btn.otr.otr-wg-nonverbal{background:var(--otr-wg-nonverbal); color:#fff;}
+    .btn.otr.otr-wg-groupdisc{background:var(--otr-wg-groupdisc); color:#fff;}
+    .btn.otr.otr-wg-teamshare{background:var(--otr-wg-teamshare); color:#fff;}
+    .btn.otr.otr-wg-precision{background:var(--otr-wg-precision); color:#fff;}
+    .btn.otr.otr-wg-elbow{background:var(--otr-wg-elbow); color:#fff;}
+    .btn.otr.otr-wg-warm{background:var(--otr-wg-warm); color:#fff;}
+    .btn.otr.otr-wg-cold{background:var(--otr-wg-cold); color:#fff;}
+    .btn.otr.otr-wg-volunteer{background:var(--otr-wg-volunteer); color:#fff;}
+
+    /* Small Group Buttons (shades of blue) */
+    .btn.otr.otr-sg-tps{background:var(--otr-sg-tps); color:#fff;}
+    .btn.otr.otr-sg-choral{background:var(--otr-sg-choral); color:#fff;}
+    .btn.otr.otr-sg-cloze{background:var(--otr-sg-cloze); color:#fff;}
+    .btn.otr.otr-sg-whiteboard{background:var(--otr-sg-whiteboard); color:#fff;}
+    .btn.otr.otr-sg-written{background:var(--otr-sg-written); color:#fff;}
+    .btn.otr.otr-sg-nonverbal{background:var(--otr-sg-nonverbal); color:#fff;}
+    .btn.otr.otr-sg-groupdisc{background:var(--otr-sg-groupdisc); color:#fff;}
+    .btn.otr.otr-sg-teamshare{background:var(--otr-sg-teamshare); color:#fff;}
+    .btn.otr.otr-sg-precision{background:var(--otr-sg-precision); color:#fff;}
+    .btn.otr.otr-sg-elbow{background:var(--otr-sg-elbow); color:#fff;}
+    .btn.otr.otr-sg-warm{background:var(--otr-sg-warm); color:#fff;}
+    .btn.otr.otr-sg-cold{background:var(--otr-sg-cold); color:#fff;}
+    .btn.otr.otr-sg-volunteer{background:var(--otr-sg-volunteer); color:#fff;}
+
+    /* Legacy class aliases */
+    .btn.otr.otr-choral{background:var(--otr-wg-choral); color:#fff;}
+    .btn.otr.otr-cloze{background:var(--otr-wg-cloze); color:#fff;}
+    .btn.otr.otr-whiteboard{background:var(--otr-wg-whiteboard); color:#fff;}
+    .btn.otr.otr-written{background:var(--otr-wg-written); color:#fff;}
+    .btn.otr.otr-nonverbal{background:var(--otr-wg-nonverbal); color:#fff;}
+    .btn.otr.otr-other-whole{background:var(--otr-wg-custom); color:#fff;}
+    .btn.otr.otr-group-disc{background:var(--otr-sg-groupdisc); color:#fff;}
+    .btn.otr.otr-team-share{background:var(--otr-sg-teamshare); color:#fff;}
+    .btn.otr.otr-other-small{background:var(--otr-sg-custom); color:#fff;}
+    .btn.otr.otr-precision{background:var(--otr-sg-precision); color:#fff;}
+    .btn.otr.otr-elbow{background:var(--otr-sg-elbow); color:#fff;}
+    .btn.otr.otr-warm{background:var(--otr-sg-warm); color:#fff;}
+    .btn.otr.otr-cold{background:var(--otr-sg-cold); color:#fff;}
+    .btn.otr.otr-volunteer{background:var(--otr-sg-volunteer); color:#fff;}
 
     .btn.otr.specific{background:var(--praise-specific); color:#fff;}
-    .btn.otr.general{background:var(--praise-general); color:#064e3b;}
+    .btn.otr.general{background:var(--praise-general); color:#fff;}
     .btn.otr.corrective{background:var(--praise-corrective); color:#fff;}
     .btn.otr.redirect{background:var(--praise-redirect); color:#fff;}
     .btn.otr.gen-crit{background:var(--praise-gen-crit); color:#fff;}
@@ -192,10 +253,8 @@
     .btn.otr.struct-partners{background:var(--struct-partners); color:#0f172a; border-color:#cbd5e1;}
     .btn.otr.struct-individual{background:var(--struct-individual); color:#0f172a; border-color:#cbd5e1;}
 
-    .btn.otr.otr-custom-whole{background:var(--otr-other-whole); color:#082f49;}
-    .btn.otr.otr-custom-small{background:var(--otr-other-small); color:#134e4a;}
-    .btn.otr.otr-custom-partner{background:var(--otr-other-partner); color:#064e3b;}
-    .btn.otr.otr-custom-individual{background:var(--otr-other-individual); color:#581c87;}
+    .btn.otr.otr-custom-whole{background:var(--otr-wg-custom); color:#fff;}
+    .btn.otr.otr-custom-small{background:var(--otr-sg-custom); color:#fff;}
     .btn.otr.praise-custom{background:#0d9488; color:#ffffff; border-color:#0f766e;}
 
     /* Add Buttons at bottom of OTR columns and Praise timer */
@@ -460,55 +519,122 @@
       align-items:stretch;
     }
 
-    /* OTR 4-Column Layout: Whole Group, Small Group, Partner, Individual */
-    .otr-columns {
+    /* Apple-style Segmented Control (Simple, grayscale, short) */
+    .otr-group-toggle-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .apple-segmented-control {
+      display: inline-flex;
+      align-items: center;
+      background: #e2e8f0;
+      padding: 3px;
+      border-radius: 9px;
+      gap: 2px;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 320px;
+      user-select: none;
+    }
+    .apple-segment {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 12px;
+      height: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #64748b;
+      background: transparent;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      font-family: inherit;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .apple-segment:hover:not(.is-active) {
+      color: #0f172a;
+    }
+    .apple-segment.is-active {
+      background: #ffffff;
+      color: #0f172a;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    .apple-segment:focus-visible {
+      outline: 2px solid #0f172a;
+      outline-offset: 1px;
+    }
+
+    /* OTR 3-Column Layout under Whole / Small Group Toggle */
+    .otr-columns-3-container {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       align-items: start;
+      width: 100%;
     }
-    .otr-column {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      transition: all 0.2s ease;
-    }
-    .otr-col-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--ink);
-      text-align: center;
-      margin-bottom: 10px;
-      line-height: 1.3;
-      white-space: nowrap;
-      padding: 4px 6px;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
-    .otr-column.is-active-col .otr-col-title {
-      color: var(--brand);
-      background: rgba(99, 102, 241, 0.14);
-      box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.3);
-    }
-    .otr-col-buttons {
+    .otr-col {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      min-width: 0;
     }
-    .otr-col-buttons[style*="display: grid"],
-    .otr-col-buttons[style*="display:grid"] {
-      display: flex !important;
-    }
-    .otr-col-buttons .btn.otr {
+    .otr-col .btn.otr {
       width: 100%;
-      min-height: 58px;
-      padding: 12px 6px;
+      min-height: 56px;
+      padding: 10px 6px;
       font-size: 13px;
       line-height: 1.25;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+      border-radius: 12px;
+    }
+    .otr-columns-3-container .otr-add-container {
+      grid-column: 1 / -1;
+      margin-top: 4px;
+    }
+    .otr-columns-3-container .btn.otr.otr-custom-btn {
+      grid-column: 1 / -1;
+      min-height: 48px;
+    }
+
+    /* OTR Button Grids fallback */
+    .otr-button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    @media (min-width: 640px) {
+      .otr-button-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+    }
+    @media (min-width: 860px) {
+      .otr-button-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+    }
+    .otr-button-grid .btn.otr {
+      width: 100%;
+      min-height: 56px;
+      padding: 10px 8px;
+      font-size: 13px;
+      line-height: 1.25;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 12px;
     }
 
     /* Apple-style Grayscale Toggle Switch */
@@ -850,29 +976,56 @@
       flex-shrink: 0;
     }
     @media (max-width: 640px) {
-      .otr-columns {
+      .apple-segmented-control {
+        max-width: 100%;
+      }
+      .otr-columns-3-container {
+        gap: 8px;
+      }
+      .otr-col {
+        gap: 8px;
+      }
+      .otr-col .btn.otr {
+        min-height: 52px;
+        padding: 8px 4px;
+        font-size: 12px;
+      }
+      .otr-button-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
       }
     }
     @media (max-width: 480px) {
-      .otr-columns {
-        grid-template-columns: repeat(2, 1fr);
+      .otr-columns-3-container {
         gap: 6px;
       }
-      .otr-col-title {
-        font-size: 12px;
-        margin-bottom: 6px;
+      .otr-col {
+        gap: 6px;
       }
-      .otr-col-buttons {
+      .otr-col .btn.otr {
+        min-height: 50px;
+        padding: 6px 3px;
+        font-size: 11px;
+      }
+      .otr-col .btn.otr .btn-badge {
+        top: 2px;
+        right: 2px;
+        min-width: 16px;
+        height: 16px;
+        font-size: 10px;
+        line-height: 16px;
+        padding: 0 3px;
+      }
+      .otr-button-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 8px;
       }
-      .otr-col-buttons .btn.otr {
+      .otr-button-grid .btn.otr {
         min-height: 52px;
         padding: 10px 4px;
         font-size: 11.5px;
       }
-      .otr-col-buttons .btn.otr .btn-badge {
+      .otr-button-grid .btn.otr .btn-badge {
         top: 2px;
         right: 3px;
         min-width: 16px;
@@ -1065,7 +1218,7 @@
       </header>
       <section style="display: flex; justify-content: space-around; margin-top: 32px; margin-bottom: 32px; gap: 16px; flex-wrap: wrap;">
         <button id="modeOtrBtn" class="mode-btn" type="button">Opportunities to Respond</button>
-        <button id="modePraiseBtn" class="mode-btn" type="button">Social Emotional Learning</button>
+        <button id="modePraiseBtn" class="mode-btn" type="button">Instructional Feedback</button>
         <button id="modeAllBtn" class="mode-btn" type="button">All</button>
       </section>
     </main>
@@ -1118,97 +1271,98 @@
 
         <!-- 3. Opportunities to Respond (OTR) -->
         <div id="otrContainer" style="display:none; margin-top:14px;">
-          <div id="otrHeaderRow" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 12px;">
-            <span id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Opportunities to Respond</span>
-            <button id="toggleAllOtrBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Opportunities to Respond timer" title="Opportunities to Respond: ON" style="display: none;">
+          <div id="otrHeaderRow" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 10px;">
+            <span id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Opportunity to Respond</span>
+            <button id="toggleAllOtrBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Opportunity to Respond timer" title="Opportunity to Respond: ON" style="display: none;">
               <span class="apple-switch-track">
                 <span class="apple-switch-thumb"></span>
               </span>
               <span id="toggleAllOtrStateText" class="apple-toggle-label">ON</span>
             </button>
           </div>
-          <div id="otrColumnsContainer" class="otr-columns">
-            <!-- Column 1: Whole Group -->
-            <div class="otr-column" id="otrColWhole">
-              <div id="otrSection1Label" class="otr-col-title">Whole Group</div>
-              <div id="otrButtons1" class="otr-col-buttons" aria-label="Whole Group Opportunities to Respond">
-                <button id="otrChoralBtn" class="btn otr otr-choral" type="button" disabled>Choral Response<span class="btn-badge" id="badge-otrChoral" aria-hidden="true">0</span></button>
-                <button id="otrClozeBtn" class="btn otr otr-cloze" type="button" disabled>Close Reading<span class="btn-badge" id="badge-otrCloze" aria-hidden="true">0</span></button>
-                <button id="otrWhiteboardBtn" class="btn otr otr-whiteboard" type="button" disabled>White Board Response<span class="btn-badge" id="badge-otrWhiteboard" aria-hidden="true">0</span></button>
-                <button id="otrWrittenBtn" class="btn otr otr-written" type="button" disabled>Written Responses<span class="btn-badge" id="badge-otrWritten" aria-hidden="true">0</span></button>
-                <button id="otrNonverbalBtn" class="btn otr otr-nonverbal" type="button" disabled>Nonverbal Response<span class="btn-badge" id="badge-otrNonverbal" aria-hidden="true">0</span></button>
-                <div class="otr-add-container" id="otrAddWholeContainer">
-                  <input type="text" id="otrAddWholeInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Whole Group" maxlength="35" />
-                  <button type="button" id="otrAddWholeBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
-                </div>
+
+          <!-- Apple-style Whole Group / Small Group Toggle -->
+          <div id="otrGroupToggleContainer" class="otr-group-toggle-container">
+            <div class="apple-segmented-control" role="tablist" aria-label="Opportunity to Respond Mode">
+              <button type="button" id="toggleWholeGroupBtn" class="apple-segment is-active" role="tab" aria-selected="true">Whole Group</button>
+              <button type="button" id="toggleSmallGroupBtn" class="apple-segment" role="tab" aria-selected="false">Small Group</button>
+            </div>
+          </div>
+
+          <div id="otrButtonsWrapper">
+            <!-- Whole Group Buttons View (Shades of Purple in 3 Columns) -->
+            <div id="otrWholeGroupView" class="otr-columns-3-container" aria-label="Whole Group Opportunities to Respond">
+              <!-- Column 1: Choral Response, Written Response, Nonverbal Response, Cloze Reading -->
+              <div class="otr-col" id="otrWholeCol1">
+                <button id="otrWholeChoralBtn" class="btn otr otr-wg-choral" type="button" disabled>Choral Response<span class="btn-badge" id="badge-otrWholeChoral" aria-hidden="true">0</span></button>
+                <button id="otrWholeWrittenBtn" class="btn otr otr-wg-written" type="button" disabled>Written Responses<span class="btn-badge" id="badge-otrWholeWritten" aria-hidden="true">0</span></button>
+                <button id="otrWholeNonverbalBtn" class="btn otr otr-wg-nonverbal" type="button" disabled>Nonverbal Response<span class="btn-badge" id="badge-otrWholeNonverbal" aria-hidden="true">0</span></button>
+                <button id="otrWholeClozeBtn" class="btn otr otr-wg-cloze" type="button" disabled>Cloze Reading<span class="btn-badge" id="badge-otrWholeCloze" aria-hidden="true">0</span></button>
+              </div>
+
+              <!-- Column 2: Precision Partner and Think, Pair, Share -->
+              <div class="otr-col" id="otrWholeCol2">
+                <button id="otrWholePrecisionBtn" class="btn otr otr-wg-precision" type="button" disabled>Precision Partner<span class="btn-badge" id="badge-otrWholePrecision" aria-hidden="true">0</span></button>
+                <button id="otrWholeTpsBtn" class="btn otr otr-wg-tps" type="button" disabled>Think, Pair, Share<span class="btn-badge" id="badge-otrWholeTps" aria-hidden="true">0</span></button>
+              </div>
+
+              <!-- Column 3: Warm Call, Cold Call, and Volunteer -->
+              <div class="otr-col" id="otrWholeCol3">
+                <button id="otrWholeWarmBtn" class="btn otr otr-wg-warm" type="button" disabled>Warm Call<span class="btn-badge" id="badge-otrWholeWarm" aria-hidden="true">0</span></button>
+                <button id="otrWholeColdBtn" class="btn otr otr-wg-cold" type="button" disabled>Cold Call<span class="btn-badge" id="badge-otrWholeCold" aria-hidden="true">0</span></button>
+                <button id="otrWholeVolunteerBtn" class="btn otr otr-wg-volunteer" type="button" disabled>Volunteer<span class="btn-badge" id="badge-otrWholeVolunteer" aria-hidden="true">0</span></button>
               </div>
             </div>
 
-            <!-- Column 2: Small Group -->
-            <div class="otr-column" id="otrColSmall">
-              <div id="otrSectionSmallLabel" class="otr-col-title">Small Group</div>
-              <div id="otrButtonsSmall" class="otr-col-buttons" aria-label="Small Group Opportunities to Respond">
-                <button id="otrGroupDiscBtn" class="btn otr otr-group-disc" type="button" disabled>Group Discussion<span class="btn-badge" id="badge-otrGroupDisc" aria-hidden="true">0</span></button>
-                <button id="otrNumberedHeadsBtn" class="btn otr otr-numbered-heads" type="button" disabled>Numbered Heads<span class="btn-badge" id="badge-otrNumberedHeads" aria-hidden="true">0</span></button>
-                <button id="otrTeamShareBtn" class="btn otr otr-team-share" type="button" disabled>Team Share<span class="btn-badge" id="badge-otrTeamShare" aria-hidden="true">0</span></button>
-                <div class="otr-add-container" id="otrAddSmallContainer">
-                  <input type="text" id="otrAddSmallInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Small Group" maxlength="35" />
-                  <button type="button" id="otrAddSmallBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
-                </div>
+            <!-- Small Group Buttons View (Shades of Blue in 3 Columns) -->
+            <div id="otrSmallGroupView" class="otr-columns-3-container" style="display: none;" aria-label="Small Group Opportunities to Respond">
+              <!-- Column 1: Choral Response, Written Response, Nonverbal Response, Cloze Reading -->
+              <div class="otr-col" id="otrSmallCol1">
+                <button id="otrSmallChoralBtn" class="btn otr otr-sg-choral" type="button" disabled>Choral Response<span class="btn-badge" id="badge-otrSmallChoral" aria-hidden="true">0</span></button>
+                <button id="otrSmallWrittenBtn" class="btn otr otr-sg-written" type="button" disabled>Written Responses<span class="btn-badge" id="badge-otrSmallWritten" aria-hidden="true">0</span></button>
+                <button id="otrSmallNonverbalBtn" class="btn otr otr-sg-nonverbal" type="button" disabled>Nonverbal Response<span class="btn-badge" id="badge-otrSmallNonverbal" aria-hidden="true">0</span></button>
+                <button id="otrSmallClozeBtn" class="btn otr otr-sg-cloze" type="button" disabled>Cloze Reading<span class="btn-badge" id="badge-otrSmallCloze" aria-hidden="true">0</span></button>
               </div>
-            </div>
 
-            <!-- Column 3: Partner -->
-            <div class="otr-column" id="otrColPartner">
-              <div id="otrSection2Label" class="otr-col-title">Partner</div>
-              <div id="otrButtons2" class="otr-col-buttons" aria-label="Partner Opportunities to Respond">
-                <button id="otrPrecisionBtn" class="btn otr otr-precision" type="button" disabled>Precision Partner<span class="btn-badge" id="badge-otrPrecision" aria-hidden="true">0</span></button>
-                <button id="otrElbowBtn" class="btn otr otr-elbow" type="button" disabled>Elbow Partner<span class="btn-badge" id="badge-otrElbow" aria-hidden="true">0</span></button>
-                <div class="otr-add-container" id="otrAddPartnerContainer">
-                  <input type="text" id="otrAddPartnerInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Partner" maxlength="35" />
-                  <button type="button" id="otrAddPartnerBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
-                </div>
+              <!-- Column 2: Precision Partner and Think, Pair, Share -->
+              <div class="otr-col" id="otrSmallCol2">
+                <button id="otrSmallPrecisionBtn" class="btn otr otr-sg-precision" type="button" disabled>Precision Partner<span class="btn-badge" id="badge-otrSmallPrecision" aria-hidden="true">0</span></button>
+                <button id="otrSmallTpsBtn" class="btn otr otr-sg-tps" type="button" disabled>Think, Pair, Share<span class="btn-badge" id="badge-otrSmallTps" aria-hidden="true">0</span></button>
               </div>
-            </div>
 
-            <!-- Column 3: Individual -->
-            <div class="otr-column" id="otrColIndividual">
-              <div id="otrSection3Label" class="otr-col-title">Individual</div>
-              <div id="otrButtons3" class="otr-col-buttons" aria-label="Individual Opportunities to Respond">
-                <button id="otrWarmBtn" class="btn otr otr-warm" type="button" disabled>Warm Call<span class="btn-badge" id="badge-otrWarm" aria-hidden="true">0</span></button>
-                <button id="otrColdBtn" class="btn otr otr-cold" type="button" disabled>Cold Call<span class="btn-badge" id="badge-otrCold" aria-hidden="true">0</span></button>
-                <button id="otrVolunteerBtn" class="btn otr otr-volunteer" type="button" disabled>Volunteer<span class="btn-badge" id="badge-otrVolunteer" aria-hidden="true">0</span></button>
-                <div class="otr-add-container" id="otrAddIndividualContainer">
-                  <input type="text" id="otrAddIndividualInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Individual" maxlength="35" />
-                  <button type="button" id="otrAddIndividualBtn" class="otr-add-plus-btn" aria-label="Add observation button" title="Add observation button">+</button>
-                </div>
+              <!-- Column 3: Warm Call, Cold Call, and Volunteer -->
+              <div class="otr-col" id="otrSmallCol3">
+                <button id="otrSmallWarmBtn" class="btn otr otr-sg-warm" type="button" disabled>Warm Call<span class="btn-badge" id="badge-otrSmallWarm" aria-hidden="true">0</span></button>
+                <button id="otrSmallColdBtn" class="btn otr otr-sg-cold" type="button" disabled>Cold Call<span class="btn-badge" id="badge-otrSmallCold" aria-hidden="true">0</span></button>
+                <button id="otrSmallVolunteerBtn" class="btn otr otr-sg-volunteer" type="button" disabled>Volunteer<span class="btn-badge" id="badge-otrSmallVolunteer" aria-hidden="true">0</span></button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 4. Praise buttons -->
+        <!-- 4. Instructional Feedback (Praise) buttons -->
         <div id="praiseContainer" style="display:none; margin-top:16px;">
           <div id="praiseHeaderRow" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 12px; margin-top: 0;">
-            <span id="praiseSubLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Social Emotional Learning</span>
-            <button id="toggleAllSelBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Social Emotional Learning timer" title="Social Emotional Learning: ON" style="display: none;">
+            <span id="praiseSubLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Instructional Feedback</span>
+            <button id="toggleAllSelBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Instructional Feedback timer" title="Instructional Feedback: ON" style="display: none;">
               <span class="apple-switch-track">
                 <span class="apple-switch-thumb"></span>
               </span>
               <span id="toggleAllSelStateText" class="apple-toggle-label">ON</span>
             </button>
           </div>
-          <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Praise buttons">
+          <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Instructional Feedback buttons">
+            <!-- Row 1: Specific Praise (Left) | Redirective Statements (Right) -->
             <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise<span class="btn-badge" id="badge-praiseSpecific" aria-hidden="true">0</span></button>
-            <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
-            <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
             <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements<span class="btn-badge" id="badge-praiseRedirect" aria-hidden="true">0</span></button>
+
+            <!-- Row 2: General Praise (Left) | General Criticism (Right) -->
+            <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
             <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism<span class="btn-badge" id="badge-praiseGenCrit" aria-hidden="true">0</span></button>
+
+            <!-- Row 3: Corrective Feedback (Left) | Individual Criticism (Right) -->
+            <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
             <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism<span class="btn-badge" id="badge-praiseIndCrit" aria-hidden="true">0</span></button>
-            <div class="otr-add-container praise-add-container" id="praiseAddContainer" style="grid-column: 1 / -1; margin-top: 4px;">
-              <input type="text" id="praiseAddInput" class="otr-add-input" placeholder="Add..." aria-label="Add observation type to Praise timer" maxlength="35" />
-              <button type="button" id="praiseAddBtn" class="otr-add-plus-btn" aria-label="Add Praise observation button" title="Add Praise observation button">+</button>
-            </div>
           </div>
         </div>
 
@@ -1325,6 +1479,7 @@
         state.stoppedAt = null;
         state.startWall = null;
         state.stopWall = null;
+        state.activeOtrGroup = "whole";
         state.otrEvents = [];
         state.customOtrButtons = [];
         state.customPraiseButtons = [];
@@ -1379,7 +1534,10 @@
           }
         });
 
-        beginBtn.addEventListener("click", showModeSelect);
+        beginBtn.addEventListener("click", () => {
+          state.mode = "All";
+          showRun();
+        });
       }
 
       function showCharacterStrong() {
@@ -1778,11 +1936,11 @@
         const hintText = document.getElementById("hintText");
 
         if (state.mode === "Praise") {
-          runTitle.textContent = "Social Emotional Learning Timer";
-          if (hintText) hintText.textContent = "Press Start to begin. Tap a Social Emotional Learning or Lesson Structure button for each observed event.";
+          runTitle.textContent = "Instructional Feedback Timer";
+          if (hintText) hintText.textContent = "Press Start to begin. Tap an Instructional Feedback or Lesson Structure button for each observed event.";
         } else if (state.mode === "All") {
-          runTitle.textContent = "All Timer";
-          if (hintText) hintText.textContent = "Press Start to begin. Tap an Opportunities to Respond or Social Emotional Learning button for each observed response.";
+          runTitle.textContent = "The Walk Through Tool";
+          if (hintText) hintText.textContent = "Press Start to begin. Tap an Opportunities to Respond or Instructional Feedback button for each observed response.";
         } else {
           runTitle.textContent = "Opportunities to Respond Timer";
           if (hintText) hintText.textContent = "Press Start to begin. Tap an Opportunities to Respond button for each observed response.";
@@ -1797,15 +1955,12 @@
         
         const otrContainer = document.getElementById("otrContainer");
         const otrSectionLabel = document.getElementById("otrSectionLabel");
-        const otrColumnsContainer = document.getElementById("otrColumnsContainer");
-        const otrSection1Label = document.getElementById("otrSection1Label");
-        const otrButtons1 = document.getElementById("otrButtons1");
-        const otrSectionSmallLabel = document.getElementById("otrSectionSmallLabel");
-        const otrButtonsSmall = document.getElementById("otrButtonsSmall");
-        const otrSection2Label = document.getElementById("otrSection2Label");
-        const otrButtons2 = document.getElementById("otrButtons2");
-        const otrSection3Label = document.getElementById("otrSection3Label");
-        const otrButtons3 = document.getElementById("otrButtons3");
+        const otrGroupToggleContainer = document.getElementById("otrGroupToggleContainer");
+        const toggleWholeGroupBtn = document.getElementById("toggleWholeGroupBtn");
+        const toggleSmallGroupBtn = document.getElementById("toggleSmallGroupBtn");
+        const otrButtonsWrapper = document.getElementById("otrButtonsWrapper");
+        const otrWholeGroupView = document.getElementById("otrWholeGroupView");
+        const otrSmallGroupView = document.getElementById("otrSmallGroupView");
         
         const praiseContainer = document.getElementById("praiseContainer");
         const praiseSubLabel = document.getElementById("praiseSubLabel");
@@ -1816,6 +1971,37 @@
         const toggleAllOtrStateText = document.getElementById("toggleAllOtrStateText");
         const toggleAllSelStateText = document.getElementById("toggleAllSelStateText");
 
+        function setOtrGroupView(group, recordEvent = false) {
+          state.activeOtrGroup = group;
+          if (toggleWholeGroupBtn) {
+            toggleWholeGroupBtn.classList.toggle("is-active", group === "whole");
+            toggleWholeGroupBtn.setAttribute("aria-selected", group === "whole" ? "true" : "false");
+          }
+          if (toggleSmallGroupBtn) {
+            toggleSmallGroupBtn.classList.toggle("is-active", group === "small");
+            toggleSmallGroupBtn.setAttribute("aria-selected", group === "small" ? "true" : "false");
+          }
+          if (otrWholeGroupView) {
+            otrWholeGroupView.style.display = group === "whole" ? "grid" : "none";
+          }
+          if (otrSmallGroupView) {
+            otrSmallGroupView.style.display = group === "small" ? "grid" : "none";
+          }
+          if (recordEvent && state.startedAt !== null && state.stoppedAt === null) {
+            const tMs = performance.now() - state.startedAt;
+            state.otrEvents.push({ tMs, kind: group === "whole" ? "structWhole" : "structSmall" });
+            updateUndoBtn();
+            updateButtonBadges();
+          }
+        }
+
+        if (toggleWholeGroupBtn) {
+          toggleWholeGroupBtn.addEventListener("click", () => setOtrGroupView("whole", true));
+        }
+        if (toggleSmallGroupBtn) {
+          toggleSmallGroupBtn.addEventListener("click", () => setOtrGroupView("small", true));
+        }
+
         if (state.mode === "Praise") {
           if (structContainer) structContainer.style.display = "block";
           if (structSectionLabel) structSectionLabel.style.display = "block";
@@ -1824,63 +2010,49 @@
           
           if (otrContainer) otrContainer.style.display = "none";
           if (otrSectionLabel) otrSectionLabel.style.display = "none";
-          if (otrColumnsContainer) otrColumnsContainer.style.display = "none";
-          if (otrSection1Label) otrSection1Label.style.display = "none";
-          if (otrButtons1) otrButtons1.style.display = "none";
-          if (otrSectionSmallLabel) otrSectionSmallLabel.style.display = "none";
-          if (otrButtonsSmall) otrButtonsSmall.style.display = "none";
-          if (otrSection2Label) otrSection2Label.style.display = "none";
-          if (otrButtons2) otrButtons2.style.display = "none";
-          if (otrSection3Label) otrSection3Label.style.display = "none";
-          if (otrButtons3) otrButtons3.style.display = "none";
+          if (otrGroupToggleContainer) otrGroupToggleContainer.style.display = "none";
+          if (otrButtonsWrapper) otrButtonsWrapper.style.display = "none";
           
           if (praiseContainer) praiseContainer.style.display = "block";
           if (praiseSubLabel) {
             praiseSubLabel.style.display = "inline-block";
-            praiseSubLabel.textContent = "Social Emotional Learning";
+            praiseSubLabel.textContent = "Instructional Feedback";
           }
           if (praiseButtons) praiseButtons.style.display = "grid";
         } else if (state.mode === "All") {
-          // On OTR and ALL timers, remove lesson structure buttons; data is automatically collected from OTR column clicks
+          // On OTR and ALL timers, remove separate lesson structure buttons; data is automatically collected from OTR mode/actions
           if (structContainer) structContainer.style.display = "none";
           if (structSectionLabel) structSectionLabel.style.display = "none";
           if (structButtons1) structButtons1.style.display = "none";
           if (structButtons2) structButtons2.style.display = "none";
           
           if (otrContainer) otrContainer.style.display = "block";
-          if (otrSectionLabel) otrSectionLabel.style.display = "inline-block";
-          if (otrSection1Label) otrSection1Label.style.display = "block";
-          if (otrButtons1) otrButtons1.style.display = "flex";
-          if (otrSectionSmallLabel) otrSectionSmallLabel.style.display = "block";
-          if (otrButtonsSmall) otrButtonsSmall.style.display = "flex";
-          if (otrSection2Label) otrSection2Label.style.display = "block";
-          if (otrButtons2) otrButtons2.style.display = "flex";
-          if (otrSection3Label) otrSection3Label.style.display = "block";
-          if (otrButtons3) otrButtons3.style.display = "flex";
+          if (otrSectionLabel) {
+            otrSectionLabel.style.display = "inline-block";
+            otrSectionLabel.textContent = "Opportunity to Respond";
+          }
+          setOtrGroupView(state.activeOtrGroup || "whole", false);
           
           if (praiseContainer) praiseContainer.style.display = "block";
           if (praiseSubLabel) {
             praiseSubLabel.style.display = "inline-block";
-            praiseSubLabel.textContent = "Social Emotional Learning";
+            praiseSubLabel.textContent = "Instructional Feedback";
           }
         } else {
-          // OTR timer: remove lesson structure buttons; data is automatically collected from OTR column clicks
+          // OTR timer
           if (structContainer) structContainer.style.display = "none";
           if (structSectionLabel) structSectionLabel.style.display = "none";
           if (structButtons1) structButtons1.style.display = "none";
           if (structButtons2) structButtons2.style.display = "none";
           
           if (otrContainer) otrContainer.style.display = "block";
-          if (otrSectionLabel) otrSectionLabel.style.display = "inline-block";
-          if (otrColumnsContainer) otrColumnsContainer.style.display = "grid";
-          if (otrSection1Label) otrSection1Label.style.display = "block";
-          if (otrButtons1) otrButtons1.style.display = "flex";
-          if (otrSectionSmallLabel) otrSectionSmallLabel.style.display = "block";
-          if (otrButtonsSmall) otrButtonsSmall.style.display = "flex";
-          if (otrSection2Label) otrSection2Label.style.display = "block";
-          if (otrButtons2) otrButtons2.style.display = "flex";
-          if (otrSection3Label) otrSection3Label.style.display = "block";
-          if (otrButtons3) otrButtons3.style.display = "flex";
+          if (otrSectionLabel) {
+            otrSectionLabel.style.display = "inline-block";
+            otrSectionLabel.textContent = "Opportunity to Respond";
+          }
+          if (otrGroupToggleContainer) otrGroupToggleContainer.style.display = "flex";
+          if (otrButtonsWrapper) otrButtonsWrapper.style.display = "block";
+          setOtrGroupView(state.activeOtrGroup || "whole", false);
           
           if (praiseContainer) praiseContainer.style.display = "none";
           if (praiseSubLabel) praiseSubLabel.style.display = "none";
@@ -1900,16 +2072,19 @@
               toggleAllOtrBtn.classList.remove("is-off");
               toggleAllOtrBtn.classList.add("is-on");
               toggleAllOtrBtn.setAttribute("aria-checked", "true");
-              toggleAllOtrBtn.setAttribute("title", "Opportunities to Respond: ON");
+              toggleAllOtrBtn.setAttribute("title", "Opportunity to Respond: ON");
               if (toggleAllOtrStateText) toggleAllOtrStateText.textContent = "ON";
-              if (otrColumnsContainer) otrColumnsContainer.style.display = "grid";
+              if (otrGroupToggleContainer) otrGroupToggleContainer.style.display = "flex";
+              if (otrButtonsWrapper) otrButtonsWrapper.style.display = "block";
+              setOtrGroupView(state.activeOtrGroup || "whole", false);
             } else {
               toggleAllOtrBtn.classList.remove("is-on");
               toggleAllOtrBtn.classList.add("is-off");
               toggleAllOtrBtn.setAttribute("aria-checked", "false");
-              toggleAllOtrBtn.setAttribute("title", "Opportunities to Respond: OFF");
+              toggleAllOtrBtn.setAttribute("title", "Opportunity to Respond: OFF");
               if (toggleAllOtrStateText) toggleAllOtrStateText.textContent = "OFF";
-              if (otrColumnsContainer) otrColumnsContainer.style.display = "none";
+              if (otrGroupToggleContainer) otrGroupToggleContainer.style.display = "none";
+              if (otrButtonsWrapper) otrButtonsWrapper.style.display = "none";
             }
           }
 
@@ -1919,14 +2094,14 @@
               toggleAllSelBtn.classList.remove("is-off");
               toggleAllSelBtn.classList.add("is-on");
               toggleAllSelBtn.setAttribute("aria-checked", "true");
-              toggleAllSelBtn.setAttribute("title", "Social Emotional Learning: ON");
+              toggleAllSelBtn.setAttribute("title", "Instructional Feedback: ON");
               if (toggleAllSelStateText) toggleAllSelStateText.textContent = "ON";
               if (praiseButtons) praiseButtons.style.display = "grid";
             } else {
               toggleAllSelBtn.classList.remove("is-on");
               toggleAllSelBtn.classList.add("is-off");
               toggleAllSelBtn.setAttribute("aria-checked", "false");
-              toggleAllSelBtn.setAttribute("title", "Social Emotional Learning: OFF");
+              toggleAllSelBtn.setAttribute("title", "Instructional Feedback: OFF");
               if (toggleAllSelStateText) toggleAllSelStateText.textContent = "OFF";
               if (praiseButtons) praiseButtons.style.display = "none";
             }
@@ -1953,26 +2128,53 @@
         const structPartnersBtn = document.getElementById("structPartnersBtn");
         const structIndividualBtn = document.getElementById("structIndividualBtn");
 
-        const otrChoralBtn = document.getElementById("otrChoralBtn");
-        const otrClozeBtn = document.getElementById("otrClozeBtn");
-        const otrWhiteboardBtn = document.getElementById("otrWhiteboardBtn");
-        const otrWrittenBtn = document.getElementById("otrWrittenBtn");
-        const otrNonverbalBtn = document.getElementById("otrNonverbalBtn");
-        const otrOtherWholeBtn = document.getElementById("otrOtherWholeBtn");
-        
-        const otrGroupDiscBtn = document.getElementById("otrGroupDiscBtn");
-        const otrNumberedHeadsBtn = document.getElementById("otrNumberedHeadsBtn");
-        const otrTeamShareBtn = document.getElementById("otrTeamShareBtn");
-        const otrOtherSmallBtn = document.getElementById("otrOtherSmallBtn");
+        // Whole Group OTR Button Elements
+        const otrWholeTpsBtn = document.getElementById("otrWholeTpsBtn");
+        const otrWholeChoralBtn = document.getElementById("otrWholeChoralBtn");
+        const otrWholeClozeBtn = document.getElementById("otrWholeClozeBtn");
+        const otrWholeWhiteboardBtn = document.getElementById("otrWholeWhiteboardBtn");
+        const otrWholeWrittenBtn = document.getElementById("otrWholeWrittenBtn");
+        const otrWholeNonverbalBtn = document.getElementById("otrWholeNonverbalBtn");
+        const otrWholeGroupDiscBtn = document.getElementById("otrWholeGroupDiscBtn");
+        const otrWholeTeamShareBtn = document.getElementById("otrWholeTeamShareBtn");
+        const otrWholePrecisionBtn = document.getElementById("otrWholePrecisionBtn");
+        const otrWholeElbowBtn = document.getElementById("otrWholeElbowBtn");
+        const otrWholeWarmBtn = document.getElementById("otrWholeWarmBtn");
+        const otrWholeColdBtn = document.getElementById("otrWholeColdBtn");
+        const otrWholeVolunteerBtn = document.getElementById("otrWholeVolunteerBtn");
 
-        const otrPrecisionBtn = document.getElementById("otrPrecisionBtn");
-        const otrElbowBtn = document.getElementById("otrElbowBtn");
-        const otrOtherPartnerBtn = document.getElementById("otrOtherPartnerBtn");
-        
-        const otrWarmBtn = document.getElementById("otrWarmBtn");
-        const otrColdBtn = document.getElementById("otrColdBtn");
-        const otrVolunteerBtn = document.getElementById("otrVolunteerBtn");
-        const otrOtherIndividualBtn = document.getElementById("otrOtherIndividualBtn");
+        // Small Group OTR Button Elements
+        const otrSmallTpsBtn = document.getElementById("otrSmallTpsBtn");
+        const otrSmallChoralBtn = document.getElementById("otrSmallChoralBtn");
+        const otrSmallClozeBtn = document.getElementById("otrSmallClozeBtn");
+        const otrSmallWhiteboardBtn = document.getElementById("otrSmallWhiteboardBtn");
+        const otrSmallWrittenBtn = document.getElementById("otrSmallWrittenBtn");
+        const otrSmallNonverbalBtn = document.getElementById("otrSmallNonverbalBtn");
+        const otrSmallGroupDiscBtn = document.getElementById("otrSmallGroupDiscBtn");
+        const otrSmallTeamShareBtn = document.getElementById("otrSmallTeamShareBtn");
+        const otrSmallPrecisionBtn = document.getElementById("otrSmallPrecisionBtn");
+        const otrSmallElbowBtn = document.getElementById("otrSmallElbowBtn");
+        const otrSmallWarmBtn = document.getElementById("otrSmallWarmBtn");
+        const otrSmallColdBtn = document.getElementById("otrSmallColdBtn");
+        const otrSmallVolunteerBtn = document.getElementById("otrSmallVolunteerBtn");
+
+        // Legacy aliases
+        const otrChoralBtn = otrWholeChoralBtn;
+        const otrClozeBtn = otrWholeClozeBtn;
+        const otrWhiteboardBtn = otrWholeWhiteboardBtn;
+        const otrWrittenBtn = otrWholeWrittenBtn;
+        const otrNonverbalBtn = otrWholeNonverbalBtn;
+        const otrOtherWholeBtn = null;
+        const otrGroupDiscBtn = otrSmallGroupDiscBtn;
+        const otrTeamShareBtn = otrSmallTeamShareBtn;
+        const otrOtherSmallBtn = null;
+        const otrPrecisionBtn = otrSmallPrecisionBtn;
+        const otrElbowBtn = otrSmallElbowBtn;
+        const otrOtherPartnerBtn = null;
+        const otrWarmBtn = otrSmallWarmBtn;
+        const otrColdBtn = otrSmallColdBtn;
+        const otrVolunteerBtn = otrSmallVolunteerBtn;
+        const otrOtherIndividualBtn = null;
 
         const praiseSpecificBtn = document.getElementById("praiseSpecificBtn");
         const praiseGeneralBtn = document.getElementById("praiseGeneralBtn");
@@ -1986,7 +2188,7 @@
 
         runBackBtn.addEventListener("click", () => {
           clearTimers();
-          showModeSelect();
+          showSetup();
         });
 
         runContext.textContent = `Observed Educator Name: ${state.educatorName}`;
@@ -2070,26 +2272,35 @@
           structPartnersBtn.disabled = !on;
           structIndividualBtn.disabled = !on;
           
-          otrChoralBtn.disabled = !on;
-          otrClozeBtn.disabled = !on;
-          otrWhiteboardBtn.disabled = !on;
-          if (otrWrittenBtn) otrWrittenBtn.disabled = !on;
-          if (otrNonverbalBtn) otrNonverbalBtn.disabled = !on;
-          if (otrOtherWholeBtn) otrOtherWholeBtn.disabled = !on;
+          // Whole Group Buttons
+          if (otrWholeTpsBtn) otrWholeTpsBtn.disabled = !on;
+          if (otrWholeChoralBtn) otrWholeChoralBtn.disabled = !on;
+          if (otrWholeClozeBtn) otrWholeClozeBtn.disabled = !on;
+          if (otrWholeWhiteboardBtn) otrWholeWhiteboardBtn.disabled = !on;
+          if (otrWholeWrittenBtn) otrWholeWrittenBtn.disabled = !on;
+          if (otrWholeNonverbalBtn) otrWholeNonverbalBtn.disabled = !on;
+          if (otrWholeGroupDiscBtn) otrWholeGroupDiscBtn.disabled = !on;
+          if (otrWholeTeamShareBtn) otrWholeTeamShareBtn.disabled = !on;
+          if (otrWholePrecisionBtn) otrWholePrecisionBtn.disabled = !on;
+          if (otrWholeElbowBtn) otrWholeElbowBtn.disabled = !on;
+          if (otrWholeWarmBtn) otrWholeWarmBtn.disabled = !on;
+          if (otrWholeColdBtn) otrWholeColdBtn.disabled = !on;
+          if (otrWholeVolunteerBtn) otrWholeVolunteerBtn.disabled = !on;
 
-          if (otrGroupDiscBtn) otrGroupDiscBtn.disabled = !on;
-          if (otrNumberedHeadsBtn) otrNumberedHeadsBtn.disabled = !on;
-          if (otrTeamShareBtn) otrTeamShareBtn.disabled = !on;
-          if (otrOtherSmallBtn) otrOtherSmallBtn.disabled = !on;
-
-          otrPrecisionBtn.disabled = !on;
-          otrElbowBtn.disabled = !on;
-          if (otrOtherPartnerBtn) otrOtherPartnerBtn.disabled = !on;
-
-          otrWarmBtn.disabled = !on;
-          otrColdBtn.disabled = !on;
-          otrVolunteerBtn.disabled = !on;
-          if (otrOtherIndividualBtn) otrOtherIndividualBtn.disabled = !on;
+          // Small Group Buttons
+          if (otrSmallTpsBtn) otrSmallTpsBtn.disabled = !on;
+          if (otrSmallChoralBtn) otrSmallChoralBtn.disabled = !on;
+          if (otrSmallClozeBtn) otrSmallClozeBtn.disabled = !on;
+          if (otrSmallWhiteboardBtn) otrSmallWhiteboardBtn.disabled = !on;
+          if (otrSmallWrittenBtn) otrSmallWrittenBtn.disabled = !on;
+          if (otrSmallNonverbalBtn) otrSmallNonverbalBtn.disabled = !on;
+          if (otrSmallGroupDiscBtn) otrSmallGroupDiscBtn.disabled = !on;
+          if (otrSmallTeamShareBtn) otrSmallTeamShareBtn.disabled = !on;
+          if (otrSmallPrecisionBtn) otrSmallPrecisionBtn.disabled = !on;
+          if (otrSmallElbowBtn) otrSmallElbowBtn.disabled = !on;
+          if (otrSmallWarmBtn) otrSmallWarmBtn.disabled = !on;
+          if (otrSmallColdBtn) otrSmallColdBtn.disabled = !on;
+          if (otrSmallVolunteerBtn) otrSmallVolunteerBtn.disabled = !on;
 
           praiseSpecificBtn.disabled = !on;
           praiseGeneralBtn.disabled = !on;
@@ -2107,38 +2318,48 @@
         const undoBtn = document.getElementById("undoBtn");
 
         const OTR_BUTTON_MAP = [
-          { kind: "structWhole", badgeId: "badge-structWhole" },
-          { kind: "structSmall", badgeId: "badge-structSmall" },
-          { kind: "structPartners", badgeId: "badge-structPartners" },
-          { kind: "structIndividual", badgeId: "badge-structIndividual" },
+          { badgeId: "badge-structWhole", kinds: ["structWhole"] },
+          { badgeId: "badge-structSmall", kinds: ["structSmall"] },
+          { badgeId: "badge-structPartners", kinds: ["structPartners"] },
+          { badgeId: "badge-structIndividual", kinds: ["structIndividual"] },
 
-          { kind: "otrChoral", badgeId: "badge-otrChoral" },
-          { kind: "otrCloze", badgeId: "badge-otrCloze" },
-          { kind: "otrWhiteboard", badgeId: "badge-otrWhiteboard" },
-          { kind: "otrWritten", badgeId: "badge-otrWritten" },
-          { kind: "otrNonverbal", badgeId: "badge-otrNonverbal" },
-          { kind: "otrOtherWhole", badgeId: "badge-otrOtherWhole" },
+          // Whole Group Buttons (shades of purple)
+          { badgeId: "badge-otrWholeTps", kinds: ["otrWhole_tps"] },
+          { badgeId: "badge-otrWholeChoral", kinds: ["otrWhole_choral", "otrChoral"] },
+          { badgeId: "badge-otrWholeCloze", kinds: ["otrWhole_cloze", "otrCloze"] },
+          { badgeId: "badge-otrWholeWhiteboard", kinds: ["otrWhole_whiteboard", "otrWhiteboard"] },
+          { badgeId: "badge-otrWholeWritten", kinds: ["otrWhole_written", "otrWritten"] },
+          { badgeId: "badge-otrWholeNonverbal", kinds: ["otrWhole_nonverbal", "otrNonverbal"] },
+          { badgeId: "badge-otrWholeGroupDisc", kinds: ["otrWhole_groupDisc"] },
+          { badgeId: "badge-otrWholeTeamShare", kinds: ["otrWhole_teamShare"] },
+          { badgeId: "badge-otrWholePrecision", kinds: ["otrWhole_precision"] },
+          { badgeId: "badge-otrWholeElbow", kinds: ["otrWhole_elbow"] },
+          { badgeId: "badge-otrWholeWarm", kinds: ["otrWhole_warm"] },
+          { badgeId: "badge-otrWholeCold", kinds: ["otrWhole_cold"] },
+          { badgeId: "badge-otrWholeVolunteer", kinds: ["otrWhole_volunteer"] },
 
-          { kind: "otrGroupDisc", badgeId: "badge-otrGroupDisc" },
-          { kind: "otrNumberedHeads", badgeId: "badge-otrNumberedHeads" },
-          { kind: "otrTeamShare", badgeId: "badge-otrTeamShare" },
-          { kind: "otrOtherSmall", badgeId: "badge-otrOtherSmall" },
+          // Small Group Buttons (shades of blue)
+          { badgeId: "badge-otrSmallTps", kinds: ["otrSmall_tps"] },
+          { badgeId: "badge-otrSmallChoral", kinds: ["otrSmall_choral"] },
+          { badgeId: "badge-otrSmallCloze", kinds: ["otrSmall_cloze"] },
+          { badgeId: "badge-otrSmallWhiteboard", kinds: ["otrSmall_whiteboard"] },
+          { badgeId: "badge-otrSmallWritten", kinds: ["otrSmall_written"] },
+          { badgeId: "badge-otrSmallNonverbal", kinds: ["otrSmall_nonverbal"] },
+          { badgeId: "badge-otrSmallGroupDisc", kinds: ["otrSmall_groupDisc", "otrGroupDisc"] },
+          { badgeId: "badge-otrSmallTeamShare", kinds: ["otrSmall_teamShare", "otrTeamShare"] },
+          { badgeId: "badge-otrSmallPrecision", kinds: ["otrSmall_precision", "otrPrecision"] },
+          { badgeId: "badge-otrSmallElbow", kinds: ["otrSmall_elbow", "otrElbow"] },
+          { badgeId: "badge-otrSmallWarm", kinds: ["otrSmall_warm", "otrWarm"] },
+          { badgeId: "badge-otrSmallCold", kinds: ["otrSmall_cold", "otrCold"] },
+          { badgeId: "badge-otrSmallVolunteer", kinds: ["otrSmall_volunteer", "otrVolunteer"] },
 
-          { kind: "otrPrecision", badgeId: "badge-otrPrecision" },
-          { kind: "otrElbow", badgeId: "badge-otrElbow" },
-          { kind: "otrOtherPartner", badgeId: "badge-otrOtherPartner" },
-
-          { kind: "otrWarm", badgeId: "badge-otrWarm" },
-          { kind: "otrCold", badgeId: "badge-otrCold" },
-          { kind: "otrVolunteer", badgeId: "badge-otrVolunteer" },
-          { kind: "otrOtherIndividual", badgeId: "badge-otrOtherIndividual" },
-
-          { kind: "specific", badgeId: "badge-praiseSpecific" },
-          { kind: "general", badgeId: "badge-praiseGeneral" },
-          { kind: "corrective", badgeId: "badge-praiseCorrective" },
-          { kind: "redirect", badgeId: "badge-praiseRedirect" },
-          { kind: "genCrit", badgeId: "badge-praiseGenCrit" },
-          { kind: "indCrit", badgeId: "badge-praiseIndCrit" }
+          // Praise / SEL Buttons
+          { badgeId: "badge-praiseSpecific", kinds: ["specific"] },
+          { badgeId: "badge-praiseGeneral", kinds: ["general"] },
+          { badgeId: "badge-praiseCorrective", kinds: ["corrective"] },
+          { badgeId: "badge-praiseRedirect", kinds: ["redirect"] },
+          { badgeId: "badge-praiseGenCrit", kinds: ["genCrit"] },
+          { badgeId: "badge-praiseIndCrit", kinds: ["indCrit"] }
         ];
 
         function getActiveStructure(events) {
@@ -2147,10 +2368,12 @@
             if (["structWhole", "structSmall", "structPartners", "structIndividual"].includes(k)) {
               return k;
             }
+            if (k.startsWith("otrWhole_")) return "structWhole";
+            if (k.startsWith("otrSmall_")) return "structSmall";
             if (["otrChoral", "otrCloze", "otrWhiteboard", "otrWritten", "otrNonverbal", "otrOtherWhole"].includes(k)) {
               return "structWhole";
             }
-            if (["otrGroupDisc", "otrNumberedHeads", "otrTeamShare", "otrOtherSmall"].includes(k)) {
+            if (["otrGroupDisc", "otrTeamShare", "otrOtherSmall"].includes(k)) {
               return "structSmall";
             }
             if (["otrPrecision", "otrElbow", "otrOtherPartner"].includes(k)) {
@@ -2178,14 +2401,19 @@
           for (const item of OTR_BUTTON_MAP) {
             const badge = document.getElementById(item.badgeId);
             if (!badge) continue;
-            const count = counts[item.kind] || 0;
+            let count = 0;
+            let isPulsed = false;
+            for (const k of item.kinds) {
+              count += (counts[k] || 0);
+              if (pulsedKind && k === pulsedKind) isPulsed = true;
+            }
             badge.textContent = String(count);
             if (count > 0) {
               badge.classList.add("has-count");
             } else {
               badge.classList.remove("has-count");
             }
-            if (pulsedKind && item.kind === pulsedKind) {
+            if (isPulsed) {
               badge.classList.remove("pulse");
               void badge.offsetWidth;
               badge.classList.add("pulse");
@@ -2214,17 +2442,6 @@
               }, 160);
             }
           }
-
-          // Automatically highlight the active lesson structure column based on OTR button clicks
-          const activeStruct = getActiveStructure(state.otrEvents);
-          const colWhole = document.getElementById("otrColWhole");
-          const colSmall = document.getElementById("otrColSmall");
-          const colPartner = document.getElementById("otrColPartner");
-          const colIndiv = document.getElementById("otrColIndividual");
-          if (colWhole) colWhole.classList.toggle("is-active-col", activeStruct === "structWhole");
-          if (colSmall) colSmall.classList.toggle("is-active-col", activeStruct === "structSmall");
-          if (colPartner) colPartner.classList.toggle("is-active-col", activeStruct === "structPartners");
-          if (colIndiv) colIndiv.classList.toggle("is-active-col", activeStruct === "structIndividual");
         }
 
         function updateUndoBtn() {
@@ -2259,9 +2476,9 @@
           if (timerNotes) timerNotes.disabled = false;
 
           if (state.mode === "Praise") {
-            hintText.textContent = "Recording... Tap a Social Emotional Learning or Lesson Structure button for each observed response.";
+            hintText.textContent = "Recording... Tap an Instructional Feedback or Lesson Structure button for each observed response.";
           } else if (state.mode === "All") {
-            hintText.textContent = "Recording... Tap an Opportunities to Respond or Social Emotional Learning button for each observed response.";
+            hintText.textContent = "Recording... Tap an Opportunities to Respond or Instructional Feedback button for each observed response.";
           } else {
             hintText.textContent = "Recording... Tap an Opportunities to Respond button for each observed response.";
           }
@@ -2320,26 +2537,35 @@
         structPartnersBtn.addEventListener("click", () => doOtr("structPartners"));
         structIndividualBtn.addEventListener("click", () => doOtr("structIndividual"));
 
-        otrChoralBtn.addEventListener("click", () => doOtr("otrChoral"));
-        otrClozeBtn.addEventListener("click", () => doOtr("otrCloze"));
-        otrWhiteboardBtn.addEventListener("click", () => doOtr("otrWhiteboard"));
-        if (otrWrittenBtn) otrWrittenBtn.addEventListener("click", () => doOtr("otrWritten"));
-        if (otrNonverbalBtn) otrNonverbalBtn.addEventListener("click", () => doOtr("otrNonverbal"));
-        if (otrOtherWholeBtn) otrOtherWholeBtn.addEventListener("click", () => doOtr("otrOtherWhole"));
-        
-        if (otrGroupDiscBtn) otrGroupDiscBtn.addEventListener("click", () => doOtr("otrGroupDisc"));
-        if (otrNumberedHeadsBtn) otrNumberedHeadsBtn.addEventListener("click", () => doOtr("otrNumberedHeads"));
-        if (otrTeamShareBtn) otrTeamShareBtn.addEventListener("click", () => doOtr("otrTeamShare"));
-        if (otrOtherSmallBtn) otrOtherSmallBtn.addEventListener("click", () => doOtr("otrOtherSmall"));
+        // Whole Group Button Click Handlers
+        if (otrWholeTpsBtn) otrWholeTpsBtn.addEventListener("click", () => doOtr("otrWhole_tps"));
+        if (otrWholeChoralBtn) otrWholeChoralBtn.addEventListener("click", () => doOtr("otrWhole_choral"));
+        if (otrWholeClozeBtn) otrWholeClozeBtn.addEventListener("click", () => doOtr("otrWhole_cloze"));
+        if (otrWholeWhiteboardBtn) otrWholeWhiteboardBtn.addEventListener("click", () => doOtr("otrWhole_whiteboard"));
+        if (otrWholeWrittenBtn) otrWholeWrittenBtn.addEventListener("click", () => doOtr("otrWhole_written"));
+        if (otrWholeNonverbalBtn) otrWholeNonverbalBtn.addEventListener("click", () => doOtr("otrWhole_nonverbal"));
+        if (otrWholeGroupDiscBtn) otrWholeGroupDiscBtn.addEventListener("click", () => doOtr("otrWhole_groupDisc"));
+        if (otrWholeTeamShareBtn) otrWholeTeamShareBtn.addEventListener("click", () => doOtr("otrWhole_teamShare"));
+        if (otrWholePrecisionBtn) otrWholePrecisionBtn.addEventListener("click", () => doOtr("otrWhole_precision"));
+        if (otrWholeElbowBtn) otrWholeElbowBtn.addEventListener("click", () => doOtr("otrWhole_elbow"));
+        if (otrWholeWarmBtn) otrWholeWarmBtn.addEventListener("click", () => doOtr("otrWhole_warm"));
+        if (otrWholeColdBtn) otrWholeColdBtn.addEventListener("click", () => doOtr("otrWhole_cold"));
+        if (otrWholeVolunteerBtn) otrWholeVolunteerBtn.addEventListener("click", () => doOtr("otrWhole_volunteer"));
 
-        otrPrecisionBtn.addEventListener("click", () => doOtr("otrPrecision"));
-        otrElbowBtn.addEventListener("click", () => doOtr("otrElbow"));
-        if (otrOtherPartnerBtn) otrOtherPartnerBtn.addEventListener("click", () => doOtr("otrOtherPartner"));
-
-        otrWarmBtn.addEventListener("click", () => doOtr("otrWarm"));
-        otrColdBtn.addEventListener("click", () => doOtr("otrCold"));
-        otrVolunteerBtn.addEventListener("click", () => doOtr("otrVolunteer"));
-        if (otrOtherIndividualBtn) otrOtherIndividualBtn.addEventListener("click", () => doOtr("otrOtherIndividual"));
+        // Small Group Button Click Handlers
+        if (otrSmallTpsBtn) otrSmallTpsBtn.addEventListener("click", () => doOtr("otrSmall_tps"));
+        if (otrSmallChoralBtn) otrSmallChoralBtn.addEventListener("click", () => doOtr("otrSmall_choral"));
+        if (otrSmallClozeBtn) otrSmallClozeBtn.addEventListener("click", () => doOtr("otrSmall_cloze"));
+        if (otrSmallWhiteboardBtn) otrSmallWhiteboardBtn.addEventListener("click", () => doOtr("otrSmall_whiteboard"));
+        if (otrSmallWrittenBtn) otrSmallWrittenBtn.addEventListener("click", () => doOtr("otrSmall_written"));
+        if (otrSmallNonverbalBtn) otrSmallNonverbalBtn.addEventListener("click", () => doOtr("otrSmall_nonverbal"));
+        if (otrSmallGroupDiscBtn) otrSmallGroupDiscBtn.addEventListener("click", () => doOtr("otrSmall_groupDisc"));
+        if (otrSmallTeamShareBtn) otrSmallTeamShareBtn.addEventListener("click", () => doOtr("otrSmall_teamShare"));
+        if (otrSmallPrecisionBtn) otrSmallPrecisionBtn.addEventListener("click", () => doOtr("otrSmall_precision"));
+        if (otrSmallElbowBtn) otrSmallElbowBtn.addEventListener("click", () => doOtr("otrSmall_elbow"));
+        if (otrSmallWarmBtn) otrSmallWarmBtn.addEventListener("click", () => doOtr("otrSmall_warm"));
+        if (otrSmallColdBtn) otrSmallColdBtn.addEventListener("click", () => doOtr("otrSmall_cold"));
+        if (otrSmallVolunteerBtn) otrSmallVolunteerBtn.addEventListener("click", () => doOtr("otrSmall_volunteer"));
 
         praiseSpecificBtn.addEventListener("click", () => doOtr("specific"));
         praiseGeneralBtn.addEventListener("click", () => doOtr("general"));
@@ -2401,23 +2627,20 @@
           });
         }
 
-        attachAddHandler("whole", "otrAddWholeInput", "otrAddWholeBtn", "otrAddWholeContainer", "otrButtons1", "otr-custom-whole");
-        attachAddHandler("small", "otrAddSmallInput", "otrAddSmallBtn", "otrAddSmallContainer", "otrButtonsSmall", "otr-custom-small");
-        attachAddHandler("partner", "otrAddPartnerInput", "otrAddPartnerBtn", "otrAddPartnerContainer", "otrButtons2", "otr-custom-partner");
-        attachAddHandler("individual", "otrAddIndividualInput", "otrAddIndividualBtn", "otrAddIndividualContainer", "otrButtons3", "otr-custom-individual");
+        attachAddHandler("whole", "otrAddWholeInput", "otrAddWholeBtn", "otrAddWholeContainer", "otrWholeGroupView", "otr-custom-whole");
+        attachAddHandler("small", "otrAddSmallInput", "otrAddSmallBtn", "otrAddSmallContainer", "otrSmallGroupView", "otr-custom-small");
         attachAddHandler("praise", "praiseAddInput", "praiseAddBtn", "praiseAddContainer", "praiseButtons", "praise-custom");
 
         if (state.customOtrButtons && state.customOtrButtons.length > 0) {
-          const colMap = {
-            whole: { buttons: document.getElementById("otrButtons1"), addRow: document.getElementById("otrAddWholeContainer"), cls: "otr-custom-whole" },
-            small: { buttons: document.getElementById("otrButtonsSmall"), addRow: document.getElementById("otrAddSmallContainer"), cls: "otr-custom-small" },
-            partner: { buttons: document.getElementById("otrButtons2"), addRow: document.getElementById("otrAddPartnerContainer"), cls: "otr-custom-partner" },
-            individual: { buttons: document.getElementById("otrButtons3"), addRow: document.getElementById("otrAddIndividualContainer"), cls: "otr-custom-individual" }
-          };
+          const wholeView = document.getElementById("otrWholeGroupView");
+          const wholeAdd = document.getElementById("otrAddWholeContainer");
+          const smallView = document.getElementById("otrSmallGroupView");
+          const smallAdd = document.getElementById("otrAddSmallContainer");
           for (const item of state.customOtrButtons) {
-            const col = colMap[item.column];
-            if (col && col.buttons && col.addRow) {
-              renderSingleCustomButton(item, col.buttons, col.addRow, col.cls);
+            if (item.column === "whole" && wholeView && wholeAdd) {
+              renderSingleCustomButton(item, wholeView, wholeAdd, "otr-custom-whole");
+            } else if (smallView && smallAdd) {
+              renderSingleCustomButton(item, smallView, smallAdd, "otr-custom-small");
             }
           }
         }
@@ -2572,22 +2795,49 @@
           structPartners: new Array(minutes).fill(0),
           structIndividual: new Array(minutes).fill(0),
 
+          // Whole Group Buttons (shades of purple)
+          otrWhole_tps: new Array(minutes).fill(0),
+          otrWhole_choral: new Array(minutes).fill(0),
+          otrWhole_cloze: new Array(minutes).fill(0),
+          otrWhole_whiteboard: new Array(minutes).fill(0),
+          otrWhole_written: new Array(minutes).fill(0),
+          otrWhole_nonverbal: new Array(minutes).fill(0),
+          otrWhole_groupDisc: new Array(minutes).fill(0),
+          otrWhole_teamShare: new Array(minutes).fill(0),
+          otrWhole_precision: new Array(minutes).fill(0),
+          otrWhole_elbow: new Array(minutes).fill(0),
+          otrWhole_warm: new Array(minutes).fill(0),
+          otrWhole_cold: new Array(minutes).fill(0),
+          otrWhole_volunteer: new Array(minutes).fill(0),
+
+          // Small Group Buttons (shades of blue)
+          otrSmall_tps: new Array(minutes).fill(0),
+          otrSmall_choral: new Array(minutes).fill(0),
+          otrSmall_cloze: new Array(minutes).fill(0),
+          otrSmall_whiteboard: new Array(minutes).fill(0),
+          otrSmall_written: new Array(minutes).fill(0),
+          otrSmall_nonverbal: new Array(minutes).fill(0),
+          otrSmall_groupDisc: new Array(minutes).fill(0),
+          otrSmall_teamShare: new Array(minutes).fill(0),
+          otrSmall_precision: new Array(minutes).fill(0),
+          otrSmall_elbow: new Array(minutes).fill(0),
+          otrSmall_warm: new Array(minutes).fill(0),
+          otrSmall_cold: new Array(minutes).fill(0),
+          otrSmall_volunteer: new Array(minutes).fill(0),
+
+          // Legacy fallbacks
           otrChoral: new Array(minutes).fill(0),
           otrCloze: new Array(minutes).fill(0),
           otrWhiteboard: new Array(minutes).fill(0),
           otrWritten: new Array(minutes).fill(0),
           otrNonverbal: new Array(minutes).fill(0),
           otrOtherWhole: new Array(minutes).fill(0),
-
           otrGroupDisc: new Array(minutes).fill(0),
-          otrNumberedHeads: new Array(minutes).fill(0),
           otrTeamShare: new Array(minutes).fill(0),
           otrOtherSmall: new Array(minutes).fill(0),
-
           otrPrecision: new Array(minutes).fill(0),
           otrElbow: new Array(minutes).fill(0),
           otrOtherPartner: new Array(minutes).fill(0),
-
           otrWarm: new Array(minutes).fill(0),
           otrCold: new Array(minutes).fill(0),
           otrVolunteer: new Array(minutes).fill(0),
@@ -2621,36 +2871,44 @@
           if (e.kind === "structPartners") bins.structPartners[idx] += 1;
           if (e.kind === "structIndividual") bins.structIndividual[idx] += 1;
 
-          if (e.kind === "otrChoral") { bins.otrChoral[idx] += 1; bins.structWhole[idx] += 1; }
-          if (e.kind === "otrCloze") { bins.otrCloze[idx] += 1; bins.structWhole[idx] += 1; }
-          if (e.kind === "otrWhiteboard") { bins.otrWhiteboard[idx] += 1; bins.structWhole[idx] += 1; }
-          if (e.kind === "otrWritten") { bins.otrWritten[idx] += 1; bins.structWhole[idx] += 1; }
-          if (e.kind === "otrNonverbal") { bins.otrNonverbal[idx] += 1; bins.structWhole[idx] += 1; }
-          if (e.kind === "otrOtherWhole") { bins.otrOtherWhole[idx] += 1; bins.structWhole[idx] += 1; }
+          // Whole Group Buttons
+          if (e.kind.startsWith("otrWhole_")) {
+            if (!bins[e.kind]) bins[e.kind] = new Array(minutes).fill(0);
+            bins[e.kind][idx] += 1;
+          }
 
-          if (e.kind === "otrGroupDisc") { bins.otrGroupDisc[idx] += 1; bins.structSmall[idx] += 1; }
-          if (e.kind === "otrNumberedHeads") { bins.otrNumberedHeads[idx] += 1; bins.structSmall[idx] += 1; }
-          if (e.kind === "otrTeamShare") { bins.otrTeamShare[idx] += 1; bins.structSmall[idx] += 1; }
-          if (e.kind === "otrOtherSmall") { bins.otrOtherSmall[idx] += 1; bins.structSmall[idx] += 1; }
+          // Small Group Buttons
+          if (e.kind.startsWith("otrSmall_")) {
+            if (!bins[e.kind]) bins[e.kind] = new Array(minutes).fill(0);
+            bins[e.kind][idx] += 1;
+          }
+
+          // Legacy mappings
+          if (e.kind === "otrChoral") { bins.otrWhole_choral[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrCloze") { bins.otrWhole_cloze[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrWhiteboard") { bins.otrWhole_whiteboard[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrWritten") { bins.otrWhole_written[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrNonverbal") { bins.otrWhole_nonverbal[idx] += 1; bins.structWhole[idx] += 1; }
+          if (e.kind === "otrOtherWhole") { bins.otrWhole_tps[idx] += 1; bins.structWhole[idx] += 1; }
+
+          if (e.kind === "otrGroupDisc") { bins.otrSmall_groupDisc[idx] += 1; bins.structSmall[idx] += 1; }
+          if (e.kind === "otrTeamShare") { bins.otrSmall_teamShare[idx] += 1; bins.structSmall[idx] += 1; }
+          if (e.kind === "otrOtherSmall") { bins.otrSmall_tps[idx] += 1; bins.structSmall[idx] += 1; }
           
-          if (e.kind === "otrPrecision") { bins.otrPrecision[idx] += 1; bins.structPartners[idx] += 1; }
-          if (e.kind === "otrElbow") { bins.otrElbow[idx] += 1; bins.structPartners[idx] += 1; }
-          if (e.kind === "otrOtherPartner") { bins.otrOtherPartner[idx] += 1; bins.structPartners[idx] += 1; }
+          if (e.kind === "otrPrecision") { bins.otrSmall_precision[idx] += 1; bins.structPartners[idx] += 1; }
+          if (e.kind === "otrElbow") { bins.otrSmall_elbow[idx] += 1; bins.structPartners[idx] += 1; }
+          if (e.kind === "otrOtherPartner") { bins.otrSmall_elbow[idx] += 1; bins.structPartners[idx] += 1; }
           
-          if (e.kind === "otrWarm") { bins.otrWarm[idx] += 1; bins.structIndividual[idx] += 1; }
-          if (e.kind === "otrCold") { bins.otrCold[idx] += 1; bins.structIndividual[idx] += 1; }
-          if (e.kind === "otrVolunteer") { bins.otrVolunteer[idx] += 1; bins.structIndividual[idx] += 1; }
-          if (e.kind === "otrOtherIndividual") { bins.otrOtherIndividual[idx] += 1; bins.structIndividual[idx] += 1; }
+          if (e.kind === "otrWarm") { bins.otrSmall_warm[idx] += 1; bins.structIndividual[idx] += 1; }
+          if (e.kind === "otrCold") { bins.otrSmall_cold[idx] += 1; bins.structIndividual[idx] += 1; }
+          if (e.kind === "otrVolunteer") { bins.otrSmall_volunteer[idx] += 1; bins.structIndividual[idx] += 1; }
+          if (e.kind === "otrOtherIndividual") { bins.otrSmall_volunteer[idx] += 1; bins.structIndividual[idx] += 1; }
 
           if (state.customOtrButtons && state.customOtrButtons.length > 0) {
             const cb = state.customOtrButtons.find(c => c.id === e.kind);
             if (cb) {
               if (!bins[cb.id]) bins[cb.id] = new Array(minutes).fill(0);
               bins[cb.id][idx] += 1;
-              if (cb.column === "whole") bins.structWhole[idx] += 1;
-              else if (cb.column === "small") bins.structSmall[idx] += 1;
-              else if (cb.column === "partner") bins.structPartners[idx] += 1;
-              else if (cb.column === "individual") bins.structIndividual[idx] += 1;
             }
           }
 
@@ -2680,9 +2938,13 @@
           let sk = null;
           if (["structWhole", "structSmall", "structPartners", "structIndividual"].includes(e.kind)) {
             sk = e.kind;
+          } else if (e.kind.startsWith("otrWhole_")) {
+            sk = "structWhole";
+          } else if (e.kind.startsWith("otrSmall_")) {
+            sk = "structSmall";
           } else if (["otrChoral", "otrCloze", "otrWhiteboard", "otrWritten", "otrNonverbal", "otrOtherWhole"].includes(e.kind)) {
             sk = "structWhole";
-          } else if (["otrGroupDisc", "otrNumberedHeads", "otrTeamShare", "otrOtherSmall"].includes(e.kind)) {
+          } else if (["otrGroupDisc", "otrTeamShare", "otrOtherSmall"].includes(e.kind)) {
             sk = "structSmall";
           } else if (["otrPrecision", "otrElbow", "otrOtherPartner"].includes(e.kind)) {
             sk = "structPartners";
@@ -3007,8 +3269,8 @@
       }
 
       function renderOtrMultiLineChartSVG(events, durationMs, structEvents = []){
-        const W = 800, H = 550;
-        const pad = { l: 58, r: 200, t: 28, b: 175 };
+        const W = 800, H = 640;
+        const pad = { l: 56, r: 215, t: 26, b: 175 };
         const innerW = W - pad.l - pad.r;
         const innerH = H - pad.t - pad.b;
 
@@ -3030,23 +3292,32 @@
           ...bins.structSmall,
           ...bins.structPartners,
           ...bins.structIndividual,
-          ...bins.otrChoral,
-          ...bins.otrCloze,
-          ...bins.otrWhiteboard,
-          ...bins.otrWritten,
-          ...bins.otrNonverbal,
-          ...bins.otrOtherWhole,
-          ...bins.otrGroupDisc,
-          ...bins.otrNumberedHeads,
-          ...bins.otrTeamShare,
-          ...bins.otrOtherSmall,
-          ...bins.otrPrecision,
-          ...bins.otrElbow,
-          ...bins.otrOtherPartner,
-          ...bins.otrWarm,
-          ...bins.otrCold,
-          ...bins.otrVolunteer,
-          ...bins.otrOtherIndividual,
+          ...bins.otrWhole_tps,
+          ...bins.otrWhole_choral,
+          ...bins.otrWhole_cloze,
+          ...bins.otrWhole_whiteboard,
+          ...bins.otrWhole_written,
+          ...bins.otrWhole_nonverbal,
+          ...bins.otrWhole_groupDisc,
+          ...bins.otrWhole_teamShare,
+          ...bins.otrWhole_precision,
+          ...bins.otrWhole_elbow,
+          ...bins.otrWhole_warm,
+          ...bins.otrWhole_cold,
+          ...bins.otrWhole_volunteer,
+          ...bins.otrSmall_tps,
+          ...bins.otrSmall_choral,
+          ...bins.otrSmall_cloze,
+          ...bins.otrSmall_whiteboard,
+          ...bins.otrSmall_written,
+          ...bins.otrSmall_nonverbal,
+          ...bins.otrSmall_groupDisc,
+          ...bins.otrSmall_teamShare,
+          ...bins.otrSmall_precision,
+          ...bins.otrSmall_elbow,
+          ...bins.otrSmall_warm,
+          ...bins.otrSmall_cold,
+          ...bins.otrSmall_volunteer,
           ...bins.specific,
           ...bins.general,
           ...bins.corrective,
@@ -3290,7 +3561,8 @@
             fill: "#1f2937"
           }, timeLabel));
 
-          const ratioLabel = (state.mode === "OTRs" || state.mode === "All") ? bRatioText : (pillW >= 95 ? `Ratio: ${bRatioText}` : bRatioText);
+          const formattedRatio = (pillW < 75) ? bRatioText.replace(" / min", "/m") : bRatioText;
+          const ratioLabel = (state.mode === "OTRs" || state.mode === "All") ? formattedRatio : (pillW >= 95 ? `Ratio: ${formattedRatio}` : formattedRatio);
           const ratioFontSize = pillW >= 95 ? 14 : (pillW >= 60 ? 15 : 13);
           svg.appendChild(el(svgNS, "text", {
             x: bCenterX, y: pillY + 35, "text-anchor": "middle",
@@ -3300,6 +3572,9 @@
         }
 
         function addSeries(series, stroke, strokeWidth, withPoints, dashArray, opacity = "1"){
+          if (!series) return;
+          const hasData = series.some(v => v > 0);
+          if (!hasData && !withPoints) return;
           const pts = [];
           for (let i = 1; i <= n; i++){
             const val = series[i - 1];
@@ -3342,29 +3617,40 @@
         const cStructPartners = css.getPropertyValue("--struct-partners").trim() || "#e2e8f0";
         const cStructIndividual = css.getPropertyValue("--struct-individual").trim() || "#f1f5f9";
 
-        const cOtrChoral = css.getPropertyValue("--otr-choral").trim() || "#075985";
-        const cOtrCloze = css.getPropertyValue("--otr-cloze").trim() || "#0284c7";
-        const cOtrWhiteboard = css.getPropertyValue("--otr-whiteboard").trim() || "#0ea5e9";
-        const cOtrWritten = css.getPropertyValue("--otr-written").trim() || "#2563eb";
-        const cOtrNonverbal = css.getPropertyValue("--otr-nonverbal").trim() || "#0ea5e9";
-        const cOtrOtherWhole = css.getPropertyValue("--otr-other-whole").trim() || "#bae6fd";
-        
-        const cOtrGroupDisc = css.getPropertyValue("--otr-group-disc").trim() || "#0f766e";
-        const cOtrNumberedHeads = css.getPropertyValue("--otr-numbered-heads").trim() || "#0d9488";
-        const cOtrTeamShare = css.getPropertyValue("--otr-team-share").trim() || "#14b8a6";
-        const cOtrOtherSmall = css.getPropertyValue("--otr-other-small").trim() || "#5eead4";
+        // Whole Group Colors (13 shades of purple - Descending Darkness to Lightness)
+        const cOtrWgTps = css.getPropertyValue("--otr-wg-tps").trim() || "#2e0750";
+        const cOtrWgChoral = css.getPropertyValue("--otr-wg-choral").trim() || "#380961";
+        const cOtrWgCloze = css.getPropertyValue("--otr-wg-cloze").trim() || "#420c71";
+        const cOtrWgWhiteboard = css.getPropertyValue("--otr-wg-whiteboard").trim() || "#4c0f81";
+        const cOtrWgWritten = css.getPropertyValue("--otr-wg-written").trim() || "#561291";
+        const cOtrWgNonverbal = css.getPropertyValue("--otr-wg-nonverbal").trim() || "#6015a1";
+        const cOtrWgGroupdisc = css.getPropertyValue("--otr-wg-groupdisc").trim() || "#6a19b0";
+        const cOtrWgTeamshare = css.getPropertyValue("--otr-wg-teamshare").trim() || "#741dbf";
+        const cOtrWgPrecision = css.getPropertyValue("--otr-wg-precision").trim() || "#7e22ce";
+        const cOtrWgElbow = css.getPropertyValue("--otr-wg-elbow").trim() || "#8729da";
+        const cOtrWgWarm = css.getPropertyValue("--otr-wg-warm").trim() || "#903bdb";
+        const cOtrWgCold = css.getPropertyValue("--otr-wg-cold").trim() || "#994ddc";
+        const cOtrWgVolunteer = css.getPropertyValue("--otr-wg-volunteer").trim() || "#a25ede";
+        const cOtrWgCustom = css.getPropertyValue("--otr-wg-custom").trim() || "#ab6fe0";
 
-        const cOtrPrecision = css.getPropertyValue("--otr-precision").trim() || "#4338ca";
-        const cOtrElbow = css.getPropertyValue("--otr-elbow").trim() || "#a5b4fc";
-        const cOtrOtherPartner = css.getPropertyValue("--otr-other-partner").trim() || "#86efac";
-        
-        const cOtrWarm = css.getPropertyValue("--otr-warm").trim() || "#6b21a8";
-        const cOtrCold = css.getPropertyValue("--otr-cold").trim() || "#9333ea";
-        const cOtrVolunteer = css.getPropertyValue("--otr-volunteer").trim() || "#e9d5ff";
-        const cOtrOtherIndividual = css.getPropertyValue("--otr-other-individual").trim() || "#e9d5ff";
+        // Small Group Colors (13 shades of blue - Descending Darkness to Lightness)
+        const cOtrSgTps = css.getPropertyValue("--otr-sg-tps").trim() || "#04234e";
+        const cOtrSgChoral = css.getPropertyValue("--otr-sg-choral").trim() || "#062b5f";
+        const cOtrSgCloze = css.getPropertyValue("--otr-sg-cloze").trim() || "#083370";
+        const cOtrSgWhiteboard = css.getPropertyValue("--otr-sg-whiteboard").trim() || "#0a3c81";
+        const cOtrSgWritten = css.getPropertyValue("--otr-sg-written").trim() || "#0d4491";
+        const cOtrSgNonverbal = css.getPropertyValue("--otr-sg-nonverbal").trim() || "#104ca2";
+        const cOtrSgGroupdisc = css.getPropertyValue("--otr-sg-groupdisc").trim() || "#1355b2";
+        const cOtrSgTeamshare = css.getPropertyValue("--otr-sg-teamshare").trim() || "#165dc1";
+        const cOtrSgPrecision = css.getPropertyValue("--otr-sg-precision").trim() || "#1a66d1";
+        const cOtrSgElbow = css.getPropertyValue("--otr-sg-elbow").trim() || "#1e6fe0";
+        const cOtrSgWarm = css.getPropertyValue("--otr-sg-warm").trim() || "#2f7ae1";
+        const cOtrSgCold = css.getPropertyValue("--otr-sg-cold").trim() || "#4285e2";
+        const cOtrSgVolunteer = css.getPropertyValue("--otr-sg-volunteer").trim() || "#5490e3";
+        const cOtrSgCustom = css.getPropertyValue("--otr-sg-custom").trim() || "#669be4";
 
         const cSpecific = css.getPropertyValue("--praise-specific").trim() || "#1f9d55";
-        const cGeneral = css.getPropertyValue("--praise-general").trim() || "#86efac";
+        const cGeneral = css.getPropertyValue("--praise-general").trim() || "#27ae60";
         const cCorrective = css.getPropertyValue("--praise-corrective").trim() || "#3b82f6";
         const cRedirect = css.getPropertyValue("--praise-redirect").trim() || "#f97316";
         const cGenCrit = css.getPropertyValue("--praise-gen-crit").trim() || "#ef4444";
@@ -3391,34 +3677,47 @@
           addSeries(bins.structSmall, cStructSmall, 2.8, false, null, "1");
           addSeries(bins.structWhole, cStructWhole, 3.8, false, null, "1");
         } else {
-          addSeries(bins.otrOtherIndividual, cOtrOtherIndividual, 2.6, false, null, "1");
-          addSeries(bins.otrVolunteer, cOtrVolunteer, 2.6, false, null, "1");
-          addSeries(bins.otrCold, cOtrCold, 2.6, false, null, "1");
-          addSeries(bins.otrWarm, cOtrWarm, 2.6, false, null, "1");
-          addSeries(bins.otrOtherPartner, cOtrOtherPartner, 2.6, false, null, "1");
-          addSeries(bins.otrElbow, cOtrElbow, 2.6, false, null, "1");
-          addSeries(bins.otrPrecision, cOtrPrecision, 2.6, false, null, "1");
-          addSeries(bins.otrOtherSmall, cOtrOtherSmall, 2.6, false, null, "1");
-          addSeries(bins.otrTeamShare, cOtrTeamShare, 2.6, false, null, "1");
-          addSeries(bins.otrNumberedHeads, cOtrNumberedHeads, 2.6, false, null, "1");
-          addSeries(bins.otrGroupDisc, cOtrGroupDisc, 2.8, false, null, "1");
-          addSeries(bins.otrOtherWhole, cOtrOtherWhole, 2.6, false, null, "1");
-          addSeries(bins.otrNonverbal, cOtrNonverbal, 2.6, false, null, "1");
-          addSeries(bins.otrWritten, cOtrWritten, 2.6, false, null, "1");
-          addSeries(bins.otrWhiteboard, cOtrWhiteboard, 2.6, false, null, "1");
-          addSeries(bins.otrCloze, cOtrCloze, 2.8, false, null, "1");
-          addSeries(bins.otrChoral, cOtrChoral, 4.0, false, null, "1");
+          // Whole Group Series (shades of purple)
+          // Column 1
+          addSeries(bins.otrWhole_cloze, cOtrWgCloze, 2.6, false, null, "1");
+          addSeries(bins.otrWhole_nonverbal, cOtrWgNonverbal, 2.6, false, null, "1");
+          addSeries(bins.otrWhole_written, cOtrWgWritten, 2.8, false, null, "1");
+          addSeries(bins.otrWhole_choral, cOtrWgChoral, 3.0, false, null, "1");
+          // Column 2
+          addSeries(bins.otrWhole_tps, cOtrWgTps, 2.6, false, null, "1");
+          addSeries(bins.otrWhole_elbow, cOtrWgElbow, 2.6, false, null, "1");
+          addSeries(bins.otrWhole_precision, cOtrWgPrecision, 2.8, false, null, "1");
+          // Column 3
+          addSeries(bins.otrWhole_volunteer, cOtrWgVolunteer, 2.6, false, null, "1");
+          addSeries(bins.otrWhole_cold, cOtrWgCold, 2.6, false, null, "1");
+          addSeries(bins.otrWhole_warm, cOtrWgWarm, 2.8, false, null, "1");
+          if (bins.otrWhole_whiteboard.some(v => v > 0)) addSeries(bins.otrWhole_whiteboard, cOtrWgWhiteboard, 2.6, false, null, "1");
+          if (bins.otrWhole_groupDisc.some(v => v > 0)) addSeries(bins.otrWhole_groupDisc, cOtrWgGroupdisc, 2.6, false, null, "1");
+          if (bins.otrWhole_teamShare.some(v => v > 0)) addSeries(bins.otrWhole_teamShare, cOtrWgTeamshare, 2.6, false, null, "1");
+
+          // Small Group Series (shades of blue)
+          // Column 1
+          addSeries(bins.otrSmall_cloze, cOtrSgCloze, 2.6, false, null, "1");
+          addSeries(bins.otrSmall_nonverbal, cOtrSgNonverbal, 2.6, false, null, "1");
+          addSeries(bins.otrSmall_written, cOtrSgWritten, 2.8, false, null, "1");
+          addSeries(bins.otrSmall_choral, cOtrSgChoral, 3.0, false, null, "1");
+          // Column 2
+          addSeries(bins.otrSmall_tps, cOtrSgTps, 2.6, false, null, "1");
+          addSeries(bins.otrSmall_elbow, cOtrSgElbow, 2.6, false, null, "1");
+          addSeries(bins.otrSmall_precision, cOtrSgPrecision, 2.8, false, null, "1");
+          // Column 3
+          addSeries(bins.otrSmall_volunteer, cOtrSgVolunteer, 2.6, false, null, "1");
+          addSeries(bins.otrSmall_cold, cOtrSgCold, 2.6, false, null, "1");
+          addSeries(bins.otrSmall_warm, cOtrSgWarm, 2.8, false, null, "1");
+          if (bins.otrSmall_whiteboard.some(v => v > 0)) addSeries(bins.otrSmall_whiteboard, cOtrSgWhiteboard, 2.6, false, null, "1");
+          if (bins.otrSmall_groupDisc.some(v => v > 0)) addSeries(bins.otrSmall_groupDisc, cOtrSgGroupdisc, 2.6, false, null, "1");
+          if (bins.otrSmall_teamShare.some(v => v > 0)) addSeries(bins.otrSmall_teamShare, cOtrSgTeamshare, 2.6, false, null, "1");
 
           if (state.customOtrButtons && state.customOtrButtons.length > 0) {
-            const colColors = {
-              whole: "#0284c7",
-              small: "#0d9488",
-              partner: "#16a34a",
-              individual: "#7e22ce"
-            };
             for (const cb of state.customOtrButtons) {
               if (bins[cb.id]) {
-                addSeries(bins[cb.id], colColors[cb.column] || "#64748b", 2.6, false, "3 2", "1");
+                const col = cb.column === "small" ? cOtrSgCustom : cOtrWgCustom;
+                addSeries(bins[cb.id], col, 2.6, false, "3 2", "1");
               }
             }
           }
@@ -3505,11 +3804,11 @@
           "font-size": 14, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
           fill: "rgba(0,0,0,.60)",
           transform: `rotate(-90 18 ${pad.t + innerH / 2})`
-        }, state.mode === "Praise" ? "Social Emotional Learning per min" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "Opportunities to Respond per min"));
+        }, state.mode === "Praise" ? "Instructional Feedback per min" : state.mode === "Lesson Structure" ? "Lesson Structure per min" : "Opportunities to Respond per min"));
 
-        const lx = pad.l + innerW + 18;
+        const lx = pad.l + innerW + 14;
         const ly = pad.t + 4;
-        const lh = 18;
+        const lh = 17;
         const font = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
 
         function legendRow(i, color, label, dashArray, strokeWidth = 3, opacity = "1", lineSpacing = lh){
@@ -3518,8 +3817,8 @@
           if (dashArray) attrs["stroke-dasharray"] = dashArray;
           svg.appendChild(el(svgNS, "line", attrs));
           svg.appendChild(el(svgNS, "text", {
-            x: lx + 28, y: y0 + 4.5, "text-anchor": "start",
-            "font-size": 12, "font-family": font,
+            x: lx + 26, y: y0 + 4, "text-anchor": "start",
+            "font-size": 11, "font-family": font,
             fill: "rgba(0,0,0,.85)"
           }, label));
         }
@@ -3547,16 +3846,14 @@
           legendRow(3, cStructIndividual, "Individual", null, 2.6, "1");
           nextLegendY = ly + 4 * lh + 12;
         } else {
-          // OTR legend: grouped by Whole Group, Small Group, Partner, Individual
+          // OTR legend: grouped by Whole Group (shades of purple) and Small Group (shades of blue)
           const wholeCustom = (state.customOtrButtons || []).filter(c => c.column === "whole");
           const smallCustom = (state.customOtrButtons || []).filter(c => c.column === "small");
-          const partnerCustom = (state.customOtrButtons || []).filter(c => c.column === "partner");
-          const individualCustom = (state.customOtrButtons || []).filter(c => c.column === "individual");
 
           let curY = ly;
-          const groupHeaderH = 14;
-          const itemH = 15;
-          const groupGap = 6;
+          const groupHeaderH = 13.5;
+          const itemH = 13.5;
+          const groupGap = 5;
 
           function renderGroupHeader(title) {
             svg.appendChild(el(svgNS, "text", {
@@ -3570,10 +3867,10 @@
             curY += groupHeaderH;
           }
 
-          function renderGroupItem(color, label, dashArray, strokeWidth = 2.8) {
+          function renderGroupItem(color, label, dashArray, strokeWidth = 2.6) {
             const attrs = {
               x1: lx + 4, y1: curY - 3.5,
-              x2: lx + 20, y2: curY - 3.5,
+              x2: lx + 18, y2: curY - 3.5,
               stroke: color,
               "stroke-width": strokeWidth,
               "stroke-linecap": "round",
@@ -3582,56 +3879,55 @@
             if (dashArray) attrs["stroke-dasharray"] = dashArray;
             svg.appendChild(el(svgNS, "line", attrs));
             svg.appendChild(el(svgNS, "text", {
-              x: lx + 26, y: curY,
+              x: lx + 24, y: curY,
               "text-anchor": "start",
-              "font-size": 11,
+              "font-size": 10.5,
               "font-family": font,
               fill: "rgba(0,0,0,.85)"
             }, label));
             curY += itemH;
           }
 
-          // 1. Whole Group
+          // 1. Whole Group (shades of purple in 3 columns)
           renderGroupHeader("Whole Group:");
-          renderGroupItem(cOtrChoral, "Choral Response", null, 3.8);
-          renderGroupItem(cOtrCloze, "Cloze Reading", null, 2.8);
-          renderGroupItem(cOtrWhiteboard, "White Board Response", null, 2.6);
-          renderGroupItem(cOtrWritten, "Written Responses", null, 2.6);
-          renderGroupItem(cOtrNonverbal, "Nonverbal Response", null, 2.6);
+          // Column 1
+          renderGroupItem(cOtrWgChoral, "Choral Response", null, 3.0);
+          renderGroupItem(cOtrWgWritten, "Written Responses", null, 2.8);
+          renderGroupItem(cOtrWgNonverbal, "Nonverbal Response", null, 2.6);
+          renderGroupItem(cOtrWgCloze, "Cloze Reading", null, 2.6);
+          // Column 2
+          renderGroupItem(cOtrWgPrecision, "Precision Partner", null, 2.8);
+          renderGroupItem(cOtrWgElbow, "Elbow Partner", null, 2.6);
+          renderGroupItem(cOtrWgTps, "Think, Pair, Share", null, 2.6);
+          // Column 3
+          renderGroupItem(cOtrWgWarm, "Warm Call", null, 2.8);
+          renderGroupItem(cOtrWgCold, "Cold Call", null, 2.6);
+          renderGroupItem(cOtrWgVolunteer, "Volunteer", null, 2.6);
           for (const cb of wholeCustom) {
-            renderGroupItem("#0284c7", cb.label, "3 2", 2.6);
+            renderGroupItem(cOtrWgCustom, cb.label, "3 2", 2.6);
           }
           curY += groupGap;
 
-          // 2. Small Group
+          // 2. Small Group (shades of blue in 3 columns)
           renderGroupHeader("Small Group:");
-          renderGroupItem(cOtrGroupDisc, "Group Discussion", null, 2.8);
-          renderGroupItem(cOtrNumberedHeads, "Numbered Heads", null, 2.6);
-          renderGroupItem(cOtrTeamShare, "Team Share", null, 2.6);
+          // Column 1
+          renderGroupItem(cOtrSgChoral, "Choral Response", null, 3.0);
+          renderGroupItem(cOtrSgWritten, "Written Responses", null, 2.8);
+          renderGroupItem(cOtrSgNonverbal, "Nonverbal Response", null, 2.6);
+          renderGroupItem(cOtrSgCloze, "Cloze Reading", null, 2.6);
+          // Column 2
+          renderGroupItem(cOtrSgPrecision, "Precision Partner", null, 2.8);
+          renderGroupItem(cOtrSgElbow, "Elbow Partner", null, 2.6);
+          renderGroupItem(cOtrSgTps, "Think, Pair, Share", null, 2.6);
+          // Column 3
+          renderGroupItem(cOtrSgWarm, "Warm Call", null, 2.8);
+          renderGroupItem(cOtrSgCold, "Cold Call", null, 2.6);
+          renderGroupItem(cOtrSgVolunteer, "Volunteer", null, 2.6);
           for (const cb of smallCustom) {
-            renderGroupItem("#0d9488", cb.label, "3 2", 2.6);
-          }
-          curY += groupGap;
-
-          // 3. Partner
-          renderGroupHeader("Partner:");
-          renderGroupItem(cOtrPrecision, "Precision Partner", null, 2.6);
-          renderGroupItem(cOtrElbow, "Elbow Partner", null, 2.6);
-          for (const cb of partnerCustom) {
-            renderGroupItem("#16a34a", cb.label, "3 2", 2.6);
-          }
-          curY += groupGap;
-
-          // 4. Individual
-          renderGroupHeader("Individual:");
-          renderGroupItem(cOtrWarm, "Warm Call", null, 2.6);
-          renderGroupItem(cOtrCold, "Cold Call", null, 2.6);
-          renderGroupItem(cOtrVolunteer, "Volunteer", null, 2.6);
-          for (const cb of individualCustom) {
-            renderGroupItem("#7e22ce", cb.label, "3 2", 2.6);
+            renderGroupItem(cOtrSgCustom, cb.label, "3 2", 2.6);
           }
 
-          nextLegendY = curY + 10;
+          nextLegendY = curY + 8;
         }
 
         if (state.mode !== "Lesson Structure") {
@@ -3731,7 +4027,7 @@
 
       function safeFilename(){
         const e = (state.educatorName || "Educator").replace(/[^\w]+/g, "_").replace(/^_+|_+$/g, "");
-        const prefix = state.mode === 'Praise' ? 'SEL' : state.mode === 'Lesson Structure' ? 'Lesson_Structure' : state.mode === 'All' ? 'All' : 'Opportunities_to_Respond';
+        const prefix = state.mode === 'Praise' ? 'Instructional_Feedback' : state.mode === 'Lesson Structure' ? 'Lesson_Structure' : state.mode === 'All' ? 'Walk_Through_Tool' : 'Opportunities_to_Respond';
         return `${prefix}_${e}.png`;
       }
 
@@ -3791,8 +4087,8 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, otrChoral, otrCloze, otrWhiteboard, otrWritten, otrNonverbal, otrOtherWhole, otrGroupDisc, otrNumberedHeads, otrTeamShare, otrOtherSmall, otrPrecision, otrElbow, otrOtherPartner, otrWarm, otrCold, otrVolunteer, otrOtherIndividual, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
-        const titlePrefix = state.mode === 'Praise' ? 'Social Emotional Learning' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : state.mode === 'NotesOnly' ? 'Observation' : 'Opportunities to Respond';
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, wholeOtr, smallOtr, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
+        const titlePrefix = state.mode === 'Praise' ? 'Instructional Feedback' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : state.mode === 'NotesOnly' ? 'Observation' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`
         ];
@@ -3834,7 +4130,7 @@
 
         if (state.mode === "NotesOnly") {
           lines.push("");
-          lines.push("Note: Both OTR and SEL observation timers were turned off during this observation.");
+          lines.push("Note: Both OTR and Instructional Feedback observation timers were turned off during this observation.");
         } else if (state.mode === "Praise") {
           lines.push(`Specific Praise: ${specific}`);
           lines.push(`General Praise: ${general}`);
@@ -3895,43 +4191,55 @@
             }
           }
         } else {
-          lines.push(`Choral Response: ${otrChoral}`);
-          lines.push(`Cloze Reading: ${otrCloze}`);
-          lines.push(`White Board Response: ${otrWhiteboard}`);
-          lines.push(`Written Responses: ${otrWritten}`);
-          lines.push(`Nonverbal Response: ${otrNonverbal}`);
-          if (otrOtherWhole > 0) lines.push(`Other (Whole Group): ${otrOtherWhole}`);
-          if (customOtrTotals && customOtrTotals.whole) {
+          const w = wholeOtr || {};
+          const s = smallOtr || {};
+
+          lines.push("Whole Group:");
+          // Column 1
+          lines.push(`  Choral Response: ${w.choral || 0}`);
+          lines.push(`  Written Responses: ${w.written || 0}`);
+          lines.push(`  Nonverbal Response: ${w.nonverbal || 0}`);
+          lines.push(`  Cloze Reading: ${w.cloze || 0}`);
+          // Column 2
+          lines.push(`  Precision Partner: ${w.precision || 0}`);
+          if (w.elbow) lines.push(`  Elbow Partner: ${w.elbow}`);
+          lines.push(`  Think, Pair, Share: ${w.tps || 0}`);
+          // Column 3
+          lines.push(`  Warm Call: ${w.warm || 0}`);
+          lines.push(`  Cold Call: ${w.cold || 0}`);
+          lines.push(`  Volunteer: ${w.volunteer || 0}`);
+          if (w.whiteboard) lines.push(`  White Board Response: ${w.whiteboard}`);
+          if (w.groupDisc) lines.push(`  Group Discussion: ${w.groupDisc}`);
+          if (w.teamShare) lines.push(`  Team Share: ${w.teamShare}`);
+          if (customOtrTotals && customOtrTotals.whole && customOtrTotals.whole.length > 0) {
             for (const item of customOtrTotals.whole) {
-              lines.push(`${item.label}: ${item.count}`);
+              lines.push(`  ${item.label}: ${item.count}`);
             }
           }
-          lines.push(`Group Discussion: ${otrGroupDisc}`);
-          lines.push(`Numbered Heads: ${otrNumberedHeads}`);
-          lines.push(`Team Share: ${otrTeamShare}`);
-          if (otrOtherSmall > 0) lines.push(`Other (Small Group): ${otrOtherSmall}`);
-          if (customOtrTotals && customOtrTotals.small) {
+
+          lines.push("Small Group:");
+          // Column 1
+          lines.push(`  Choral Response: ${s.choral || 0}`);
+          lines.push(`  Written Responses: ${s.written || 0}`);
+          lines.push(`  Nonverbal Response: ${s.nonverbal || 0}`);
+          lines.push(`  Cloze Reading: ${s.cloze || 0}`);
+          // Column 2
+          lines.push(`  Precision Partner: ${s.precision || 0}`);
+          if (s.elbow) lines.push(`  Elbow Partner: ${s.elbow}`);
+          lines.push(`  Think, Pair, Share: ${s.tps || 0}`);
+          // Column 3
+          lines.push(`  Warm Call: ${s.warm || 0}`);
+          lines.push(`  Cold Call: ${s.cold || 0}`);
+          lines.push(`  Volunteer: ${s.volunteer || 0}`);
+          if (s.whiteboard) lines.push(`  White Board Response: ${s.whiteboard}`);
+          if (s.groupDisc) lines.push(`  Group Discussion: ${s.groupDisc}`);
+          if (s.teamShare) lines.push(`  Team Share: ${s.teamShare}`);
+          if (customOtrTotals && customOtrTotals.small && customOtrTotals.small.length > 0) {
             for (const item of customOtrTotals.small) {
-              lines.push(`${item.label}: ${item.count}`);
+              lines.push(`  ${item.label}: ${item.count}`);
             }
           }
-          lines.push(`Precision Partner: ${otrPrecision}`);
-          lines.push(`Elbow Partner: ${otrElbow}`);
-          if (otrOtherPartner > 0) lines.push(`Other (Partner): ${otrOtherPartner}`);
-          if (customOtrTotals && customOtrTotals.partner) {
-            for (const item of customOtrTotals.partner) {
-              lines.push(`${item.label}: ${item.count}`);
-            }
-          }
-          lines.push(`Warm Call: ${otrWarm}`);
-          lines.push(`Cold Call: ${otrCold}`);
-          lines.push(`Volunteer: ${otrVolunteer}`);
-          if (otrOtherIndividual > 0) lines.push(`Other (Individual): ${otrOtherIndividual}`);
-          if (customOtrTotals && customOtrTotals.individual) {
-            for (const item of customOtrTotals.individual) {
-              lines.push(`${item.label}: ${item.count}`);
-            }
-          }
+
           lines.push(`Opportunities to Respond Total: ${otrTotal}`);
           lines.push(`Opportunities to Respond per minute: ${ratioText}`);
           lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
@@ -3941,8 +4249,8 @@
             lines.push("Lesson Structure:");
             lines.push(`  Whole Group: ${structWhole}`);
             lines.push(`  Small Group: ${structSmall}`);
-            lines.push(`  Partners: ${structPartners}`);
-            lines.push(`  Individual: ${structIndividual}`);
+            if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
+            if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
             if (engagementChecks && engagementChecks.length > 0) {
               for (const check of engagementChecks) {
                 const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
@@ -4175,7 +4483,7 @@
               }
             }
 
-            if (lineText === "Notes:" || lineText === "Observations:" || lineText === "Lesson Structure:") {
+            if (lineText === "Notes:" || lineText === "Observations:" || lineText === "Lesson Structure:" || lineText === "Whole Group:" || lineText === "Small Group:") {
               root.appendChild(el(svgNS, "text", {
                 x: pad + 4,
                 y: yPos,
@@ -4263,23 +4571,39 @@
         const totalStructPartners = bins.structPartners.reduce((a, b) => a + b, 0);
         const totalStructIndividual = bins.structIndividual.reduce((a, b) => a + b, 0);
 
-        const totalOtrChoral = bins.otrChoral.reduce((a, b) => a + b, 0);
-        const totalOtrCloze = bins.otrCloze.reduce((a, b) => a + b, 0);
-        const totalOtrWhiteboard = bins.otrWhiteboard.reduce((a, b) => a + b, 0);
-        const totalOtrWritten = bins.otrWritten.reduce((a, b) => a + b, 0);
-        const totalOtrNonverbal = bins.otrNonverbal.reduce((a, b) => a + b, 0);
-        const totalOtrOtherWhole = bins.otrOtherWhole.reduce((a, b) => a + b, 0);
-        const totalOtrGroupDisc = bins.otrGroupDisc.reduce((a, b) => a + b, 0);
-        const totalOtrNumberedHeads = bins.otrNumberedHeads.reduce((a, b) => a + b, 0);
-        const totalOtrTeamShare = bins.otrTeamShare.reduce((a, b) => a + b, 0);
-        const totalOtrOtherSmall = bins.otrOtherSmall.reduce((a, b) => a + b, 0);
-        const totalOtrPrecision = bins.otrPrecision.reduce((a, b) => a + b, 0);
-        const totalOtrElbow = bins.otrElbow.reduce((a, b) => a + b, 0);
-        const totalOtrOtherPartner = bins.otrOtherPartner.reduce((a, b) => a + b, 0);
-        const totalOtrWarm = bins.otrWarm.reduce((a, b) => a + b, 0);
-        const totalOtrCold = bins.otrCold.reduce((a, b) => a + b, 0);
-        const totalOtrVolunteer = bins.otrVolunteer.reduce((a, b) => a + b, 0);
-        const totalOtrOtherIndividual = bins.otrOtherIndividual.reduce((a, b) => a + b, 0);
+        // Calculate Whole Group OTR totals
+        const wholeOtrTotals = {
+          tps: bins.otrWhole_tps.reduce((a, b) => a + b, 0),
+          choral: bins.otrWhole_choral.reduce((a, b) => a + b, 0),
+          cloze: bins.otrWhole_cloze.reduce((a, b) => a + b, 0),
+          whiteboard: bins.otrWhole_whiteboard.reduce((a, b) => a + b, 0),
+          written: bins.otrWhole_written.reduce((a, b) => a + b, 0),
+          nonverbal: bins.otrWhole_nonverbal.reduce((a, b) => a + b, 0),
+          groupDisc: bins.otrWhole_groupDisc.reduce((a, b) => a + b, 0),
+          teamShare: bins.otrWhole_teamShare.reduce((a, b) => a + b, 0),
+          precision: bins.otrWhole_precision.reduce((a, b) => a + b, 0),
+          elbow: bins.otrWhole_elbow.reduce((a, b) => a + b, 0),
+          warm: bins.otrWhole_warm.reduce((a, b) => a + b, 0),
+          cold: bins.otrWhole_cold.reduce((a, b) => a + b, 0),
+          volunteer: bins.otrWhole_volunteer.reduce((a, b) => a + b, 0)
+        };
+
+        // Calculate Small Group OTR totals
+        const smallOtrTotals = {
+          tps: bins.otrSmall_tps.reduce((a, b) => a + b, 0),
+          choral: bins.otrSmall_choral.reduce((a, b) => a + b, 0),
+          cloze: bins.otrSmall_cloze.reduce((a, b) => a + b, 0),
+          whiteboard: bins.otrSmall_whiteboard.reduce((a, b) => a + b, 0),
+          written: bins.otrSmall_written.reduce((a, b) => a + b, 0),
+          nonverbal: bins.otrSmall_nonverbal.reduce((a, b) => a + b, 0),
+          groupDisc: bins.otrSmall_groupDisc.reduce((a, b) => a + b, 0),
+          teamShare: bins.otrSmall_teamShare.reduce((a, b) => a + b, 0),
+          precision: bins.otrSmall_precision.reduce((a, b) => a + b, 0),
+          elbow: bins.otrSmall_elbow.reduce((a, b) => a + b, 0),
+          warm: bins.otrSmall_warm.reduce((a, b) => a + b, 0),
+          cold: bins.otrSmall_cold.reduce((a, b) => a + b, 0),
+          volunteer: bins.otrSmall_volunteer.reduce((a, b) => a + b, 0)
+        };
 
         const totalSpecific = bins.specific.reduce((a, b) => a + b, 0);
         const totalGeneral = bins.general.reduce((a, b) => a + b, 0);
@@ -4310,13 +4634,12 @@
           }
         }
 
-        const totalOtr = state.otrEvents.filter(e => [
-          "otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrOtherWhole",
-          "otrGroupDisc","otrNumberedHeads","otrTeamShare","otrOtherSmall",
-          "otrPrecision","otrElbow","otrOtherPartner",
-          "otrWarm","otrCold","otrVolunteer","otrOtherIndividual",
-          ...customIds
-        ].includes(e.kind)).length;
+        const totalOtr = state.otrEvents.filter(e =>
+          e.kind.startsWith("otrWhole_") ||
+          e.kind.startsWith("otrSmall_") ||
+          e.kind.startsWith("otr") ||
+          customIds.includes(e.kind)
+        ).length;
         const totalPraise = state.otrEvents.filter(e => [
           "specific","general","corrective","redirect","genCrit","indCrit",
           ...customPraiseIds
@@ -4329,16 +4652,16 @@
         const resultsTitle = document.getElementById("resultsTitle");
         
         if (state.mode === "Praise") {
-          resultsTitle.textContent = "Social Emotional Learning Results";
+          resultsTitle.textContent = "Instructional Feedback Results";
         } else if (state.mode === "All") {
           if (state.allIncludeOtr && state.allIncludeSel) {
-            resultsTitle.textContent = "All Results";
+            resultsTitle.textContent = "The Walk Through Tool Results";
           } else if (state.allIncludeOtr) {
-            resultsTitle.textContent = "All Results (OTR Only)";
+            resultsTitle.textContent = "The Walk Through Tool Results (OTR Only)";
           } else if (state.allIncludeSel) {
-            resultsTitle.textContent = "All Results (SEL Only)";
+            resultsTitle.textContent = "The Walk Through Tool Results (Instructional Feedback Only)";
           } else {
-            resultsTitle.textContent = "All Results (Timers Off)";
+            resultsTitle.textContent = "The Walk Through Tool Results (Timers Off)";
           }
         } else {
           resultsTitle.textContent = "Opportunities to Respond Results";
@@ -4376,13 +4699,12 @@
              modeEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
              chartSvg = renderEngagementStackedBarChartSVG(modeEvents, durationMs);
           } else if (renderMode === "OTRs") {
-             modeEvents = state.otrEvents.filter(e => [
-               "otrChoral","otrCloze","otrWhiteboard","otrWritten","otrNonverbal","otrOtherWhole",
-               "otrGroupDisc","otrNumberedHeads","otrTeamShare","otrOtherSmall",
-               "otrPrecision","otrElbow","otrOtherPartner",
-               "otrWarm","otrCold","otrVolunteer","otrOtherIndividual",
-               ...customIds
-             ].includes(e.kind));
+             modeEvents = state.otrEvents.filter(e =>
+               e.kind.startsWith("otrWhole_") ||
+               e.kind.startsWith("otrSmall_") ||
+               e.kind.startsWith("otr") ||
+               customIds.includes(e.kind)
+             );
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
           } else {
              chartSvg = null;
@@ -4406,23 +4728,8 @@
               structPartners: totalStructPartners,
               structIndividual: totalStructIndividual,
 
-              otrChoral: totalOtrChoral,
-              otrCloze: totalOtrCloze,
-              otrWhiteboard: totalOtrWhiteboard,
-              otrWritten: totalOtrWritten,
-              otrNonverbal: totalOtrNonverbal,
-              otrOtherWhole: totalOtrOtherWhole,
-              otrGroupDisc: totalOtrGroupDisc,
-              otrNumberedHeads: totalOtrNumberedHeads,
-              otrTeamShare: totalOtrTeamShare,
-              otrOtherSmall: totalOtrOtherSmall,
-              otrPrecision: totalOtrPrecision,
-              otrElbow: totalOtrElbow,
-              otrOtherPartner: totalOtrOtherPartner,
-              otrWarm: totalOtrWarm,
-              otrCold: totalOtrCold,
-              otrVolunteer: totalOtrVolunteer,
-              otrOtherIndividual: totalOtrOtherIndividual,
+              wholeOtr: wholeOtrTotals,
+              smallOtr: smallOtrTotals,
               customOtrTotals: customOtrTotals,
               customPraiseTotals: customPraiseTotals,
 
@@ -4470,8 +4777,8 @@
           if (!sharedBlocks || sharedBlocks.length === 0) return;
           const oldStateMode = state.mode;
           state.mode = renderModes[0];
-          const firstOtrTotal = state.mode === "Praise" ? totalPraise : totalOtr;
-          const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : formatOtrRate(firstOtrTotal, durationMs);
+          const firstOtrTotal = state.mode === "Praise" ? totalPraise : (state.mode === "Lesson Structure" ? totalEngagement : totalOtr);
+          const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : (state.mode === "OTRs" ? formatOtrRate(firstOtrTotal, durationMs) : formatOtrRatio(firstOtrTotal, durationMs));
           
           sharedBlocks[0].lines = buildResultsLines({
               educator: state.educatorName,
@@ -4482,23 +4789,20 @@
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
               regulationSpace: state.regulationSpace,
               characterTraitGraphic: state.characterTraitGraphic,
-              structWhole: totalStructWhole, structSmall: totalStructSmall, structPartners: totalStructPartners, structIndividual: totalStructIndividual,
-              otrChoral: totalOtrChoral, otrCloze: totalOtrCloze, otrWhiteboard: totalOtrWhiteboard,
-              otrWritten: totalOtrWritten,
-              otrNonverbal: totalOtrNonverbal,
-              otrOtherWhole: totalOtrOtherWhole,
-              otrGroupDisc: totalOtrGroupDisc,
-              otrNumberedHeads: totalOtrNumberedHeads,
-              otrTeamShare: totalOtrTeamShare,
-              otrOtherSmall: totalOtrOtherSmall,
-              otrPrecision: totalOtrPrecision, otrElbow: totalOtrElbow,
-              otrOtherPartner: totalOtrOtherPartner,
-              otrWarm: totalOtrWarm, otrCold: totalOtrCold, otrVolunteer: totalOtrVolunteer,
-              otrOtherIndividual: totalOtrOtherIndividual,
+              structWhole: totalStructWhole,
+              structSmall: totalStructSmall,
+              structPartners: totalStructPartners,
+              structIndividual: totalStructIndividual,
+              wholeOtr: wholeOtrTotals,
+              smallOtr: smallOtrTotals,
               customOtrTotals: customOtrTotals,
               customPraiseTotals: customPraiseTotals,
-              specific: totalSpecific, general: totalGeneral, corrective: totalCorrective,
-              redirect: totalRedirect, genCrit: totalGenCrit, indCrit: totalIndCrit,
+              specific: totalSpecific,
+              general: totalGeneral,
+              corrective: totalCorrective,
+              redirect: totalRedirect,
+              genCrit: totalGenCrit,
+              indCrit: totalIndCrit,
               otrTotal: firstOtrTotal,
               ratioText: firstRatioText,
               notes: state.notes,
@@ -4511,35 +4815,41 @@
           state.mode = oldStateMode;
         };
 
+        let activeRenderPromise = null;
         const renderImageBlob = async () => {
-          if (isGenerating && cachedBlob) return cachedBlob;
-          isGenerating = true;
-          try {
-            updateFirstBlockLines();
-            const composite = renderResultsCompositeSVG(sharedBlocks);
-            const blob = await svgElementToPngBlob(composite, 2);
-            cachedBlob = blob;
-            if (cachedObjectUrl) {
-              URL.revokeObjectURL(cachedObjectUrl);
+          if (cachedBlob) return cachedBlob;
+          if (activeRenderPromise) return activeRenderPromise;
+          
+          activeRenderPromise = (async () => {
+            try {
+              updateFirstBlockLines();
+              const composite = renderResultsCompositeSVG(sharedBlocks);
+              const blob = await svgElementToPngBlob(composite, 2);
+              cachedBlob = blob;
+              if (cachedObjectUrl) {
+                URL.revokeObjectURL(cachedObjectUrl);
+              }
+              cachedObjectUrl = URL.createObjectURL(blob);
+              if (resultsGraphicImg) {
+                resultsGraphicImg.src = cachedObjectUrl;
+                resultsGraphicImg.style.display = "block";
+              }
+              if (resultsLoadingIndicator) {
+                resultsLoadingIndicator.style.display = "none";
+              }
+              return blob;
+            } catch (err) {
+              console.error("Failed to render composite graphic:", err);
+              if (resultsLoadingIndicator) {
+                resultsLoadingIndicator.textContent = "Error generating graphic preview.";
+              }
+              throw err;
+            } finally {
+              activeRenderPromise = null;
             }
-            cachedObjectUrl = URL.createObjectURL(blob);
-            if (resultsGraphicImg) {
-              resultsGraphicImg.src = cachedObjectUrl;
-              resultsGraphicImg.style.display = "block";
-            }
-            if (resultsLoadingIndicator) {
-              resultsLoadingIndicator.style.display = "none";
-            }
-            return blob;
-          } catch (err) {
-            console.error("Failed to render composite graphic:", err);
-            if (resultsLoadingIndicator) {
-              resultsLoadingIndicator.textContent = "Error generating graphic preview.";
-            }
-            throw err;
-          } finally {
-            isGenerating = false;
-          }
+          })();
+
+          return activeRenderPromise;
         };
 
         // Render immediately so the graphic is shown on screen and ready for mobile long-click
