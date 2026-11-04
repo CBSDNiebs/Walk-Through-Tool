@@ -1,0 +1,6 @@
+{
+  "summary": "Implementation plan for switching Skip and Record button positions on the on-task popup, unifying all Next and Skip button styling to charcoal grey with white text, and rearranging Total OTR and Feedback graphics to place column sparklines above Title, Ratio, and Goal.",
+  "updatedAt": "2026-11-02T17:18:30.264170148Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

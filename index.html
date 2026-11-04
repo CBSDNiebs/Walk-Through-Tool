@@ -18,24 +18,24 @@
       --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       --lite:#e0e0e0;
 
-      /* Whole Group - 3 Columns (Descending Brightest to Lightest on Each Column) */
+      /* Whole Group - 3 Columns (Descending Darkest/Richest to Lightest on Each Column) */
       /* Column 1: Choral, Written, Nonverbal, Cloze */
-      --otr-wg-choral:#2e0750;     /* Deepest Royal Purple */
-      --otr-wg-written:#4c0f81;    /* Deep Purple */
-      --otr-wg-nonverbal:#741dbf;  /* Medium Rich Purple */
-      --otr-wg-cloze:#9d4edd;      /* Light Lilac Purple */
+      --otr-wg-choral:#064e3b;     /* Deepest Forest Green */
+      --otr-wg-written:#047857;    /* Deep Emerald Green */
+      --otr-wg-nonverbal:#059669;  /* Medium Rich Jade Green */
+      --otr-wg-cloze:#10b981;      /* Bright Mint Green */
       /* Column 2: Precision, Elbow, Think Pair Share */
-      --otr-wg-precision:#3b0764;  /* Deep Plum Purple */
-      --otr-wg-elbow:#6b21a8;      /* Medium Violet */
-      --otr-wg-tps:#a855f7;        /* Bright Light Violet */
+      --otr-wg-precision:#065f46;  /* Deep Pine Teal-Green */
+      --otr-wg-elbow:#0f766e;      /* Medium Teal-Green */
+      --otr-wg-tps:#14b8a6;        /* Bright Teal-Green */
       /* Column 3: Warm Call, Cold Call, Volunteer */
-      --otr-wg-warm:#311068;       /* Deep Indigo Purple */
-      --otr-wg-cold:#5b21b6;       /* Medium Indigo Purple */
-      --otr-wg-volunteer:#8b5cf6;  /* Light Lavender Indigo */
-      --otr-wg-whiteboard:#4c0f81; /* Legacy fallback */
-      --otr-wg-groupdisc:#6a19b0;  /* Legacy fallback */
-      --otr-wg-teamshare:#741dbf;  /* Legacy fallback */
-      --otr-wg-custom:#ab6fe0;     /* Custom Purple */
+      --otr-wg-warm:#14532d;       /* Deep Olive Green */
+      --otr-wg-cold:#15803d;       /* Medium Leaf Green */
+      --otr-wg-volunteer:#22c55e;  /* Bright Spring Green */
+      --otr-wg-whiteboard:#047857; /* Legacy fallback */
+      --otr-wg-groupdisc:#065f46;  /* Legacy fallback */
+      --otr-wg-teamshare:#0f766e;  /* Legacy fallback */
+      --otr-wg-custom:#10b981;     /* Custom Green */
 
       /* Small Group - 3 Columns (Descending Brightest to Lightest on Each Column) */
       /* Column 1: Choral, Written, Nonverbal, Cloze */
@@ -57,12 +57,12 @@
       --otr-sg-custom:#669be4;     /* Custom Blue */
 
       /* Legacy fallbacks */
-      --otr-choral:#581c87;
-      --otr-cloze:#6b21a8;
-      --otr-whiteboard:#7e22ce;
-      --otr-written:#9333ea;
-      --otr-nonverbal:#a855f7;
-      --otr-other-whole:#9d4edd;
+      --otr-choral:#064e3b;
+      --otr-cloze:#10b981;
+      --otr-whiteboard:#047857;
+      --otr-written:#047857;
+      --otr-nonverbal:#059669;
+      --otr-other-whole:#10b981;
       --otr-group-disc:#172554;
       --otr-team-share:#1e3a8a;
       --otr-other-small:#0284c7;
@@ -180,7 +180,7 @@
       border-radius:12px;
     }
 
-    /* OTR Buttons: Whole Group = Shades of Purple, Small Group = Shades of Blue */
+    /* OTR Buttons: Whole Group = Shades of Green, Small Group = Shades of Blue */
     .btn.otr{
       position:relative;
       color:#fff;
@@ -195,7 +195,7 @@
     }
     .btn.otr:disabled{opacity:.45;cursor:not-allowed;}
 
-    /* Whole Group Buttons (shades of purple) */
+    /* Whole Group Buttons (shades of green) */
     .btn.otr.otr-wg-tps{background:var(--otr-wg-tps); color:#fff;}
     .btn.otr.otr-wg-choral{background:var(--otr-wg-choral); color:#fff;}
     .btn.otr.otr-wg-cloze{background:var(--otr-wg-cloze); color:#fff;}
@@ -475,15 +475,16 @@
       cursor:not-allowed;
       box-shadow:none;
     }
-    #nextBtn{
-      flex:1;
-      height:50px;
+    #nextBtn,
+    #questionsNextBtn,
+    #csNextBtn {
+      flex: 1;
       min-height:50px;
       padding:0 24px;
       font-size:16px;
-      font-weight:700;
-      border-radius:999px;
-      background-color:#6b7280 !important;
+      font-weight:700 !important;
+      border-radius:999px !important;
+      background-color:#4b5563 !important;
       color:#ffffff !important;
       border:none !important;
       cursor:pointer;
@@ -492,10 +493,55 @@
       justify-content:center;
       transition:background-color 0.2s, box-shadow 0.2s, transform 0.1s;
     }
-    #nextBtn:hover{
-      background-color:#4b5563 !important;
+    #nextBtn:hover,
+    #questionsNextBtn:hover,
+    #csNextBtn:hover {
+      background-color:#374151 !important;
     }
-    #nextBtn:active{
+    #nextBtn:active,
+    #questionsNextBtn:active,
+    #csNextBtn:active {
+      transform:scale(0.98);
+    }
+
+    #questionsSkipBtn,
+    #questionsSkipBtnHeader,
+    #csSkipBtn,
+    #csSkipBtnHeader,
+    #engSkipBtn {
+      min-height:50px;
+      padding:0 24px;
+      font-size:16px;
+      font-weight:700 !important;
+      border-radius:999px !important;
+      background-color:#9ca3af !important;
+      color:#ffffff !important;
+      border:none !important;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+    }
+    #questionsSkipBtnHeader,
+    #csSkipBtnHeader {
+      min-height: auto !important;
+      height: auto !important;
+      padding: 8px 16px !important;
+      font-size: 14px !important;
+    }
+    #questionsSkipBtn:hover,
+    #questionsSkipBtnHeader:hover,
+    #csSkipBtn:hover,
+    #csSkipBtnHeader:hover,
+    #engSkipBtn:hover {
+      background-color:#6b7280 !important;
+    }
+    #questionsSkipBtn:active,
+    #questionsSkipBtnHeader:active,
+    #csSkipBtn:active,
+    #csSkipBtnHeader:active,
+    #engSkipBtn:active {
       transform:scale(0.98);
     }
     .stat{
@@ -1085,7 +1131,7 @@
           <p class="subhead">Please answer the following questions.</p>
         </div>
         <div style="display: flex; gap: 8px; align-items: center;">
-          <button id="questionsSkipBtnHeader" class="btn" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; cursor: pointer; font-weight: 600;" type="button">Skip</button>
+          <button id="questionsSkipBtnHeader" class="btn" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer; font-weight: 700;" type="button">Skip</button>
           <button id="questionsBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
         </div>
       </header>
@@ -1125,8 +1171,8 @@
       </section>
 
       <section class="actions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
-        <button id="questionsSkipBtn" class="btn" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; cursor: pointer;">Skip</button>
-        <button id="questionsNextBtn" class="btn primary" type="button" disabled style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px;">Next</button>
+        <button id="questionsSkipBtn" class="btn" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer;">Skip</button>
+        <button id="questionsNextBtn" class="btn primary" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #4b5563; color: #ffffff; border: none; cursor: pointer;">Next</button>
       </section>
     </main>
   </template>
@@ -1139,7 +1185,7 @@
           <p class="subhead" id="characterStrongSubhead">Please rate each observed practice or skip this section.</p>
         </div>
         <div style="display: flex; gap: 8px; align-items: center;">
-          <button id="csSkipBtnHeader" class="btn" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; cursor: pointer; font-weight: 600;" type="button">Skip</button>
+          <button id="csSkipBtnHeader" class="btn" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer; font-weight: 700;" type="button">Skip</button>
           <button id="csBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none; cursor: pointer;" type="button">Back</button>
         </div>
       </header>
@@ -1200,8 +1246,8 @@
         </div>
 
         <section class="actions" id="characterStrongActions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
-          <button id="csSkipBtn" class="btn" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; cursor: pointer;">Skip</button>
-          <button id="csNextBtn" class="btn primary" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #6b7280; color: #ffffff; border: none; cursor: pointer;">Next</button>
+          <button id="csSkipBtn" class="btn" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer;">Skip</button>
+          <button id="csNextBtn" class="btn primary" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #4b5563; color: #ffffff; border: none; cursor: pointer;">Next</button>
         </section>
       </section>
     </main>
@@ -1256,14 +1302,10 @@
           <button id="undoBtn" class="btn" type="button" disabled>Undo last button click</button>
         </div>
 
-        <!-- 2. Lesson Structure -->
+        <!-- 2. Engagement Check -->
         <div id="structContainer" style="display:none; margin-top:12px;">
-          <div id="structSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; color:var(--ink);">Lesson Structure</div>
-          <div id="structButtons1" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Lesson Structure 1">
-            <button id="structWholeBtn" class="btn otr struct-whole" type="button" disabled>Whole Group<span class="btn-badge" id="badge-structWhole" aria-hidden="true">0</span></button>
-            <button id="structSmallBtn" class="btn otr struct-small" type="button" disabled>Small Group<span class="btn-badge" id="badge-structSmall" aria-hidden="true">0</span></button>
-          </div>
-          <div id="structButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;" aria-label="Lesson Structure 2">
+          <div id="structSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; color:var(--ink);">Engagement Check</div>
+          <div id="structButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Engagement Check">
             <button id="structPartnersBtn" class="btn otr struct-partners" type="button" disabled>Partners<span class="btn-badge" id="badge-structPartners" aria-hidden="true">0</span></button>
             <button id="structIndividualBtn" class="btn otr struct-individual" type="button" disabled>Individual<span class="btn-badge" id="badge-structIndividual" aria-hidden="true">0</span></button>
           </div>
@@ -1290,7 +1332,7 @@
           </div>
 
           <div id="otrButtonsWrapper">
-            <!-- Whole Group Buttons View (Shades of Purple in 3 Columns) -->
+            <!-- Whole Group Buttons View (Shades of Green in 3 Columns) -->
             <div id="otrWholeGroupView" class="otr-columns-3-container" aria-label="Whole Group Opportunities to Respond">
               <!-- Column 1: Choral Response, Written Response, Nonverbal Response, Cloze Reading -->
               <div class="otr-col" id="otrWholeCol1">
@@ -1392,8 +1434,8 @@
           <input type="number" id="engOffTaskStudents" class="control" min="0" />
         </label>
         <div style="display:flex; gap:10px; margin-top:16px;">
+          <button id="engSkipBtn" class="btn" style="flex:1; min-height:50px; height:50px; font-size:16px; font-weight:700; border-radius:999px; background-color:#9ca3af; color:#ffffff; border:none; cursor:pointer;" type="button">Skip</button>
           <button id="engRecordBtn" class="btn primary" style="flex:1;" disabled>Record</button>
-          <button id="engSkipBtn" class="btn" style="flex:1; background:transparent; border:1px solid var(--hairline); color:var(--muted);" type="button">Skip</button>
         </div>
       </div>
     </div>
@@ -1635,24 +1677,20 @@
             q4NoBtn.classList.toggle("selected", state.characterTraitGraphic === "No");
           }
 
-          let isValid = !!state.lessonTargetPosted && !!state.curriculaMaterialsUsed;
-          if (isPraiseOrAll) {
-            isValid = isValid && !!state.regulationSpace && !!state.characterTraitGraphic;
-          }
-          nextBtn.disabled = !isValid;
+          nextBtn.disabled = false;
         }
 
-        q1YesBtn.addEventListener("click", () => { state.lessonTargetPosted = "Yes"; updateUI(); });
-        q1NoBtn.addEventListener("click", () => { state.lessonTargetPosted = "No"; updateUI(); });
+        q1YesBtn.addEventListener("click", () => { state.lessonTargetPosted = state.lessonTargetPosted === "Yes" ? null : "Yes"; updateUI(); });
+        q1NoBtn.addEventListener("click", () => { state.lessonTargetPosted = state.lessonTargetPosted === "No" ? null : "No"; updateUI(); });
         
-        q2YesBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = "Yes"; updateUI(); });
-        q2NoBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = "No"; updateUI(); });
+        q2YesBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = state.curriculaMaterialsUsed === "Yes" ? null : "Yes"; updateUI(); });
+        q2NoBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = state.curriculaMaterialsUsed === "No" ? null : "No"; updateUI(); });
         
-        q3YesBtn.addEventListener("click", () => { state.regulationSpace = "Yes"; updateUI(); });
-        q3NoBtn.addEventListener("click", () => { state.regulationSpace = "No"; updateUI(); });
+        q3YesBtn.addEventListener("click", () => { state.regulationSpace = state.regulationSpace === "Yes" ? null : "Yes"; updateUI(); });
+        q3NoBtn.addEventListener("click", () => { state.regulationSpace = state.regulationSpace === "No" ? null : "No"; updateUI(); });
         
-        q4YesBtn.addEventListener("click", () => { state.characterTraitGraphic = "Yes"; updateUI(); });
-        q4NoBtn.addEventListener("click", () => { state.characterTraitGraphic = "No"; updateUI(); });
+        q4YesBtn.addEventListener("click", () => { state.characterTraitGraphic = state.characterTraitGraphic === "Yes" ? null : "Yes"; updateUI(); });
+        q4NoBtn.addEventListener("click", () => { state.characterTraitGraphic = state.characterTraitGraphic === "No" ? null : "No"; updateUI(); });
 
         const handleQuestionsSkip = () => {
           state.skipQuestions = true;
@@ -2004,8 +2042,10 @@
 
         if (state.mode === "Praise") {
           if (structContainer) structContainer.style.display = "block";
-          if (structSectionLabel) structSectionLabel.style.display = "block";
-          if (structButtons1) structButtons1.style.display = "grid";
+          if (structSectionLabel) {
+            structSectionLabel.style.display = "block";
+            structSectionLabel.textContent = "Engagement Check";
+          }
           if (structButtons2) structButtons2.style.display = "grid";
           
           if (otrContainer) otrContainer.style.display = "none";
@@ -2267,10 +2307,10 @@
         }
 
         function setOtrEnabled(on){
-          structWholeBtn.disabled = !on;
-          structSmallBtn.disabled = !on;
-          structPartnersBtn.disabled = !on;
-          structIndividualBtn.disabled = !on;
+          if (structWholeBtn) structWholeBtn.disabled = !on;
+          if (structSmallBtn) structSmallBtn.disabled = !on;
+          if (structPartnersBtn) structPartnersBtn.disabled = !on;
+          if (structIndividualBtn) structIndividualBtn.disabled = !on;
           
           // Whole Group Buttons
           if (otrWholeTpsBtn) otrWholeTpsBtn.disabled = !on;
@@ -2302,12 +2342,12 @@
           if (otrSmallColdBtn) otrSmallColdBtn.disabled = !on;
           if (otrSmallVolunteerBtn) otrSmallVolunteerBtn.disabled = !on;
 
-          praiseSpecificBtn.disabled = !on;
-          praiseGeneralBtn.disabled = !on;
-          praiseCorrectiveBtn.disabled = !on;
-          praiseRedirectBtn.disabled = !on;
-          praiseGenCritBtn.disabled = !on;
-          praiseIndCritBtn.disabled = !on;
+          if (praiseSpecificBtn) praiseSpecificBtn.disabled = !on;
+          if (praiseGeneralBtn) praiseGeneralBtn.disabled = !on;
+          if (praiseCorrectiveBtn) praiseCorrectiveBtn.disabled = !on;
+          if (praiseRedirectBtn) praiseRedirectBtn.disabled = !on;
+          if (praiseGenCritBtn) praiseGenCritBtn.disabled = !on;
+          if (praiseIndCritBtn) praiseIndCritBtn.disabled = !on;
 
           const customBtns = document.querySelectorAll(".btn.otr-custom-btn");
           customBtns.forEach(btn => {
@@ -2532,10 +2572,10 @@
         undoBtn.addEventListener("click", doUndo);
         startBtn.addEventListener("click", doStart);
         if (nextBtn) nextBtn.addEventListener("click", doNext);
-        structWholeBtn.addEventListener("click", () => doOtr("structWhole"));
-        structSmallBtn.addEventListener("click", () => doOtr("structSmall"));
-        structPartnersBtn.addEventListener("click", () => doOtr("structPartners"));
-        structIndividualBtn.addEventListener("click", () => doOtr("structIndividual"));
+        if (structWholeBtn) structWholeBtn.addEventListener("click", () => doOtr("structWhole"));
+        if (structSmallBtn) structSmallBtn.addEventListener("click", () => doOtr("structSmall"));
+        if (structPartnersBtn) structPartnersBtn.addEventListener("click", () => doOtr("structPartners"));
+        if (structIndividualBtn) structIndividualBtn.addEventListener("click", () => doOtr("structIndividual"));
 
         // Whole Group Button Click Handlers
         if (otrWholeTpsBtn) otrWholeTpsBtn.addEventListener("click", () => doOtr("otrWhole_tps"));
@@ -2567,12 +2607,12 @@
         if (otrSmallColdBtn) otrSmallColdBtn.addEventListener("click", () => doOtr("otrSmall_cold"));
         if (otrSmallVolunteerBtn) otrSmallVolunteerBtn.addEventListener("click", () => doOtr("otrSmall_volunteer"));
 
-        praiseSpecificBtn.addEventListener("click", () => doOtr("specific"));
-        praiseGeneralBtn.addEventListener("click", () => doOtr("general"));
-        praiseCorrectiveBtn.addEventListener("click", () => doOtr("corrective"));
-        praiseRedirectBtn.addEventListener("click", () => doOtr("redirect"));
-        praiseGenCritBtn.addEventListener("click", () => doOtr("genCrit"));
-        praiseIndCritBtn.addEventListener("click", () => doOtr("indCrit"));
+        if (praiseSpecificBtn) praiseSpecificBtn.addEventListener("click", () => doOtr("specific"));
+        if (praiseGeneralBtn) praiseGeneralBtn.addEventListener("click", () => doOtr("general"));
+        if (praiseCorrectiveBtn) praiseCorrectiveBtn.addEventListener("click", () => doOtr("corrective"));
+        if (praiseRedirectBtn) praiseRedirectBtn.addEventListener("click", () => doOtr("redirect"));
+        if (praiseGenCritBtn) praiseGenCritBtn.addEventListener("click", () => doOtr("genCrit"));
+        if (praiseIndCritBtn) praiseIndCritBtn.addEventListener("click", () => doOtr("indCrit"));
 
         function renderSingleCustomButton(customItem, buttonsContainer, addRow, customClass) {
           const btn = document.createElement("button");
@@ -2757,9 +2797,13 @@
         if (state.startedAt === null) {
           startBtn.disabled = false;
           stopBtn.disabled = true;
+          setOtrEnabled(false);
+          updateUndoBtn();
           if (nextBtn) nextBtn.disabled = false;
           if (timerNotes) timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = true);
+          elapsedText.textContent = "00:00.0";
+          if (hintText) hintText.textContent = "Click Start to begin the observation timer.";
         } else if (state.stoppedAt !== null) {
           const durationMs = state.stoppedAt - state.startedAt;
           elapsedText.textContent = formatElapsed(durationMs);
@@ -3341,10 +3385,8 @@
 
         svg.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: H, fill: "#fff" }));
 
-        // Draw Lesson Structure progression as transparent light grey background bands
+        // Draw Engagement Check progression as transparent light grey background bands
         const lsCategories = [
-          { key: "structWhole", fill: "rgba(148, 163, 184, 0.22)", stroke: "#64748b", label: "Whole Group" },
-          { key: "structSmall", fill: "rgba(203, 213, 225, 0.28)", stroke: "#94a3b8", label: "Small Group" },
           { key: "structPartners", fill: "rgba(226, 232, 240, 0.36)", stroke: "#cbd5e1", label: "Partners" },
           { key: "structIndividual", fill: "rgba(241, 245, 249, 0.46)", stroke: "#cbd5e1", label: "Individual" }
         ];
@@ -3752,8 +3794,8 @@
           svg.appendChild(el(svgNS, "text", {
             x: pad.l + innerW / 2, y: pad.t + innerH + 114, "text-anchor": "middle",
             "font-size": 13, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
-            "font-weight": "bold",
-            fill: "#16a34a"
+            "font-weight": 600,
+            fill: "#64748b"
           }, "Goal: 5:1 positive to negative feedback"));
 
           renderCircledRatioBadge(
@@ -3773,8 +3815,8 @@
           svg.appendChild(el(svgNS, "text", {
             x: pad.l + innerW / 2, y: pad.t + innerH + 114, "text-anchor": "middle",
             "font-size": 13, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
-            "font-weight": "bold",
-            fill: "#16a34a"
+            "font-weight": 600,
+            fill: "#64748b"
           }, "Goal: 3-5 Opportunities to Respond per minute of instruction"));
 
           renderCircledRatioBadge(
@@ -3888,43 +3930,55 @@
             curY += itemH;
           }
 
+          const hasWholeData = [
+            bins.otrWhole_cloze, bins.otrWhole_nonverbal, bins.otrWhole_written, bins.otrWhole_choral,
+            bins.otrWhole_tps, bins.otrWhole_elbow, bins.otrWhole_precision,
+            bins.otrWhole_volunteer, bins.otrWhole_cold, bins.otrWhole_warm,
+            bins.otrWhole_whiteboard, bins.otrWhole_groupDisc, bins.otrWhole_teamShare
+          ].some(arr => arr && arr.some(v => v > 0)) || wholeCustom.some(cb => bins[cb.id] && bins[cb.id].some(v => v > 0));
+
+          const hasSmallData = [
+            bins.otrSmall_cloze, bins.otrSmall_nonverbal, bins.otrSmall_written, bins.otrSmall_choral,
+            bins.otrSmall_tps, bins.otrSmall_elbow, bins.otrSmall_precision,
+            bins.otrSmall_volunteer, bins.otrSmall_cold, bins.otrSmall_warm,
+            bins.otrSmall_whiteboard, bins.otrSmall_groupDisc, bins.otrSmall_teamShare
+          ].some(arr => arr && arr.some(v => v > 0)) || smallCustom.some(cb => bins[cb.id] && bins[cb.id].some(v => v > 0));
+
           // 1. Whole Group (shades of purple in 3 columns)
-          renderGroupHeader("Whole Group:");
-          // Column 1
-          renderGroupItem(cOtrWgChoral, "Choral Response", null, 3.0);
-          renderGroupItem(cOtrWgWritten, "Written Responses", null, 2.8);
-          renderGroupItem(cOtrWgNonverbal, "Nonverbal Response", null, 2.6);
-          renderGroupItem(cOtrWgCloze, "Cloze Reading", null, 2.6);
-          // Column 2
-          renderGroupItem(cOtrWgPrecision, "Precision Partner", null, 2.8);
-          renderGroupItem(cOtrWgElbow, "Elbow Partner", null, 2.6);
-          renderGroupItem(cOtrWgTps, "Think, Pair, Share", null, 2.6);
-          // Column 3
-          renderGroupItem(cOtrWgWarm, "Warm Call", null, 2.8);
-          renderGroupItem(cOtrWgCold, "Cold Call", null, 2.6);
-          renderGroupItem(cOtrWgVolunteer, "Volunteer", null, 2.6);
-          for (const cb of wholeCustom) {
-            renderGroupItem(cOtrWgCustom, cb.label, "3 2", 2.6);
+          if (hasWholeData) {
+            renderGroupHeader("Whole Group:");
+            renderGroupItem(cOtrWgChoral, "Choral Response", null, 3.0);
+            renderGroupItem(cOtrWgWritten, "Written Responses", null, 2.8);
+            renderGroupItem(cOtrWgNonverbal, "Nonverbal Response", null, 2.6);
+            renderGroupItem(cOtrWgCloze, "Cloze Reading", null, 2.6);
+            renderGroupItem(cOtrWgPrecision, "Precision Partner", null, 2.8);
+            if (bins.otrWhole_elbow && bins.otrWhole_elbow.some(v => v > 0)) renderGroupItem(cOtrWgElbow, "Elbow Partner", null, 2.6);
+            renderGroupItem(cOtrWgTps, "Think, Pair, Share", null, 2.6);
+            renderGroupItem(cOtrWgWarm, "Warm Call", null, 2.8);
+            renderGroupItem(cOtrWgCold, "Cold Call", null, 2.6);
+            renderGroupItem(cOtrWgVolunteer, "Volunteer", null, 2.6);
+            for (const cb of wholeCustom) {
+              renderGroupItem(cOtrWgCustom, cb.label, "3 2", 2.6);
+            }
+            curY += groupGap;
           }
-          curY += groupGap;
 
           // 2. Small Group (shades of blue in 3 columns)
-          renderGroupHeader("Small Group:");
-          // Column 1
-          renderGroupItem(cOtrSgChoral, "Choral Response", null, 3.0);
-          renderGroupItem(cOtrSgWritten, "Written Responses", null, 2.8);
-          renderGroupItem(cOtrSgNonverbal, "Nonverbal Response", null, 2.6);
-          renderGroupItem(cOtrSgCloze, "Cloze Reading", null, 2.6);
-          // Column 2
-          renderGroupItem(cOtrSgPrecision, "Precision Partner", null, 2.8);
-          renderGroupItem(cOtrSgElbow, "Elbow Partner", null, 2.6);
-          renderGroupItem(cOtrSgTps, "Think, Pair, Share", null, 2.6);
-          // Column 3
-          renderGroupItem(cOtrSgWarm, "Warm Call", null, 2.8);
-          renderGroupItem(cOtrSgCold, "Cold Call", null, 2.6);
-          renderGroupItem(cOtrSgVolunteer, "Volunteer", null, 2.6);
-          for (const cb of smallCustom) {
-            renderGroupItem(cOtrSgCustom, cb.label, "3 2", 2.6);
+          if (hasSmallData) {
+            renderGroupHeader("Small Group:");
+            renderGroupItem(cOtrSgChoral, "Choral Response", null, 3.0);
+            renderGroupItem(cOtrSgWritten, "Written Responses", null, 2.8);
+            renderGroupItem(cOtrSgNonverbal, "Nonverbal Response", null, 2.6);
+            renderGroupItem(cOtrSgCloze, "Cloze Reading", null, 2.6);
+            renderGroupItem(cOtrSgPrecision, "Precision Partner", null, 2.8);
+            if (bins.otrSmall_elbow && bins.otrSmall_elbow.some(v => v > 0)) renderGroupItem(cOtrSgElbow, "Elbow Partner", null, 2.6);
+            renderGroupItem(cOtrSgTps, "Think, Pair, Share", null, 2.6);
+            renderGroupItem(cOtrSgWarm, "Warm Call", null, 2.8);
+            renderGroupItem(cOtrSgCold, "Cold Call", null, 2.6);
+            renderGroupItem(cOtrSgVolunteer, "Volunteer", null, 2.6);
+            for (const cb of smallCustom) {
+              renderGroupItem(cOtrSgCustom, cb.label, "3 2", 2.6);
+            }
           }
 
           nextLegendY = curY + 8;
@@ -3938,7 +3992,7 @@
             "font-weight": "700",
             "font-family": font,
             fill: "#475569"
-          }, "Lesson Structure:"));
+          }, "Engagement Check:"));
 
           const lsLh = 17;
           lsCategories.forEach((cat, k) => {
@@ -4032,20 +4086,21 @@
       }
 
       function formatOtrRate(otrTotal, durationMs){
-        const minutesElapsed = durationMs / 60000;
-        if (minutesElapsed <= 0) return `0 / min`;
-        const rate = otrTotal / minutesElapsed;
+        if (!durationMs || durationMs <= 0) return `0 / min`;
+        const totalMinutes = Math.max(1, Math.ceil(durationMs / 60000));
+        const rate = otrTotal / totalMinutes;
         const rounded = Math.round(rate * 10) / 10;
         const display = (rounded % 1 === 0) ? String(rounded) : rounded.toFixed(1);
         return `${display} / min`;
       }
 
       function formatOtrRatio(otrTotal, durationMs){
-        if (durationMs <= 60000) return `${otrTotal}:1`;
-        const minutesElapsed = durationMs / 60000;
-        const rate = minutesElapsed > 0 ? (otrTotal / minutesElapsed) : 0;
-        const rounded = Math.max(0, Math.round(rate));
-        return `${rounded}:1`;
+        if (!durationMs || durationMs <= 0) return `0:1`;
+        const totalMinutes = Math.max(1, Math.ceil(durationMs / 60000));
+        const rate = otrTotal / totalMinutes;
+        const rounded = Math.round(rate * 10) / 10;
+        const display = (rounded % 1 === 0) ? String(rounded) : rounded.toFixed(1);
+        return `${display}:1`;
       }
 
       function formatPraiseRatio(positive, negative, durationMs) {
@@ -4087,11 +4142,13 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, wholeOtr, smallOtr, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock }){
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, wholeOtr, smallOtr, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock, bins }){
         const titlePrefix = state.mode === 'Praise' ? 'Instructional Feedback' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : state.mode === 'NotesOnly' ? 'Observation' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`
         ];
+
+
 
         if (!isSubsequentBlock) {
           lines.push(`Observed Educator Name: ${educator}`);
@@ -4132,17 +4189,18 @@
           lines.push("");
           lines.push("Note: Both OTR and Instructional Feedback observation timers were turned off during this observation.");
         } else if (state.mode === "Praise") {
-          lines.push(`Specific Praise: ${specific}`);
-          lines.push(`General Praise: ${general}`);
-          lines.push(`Corrective Feedback: ${corrective}`);
+          lines.push("Instructional Feedback:");
+          lines.push(`  Specific Praise: ${specific}`);
+          lines.push(`  General Praise: ${general}`);
+          lines.push(`  Corrective Feedback: ${corrective}`);
           if (customPraiseTotals && customPraiseTotals.length > 0) {
             for (const item of customPraiseTotals) {
-              lines.push(`${item.label}: ${item.count}`);
+              lines.push(`  ${item.label}: ${item.count}`);
             }
           }
-          lines.push(`Redirective Statements: ${redirect}`);
-          lines.push(`General Criticism: ${genCrit}`);
-          lines.push(`Individual Criticism: ${indCrit}`);
+          lines.push(`  Redirective Statements: ${redirect}`);
+          lines.push(`  General Criticism: ${genCrit}`);
+          lines.push(`  Individual Criticism: ${indCrit}`);
           lines.push(`Total Statements: ${otrTotal}`);
           lines.push(`Average Positive to Negative (ratio): ${ratioText}`);
           lines.push(`Goal: 5:1 positive to negative feedback`);
@@ -4163,13 +4221,11 @@
             }
           }
 
-          if (structWhole > 0 || structSmall > 0 || structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
+          if (structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
             lines.push("");
-            lines.push("Lesson Structure:");
-            lines.push(`  Whole Group: ${structWhole}`);
-            lines.push(`  Small Group: ${structSmall}`);
-            lines.push(`  Partners: ${structPartners}`);
-            lines.push(`  Individual: ${structIndividual}`);
+            lines.push("Engagement Check:");
+            if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
+            if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
             if (engagementChecks && engagementChecks.length > 0) {
               for (const check of engagementChecks) {
                 const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
@@ -4177,13 +4233,12 @@
               }
             }
           }
-        } else if (state.mode === "Lesson Structure") {
-          lines.push(`Whole Group: ${structWhole}`);
-          lines.push(`Small Group: ${structSmall}`);
-          lines.push(`Partners: ${structPartners}`);
-          lines.push(`Individual: ${structIndividual}`);
+        } else if (state.mode === "Lesson Structure" || state.mode === "Engagement Check") {
+          lines.push("Engagement Check:");
+          if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
+          if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
           lines.push(`Total Events: ${otrTotal}`);
-          lines.push(`Lesson Structure per min (ratio): ${ratioText}`);
+          lines.push(`Engagement Check per min (ratio): ${ratioText}`);
           if (engagementChecks && engagementChecks.length > 0) {
             for (const check of engagementChecks) {
               const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
@@ -4194,49 +4249,71 @@
           const w = wholeOtr || {};
           const s = smallOtr || {};
 
-          lines.push("Whole Group:");
-          // Column 1
-          lines.push(`  Choral Response: ${w.choral || 0}`);
-          lines.push(`  Written Responses: ${w.written || 0}`);
-          lines.push(`  Nonverbal Response: ${w.nonverbal || 0}`);
-          lines.push(`  Cloze Reading: ${w.cloze || 0}`);
-          // Column 2
-          lines.push(`  Precision Partner: ${w.precision || 0}`);
-          if (w.elbow) lines.push(`  Elbow Partner: ${w.elbow}`);
-          lines.push(`  Think, Pair, Share: ${w.tps || 0}`);
-          // Column 3
-          lines.push(`  Warm Call: ${w.warm || 0}`);
-          lines.push(`  Cold Call: ${w.cold || 0}`);
-          lines.push(`  Volunteer: ${w.volunteer || 0}`);
-          if (w.whiteboard) lines.push(`  White Board Response: ${w.whiteboard}`);
-          if (w.groupDisc) lines.push(`  Group Discussion: ${w.groupDisc}`);
-          if (w.teamShare) lines.push(`  Team Share: ${w.teamShare}`);
-          if (customOtrTotals && customOtrTotals.whole && customOtrTotals.whole.length > 0) {
+          let totalWholeClicks = (w.choral || 0) + (w.written || 0) + (w.nonverbal || 0) + (w.cloze || 0) +
+            (w.precision || 0) + (w.elbow || 0) + (w.tps || 0) + (w.warm || 0) + (w.cold || 0) +
+            (w.volunteer || 0) + (w.whiteboard || 0) + (w.groupDisc || 0) + (w.teamShare || 0);
+          if (customOtrTotals && customOtrTotals.whole) {
             for (const item of customOtrTotals.whole) {
-              lines.push(`  ${item.label}: ${item.count}`);
+              totalWholeClicks += (item.count || 0);
             }
           }
 
-          lines.push("Small Group:");
-          // Column 1
-          lines.push(`  Choral Response: ${s.choral || 0}`);
-          lines.push(`  Written Responses: ${s.written || 0}`);
-          lines.push(`  Nonverbal Response: ${s.nonverbal || 0}`);
-          lines.push(`  Cloze Reading: ${s.cloze || 0}`);
-          // Column 2
-          lines.push(`  Precision Partner: ${s.precision || 0}`);
-          if (s.elbow) lines.push(`  Elbow Partner: ${s.elbow}`);
-          lines.push(`  Think, Pair, Share: ${s.tps || 0}`);
-          // Column 3
-          lines.push(`  Warm Call: ${s.warm || 0}`);
-          lines.push(`  Cold Call: ${s.cold || 0}`);
-          lines.push(`  Volunteer: ${s.volunteer || 0}`);
-          if (s.whiteboard) lines.push(`  White Board Response: ${s.whiteboard}`);
-          if (s.groupDisc) lines.push(`  Group Discussion: ${s.groupDisc}`);
-          if (s.teamShare) lines.push(`  Team Share: ${s.teamShare}`);
-          if (customOtrTotals && customOtrTotals.small && customOtrTotals.small.length > 0) {
+          let totalSmallClicks = (s.choral || 0) + (s.written || 0) + (s.nonverbal || 0) + (s.cloze || 0) +
+            (s.precision || 0) + (s.elbow || 0) + (s.tps || 0) + (s.warm || 0) + (s.cold || 0) +
+            (s.volunteer || 0) + (s.whiteboard || 0) + (s.groupDisc || 0) + (s.teamShare || 0);
+          if (customOtrTotals && customOtrTotals.small) {
             for (const item of customOtrTotals.small) {
-              lines.push(`  ${item.label}: ${item.count}`);
+              totalSmallClicks += (item.count || 0);
+            }
+          }
+
+          if (totalWholeClicks > 0) {
+            lines.push("Whole Group:");
+            // Column 1
+            lines.push(`  Choral Response: ${w.choral || 0}`);
+            lines.push(`  Written Responses: ${w.written || 0}`);
+            lines.push(`  Nonverbal Response: ${w.nonverbal || 0}`);
+            lines.push(`  Cloze Reading: ${w.cloze || 0}`);
+            // Column 2
+            lines.push(`  Precision Partner: ${w.precision || 0}`);
+            if (w.elbow) lines.push(`  Elbow Partner: ${w.elbow}`);
+            lines.push(`  Think, Pair, Share: ${w.tps || 0}`);
+            // Column 3
+            lines.push(`  Warm Call: ${w.warm || 0}`);
+            lines.push(`  Cold Call: ${w.cold || 0}`);
+            lines.push(`  Volunteer: ${w.volunteer || 0}`);
+            if (w.whiteboard) lines.push(`  White Board Response: ${w.whiteboard}`);
+            if (w.groupDisc) lines.push(`  Group Discussion: ${w.groupDisc}`);
+            if (w.teamShare) lines.push(`  Team Share: ${w.teamShare}`);
+            if (customOtrTotals && customOtrTotals.whole && customOtrTotals.whole.length > 0) {
+              for (const item of customOtrTotals.whole) {
+                lines.push(`  ${item.label}: ${item.count}`);
+              }
+            }
+          }
+
+          if (totalSmallClicks > 0) {
+            lines.push("Small Group:");
+            // Column 1
+            lines.push(`  Choral Response: ${s.choral || 0}`);
+            lines.push(`  Written Responses: ${s.written || 0}`);
+            lines.push(`  Nonverbal Response: ${s.nonverbal || 0}`);
+            lines.push(`  Cloze Reading: ${s.cloze || 0}`);
+            // Column 2
+            lines.push(`  Precision Partner: ${s.precision || 0}`);
+            if (s.elbow) lines.push(`  Elbow Partner: ${s.elbow}`);
+            lines.push(`  Think, Pair, Share: ${s.tps || 0}`);
+            // Column 3
+            lines.push(`  Warm Call: ${s.warm || 0}`);
+            lines.push(`  Cold Call: ${s.cold || 0}`);
+            lines.push(`  Volunteer: ${s.volunteer || 0}`);
+            if (s.whiteboard) lines.push(`  White Board Response: ${s.whiteboard}`);
+            if (s.groupDisc) lines.push(`  Group Discussion: ${s.groupDisc}`);
+            if (s.teamShare) lines.push(`  Team Share: ${s.teamShare}`);
+            if (customOtrTotals && customOtrTotals.small && customOtrTotals.small.length > 0) {
+              for (const item of customOtrTotals.small) {
+                lines.push(`  ${item.label}: ${item.count}`);
+              }
             }
           }
 
@@ -4244,11 +4321,9 @@
           lines.push(`Opportunities to Respond per minute: ${ratioText}`);
           lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
 
-          if (structWhole > 0 || structSmall > 0 || structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
+          if (structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
             lines.push("");
-            lines.push("Lesson Structure:");
-            lines.push(`  Whole Group: ${structWhole}`);
-            lines.push(`  Small Group: ${structSmall}`);
+            lines.push("Engagement Check:");
             if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
             if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
             if (engagementChecks && engagementChecks.length > 0) {
@@ -4260,11 +4335,59 @@
           }
         }
         
-        if (notes) {
-          // Notes handled above after educator name
-        }
-        
         return lines;
+      }
+
+      function getOtrEventDetails(kind) {
+        if (!kind) return { group: "whole", label: "OTR", color: "#10b981" };
+
+        // Whole Group
+        if (kind === "otrWhole_choral" || kind === "otrChoral") return { group: "whole", label: "Choral Response", color: "#064e3b" };
+        if (kind === "otrWhole_written" || kind === "otrWritten") return { group: "whole", label: "Written Responses", color: "#047857" };
+        if (kind === "otrWhole_nonverbal" || kind === "otrNonverbal") return { group: "whole", label: "Nonverbal Response", color: "#059669" };
+        if (kind === "otrWhole_cloze" || kind === "otrCloze") return { group: "whole", label: "Cloze Reading", color: "#10b981" };
+        if (kind === "otrWhole_precision") return { group: "whole", label: "Precision Partner", color: "#065f46" };
+        if (kind === "otrWhole_elbow") return { group: "whole", label: "Elbow Partner", color: "#0f766e" };
+        if (kind === "otrWhole_tps") return { group: "whole", label: "Think, Pair, Share", color: "#14b8a6" };
+        if (kind === "otrWhole_warm") return { group: "whole", label: "Warm Call", color: "#14532d" };
+        if (kind === "otrWhole_cold") return { group: "whole", label: "Cold Call", color: "#15803d" };
+        if (kind === "otrWhole_volunteer") return { group: "whole", label: "Volunteer", color: "#22c55e" };
+        if (kind === "otrWhole_whiteboard" || kind === "otrWhiteboard") return { group: "whole", label: "White Board Response", color: "#047857" };
+        if (kind === "otrWhole_groupDisc") return { group: "whole", label: "Group Discussion", color: "#065f46" };
+        if (kind === "otrWhole_teamShare") return { group: "whole", label: "Team Share", color: "#0f766e" };
+
+        // Small Group
+        if (kind === "otrSmall_choral") return { group: "small", label: "Choral Response", color: "#0a4282" };
+        if (kind === "otrSmall_written") return { group: "small", label: "Written Responses", color: "#1565c0" };
+        if (kind === "otrSmall_nonverbal") return { group: "small", label: "Nonverbal Response", color: "#0284c7" };
+        if (kind === "otrSmall_cloze") return { group: "small", label: "Cloze Reading", color: "#0369a1" };
+        if (kind === "otrSmall_precision") return { group: "small", label: "Precision Partner", color: "#032b43" };
+        if (kind === "otrSmall_elbow") return { group: "small", label: "Elbow Partner", color: "#0369a1" };
+        if (kind === "otrSmall_tps") return { group: "small", label: "Think, Pair, Share", color: "#38bdf8" };
+        if (kind === "otrSmall_warm") return { group: "small", label: "Warm Call", color: "#1e3a8a" };
+        if (kind === "otrSmall_cold") return { group: "small", label: "Cold Call", color: "#2563eb" };
+        if (kind === "otrSmall_volunteer" || kind === "otrVolunteer" || kind === "otrOtherIndividual") return { group: "small", label: "Volunteer", color: "#60a5fa" };
+        if (kind === "otrSmall_whiteboard") return { group: "small", label: "White Board Response", color: "#0a3c81" };
+        if (kind === "otrSmall_groupDisc" || kind === "otrGroupDisc") return { group: "small", label: "Group Discussion", color: "#1355b2" };
+        if (kind === "otrSmall_teamShare" || kind === "otrTeamShare") return { group: "small", label: "Team Share", color: "#165dc1" };
+
+        // Custom buttons
+        if (state.customOtrButtons && state.customOtrButtons.length > 0) {
+          const customMatch = state.customOtrButtons.find(c => c.id === kind);
+          if (customMatch) {
+            const isWhole = customMatch.column === "whole";
+            return {
+              group: isWhole ? "whole" : "small",
+              label: customMatch.label || "Custom OTR",
+              color: isWhole ? "#10b981" : "#60a5fa"
+            };
+          }
+        }
+
+        if (kind.startsWith("otrWhole") || kind.startsWith("otr_whole")) {
+          return { group: "whole", label: "Whole Group OTR", color: "#10b981" };
+        }
+        return { group: "small", label: "Small Group OTR", color: "#38bdf8" };
       }
 
       function renderResultsCompositeSVG(blocks){
@@ -4273,7 +4396,6 @@
         const pad = 16;
         const lineH = 25;
         
-        let totalH = 0;
         const fontSans = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
 
         let measureCtx = null;
@@ -4282,22 +4404,25 @@
           measureCtx = measureCanvas.getContext("2d");
         } catch (_) {}
 
-        // Calculate heights and store block offsets
+        // Calculate heights: each block has its text lines + its chartSvg in original location
+        let totalH = pad;
         for (const block of blocks) {
           block.textBlockH = pad + (block.lines.length * lineH) + 14;
-          block.chartH = block.chartSvg ? (Number(block.chartSvg.getAttribute("height")) || 465) : 0;
-          block.totalH = block.textBlockH + block.chartH + pad;
-          totalH += block.totalH;
+          totalH += block.textBlockH;
+          if (block.chartSvg) {
+            block.chartH = Number(block.chartSvg.getAttribute("height")) || 465;
+            totalH += block.chartH + 28;
+          } else {
+            block.chartH = 0;
+          }
         }
-        
-        const H = totalH;
 
         const root = document.createElementNS(svgNS, "svg");
         root.setAttribute("xmlns", svgNS);
-        root.setAttribute("viewBox", `0 0 ${W} ${H}`);
+        root.setAttribute("viewBox", `0 0 ${W} ${totalH}`);
         root.setAttribute("width", String(W));
-        root.setAttribute("height", String(H));
-        root.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: H, fill: "#fff" }));
+        root.setAttribute("height", String(totalH));
+        root.appendChild(el(svgNS, "rect", { x: 0, y: 0, width: W, height: totalH, fill: "#fff" }));
 
         let currentYOffset = 0;
 
@@ -4306,10 +4431,12 @@
           let notesStartIdx = -1;
           let notesEndIdx = -1;
           for (let i = 0; i < block.lines.length; i++) {
-            if (block.lines[i] === "Notes:") {
+            const rawLine = block.lines[i];
+            const lineStr = typeof rawLine === "string" ? rawLine : (rawLine && rawLine.text ? rawLine.text : "");
+            if (lineStr === "Notes:") {
               notesStartIdx = i;
             } else if (notesStartIdx !== -1) {
-              if (block.lines[i].startsWith("  ") || block.lines[i] === "") {
+              if (lineStr.startsWith("  ") || lineStr === "") {
                 notesEndIdx = i;
               } else {
                 break;
@@ -4342,7 +4469,8 @@
 
           for (let i = 0; i < block.lines.length; i++){
             const isTitle = i === 0;
-            const lineText = block.lines[i];
+            const lineItem = block.lines[i];
+            const lineText = typeof lineItem === "string" ? lineItem : (lineItem && lineItem.text ? lineItem.text : "");
             const yPos = currentYOffset + pad + (i + 1) * lineH;
 
             // Ratio or rate line with circled/bordered actual value (safely spaced to never overlap label text)
@@ -4374,27 +4502,25 @@
               const ratioW = Math.max(measuredRatioW, Math.ceil(ratioVal.length * 11), 32);
 
               let isGoalMet = false;
-              let strokeColor = "#6366f1";
-              let fillColor = "#eef2ff";
-              let textColor = "#312e81";
+              let strokeColor = "#dc2626";
+              let fillColor = "#fef2f2";
+              let textColor = "#991b1b";
 
               const rateNum = parseFloat(ratioVal);
-              if (!isNaN(rateNum)) {
-                if (lineText.includes("Positive to Negative")) {
-                  isGoalMet = rateNum >= 5;
-                  strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
-                  fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
-                  textColor = isGoalMet ? "#15803d" : "#991b1b";
-                } else if (lineText.startsWith("Opportunities to Respond")) {
-                  isGoalMet = rateNum >= 3;
-                  strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
-                  fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
-                  textColor = isGoalMet ? "#15803d" : "#991b1b";
-                } else {
-                  strokeColor = "#6366f1";
-                  fillColor = "#eef2ff";
-                  textColor = "#312e81";
-                }
+              if (lineText.includes("Positive to Negative")) {
+                isGoalMet = !isNaN(rateNum) && rateNum >= 5;
+                strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
+                fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
+                textColor = isGoalMet ? "#15803d" : "#991b1b";
+              } else if (lineText.startsWith("Opportunities to Respond")) {
+                isGoalMet = !isNaN(rateNum) && rateNum >= 3;
+                strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
+                fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
+                textColor = isGoalMet ? "#15803d" : "#991b1b";
+              } else {
+                strokeColor = isGoalMet ? "#16a34a" : "#dc2626";
+                fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
+                textColor = isGoalMet ? "#15803d" : "#991b1b";
               }
 
               // Subtle row background
@@ -4483,7 +4609,7 @@
               }
             }
 
-            if (lineText === "Notes:" || lineText === "Observations:" || lineText === "Lesson Structure:" || lineText === "Whole Group:" || lineText === "Small Group:") {
+            if (lineText === "Notes:" || lineText === "Observations:" || lineText === "Engagement Check:" || lineText === "Lesson Structure:" || lineText === "Whole Group:" || lineText === "Small Group:" || lineText === "Instructional Feedback:") {
               root.appendChild(el(svgNS, "text", {
                 x: pad + 4,
                 y: yPos,
@@ -4525,6 +4651,19 @@
               continue;
             }
 
+            if (lineText.trim().startsWith("Goal:")) {
+              root.appendChild(el(svgNS, "text", {
+                x: pad + 4,
+                y: yPos,
+                "text-anchor": "start",
+                "font-size": 13,
+                "font-family": fontSans,
+                "font-weight": 600,
+                fill: "#64748b"
+              }, lineText));
+              continue;
+            }
+
             root.appendChild(el(svgNS, "text", {
               x: pad,
               y: yPos,
@@ -4536,23 +4675,26 @@
             }, lineText));
           }
 
+          currentYOffset += block.textBlockH;
+
+          // Render this block's line graph directly below this block's text lines (original location)
           if (block.chartSvg) {
             root.appendChild(el(svgNS, "line", {
-              x1: pad, y1: currentYOffset + block.textBlockH - 7,
-              x2: W - pad, y2: currentYOffset + block.textBlockH - 7,
-              stroke: "rgba(0,0,0,.12)",
+              x1: pad, y1: currentYOffset + 8,
+              x2: W - pad, y2: currentYOffset + 8,
+              stroke: "rgba(0,0,0,.15)",
               "stroke-width": 1
             }));
 
             const g = document.createElementNS(svgNS, "g");
-            g.setAttribute("transform", `translate(0 ${currentYOffset + block.textBlockH})`);
+            g.setAttribute("transform", `translate(0 ${currentYOffset + 18})`);
             const cloned = block.chartSvg.cloneNode(true);
             while (cloned.firstChild){
               g.appendChild(cloned.firstChild);
             }
             root.appendChild(g);
+            currentYOffset += (block.chartH || 465) + 28;
           }
-          currentYOffset += block.totalH;
         }
 
         return root;
@@ -4695,8 +4837,8 @@
                ...customPraiseIds
              ].includes(e.kind));
              chartSvg = renderOtrMultiLineChartSVG(modeEvents, durationMs, structEvents);
-          } else if (renderMode === "Lesson Structure") {
-             modeEvents = state.otrEvents.filter(e => ["structWhole","structSmall","structPartners","structIndividual"].includes(e.kind));
+          } else if (renderMode === "Lesson Structure" || renderMode === "Engagement Check") {
+             modeEvents = state.otrEvents.filter(e => ["structPartners","structIndividual"].includes(e.kind));
              chartSvg = renderEngagementStackedBarChartSVG(modeEvents, durationMs);
           } else if (renderMode === "OTRs") {
              modeEvents = state.otrEvents.filter(e =>
@@ -4710,7 +4852,7 @@
              chartSvg = null;
           }
           
-          const curOtrTotal = renderMode === "Praise" ? totalPraise : renderMode === "Lesson Structure" ? totalEngagement : totalOtr;
+          const curOtrTotal = renderMode === "Praise" ? totalPraise : (renderMode === "Lesson Structure" || renderMode === "Engagement Check") ? totalEngagement : totalOtr;
           const curRatioText = renderMode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : (renderMode === "OTRs" ? formatOtrRate(curOtrTotal, durationMs) : formatOtrRatio(curOtrTotal, durationMs));
           
           const lines = buildResultsLines({
@@ -4747,11 +4889,12 @@
               praiseRatings: state.praiseRatings,
               skipSELObservations: state.skipSELObservations,
               skipQuestions: state.skipQuestions,
-              isSubsequentBlock: renderMode !== renderModes[0]
+              isSubsequentBlock: renderMode !== renderModes[0],
+              bins
           });
           state.mode = oldStateMode;
           
-          sharedBlocks.push({ lines, chartSvg });
+          sharedBlocks.push({ lines, chartSvg, durationMs, events: modeEvents });
         }
 
         const resultsGraphicImg = document.getElementById("resultsGraphicImg");
@@ -4777,7 +4920,7 @@
           if (!sharedBlocks || sharedBlocks.length === 0) return;
           const oldStateMode = state.mode;
           state.mode = renderModes[0];
-          const firstOtrTotal = state.mode === "Praise" ? totalPraise : (state.mode === "Lesson Structure" ? totalEngagement : totalOtr);
+          const firstOtrTotal = state.mode === "Praise" ? totalPraise : ((state.mode === "Lesson Structure" || state.mode === "Engagement Check") ? totalEngagement : totalOtr);
           const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : (state.mode === "OTRs" ? formatOtrRate(firstOtrTotal, durationMs) : formatOtrRatio(firstOtrTotal, durationMs));
           
           sharedBlocks[0].lines = buildResultsLines({
@@ -4810,8 +4953,10 @@
               praiseRatings: state.praiseRatings,
               skipSELObservations: state.skipSELObservations,
               skipQuestions: state.skipQuestions,
-              isSubsequentBlock: false
+              isSubsequentBlock: false,
+              bins
           });
+          sharedBlocks[0].durationMs = durationMs;
           state.mode = oldStateMode;
         };
 
@@ -4929,23 +5074,6 @@
         });
       }
 
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && state.currentScreen === "run") {
-          const startBtn = document.getElementById("startBtn");
-          if (startBtn && !startBtn.disabled) {
-            if (document.activeElement && (
-              document.activeElement.tagName.toLowerCase() === "textarea" || 
-              document.activeElement.tagName.toLowerCase() === "input" ||
-              document.activeElement.isContentEditable ||
-              document.activeElement.getAttribute("contenteditable") === "true"
-            )) {
-              return;
-            }
-            e.preventDefault();
-            startBtn.click();
-          }
-        }
-      });
 
       // Initialize App
       showSetup();
