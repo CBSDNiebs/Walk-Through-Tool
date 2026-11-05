@@ -1097,6 +1097,51 @@
       outline: 2px solid #3b82f6;
       outline-offset: 1px;
     }
+    .cs-btn-group {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .btn.cs-btn {
+      width: auto;
+      min-width: 44px;
+      height: 38px;
+      min-height: 38px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 1.5px solid #d1d5db;
+      background: #ffffff;
+      color: #4b5563;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn.cs-btn:hover {
+      border-color: #9ca3af;
+      background: #f9fafb;
+    }
+    .btn.cs-btn.selected[data-val="0"] {
+      background: #f3f4f6;
+      border-color: #9ca3af;
+      color: #1f2937;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .btn.cs-btn.selected[data-val="1"] {
+      background: #dbeafe;
+      border-color: #60a5fa;
+      color: #1e40af;
+      box-shadow: 0 1px 3px rgba(37,99,235,0.15);
+    }
+    .btn.cs-btn.selected[data-val="2"] {
+      background: #3b82f6;
+      border-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(37,99,235,0.3);
+    }
   </style>
 </head>
 <body>
@@ -1191,58 +1236,60 @@
       </header>
 
       <section class="form" id="characterStrongForm" style="margin-top: 16px; display: flex; flex-direction: column; gap: 4px; align-items: stretch;">
+        <div style="font-size: 13px; color: var(--muted); margin-bottom: 10px; font-weight: 500;">Scale: <strong>0</strong> = Not Present &nbsp;|&nbsp; <strong>1</strong> = Partial &nbsp;|&nbsp; <strong>2</strong> = Fully Implemented</div>
+
         <div class="question-row" id="csRow0">
           <span class="question-label">Educator models warm & respectful interactions</span>
-          <select class="rating-select" id="csRating0" data-q="0" aria-label="Educator models warm & respectful interactions">
-            <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
-            <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
-            <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
-          </select>
+          <div class="cs-btn-group" data-q="0" aria-label="Educator models warm & respectful interactions rating">
+            <button type="button" class="btn cs-btn" data-q="0" data-val="0" title="0 - Not Present">0</button>
+            <button type="button" class="btn cs-btn" data-q="0" data-val="1" title="1 - Partial">1</button>
+            <button type="button" class="btn cs-btn" data-q="0" data-val="2" title="2 - Fully Implemented">2</button>
+          </div>
         </div>
 
         <div class="question-row" id="csRow1">
           <span class="question-label">Educator joins in community-building activities</span>
-          <select class="rating-select" id="csRating1" data-q="1" aria-label="Educator joins in community-building activities">
-            <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
-            <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
-            <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
-          </select>
+          <div class="cs-btn-group" data-q="1" aria-label="Educator joins in community-building activities rating">
+            <button type="button" class="btn cs-btn" data-q="1" data-val="0" title="0 - Not Present">0</button>
+            <button type="button" class="btn cs-btn" data-q="1" data-val="1" title="1 - Partial">1</button>
+            <button type="button" class="btn cs-btn" data-q="1" data-val="2" title="2 - Fully Implemented">2</button>
+          </div>
         </div>
 
         <div class="question-row" id="csRow2">
           <span class="question-label">Educator leads activities with enthusiasm</span>
-          <select class="rating-select" id="csRating2" data-q="2" aria-label="Educator leads activities with enthusiasm">
-            <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
-            <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
-            <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
-          </select>
+          <div class="cs-btn-group" data-q="2" aria-label="Educator leads activities with enthusiasm rating">
+            <button type="button" class="btn cs-btn" data-q="2" data-val="0" title="0 - Not Present">0</button>
+            <button type="button" class="btn cs-btn" data-q="2" data-val="1" title="1 - Partial">1</button>
+            <button type="button" class="btn cs-btn" data-q="2" data-val="2" title="2 - Fully Implemented">2</button>
+          </div>
         </div>
 
         <div class="question-row" id="csRow3">
           <span class="question-label">Students share their ideas and perspectives</span>
-          <select class="rating-select" id="csRating3" data-q="3" aria-label="Students share their ideas and perspectives">
-            <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
-            <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
-            <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
-          </select>
+          <div class="cs-btn-group" data-q="3" aria-label="Students share their ideas and perspectives rating">
+            <button type="button" class="btn cs-btn" data-q="3" data-val="0" title="0 - Not Present">0</button>
+            <button type="button" class="btn cs-btn" data-q="3" data-val="1" title="1 - Partial">1</button>
+            <button type="button" class="btn cs-btn" data-q="3" data-val="2" title="2 - Fully Implemented">2</button>
+          </div>
         </div>
 
         <div class="question-row" id="csRow4">
           <span class="question-label">Overall atmosphere of safety and respect</span>
-          <select class="rating-select" id="csRating4" data-q="4" aria-label="Overall atmosphere of safety and respect">
-            <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
-            <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
-            <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
-          </select>
+          <div class="cs-btn-group" data-q="4" aria-label="Overall atmosphere of safety and respect rating">
+            <button type="button" class="btn cs-btn" data-q="4" data-val="0" title="0 - Not Present">0</button>
+            <button type="button" class="btn cs-btn" data-q="4" data-val="1" title="1 - Partial">1</button>
+            <button type="button" class="btn cs-btn" data-q="4" data-val="2" title="2 - Fully Implemented">2</button>
+          </div>
         </div>
 
         <div class="question-row" id="csRow5">
           <span class="question-label">Evidence of class agreement with student input</span>
-          <select class="rating-select" id="csRating5" data-q="5" aria-label="Evidence of class agreement with student input">
-            <option value="0" selected style="background-color:#f3f4f6; color:#374151;">0 - Not Present</option>
-            <option value="1" style="background-color:#dbeafe; color:#1e40af;">1 - Partial</option>
-            <option value="2" style="background-color:#3b82f6; color:#ffffff;">2 - Fully Implemented</option>
-          </select>
+          <div class="cs-btn-group" data-q="5" aria-label="Evidence of class agreement with student input rating">
+            <button type="button" class="btn cs-btn" data-q="5" data-val="0" title="0 - Not Present">0</button>
+            <button type="button" class="btn cs-btn" data-q="5" data-val="1" title="1 - Partial">1</button>
+            <button type="button" class="btn cs-btn" data-q="5" data-val="2" title="2 - Fully Implemented">2</button>
+          </div>
         </div>
 
         <section class="actions" id="characterStrongActions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
@@ -1476,8 +1523,10 @@
         curriculaMaterialsUsed: null,
         regulationSpace: null,
         characterTraitGraphic: null,
-        skipSELObservations: false,
-        skipQuestions: false,
+        skipSELObservations: true,
+        skipQuestions: true,
+        praiseRatingsTouched: false,
+        questionsButtonsClicked: false,
         mode: "OTRs",
         notes: "",
         startedAt: null,
@@ -1487,7 +1536,7 @@
         otrEvents: [],
         engagementChecks: [],
         engagementPopupsShown: {},
-        praiseRatings: [0, 0, 0, 0, 0, 0], // Store slider values 0-4
+        praiseRatings: [null, null, null, null, null, null],
         tickerId: null,
         currentScreen: "setup",
         allIncludeOtr: true,
@@ -1526,13 +1575,17 @@
         state.customOtrButtons = [];
         state.customPraiseButtons = [];
         state.notes = "";
+        state.lessonTargetPosted = null;
+        state.curriculaMaterialsUsed = null;
         state.regulationSpace = null;
         state.characterTraitGraphic = null;
-        state.skipSELObservations = false;
-        state.skipQuestions = false;
+        state.skipSELObservations = true;
+        state.skipQuestions = true;
+        state.praiseRatingsTouched = false;
+        state.questionsButtonsClicked = false;
         state.engagementChecks = [];
         state.engagementPopupsShown = {};
-        state.praiseRatings = [0, 0, 0, 0, 0, 0];
+        state.praiseRatings = [null, null, null, null, null, null];
         state.allIncludeOtr = true;
         state.allIncludeSel = true;
       }
@@ -1561,7 +1614,13 @@
         state.educatorName = "";
         state.lessonTargetPosted = null;
         state.curriculaMaterialsUsed = null;
-        state.skipQuestions = false;
+        state.regulationSpace = null;
+        state.characterTraitGraphic = null;
+        state.skipQuestions = true;
+        state.skipSELObservations = true;
+        state.praiseRatingsTouched = false;
+        state.questionsButtonsClicked = false;
+        state.praiseRatings = [null, null, null, null, null, null];
         updateBeginEnabled();
 
         educatorInput.addEventListener("input", (e) => {
@@ -1586,34 +1645,38 @@
         state.currentScreen = "character-strong";
         mountTemplate("screen-character-strong");
 
-        const updateSelectStyle = (select) => {
-          const val = parseInt(select.value, 10);
-          const colorConfigs = [
-            { bg: "linear-gradient(135deg, #f9fafb, #f3f4f6)", border: "#d1d5db", text: "#374151", stroke: "%234b5563" },
-            { bg: "linear-gradient(135deg, #dbeafe, #93c5fd)", border: "#60a5fa", text: "#1e40af", stroke: "%231e40af" },
-            { bg: "linear-gradient(135deg, #3b82f6, #2563eb)", border: "#1d4ed8", text: "#ffffff", stroke: "%23ffffff" }
-          ];
-          const cfg = colorConfigs[val] || colorConfigs[0];
-          select.style.borderColor = cfg.border;
-          select.style.color = cfg.text;
-          select.style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='${cfg.stroke}' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"), ${cfg.bg}`;
+        const updateCsButtonsUI = () => {
+          document.querySelectorAll(".cs-btn-group").forEach(group => {
+            const qIndex = parseInt(group.getAttribute("data-q"), 10);
+            const currentVal = state.praiseRatings ? state.praiseRatings[qIndex] : null;
+            group.querySelectorAll(".cs-btn").forEach(btn => {
+              const val = parseInt(btn.getAttribute("data-val"), 10);
+              btn.classList.toggle("selected", currentVal === val);
+            });
+          });
         };
 
-        const ratingSelects = document.querySelectorAll(".rating-select");
-        ratingSelects.forEach(select => {
-          const qIndex = parseInt(select.getAttribute("data-q"), 10);
-          select.value = String(state.praiseRatings[qIndex] !== undefined ? state.praiseRatings[qIndex] : 0);
-          updateSelectStyle(select);
-
-          select.addEventListener("change", (e) => {
-            const val = parseInt(e.target.value, 10);
-            state.praiseRatings[qIndex] = val;
-            updateSelectStyle(e.target);
+        document.querySelectorAll(".cs-btn").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            const qIndex = parseInt(e.currentTarget.getAttribute("data-q"), 10);
+            const val = parseInt(e.currentTarget.getAttribute("data-val"), 10);
+            if (!state.praiseRatings) {
+              state.praiseRatings = [null, null, null, null, null, null];
+            }
+            if (state.praiseRatings[qIndex] === val) {
+              state.praiseRatings[qIndex] = null; // Unselect if clicked again
+            } else {
+              state.praiseRatings[qIndex] = val;
+            }
+            state.praiseRatingsTouched = state.praiseRatings.some(r => r !== null && r !== undefined);
+            updateCsButtonsUI();
           });
         });
 
         const handleSkip = () => {
           state.skipSELObservations = true;
+          state.praiseRatings = [null, null, null, null, null, null];
+          state.praiseRatingsTouched = false;
           showQuestions();
         };
 
@@ -1629,9 +1692,17 @@
 
         const csNextBtn = document.getElementById("csNextBtn");
         csNextBtn.addEventListener("click", () => {
-          state.skipSELObservations = false;
+          const hasAnyRating = state.praiseRatings && state.praiseRatings.some(r => r !== null && r !== undefined);
+          if (!hasAnyRating || !state.praiseRatingsTouched) {
+            state.skipSELObservations = true;
+            state.praiseRatings = [null, null, null, null, null, null];
+          } else {
+            state.skipSELObservations = false;
+          }
           showQuestions();
         });
+
+        updateCsButtonsUI();
       }
 
       function showQuestions() {
@@ -1680,20 +1751,57 @@
           nextBtn.disabled = false;
         }
 
-        q1YesBtn.addEventListener("click", () => { state.lessonTargetPosted = state.lessonTargetPosted === "Yes" ? null : "Yes"; updateUI(); });
-        q1NoBtn.addEventListener("click", () => { state.lessonTargetPosted = state.lessonTargetPosted === "No" ? null : "No"; updateUI(); });
+        q1YesBtn.addEventListener("click", () => {
+          state.lessonTargetPosted = state.lessonTargetPosted === "Yes" ? null : "Yes";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
+        q1NoBtn.addEventListener("click", () => {
+          state.lessonTargetPosted = state.lessonTargetPosted === "No" ? null : "No";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
         
-        q2YesBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = state.curriculaMaterialsUsed === "Yes" ? null : "Yes"; updateUI(); });
-        q2NoBtn.addEventListener("click", () => { state.curriculaMaterialsUsed = state.curriculaMaterialsUsed === "No" ? null : "No"; updateUI(); });
+        q2YesBtn.addEventListener("click", () => {
+          state.curriculaMaterialsUsed = state.curriculaMaterialsUsed === "Yes" ? null : "Yes";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
+        q2NoBtn.addEventListener("click", () => {
+          state.curriculaMaterialsUsed = state.curriculaMaterialsUsed === "No" ? null : "No";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
         
-        q3YesBtn.addEventListener("click", () => { state.regulationSpace = state.regulationSpace === "Yes" ? null : "Yes"; updateUI(); });
-        q3NoBtn.addEventListener("click", () => { state.regulationSpace = state.regulationSpace === "No" ? null : "No"; updateUI(); });
+        q3YesBtn.addEventListener("click", () => {
+          state.regulationSpace = state.regulationSpace === "Yes" ? null : "Yes";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
+        q3NoBtn.addEventListener("click", () => {
+          state.regulationSpace = state.regulationSpace === "No" ? null : "No";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
         
-        q4YesBtn.addEventListener("click", () => { state.characterTraitGraphic = state.characterTraitGraphic === "Yes" ? null : "Yes"; updateUI(); });
-        q4NoBtn.addEventListener("click", () => { state.characterTraitGraphic = state.characterTraitGraphic === "No" ? null : "No"; updateUI(); });
+        q4YesBtn.addEventListener("click", () => {
+          state.characterTraitGraphic = state.characterTraitGraphic === "Yes" ? null : "Yes";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
+        q4NoBtn.addEventListener("click", () => {
+          state.characterTraitGraphic = state.characterTraitGraphic === "No" ? null : "No";
+          state.questionsButtonsClicked = true;
+          updateUI();
+        });
 
         const handleQuestionsSkip = () => {
           state.skipQuestions = true;
+          state.curriculaMaterialsUsed = null;
+          state.lessonTargetPosted = null;
+          state.regulationSpace = null;
+          state.characterTraitGraphic = null;
+          state.questionsButtonsClicked = false;
           showResults();
         };
 
@@ -1703,7 +1811,16 @@
         if (questionsSkipBtnHeader) questionsSkipBtnHeader.addEventListener("click", handleQuestionsSkip);
 
         nextBtn.addEventListener("click", () => {
-          state.skipQuestions = false;
+          const hasAnyAnswer = !!(state.curriculaMaterialsUsed || state.lessonTargetPosted || state.regulationSpace || state.characterTraitGraphic);
+          if (!hasAnyAnswer) {
+            state.skipQuestions = true;
+            state.curriculaMaterialsUsed = null;
+            state.lessonTargetPosted = null;
+            state.regulationSpace = null;
+            state.characterTraitGraphic = null;
+          } else {
+            state.skipQuestions = false;
+          }
           showResults();
         });
         
@@ -3031,7 +3148,7 @@
         return Array.from(ticks).sort((a,b)=>a-b);
       }
 
-      function renderCircledRatioBadge(svg, centerX, baselineY, labelText, ratioText, isGoalMet, customColors = null) {
+      function renderCircledRatioBadge(svg, centerX, baselineY, labelText, ratioText, isGoalMet, customColors = null, goalText = null) {
         const svgNS = "http://www.w3.org/2000/svg";
         const fontSans = "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial";
         
@@ -3051,23 +3168,29 @@
 
         let measuredLabelW = 0;
         let measuredRatioW = 0;
+        let measuredGoalW = 0;
         try {
           const mc = document.createElement("canvas").getContext("2d");
           mc.font = `bold 14px ${fontSans}`;
           measuredLabelW = mc.measureText(labelText).width;
           mc.font = `bold 15px ${fontSans}`;
           measuredRatioW = mc.measureText(ratioText).width;
+          if (goalText) {
+            mc.font = `600 13px ${fontSans}`;
+            measuredGoalW = mc.measureText(goalText).width;
+          }
         } catch (_) {}
 
         const charEstimateW = Math.ceil(labelText.length * 9.2);
-        const labelW = Math.max(measuredLabelW, charEstimateW, 280);
+        const labelW = Math.max(measuredLabelW, charEstimateW, 260);
         const ratioW = Math.max(measuredRatioW, Math.ceil(ratioText.length * 11), 32);
+        const goalW = goalText ? Math.max(measuredGoalW, Math.ceil(goalText.length * 8)) : 0;
 
         const badgePadX = 14;
         const badgeW = Math.max(ratioW + (badgePadX * 2), 52);
         const badgeH = 26;
-        const gap = 16;
-        const totalW = labelW + gap + badgeW;
+        const gap = 14;
+        const totalW = labelW + gap + badgeW + (goalText ? (gap + goalW) : 0);
         const startX = centerX - (totalW / 2);
 
         // Label text
@@ -3107,6 +3230,19 @@
           "font-weight": 800,
           fill: textColor
         }, ratioText));
+
+        // Goal text right after the circled ratio badge
+        if (goalText) {
+          svg.appendChild(el(svgNS, "text", {
+            x: badgeX + badgeW + gap,
+            y: baselineY,
+            "text-anchor": "start",
+            "font-size": 13,
+            "font-family": fontSans,
+            "font-weight": 600,
+            fill: "#64748b"
+          }, goalText));
+        }
       }
 
       function renderEngagementStackedBarChartSVG(events, durationMs) {
@@ -3791,20 +3927,15 @@
           const ratioValue = negative === 0 ? positive : Math.round(positive / negative);
           const isGoalMet = ratioValue >= 5;
 
-          svg.appendChild(el(svgNS, "text", {
-            x: pad.l + innerW / 2, y: pad.t + innerH + 114, "text-anchor": "middle",
-            "font-size": 13, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
-            "font-weight": 600,
-            fill: "#64748b"
-          }, "Goal: 5:1 positive to negative feedback"));
-
           renderCircledRatioBadge(
             svg,
             pad.l + innerW / 2,
-            pad.t + innerH + 146,
-            "Average Positive to Negative (ratio):",
+            pad.t + innerH + 130,
+            "Average Positive to Negative ratio:",
             ratioText,
-            isGoalMet
+            isGoalMet,
+            null,
+            "Goal: 5:1  +:- feedback"
           );
         } else if (state.mode === "OTRs") {
           const totalOtr = bins.total.reduce((a, b) => a + b, 0);
@@ -3812,20 +3943,15 @@
           const rateNum = parseFloat(rateText);
           const isGoalMet = !isNaN(rateNum) && rateNum >= 3;
 
-          svg.appendChild(el(svgNS, "text", {
-            x: pad.l + innerW / 2, y: pad.t + innerH + 114, "text-anchor": "middle",
-            "font-size": 13, "font-family": "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
-            "font-weight": 600,
-            fill: "#64748b"
-          }, "Goal: 3-5 Opportunities to Respond per minute of instruction"));
-
           renderCircledRatioBadge(
             svg,
             pad.l + innerW / 2,
-            pad.t + innerH + 146,
+            pad.t + innerH + 130,
             "Opportunities to Respond per minute:",
             rateText,
-            isGoalMet
+            isGoalMet,
+            null,
+            "Goal: 3-5 OTRs/min"
           );
         } else if (state.mode === "Lesson Structure") {
           const totalEvents = events.length;
@@ -4142,18 +4268,62 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, wholeOtr, smallOtr, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock, bins }){
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, wholeOtr, smallOtr, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, otrRatioText, praiseRatioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock, bins, events = [], includeOtr = true, includePraise = true }){
         const titlePrefix = state.mode === 'Praise' ? 'Instructional Feedback' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : state.mode === 'NotesOnly' ? 'Observation' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`
         ];
 
-
-
         if (!isSubsequentBlock) {
           lines.push(`Observed Educator Name: ${educator}`);
 
+          // Recorded on, recorded from, and time length under educator name and above OTRs per minute
+          lines.push(
+            `Recorded on: ${recordedOn}`,
+            `Recorded from: ${recordedFrom}`,
+            `Time length: ${formatElapsed(durationMs)}`
+          );
+
+          if (!skipQuestions) {
+            if (curriculaMaterialsUsed) addWrappedResultLine(lines, `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`, 85);
+            if (lessonTargetPosted) addWrappedResultLine(lines, `Lesson target referenced: ${lessonTargetPosted}`, 85);
+          }
+
+          // Opportunities to Respond ratio and Instructional Feedback ratio below recorded info (omitted if toggled off)
+          if (state.mode === "Lesson Structure" || state.mode === "Engagement Check") {
+            lines.push(`Engagement Check per min (ratio): ${ratioText}`);
+          } else if (state.mode !== "NotesOnly") {
+            if (includeOtr) {
+              const effOtrRate = otrRatioText || (state.mode === "OTRs" ? ratioText : formatOtrRate(otrTotal, durationMs));
+              lines.push(`Opportunities to Respond per minute: ${effOtrRate}`);
+            }
+            if (includePraise) {
+              const effPraiseRatio = praiseRatioText || (state.mode === "Praise" ? ratioText : formatPraiseRatio(
+                (specific || 0) + (general || 0) + (corrective || 0) + (customPraiseTotals || []).reduce((a, b) => a + (b.count || 0), 0),
+                (redirect || 0) + (genCrit || 0) + (indCrit || 0),
+                durationMs
+              ));
+              lines.push(`Average Positive to Negative ratio: ${effPraiseRatio}`);
+            }
+          }
+
+          // Engagement check results below ratios
+          if (structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
+            lines.push("");
+            lines.push("Engagement Check:");
+            if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
+            if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
+            if (engagementChecks && engagementChecks.length > 0) {
+              for (const check of engagementChecks) {
+                const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
+                lines.push(`  Engagement Check (${check.timeMin} min): ${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`);
+              }
+            }
+          }
+
+          // Notes below the engagement check
           if (notes !== undefined && notes !== null) {
+            lines.push("");
             lines.push("Notes:");
             const trimmed = typeof notes === "string" ? notes.trim() : "";
             if (trimmed) {
@@ -4171,17 +4341,21 @@
             } else {
               lines.push("  (No notes entered)");
             }
+            lines.push("__NOTES_END__");
+            // Give space after the notes box between the box and whole group (bisected by grey line)
+            lines.push("");
+            lines.push("");
+            lines.push("");
+            lines.push("");
           }
-
-          lines.push(
-            `Recorded on: ${recordedOn}`,
-            `Recorded from: ${recordedFrom}`,
-            `Time length: ${formatElapsed(durationMs)}`
-          );
-
-          if (!skipQuestions) {
-            if (curriculaMaterialsUsed) addWrappedResultLine(lines, `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`, 85);
-            if (lessonTargetPosted) addWrappedResultLine(lines, `Lesson target referenced: ${lessonTargetPosted}`, 85);
+        } else {
+          // If subsequent block, place ratio directly below title
+          if (state.mode === "Praise") {
+            lines.push(`Average Positive to Negative ratio: ${ratioText}`);
+          } else if (state.mode === "Lesson Structure" || state.mode === "Engagement Check") {
+            lines.push(`Engagement Check per min (ratio): ${ratioText}`);
+          } else if (state.mode !== "NotesOnly") {
+            lines.push(`Opportunities to Respond per minute: ${ratioText}`);
           }
         }
 
@@ -4202,48 +4376,65 @@
           lines.push(`  General Criticism: ${genCrit}`);
           lines.push(`  Individual Criticism: ${indCrit}`);
           lines.push(`Total Statements: ${otrTotal}`);
-          lines.push(`Average Positive to Negative (ratio): ${ratioText}`);
-          lines.push(`Goal: 5:1 positive to negative feedback`);
+
+          // 5-minute increment ratios placed directly under raw data of instructional feedback
+          const numBlocks = Math.max(1, Math.ceil(durationMs / 300000));
+          lines.push("");
+          lines.push("Five-Minute Increment Ratios:");
+          const customPraiseIds = (state.customPraiseButtons || []).map(c => c.id);
+          for (let b = 0; b < numBlocks; b++) {
+            const bStartMin = b * 5;
+            const bEndMin = (b + 1) * 5;
+            const bStartMs = bStartMin * 60000;
+            const bEndMs = bEndMin * 60000;
+            const bEvents = (events || []).filter(e => e.tMs >= bStartMs && e.tMs < bEndMs);
+            const bDurationMs = Math.max(0, Math.min(durationMs, bEndMs) - bStartMs);
+            const effectiveDurationMs = bDurationMs > 0 ? bDurationMs : 300000;
+            const bPos = bEvents.filter(e => ["specific", "general", "corrective", ...customPraiseIds].includes(e.kind)).length;
+            const bNeg = bEvents.filter(e => ["redirect", "genCrit", "indCrit"].includes(e.kind)).length;
+            const bRatioText = formatPraiseRatio(bPos, bNeg, effectiveDurationMs);
+            lines.push(`  ${bStartMin}-${bEndMin} min ratio: ${bRatioText}`);
+          }
           
-          if ((!skipQuestions && (regulationSpace || characterTraitGraphic)) || (praiseRatings && !skipSELObservations)) {
+          const hasQuestionsObservations = !skipQuestions && !!(regulationSpace || characterTraitGraphic);
+          const hasSelObservations = !skipSELObservations && praiseRatings && praiseRatings.some(r => r !== null && r !== undefined);
+          if (hasQuestionsObservations || hasSelObservations) {
             const labels = ["0 - Not Present", "1 - Partial", "2 - Fully Implemented"];
             lines.push("");
             lines.push("Observations:");
             if (!skipQuestions && regulationSpace) addWrappedResultLine(lines, `Is there a regulation space in the classroom?: ${regulationSpace}`, 85);
             if (!skipQuestions && characterTraitGraphic) addWrappedResultLine(lines, `Is there a graphic depicting the character trait of the month?: ${characterTraitGraphic}`, 85);
-            if (praiseRatings && !skipSELObservations) {
-              addWrappedResultLine(lines, `Educator models warm & respectful interactions: ${labels[praiseRatings[0]]}`, 85);
-              addWrappedResultLine(lines, `Educator joins in community-building activities: ${labels[praiseRatings[1]]}`, 85);
-              addWrappedResultLine(lines, `Educator leads activities with enthusiasm: ${labels[praiseRatings[2]]}`, 85);
-              addWrappedResultLine(lines, `Students share their ideas and perspectives: ${labels[praiseRatings[3]]}`, 85);
-              addWrappedResultLine(lines, `Overall atmosphere of safety and respect: ${labels[praiseRatings[4]]}`, 85);
-              addWrappedResultLine(lines, `Evidence of class agreement with student input: ${labels[praiseRatings[5]]}`, 85);
-            }
-          }
-
-          if (structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
-            lines.push("");
-            lines.push("Engagement Check:");
-            if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
-            if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
-            if (engagementChecks && engagementChecks.length > 0) {
-              for (const check of engagementChecks) {
-                const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
-                lines.push(`  Engagement Check (${check.timeMin} min): ${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`);
+            if (hasSelObservations) {
+              const csPrompts = [
+                "Educator models warm & respectful interactions",
+                "Educator joins in community-building activities",
+                "Educator leads activities with enthusiasm",
+                "Students share their ideas and perspectives",
+                "Overall atmosphere of safety and respect",
+                "Evidence of class agreement with student input"
+              ];
+              for (let i = 0; i < csPrompts.length; i++) {
+                if (praiseRatings[i] !== null && praiseRatings[i] !== undefined && labels[praiseRatings[i]] !== undefined) {
+                  addWrappedResultLine(lines, `${csPrompts[i]}: ${labels[praiseRatings[i]]}`, 85);
+                }
               }
             }
           }
         } else if (state.mode === "Lesson Structure" || state.mode === "Engagement Check") {
-          lines.push("Engagement Check:");
-          if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
-          if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
           lines.push(`Total Events: ${otrTotal}`);
-          lines.push(`Engagement Check per min (ratio): ${ratioText}`);
-          if (engagementChecks && engagementChecks.length > 0) {
-            for (const check of engagementChecks) {
-              const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
-              lines.push(`Engagement Check (${check.timeMin} min): ${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`);
-            }
+          const numBlocks = Math.max(1, Math.ceil(durationMs / 300000));
+          lines.push("");
+          lines.push("Five-Minute Increment Ratios:");
+          for (let b = 0; b < numBlocks; b++) {
+            const bStartMin = b * 5;
+            const bEndMin = (b + 1) * 5;
+            const bStartMs = bStartMin * 60000;
+            const bEndMs = bEndMin * 60000;
+            const bEvents = (events || []).filter(e => e.tMs >= bStartMs && e.tMs < bEndMs);
+            const bDurationMs = Math.max(0, Math.min(durationMs, bEndMs) - bStartMs);
+            const effectiveDurationMs = bDurationMs > 0 ? bDurationMs : 300000;
+            const bRatioText = formatOtrRatio(bEvents.length, effectiveDurationMs);
+            lines.push(`  ${bStartMin}-${bEndMin} min ratio: ${bRatioText}`);
           }
         } else {
           const w = wholeOtr || {};
@@ -4318,18 +4509,46 @@
           }
 
           lines.push(`Opportunities to Respond Total: ${otrTotal}`);
-          lines.push(`Opportunities to Respond per minute: ${ratioText}`);
-          lines.push(`Goal: 3-5 Opportunities to Respond per minute of instruction`);
 
-          if (structPartners > 0 || structIndividual > 0 || (engagementChecks && engagementChecks.length > 0)) {
+          // 5-minute increment ratios placed directly under raw data of whole group and small group
+          const numBlocks = Math.max(1, Math.ceil(durationMs / 300000));
+          lines.push("");
+          lines.push("Five-Minute Increment Ratios:");
+          for (let b = 0; b < numBlocks; b++) {
+            const bStartMin = b * 5;
+            const bEndMin = (b + 1) * 5;
+            const bStartMs = bStartMin * 60000;
+            const bEndMs = bEndMin * 60000;
+            const bEvents = (events || []).filter(e => e.tMs >= bStartMs && e.tMs < bEndMs);
+            const bDurationMs = Math.max(0, Math.min(durationMs, bEndMs) - bStartMs);
+            const effectiveDurationMs = bDurationMs > 0 ? bDurationMs : 300000;
+            const bRatioText = formatOtrRate(bEvents.length, effectiveDurationMs);
+            lines.push(`  ${bStartMin}-${bEndMin} min ratio: ${bRatioText}`);
+          }
+        }
+
+        if (state.mode !== "Praise" && !isSubsequentBlock && !state.allIncludeSel) {
+          const nonPraiseHasQuestions = !skipQuestions && !!(regulationSpace || characterTraitGraphic);
+          const nonPraiseHasSel = !skipSELObservations && praiseRatings && praiseRatings.some(r => r !== null && r !== undefined);
+          if (nonPraiseHasQuestions || nonPraiseHasSel) {
+            const labels = ["0 - Not Present", "1 - Partial", "2 - Fully Implemented"];
             lines.push("");
-            lines.push("Engagement Check:");
-            if (structPartners > 0) lines.push(`  Partners: ${structPartners}`);
-            if (structIndividual > 0) lines.push(`  Individual: ${structIndividual}`);
-            if (engagementChecks && engagementChecks.length > 0) {
-              for (const check of engagementChecks) {
-                const percentOffTask = check.totalStudents > 0 ? Math.round((check.offTaskStudents / check.totalStudents) * 100) : 0;
-                lines.push(`  Engagement Check (${check.timeMin} min): ${check.offTaskStudents} off task / ${check.totalStudents} total (${percentOffTask}%)`);
+            lines.push("Observations:");
+            if (!skipQuestions && regulationSpace) addWrappedResultLine(lines, `Is there a regulation space in the classroom?: ${regulationSpace}`, 85);
+            if (!skipQuestions && characterTraitGraphic) addWrappedResultLine(lines, `Is there a graphic depicting the character trait of the month?: ${characterTraitGraphic}`, 85);
+            if (nonPraiseHasSel) {
+              const csPrompts = [
+                "Educator models warm & respectful interactions",
+                "Educator joins in community-building activities",
+                "Educator leads activities with enthusiasm",
+                "Students share their ideas and perspectives",
+                "Overall atmosphere of safety and respect",
+                "Evidence of class agreement with student input"
+              ];
+              for (let i = 0; i < csPrompts.length; i++) {
+                if (praiseRatings[i] !== null && praiseRatings[i] !== undefined && labels[praiseRatings[i]] !== undefined) {
+                  addWrappedResultLine(lines, `${csPrompts[i]}: ${labels[praiseRatings[i]]}`, 85);
+                }
               }
             }
           }
@@ -4404,10 +4623,31 @@
           measureCtx = measureCanvas.getContext("2d");
         } catch (_) {}
 
-        // Calculate heights: each block has its text lines + its chartSvg in original location
+        // Calculate heights and per-line Y positions: each block has its text lines + its chartSvg in original location
         let totalH = pad;
         for (const block of blocks) {
-          block.textBlockH = pad + (block.lines.length * lineH) + 14;
+          let lineY = pad + 18;
+          block.lineYPositions = [];
+          for (let i = 0; i < block.lines.length; i++) {
+            const rawLine = block.lines[i];
+            const lineStr = typeof rawLine === "string" ? rawLine : (rawLine && rawLine.text ? rawLine.text : "");
+            if (lineStr === "__NOTES_END__") {
+              block.lineYPositions.push(lineY);
+              continue;
+            }
+            const isRatio = lineStr.startsWith("Opportunities to Respond per min") ||
+                            lineStr.startsWith("Average Positive to Negative ratio:") ||
+                            lineStr.includes("(ratio):");
+            block.lineYPositions.push(lineY);
+            if (isRatio) {
+              lineY += 30;
+            } else if (i === 0) {
+              lineY += 28;
+            } else {
+              lineY += 25;
+            }
+          }
+          block.textBlockH = lineY + 14;
           totalH += block.textBlockH;
           if (block.chartSvg) {
             block.chartH = Number(block.chartSvg.getAttribute("height")) || 465;
@@ -4435,10 +4675,19 @@
             const lineStr = typeof rawLine === "string" ? rawLine : (rawLine && rawLine.text ? rawLine.text : "");
             if (lineStr === "Notes:") {
               notesStartIdx = i;
+              notesEndIdx = i;
             } else if (notesStartIdx !== -1) {
-              if (lineStr.startsWith("  ") || lineStr === "") {
+              if (lineStr === "__NOTES_END__") {
+                notesEndIdx = Math.max(notesStartIdx, i - 1);
+                break;
+              } else if (lineStr.startsWith("  ")) {
                 notesEndIdx = i;
-              } else {
+              } else if (lineStr === "Whole Group:" || lineStr === "Small Group:" || lineStr === "Instructional Feedback:" || lineStr === "Observations:") {
+                let lastNote = i - 1;
+                while (lastNote > notesStartIdx && (block.lines[lastNote] === "" || block.lines[lastNote] === "__NOTES_END__")) {
+                  lastNote--;
+                }
+                notesEndIdx = Math.max(notesStartIdx, lastNote);
                 break;
               }
             }
@@ -4447,10 +4696,11 @@
             notesEndIdx = notesStartIdx;
           }
 
-          // Draw notes box if notes exist
+          // Draw notes box and thin grey line bisecting the space between the box and whole group (or next raw data)
           if (notesStartIdx !== -1) {
-            const boxTopY = currentYOffset + pad + (notesStartIdx * lineH) + 4;
-            const boxHeight = ((notesEndIdx - notesStartIdx + 1) * lineH) + 6;
+            const boxTopY = currentYOffset + block.lineYPositions[notesStartIdx] - 16;
+            const boxBottomY = currentYOffset + block.lineYPositions[notesEndIdx] + 12;
+            const boxHeight = boxBottomY - boxTopY;
             const boxX = pad - 6;
             const boxW = W - (pad * 2) + 12;
 
@@ -4465,41 +4715,80 @@
               rx: 8,
               ry: 8
             }));
+
+            // Find next non-empty line after the notes box (e.g. Whole Group, Small Group, or Instructional Feedback)
+            let nextLineIdx = -1;
+            for (let i = notesEndIdx + 1; i < block.lines.length; i++) {
+              const str = typeof block.lines[i] === "string" ? block.lines[i] : (block.lines[i]?.text || "");
+              if (str !== "__NOTES_END__" && str.trim() !== "") {
+                nextLineIdx = i;
+                break;
+              }
+            }
+
+            if (nextLineIdx !== -1) {
+              const nextSectionY = currentYOffset + block.lineYPositions[nextLineIdx] - 16;
+              const dividerY = Math.round(boxBottomY + (nextSectionY - boxBottomY) / 2);
+
+              root.appendChild(el(svgNS, "line", {
+                x1: pad,
+                y1: dividerY,
+                x2: W - pad,
+                y2: dividerY,
+                stroke: "#94a3b8",
+                "stroke-width": 1.25
+              }));
+            }
           }
+
+          // Measure max label width for summary ratios in this block so pills align to the exact same column
+          let maxSummaryLabelW = 320;
+          for (const l of block.lines) {
+            const s = typeof l === "string" ? l : (l && l.text ? l.text : "");
+            if (s.startsWith("Opportunities to Respond per min") || s.startsWith("Average Positive to Negative ratio:") || s.includes("(ratio):")) {
+              const colon = s.indexOf(":");
+              const lbl = s.substring(0, colon + 1).trim();
+              let mW = 0;
+              try {
+                if (measureCtx) {
+                  measureCtx.font = `bold 14px ${fontSans}`;
+                  mW = measureCtx.measureText(lbl).width;
+                }
+              } catch (_) {}
+              const cW = Math.ceil(lbl.length * 9.2);
+              maxSummaryLabelW = Math.max(maxSummaryLabelW, mW, cW);
+            }
+          }
+          const sharedRatioBadgeX = pad + maxSummaryLabelW + 14;
 
           for (let i = 0; i < block.lines.length; i++){
             const isTitle = i === 0;
             const lineItem = block.lines[i];
             const lineText = typeof lineItem === "string" ? lineItem : (lineItem && lineItem.text ? lineItem.text : "");
-            const yPos = currentYOffset + pad + (i + 1) * lineH;
+            const yPos = currentYOffset + (block.lineYPositions ? block.lineYPositions[i] : (pad + (i + 1) * lineH));
 
-            // Ratio or rate line with circled/bordered actual value (safely spaced to never overlap label text)
-            if (lineText.includes("(ratio):") || lineText.startsWith("Opportunities to Respond per minute:") || lineText.startsWith("Opportunities to Respond per min:")) {
-              let label, ratioVal;
-              if (lineText.includes("(ratio):")) {
-                const colonIdx = lineText.indexOf("(ratio):");
-                label = lineText.substring(0, colonIdx + 8).trim();
-                ratioVal = lineText.substring(colonIdx + 8).trim();
-              } else {
-                const colonIdx = lineText.indexOf(":");
-                label = lineText.substring(0, colonIdx + 1).trim();
-                ratioVal = lineText.substring(colonIdx + 1).trim();
-              }
+            if (!lineText || lineText === "__NOTES_END__") {
+              continue;
+            }
 
-              let measuredLabelW = 0;
+            // Ratio or rate line with circled/bordered actual value (never overlapping)
+            const isRatioSummaryLine = lineText.startsWith("Opportunities to Respond per min") ||
+                                       lineText.startsWith("Average Positive to Negative ratio:") ||
+                                       lineText.includes("(ratio):");
+            if (isRatioSummaryLine) {
+              const colonIdx = lineText.indexOf(":");
+              const label = lineText.substring(0, colonIdx + 1).trim();
+              const ratioVal = lineText.substring(colonIdx + 1).trim();
+
               let measuredRatioW = 0;
               try {
                 if (measureCtx) {
-                  measureCtx.font = `bold 14px ${fontSans}`;
-                  measuredLabelW = measureCtx.measureText(label).width;
                   measureCtx.font = `bold 15px ${fontSans}`;
                   measuredRatioW = measureCtx.measureText(ratioVal).width;
                 }
               } catch (_) {}
 
-              const charEstimateW = Math.ceil(label.length * 9.2);
-              const labelW = Math.max(measuredLabelW, charEstimateW, 310);
-              const ratioW = Math.max(measuredRatioW, Math.ceil(ratioVal.length * 11), 32);
+              const ratioW = Math.max(measuredRatioW, Math.ceil(ratioVal.length * 10), 28);
 
               let isGoalMet = false;
               let strokeColor = "#dc2626";
@@ -4523,12 +4812,12 @@
                 textColor = isGoalMet ? "#15803d" : "#991b1b";
               }
 
-              // Subtle row background
+              // Subtle row background (height 26, leaving 4px margin between consecutive rows)
               root.appendChild(el(svgNS, "rect", {
                 x: pad - 4,
-                y: yPos - lineH + 5,
+                y: yPos - 19,
                 width: W - (pad * 2) + 8,
-                height: lineH + 1,
+                height: 26,
                 fill: (lineText.includes("Positive to Negative") || lineText.startsWith("Opportunities to Respond"))
                   ? (isGoalMet ? "rgba(240, 253, 244, 0.5)" : "rgba(254, 242, 242, 0.5)")
                   : "rgba(241, 245, 249, 0.5)",
@@ -4546,12 +4835,12 @@
                 fill: "rgba(0,0,0,.90)"
               }, label));
 
-              // Circle/pill border around the actual ratio
-              const badgeH = 26;
+              // Circle/pill border around the actual ratio (shared badgeX and 22px height prevents overlap)
+              const badgeH = 22;
               const badgePadX = 14;
               const badgeW = Math.max(ratioW + (badgePadX * 2), 52);
-              const badgeX = pad + labelW + 16;
-              const badgeY = yPos - 18;
+              const badgeX = sharedRatioBadgeX;
+              const badgeY = yPos - 16;
 
               root.appendChild(el(svgNS, "rect", {
                 x: badgeX,
@@ -4568,11 +4857,122 @@
               // Text inside the circled ratio
               root.appendChild(el(svgNS, "text", {
                 x: badgeX + (badgeW / 2),
-                y: yPos,
+                y: yPos - 1,
                 "text-anchor": "middle",
-                "font-size": 15,
+                "font-size": 14,
                 "font-family": fontSans,
                 "font-weight": 800,
+                fill: textColor
+              }, ratioVal));
+
+              // Goal text right after the circled ratio
+              let goalText = "";
+              if (lineText.includes("Positive to Negative")) {
+                goalText = "Goal: 5:1  +:- feedback";
+              } else if (lineText.startsWith("Opportunities to Respond")) {
+                goalText = "Goal: 3-5 OTRs/min";
+              }
+
+              if (goalText) {
+                root.appendChild(el(svgNS, "text", {
+                  x: badgeX + badgeW + 14,
+                  y: yPos,
+                  "text-anchor": "start",
+                  "font-size": 13,
+                  "font-family": fontSans,
+                  "font-weight": 600,
+                  fill: "#64748b"
+                }, goalText));
+              }
+
+              continue;
+            }
+
+            // 5-minute increment ratio line with lighter pastel pill and subtle row highlight
+            if (lineText.includes("min ratio:")) {
+              const colonIdx = lineText.indexOf(":");
+              const label = lineText.substring(0, colonIdx + 1).trim();
+              const ratioVal = lineText.substring(colonIdx + 1).trim();
+
+              let isGoalMet = false;
+              if (ratioVal.includes(":")) {
+                const parts = ratioVal.split(":");
+                const pos = parseInt(parts[0], 10) || 0;
+                const neg = parseInt(parts[1], 10) || 0;
+                const rVal = neg === 0 ? pos : Math.round(pos / neg);
+                isGoalMet = rVal >= 5;
+              } else {
+                const rateNum = parseFloat(ratioVal);
+                isGoalMet = !isNaN(rateNum) && rateNum >= 3;
+              }
+
+              const strokeColor = isGoalMet ? "#86efac" : "#fca5a5";
+              const fillColor = isGoalMet ? "#f0fdf4" : "#fef2f2";
+              const textColor = isGoalMet ? "#15803d" : "#b91c1c";
+              const rowHighlight = isGoalMet ? "rgba(240, 253, 244, 0.4)" : "rgba(254, 242, 242, 0.4)";
+
+              // Subtle lighter row background
+              root.appendChild(el(svgNS, "rect", {
+                x: pad - 4,
+                y: yPos - lineH + 5,
+                width: W - (pad * 2) + 8,
+                height: lineH + 1,
+                fill: rowHighlight,
+                rx: 4
+              }));
+
+              // Render label text (e.g. "0-5 min ratio:")
+              root.appendChild(el(svgNS, "text", {
+                x: pad + 8,
+                y: yPos,
+                "text-anchor": "start",
+                "font-size": 13.5,
+                "font-family": fontSans,
+                "font-weight": 600,
+                fill: "#334155"
+              }, label));
+
+              let measuredLabelW = 0;
+              let measuredRatioW = 0;
+              try {
+                if (measureCtx) {
+                  measureCtx.font = `600 13.5px ${fontSans}`;
+                  measuredLabelW = measureCtx.measureText(label).width;
+                  measureCtx.font = `bold 13.5px ${fontSans}`;
+                  measuredRatioW = measureCtx.measureText(ratioVal).width;
+                }
+              } catch (_) {}
+
+              const labelW = Math.max(measuredLabelW, Math.ceil(label.length * 8.5), 140);
+              const ratioW = Math.max(measuredRatioW, Math.ceil(ratioVal.length * 9), 30);
+
+              // Lighter colored pill badge around the ratio
+              const badgeH = 22;
+              const badgePadX = 10;
+              const badgeW = Math.max(ratioW + (badgePadX * 2), 48);
+              const badgeX = pad + labelW + 18;
+              const badgeY = yPos - 16;
+
+              root.appendChild(el(svgNS, "rect", {
+                x: badgeX,
+                y: badgeY,
+                width: badgeW,
+                height: badgeH,
+                rx: badgeH / 2,
+                ry: badgeH / 2,
+                fill: fillColor,
+                stroke: strokeColor,
+                "stroke-width": 1.5
+              }));
+
+              // Text inside the pill badge
+              root.appendChild(el(svgNS, "text", {
+                x: badgeX + (badgeW / 2),
+                y: yPos - 1,
+                "text-anchor": "middle",
+                "font-size": 13,
+                "font-family": fontSans,
+                "font-weight": 700,
                 fill: textColor
               }, ratioVal));
 
@@ -4609,7 +5009,7 @@
               }
             }
 
-            if (lineText === "Notes:" || lineText === "Observations:" || lineText === "Engagement Check:" || lineText === "Lesson Structure:" || lineText === "Whole Group:" || lineText === "Small Group:" || lineText === "Instructional Feedback:") {
+            if (lineText === "Notes:" || lineText === "Observations:" || lineText === "Engagement Check:" || lineText === "Lesson Structure:" || lineText === "Whole Group:" || lineText === "Small Group:" || lineText === "Instructional Feedback:" || lineText === "Five-Minute Increment Ratios:") {
               root.appendChild(el(svgNS, "text", {
                 x: pad + 4,
                 y: yPos,
@@ -4652,15 +5052,6 @@
             }
 
             if (lineText.trim().startsWith("Goal:")) {
-              root.appendChild(el(svgNS, "text", {
-                x: pad + 4,
-                y: yPos,
-                "text-anchor": "start",
-                "font-size": 13,
-                "font-family": fontSans,
-                "font-weight": 600,
-                fill: "#64748b"
-              }, lineText));
               continue;
             }
 
@@ -4811,6 +5202,10 @@
 
         document.getElementById("resultsContext").textContent = `Observed Educator Name: ${state.educatorName}`;
         
+        const originalMode = state.mode;
+        const isOtrActive = originalMode === "All" ? state.allIncludeOtr : (originalMode === "OTRs");
+        const isPraiseActive = originalMode === "All" ? state.allIncludeSel : (originalMode === "Praise");
+
         const renderModes = [];
         if (state.mode === "All") {
           if (state.allIncludeOtr) renderModes.push("OTRs");
@@ -4884,13 +5279,18 @@
 
               otrTotal: curOtrTotal,
               ratioText: curRatioText,
+              otrRatioText: formatOtrRate(totalOtr, durationMs),
+              praiseRatioText: formatPraiseRatio(positivePraise, negativePraise, durationMs),
               notes: renderMode === renderModes[0] ? state.notes : null,
               engagementChecks: state.engagementChecks,
               praiseRatings: state.praiseRatings,
               skipSELObservations: state.skipSELObservations,
               skipQuestions: state.skipQuestions,
               isSubsequentBlock: renderMode !== renderModes[0],
-              bins
+              bins,
+              events: modeEvents,
+              includeOtr: isOtrActive,
+              includePraise: isPraiseActive
           });
           state.mode = oldStateMode;
           
@@ -4923,6 +5323,22 @@
           const firstOtrTotal = state.mode === "Praise" ? totalPraise : ((state.mode === "Lesson Structure" || state.mode === "Engagement Check") ? totalEngagement : totalOtr);
           const firstRatioText = state.mode === "Praise" ? formatPraiseRatio(positivePraise, negativePraise, durationMs) : (state.mode === "OTRs" ? formatOtrRate(firstOtrTotal, durationMs) : formatOtrRatio(firstOtrTotal, durationMs));
           
+          let firstModeEvents = [];
+          if (state.mode === "Praise") {
+            const customPraiseIds = (state.customPraiseButtons || []).map(c => c.id);
+            firstModeEvents = state.otrEvents.filter(e => ["specific", "general", "corrective", "redirect", "genCrit", "indCrit", ...customPraiseIds].includes(e.kind));
+          } else if (state.mode === "Lesson Structure" || state.mode === "Engagement Check") {
+            firstModeEvents = state.otrEvents.filter(e => ["structPartners","structIndividual"].includes(e.kind));
+          } else if (state.mode === "OTRs") {
+            const customIds = (state.customOtrButtons || []).map(c => c.id);
+            firstModeEvents = state.otrEvents.filter(e =>
+              e.kind.startsWith("otrWhole_") ||
+              e.kind.startsWith("otrSmall_") ||
+              e.kind.startsWith("otr") ||
+              customIds.includes(e.kind)
+            );
+          }
+
           sharedBlocks[0].lines = buildResultsLines({
               educator: state.educatorName,
               recordedOn: state.startWall ? state.startWall.toLocaleDateString() : "",
@@ -4948,13 +5364,18 @@
               indCrit: totalIndCrit,
               otrTotal: firstOtrTotal,
               ratioText: firstRatioText,
+              otrRatioText: formatOtrRate(totalOtr, durationMs),
+              praiseRatioText: formatPraiseRatio(positivePraise, negativePraise, durationMs),
               notes: state.notes,
               engagementChecks: state.engagementChecks,
               praiseRatings: state.praiseRatings,
               skipSELObservations: state.skipSELObservations,
               skipQuestions: state.skipQuestions,
               isSubsequentBlock: false,
-              bins
+              bins,
+              events: firstModeEvents,
+              includeOtr: isOtrActive,
+              includePraise: isPraiseActive
           });
           sharedBlocks[0].durationMs = durationMs;
           state.mode = oldStateMode;
