@@ -37,24 +37,24 @@
       --otr-wg-teamshare:#6f3bbf;  /* Legacy fallback */
       --otr-wg-custom:#7b47c4;     /* Custom Violet */
 
-      /* Small Group - 3 Columns (Teal/Blue: softer pastel bottom-left -> bold medium top-right, white-text contrast) */
+      /* Small Group - 3 Columns (Bright-to-Light Orange: lighter apricot-orange bottom-left -> bold bright orange top-right, white-text contrast) */
       /* Column 1 (bottom->top): Cloze, Nonverbal, Written, Choral */
-      --otr-sg-cloze:#369496;      /* Soft Pastel Teal (Bottom-Left: lightest) */
-      --otr-sg-nonverbal:#328ea0;  /* Soft Teal-Aqua */
-      --otr-sg-written:#2d86a8;    /* Medium Light Cerulean-Teal */
-      --otr-sg-choral:#2779b5;     /* Medium Cerulean Blue (Top-Left) */
+      --otr-sg-cloze:#e88c46;      /* Light Warm Apricot-Orange (Bottom-Left: lightest) */
+      --otr-sg-nonverbal:#ec7f34;  /* Light Tangerine Orange */
+      --otr-sg-written:#f07124;    /* Bright Medium Tangerine */
+      --otr-sg-choral:#ea5d15;     /* Bright Vivid Orange (Top-Left) */
       /* Column 2 (bottom->top): Think Pair Share, Elbow, Precision */
-      --otr-sg-tps:#297eb0;        /* Medium Sky-Cerulean */
-      --otr-sg-elbow:#246dbf;      /* Legacy/Middle Blue */
-      --otr-sg-precision:#2263c7;  /* Bold Medium Blue */
+      --otr-sg-tps:#ee681b;        /* Bright Tangy Orange */
+      --otr-sg-elbow:#e55612;      /* Legacy/Middle Bright Orange */
+      --otr-sg-precision:#e0510f;  /* Bold Vibrant Orange */
       /* Column 3 (bottom->top): Volunteer, Cold Response, Warm Response */
-      --otr-sg-volunteer:#2570bd;  /* Bright Medium Azure Blue */
-      --otr-sg-cold:#205bc9;       /* Rich Medium Royal Blue */
-      --otr-sg-warm:#1d4ed8;       /* Bold Vivid Royal Blue (Top-Right: richest) */
-      --otr-sg-whiteboard:#2d86a8; /* Legacy fallback */
-      --otr-sg-groupdisc:#246dbf;  /* Legacy fallback */
-      --otr-sg-teamshare:#2263c7;  /* Legacy fallback */
-      --otr-sg-custom:#2779b5;     /* Custom Blue-Teal */
+      --otr-sg-volunteer:#eb641a;  /* Bright Warm Orange */
+      --otr-sg-cold:#e24f0d;       /* Rich Bright Orange */
+      --otr-sg-warm:#d94308;       /* Bold Vivid Bright Orange (Top-Right: richest) */
+      --otr-sg-whiteboard:#f07124; /* Legacy fallback */
+      --otr-sg-groupdisc:#e55612;  /* Legacy fallback */
+      --otr-sg-teamshare:#e0510f;  /* Legacy fallback */
+      --otr-sg-custom:#ea5d15;     /* Custom Orange */
 
       /* Legacy fallbacks */
       --otr-choral:#7b47c4;
@@ -63,16 +63,16 @@
       --otr-written:#8758ca;
       --otr-nonverbal:#9166cf;
       --otr-other-whole:#7b47c4;
-      --otr-group-disc:#246dbf;
-      --otr-team-share:#2263c7;
-      --otr-other-small:#2779b5;
-      --otr-precision:#2263c7;
-      --otr-elbow:#246dbf;
-      --otr-other-partner:#297eb0;
-      --otr-warm:#1d4ed8;
-      --otr-cold:#205bc9;
-      --otr-volunteer:#2570bd;
-      --otr-other-individual:#2570bd;
+      --otr-group-disc:#e55612;
+      --otr-team-share:#e0510f;
+      --otr-other-small:#ea5d15;
+      --otr-precision:#e0510f;
+      --otr-elbow:#e55612;
+      --otr-other-partner:#ee681b;
+      --otr-warm:#d94308;
+      --otr-cold:#e24f0d;
+      --otr-volunteer:#eb641a;
+      --otr-other-individual:#eb641a;
 
       --otr-total:rgba(0,0,0,0.2); /* transparent grey */
 
@@ -180,7 +180,7 @@
       border-radius:12px;
     }
 
-    /* OTR Buttons: Whole Group = Shades of Pure Violet/Purple, Small Group = Shades of Teal/Blue */
+    /* OTR Buttons: Whole Group = Shades of Pure Violet/Purple, Small Group = Bright to Light Orange */
     .btn.otr{
       position:relative;
       color:#fff;
@@ -210,7 +210,7 @@
     .btn.otr.otr-wg-cold{background:var(--otr-wg-cold); color:#fff;}
     .btn.otr.otr-wg-volunteer{background:var(--otr-wg-volunteer); color:#fff;}
 
-    /* Small Group Buttons (Teal/Blue: softer pastel bottom-left -> bold medium top-right, all white lettering) */
+    /* Small Group Buttons (Bright-to-Light Orange: lighter apricot bottom-left -> bold bright orange top-right, all white lettering) */
     .btn.otr.otr-sg-tps{background:var(--otr-sg-tps); color:#fff;}
     .btn.otr.otr-sg-choral{background:var(--otr-sg-choral); color:#fff;}
     .btn.otr.otr-sg-cloze{background:var(--otr-sg-cloze); color:#fff;}
@@ -1403,7 +1403,7 @@
               </div>
             </div>
 
-            <!-- Small Group Buttons View (Shades of Teal/Blue in 3 Columns) -->
+            <!-- Small Group Buttons View (Bright to Light Shades of Orange in 3 Columns) -->
             <div id="otrSmallGroupView" class="otr-columns-3-container" style="display: none;" aria-label="Small Group Opportunities to Respond">
               <!-- Column 1: Choral Response, Written Response, Nonverbal Response, Cloze Reading -->
               <div class="otr-col" id="otrSmallCol1">
@@ -3136,6 +3136,49 @@
         return node;
       }
 
+      function getRatioShadeColors(baseColor){
+        const c = String(baseColor || "").trim().toLowerCase();
+        if (c === "#15803d") return { base: "#15803d", decimal: "#22a855", colon: "#052e16" };
+        if (c === "#991b1b") return { base: "#991b1b", decimal: "#dc2626", colon: "#450a0a" };
+        if (c === "#b91c1c") return { base: "#b91c1c", decimal: "#ef4444", colon: "#450a0a" };
+        if (c === "#312e81") return { base: "#312e81", decimal: "#6366f1", colon: "#1e1b4b" };
+        if (c === "#1e293b" || c === "#0f172a") return { base: "#1e293b", decimal: "#64748b", colon: "#000000" };
+        if (c === "#64748b") return { base: "#64748b", decimal: "#94a3b8", colon: "#1e293b" };
+        return { base: baseColor, decimal: baseColor, colon: baseColor };
+      }
+
+      function createStyledRatioTextEl(ns, attrs, text, baseColor){
+        const shades = getRatioShadeColors(baseColor);
+        const node = el(ns, "text", { ...attrs, fill: shades.base });
+        const str = String(text ?? "");
+        let idx = 0;
+        let buf = "";
+        const flushBuf = () => {
+          if (buf) {
+            node.appendChild(el(ns, "tspan", { fill: shades.base }, buf));
+            buf = "";
+          }
+        };
+        while (idx < str.length) {
+          if (str[idx] === "." && idx + 1 < str.length && /\d/.test(str[idx + 1])) {
+            flushBuf();
+            let end = idx + 2;
+            while (end < str.length && /\d/.test(str[end])) end++;
+            node.appendChild(el(ns, "tspan", { fill: shades.decimal }, str.slice(idx, end)));
+            idx = end;
+          } else if (str[idx] === ":" && idx > 0 && /[\d+]/.test(str[idx - 1]) && idx + 1 < str.length && /[\d-]/.test(str[idx + 1])) {
+            flushBuf();
+            node.appendChild(el(ns, "tspan", { fill: shades.colon }, ":"));
+            idx++;
+          } else {
+            buf += str[idx];
+            idx++;
+          }
+        }
+        flushBuf();
+        return node;
+      }
+
       function pickIntTicks(yMax, targetCount){
         const ticks = new Set([0, yMax]);
         if (yMax <= targetCount){
@@ -3166,31 +3209,42 @@
           textColor = isGoalMet ? "#15803d" : "#991b1b";
         }
 
+        const countsMatch = typeof ratioText === "string" ? ratioText.match(/^(\d+:\d+)\s+\(([^)]+)\)$/) : null;
+        const countsText = countsMatch ? countsMatch[1] : "";
+        const pillText = countsMatch ? countsMatch[2] : ratioText;
+
         let measuredLabelW = 0;
+        let measuredCountsW = 0;
         let measuredRatioW = 0;
         let measuredGoalW = 0;
         try {
           const mc = document.createElement("canvas").getContext("2d");
           mc.font = `bold 14px ${fontSans}`;
           measuredLabelW = mc.measureText(labelText).width;
+          if (countsText) {
+            mc.font = `700 14px ${fontSans}`;
+            measuredCountsW = mc.measureText(countsText).width;
+          }
           mc.font = `bold 15px ${fontSans}`;
-          measuredRatioW = mc.measureText(ratioText).width;
+          measuredRatioW = mc.measureText(pillText).width;
           if (goalText) {
             mc.font = `600 13px ${fontSans}`;
             measuredGoalW = mc.measureText(goalText).width;
           }
         } catch (_) {}
 
-        const charEstimateW = Math.ceil(labelText.length * 9.2);
-        const labelW = Math.max(measuredLabelW, charEstimateW, 260);
-        const ratioW = Math.max(measuredRatioW, Math.ceil(ratioText.length * 11), 32);
+        const charEstimateW = Math.ceil(labelText.length * 8.4);
+        const labelW = Math.max(measuredLabelW, charEstimateW, 240);
+        const countsW = countsText ? Math.max(measuredCountsW, Math.ceil(countsText.length * 8.5)) : 0;
+        const countsGap = countsText ? 10 : 0;
+        const ratioW = Math.max(measuredRatioW, Math.ceil(pillText.length * 10), 32);
         const goalW = goalText ? Math.max(measuredGoalW, Math.ceil(goalText.length * 8)) : 0;
 
         const badgePadX = 14;
         const badgeW = Math.max(ratioW + (badgePadX * 2), 52);
         const badgeH = 26;
         const gap = 14;
-        const totalW = labelW + gap + badgeW + (goalText ? (gap + goalW) : 0);
+        const totalW = labelW + (countsText ? (countsGap + countsW) : 0) + gap + badgeW + (goalText ? (gap + goalW) : 0);
         const startX = centerX - (totalW / 2);
 
         // Label text
@@ -3204,8 +3258,20 @@
           fill: "rgba(0,0,0,.85)"
         }, labelText));
 
+        // Actual counts before the pill (e.g. "11:2")
+        if (countsText) {
+          svg.appendChild(createStyledRatioTextEl(svgNS, {
+            x: startX + labelW + countsGap,
+            y: baselineY,
+            "text-anchor": "start",
+            "font-size": 14,
+            "font-family": fontSans,
+            "font-weight": 700
+          }, countsText, "#1e293b"));
+        }
+
         // Circle/pill border
-        const badgeX = startX + labelW + gap;
+        const badgeX = startX + labelW + (countsText ? (countsGap + countsW) : 0) + gap;
         const badgeY = baselineY - 18;
 
         svg.appendChild(el(svgNS, "rect", {
@@ -3220,28 +3286,26 @@
           "stroke-width": 2
         }));
 
-        // Ratio text
-        svg.appendChild(el(svgNS, "text", {
+        // Ratio text inside the pill (lighter decimal, darker ratio colon)
+        svg.appendChild(createStyledRatioTextEl(svgNS, {
           x: badgeX + (badgeW / 2),
           y: baselineY,
           "text-anchor": "middle",
           "font-size": 15,
           "font-family": fontSans,
-          "font-weight": 800,
-          fill: textColor
-        }, ratioText));
+          "font-weight": 800
+        }, pillText, textColor));
 
         // Goal text right after the circled ratio badge
         if (goalText) {
-          svg.appendChild(el(svgNS, "text", {
+          svg.appendChild(createStyledRatioTextEl(svgNS, {
             x: badgeX + badgeW + gap,
             y: baselineY,
             "text-anchor": "start",
             "font-size": 13,
             "font-family": fontSans,
-            "font-weight": 600,
-            fill: "#64748b"
-          }, goalText));
+            "font-weight": 600
+          }, goalText, "#64748b"));
         }
       }
 
@@ -3701,7 +3765,7 @@
             const bPos = bEvents.filter(e => ["specific", "general", "corrective", ...customPraiseIds].includes(e.kind)).length;
             const bNeg = bEvents.filter(e => ["redirect", "genCrit", "indCrit"].includes(e.kind)).length;
             bRatioText = formatPraiseRatio(bPos, bNeg, effectiveDurationMs);
-            const rVal = bNeg === 0 ? bPos : Math.round(bPos / bNeg);
+            const rVal = bNeg === 0 ? bPos : Math.round((bPos / bNeg) * 10) / 10;
             bGoalMet = rVal >= 5;
             bStroke = bGoalMet ? "#16a34a" : "#dc2626";
             bFill = bGoalMet ? "#f0fdf4" : "#fef2f2";
@@ -3740,13 +3804,14 @@
           }, timeLabel));
 
           const formattedRatio = (pillW < 75) ? bRatioText.replace(" / min", "/m") : bRatioText;
-          const ratioLabel = (state.mode === "OTRs" || state.mode === "All") ? formattedRatio : (pillW >= 95 ? `Ratio: ${formattedRatio}` : formattedRatio);
-          const ratioFontSize = pillW >= 95 ? 14 : (pillW >= 60 ? 15 : 13);
-          svg.appendChild(el(svgNS, "text", {
+          const ratioLabel = (state.mode === "OTRs" || state.mode === "All" || formattedRatio.includes("(")) ? formattedRatio : (pillW >= 95 ? `Ratio: ${formattedRatio}` : formattedRatio);
+          const ratioFontSize = formattedRatio.includes("(")
+            ? (pillW >= 105 ? 12 : (pillW >= 78 ? 11 : 9.5))
+            : (pillW >= 95 ? 14 : (pillW >= 60 ? 15 : 13));
+          svg.appendChild(createStyledRatioTextEl(svgNS, {
             x: bCenterX, y: pillY + 35, "text-anchor": "middle",
-            "font-size": ratioFontSize, "font-weight": "800",
-            fill: bText
-          }, ratioLabel));
+            "font-size": ratioFontSize, "font-weight": "800"
+          }, ratioLabel, bText));
         }
 
         function addSeries(series, stroke, strokeWidth, withPoints, dashArray, opacity = "1"){
@@ -3811,21 +3876,21 @@
         const cOtrWgVolunteer = css.getPropertyValue("--otr-wg-volunteer").trim() || "#7544c2";
         const cOtrWgCustom = css.getPropertyValue("--otr-wg-custom").trim() || "#7b47c4";
 
-        // Small Group Colors (Teal/Blue: softer pastel bottom-left -> bold medium top-right)
-        const cOtrSgTps = css.getPropertyValue("--otr-sg-tps").trim() || "#297eb0";
-        const cOtrSgChoral = css.getPropertyValue("--otr-sg-choral").trim() || "#2779b5";
-        const cOtrSgCloze = css.getPropertyValue("--otr-sg-cloze").trim() || "#369496";
-        const cOtrSgWhiteboard = css.getPropertyValue("--otr-sg-whiteboard").trim() || "#2d86a8";
-        const cOtrSgWritten = css.getPropertyValue("--otr-sg-written").trim() || "#2d86a8";
-        const cOtrSgNonverbal = css.getPropertyValue("--otr-sg-nonverbal").trim() || "#328ea0";
-        const cOtrSgGroupdisc = css.getPropertyValue("--otr-sg-groupdisc").trim() || "#246dbf";
-        const cOtrSgTeamshare = css.getPropertyValue("--otr-sg-teamshare").trim() || "#2263c7";
-        const cOtrSgPrecision = css.getPropertyValue("--otr-sg-precision").trim() || "#2263c7";
-        const cOtrSgElbow = css.getPropertyValue("--otr-sg-elbow").trim() || "#246dbf";
-        const cOtrSgWarm = css.getPropertyValue("--otr-sg-warm").trim() || "#1d4ed8";
-        const cOtrSgCold = css.getPropertyValue("--otr-sg-cold").trim() || "#205bc9";
-        const cOtrSgVolunteer = css.getPropertyValue("--otr-sg-volunteer").trim() || "#2570bd";
-        const cOtrSgCustom = css.getPropertyValue("--otr-sg-custom").trim() || "#2779b5";
+        // Small Group Colors (Bright-to-Light Orange: lighter apricot bottom-left -> bold bright orange top-right)
+        const cOtrSgTps = css.getPropertyValue("--otr-sg-tps").trim() || "#ee681b";
+        const cOtrSgChoral = css.getPropertyValue("--otr-sg-choral").trim() || "#ea5d15";
+        const cOtrSgCloze = css.getPropertyValue("--otr-sg-cloze").trim() || "#e88c46";
+        const cOtrSgWhiteboard = css.getPropertyValue("--otr-sg-whiteboard").trim() || "#f07124";
+        const cOtrSgWritten = css.getPropertyValue("--otr-sg-written").trim() || "#f07124";
+        const cOtrSgNonverbal = css.getPropertyValue("--otr-sg-nonverbal").trim() || "#ec7f34";
+        const cOtrSgGroupdisc = css.getPropertyValue("--otr-sg-groupdisc").trim() || "#e55612";
+        const cOtrSgTeamshare = css.getPropertyValue("--otr-sg-teamshare").trim() || "#e0510f";
+        const cOtrSgPrecision = css.getPropertyValue("--otr-sg-precision").trim() || "#e0510f";
+        const cOtrSgElbow = css.getPropertyValue("--otr-sg-elbow").trim() || "#e55612";
+        const cOtrSgWarm = css.getPropertyValue("--otr-sg-warm").trim() || "#d94308";
+        const cOtrSgCold = css.getPropertyValue("--otr-sg-cold").trim() || "#e24f0d";
+        const cOtrSgVolunteer = css.getPropertyValue("--otr-sg-volunteer").trim() || "#eb641a";
+        const cOtrSgCustom = css.getPropertyValue("--otr-sg-custom").trim() || "#ea5d15";
 
         const cSpecific = css.getPropertyValue("--praise-specific").trim() || "#1f9d55";
         const cGeneral = css.getPropertyValue("--praise-general").trim() || "#27ae60";
@@ -3924,7 +3989,7 @@
           const positive = totalSpecific + totalGeneral + totalCorrective + totalCustomP;
           const negative = totalRedirect + totalGenCrit + totalIndCrit;
           const ratioText = formatPraiseRatio(positive, negative, durationMs);
-          const ratioValue = negative === 0 ? positive : Math.round(positive / negative);
+          const ratioValue = negative === 0 ? positive : Math.round((positive / negative) * 10) / 10;
           const isGoalMet = ratioValue >= 5;
 
           renderCircledRatioBadge(
@@ -4089,7 +4154,7 @@
             curY += groupGap;
           }
 
-          // 2. Small Group (shades of teal/blue in 3 columns)
+          // 2. Small Group (bright to light shades of orange in 3 columns)
           if (hasSmallData) {
             renderGroupHeader("Small Group:");
             renderGroupItem(cOtrSgChoral, "Choral Response", null, 3.0);
@@ -4199,9 +4264,12 @@
       }
 
       function formatPraiseRatio(positive, negative, durationMs) {
-        if (negative === 0) return `${positive}:0`;
-        const ratio = Math.round(positive / negative);
-        return `${ratio}:1`;
+        const pos = positive || 0;
+        const neg = negative || 0;
+        if (neg === 0) return `${pos}:0`;
+        const rounded = Math.round((pos / neg) * 10) / 10;
+        const display = (rounded % 1 === 0) ? String(rounded) : rounded.toFixed(1);
+        return `${pos}:${neg} (${display}:1)`;
       }
 
       function addWrappedResultLine(targetLines, text, maxChars = 85) {
@@ -4545,19 +4613,19 @@
         if (kind === "otrWhole_teamShare") return { group: "whole", label: "Team Share", color: "#6f3bbf" };
 
         // Small Group
-        if (kind === "otrSmall_choral") return { group: "small", label: "Choral Response", color: "#2779b5" };
-        if (kind === "otrSmall_written") return { group: "small", label: "Written Responses", color: "#2d86a8" };
-        if (kind === "otrSmall_nonverbal") return { group: "small", label: "Nonverbal Response", color: "#328ea0" };
-        if (kind === "otrSmall_cloze") return { group: "small", label: "Cloze Reading", color: "#369496" };
-        if (kind === "otrSmall_precision") return { group: "small", label: "Precision Partner", color: "#2263c7" };
-        if (kind === "otrSmall_elbow") return { group: "small", label: "Elbow Partner", color: "#246dbf" };
-        if (kind === "otrSmall_tps") return { group: "small", label: "Think, Pair, Share", color: "#297eb0" };
-        if (kind === "otrSmall_warm") return { group: "small", label: "Warm Response", color: "#1d4ed8" };
-        if (kind === "otrSmall_cold") return { group: "small", label: "Cold Response", color: "#205bc9" };
-        if (kind === "otrSmall_volunteer" || kind === "otrVolunteer" || kind === "otrOtherIndividual") return { group: "small", label: "Volunteer", color: "#2570bd" };
-        if (kind === "otrSmall_whiteboard") return { group: "small", label: "White Board Response", color: "#2d86a8" };
-        if (kind === "otrSmall_groupDisc" || kind === "otrGroupDisc") return { group: "small", label: "Group Discussion", color: "#246dbf" };
-        if (kind === "otrSmall_teamShare" || kind === "otrTeamShare") return { group: "small", label: "Team Share", color: "#2263c7" };
+        if (kind === "otrSmall_choral") return { group: "small", label: "Choral Response", color: "#ea5d15" };
+        if (kind === "otrSmall_written") return { group: "small", label: "Written Responses", color: "#f07124" };
+        if (kind === "otrSmall_nonverbal") return { group: "small", label: "Nonverbal Response", color: "#ec7f34" };
+        if (kind === "otrSmall_cloze") return { group: "small", label: "Cloze Reading", color: "#e88c46" };
+        if (kind === "otrSmall_precision") return { group: "small", label: "Precision Partner", color: "#e0510f" };
+        if (kind === "otrSmall_elbow") return { group: "small", label: "Elbow Partner", color: "#e55612" };
+        if (kind === "otrSmall_tps") return { group: "small", label: "Think, Pair, Share", color: "#ee681b" };
+        if (kind === "otrSmall_warm") return { group: "small", label: "Warm Response", color: "#d94308" };
+        if (kind === "otrSmall_cold") return { group: "small", label: "Cold Response", color: "#e24f0d" };
+        if (kind === "otrSmall_volunteer" || kind === "otrVolunteer" || kind === "otrOtherIndividual") return { group: "small", label: "Volunteer", color: "#eb641a" };
+        if (kind === "otrSmall_whiteboard") return { group: "small", label: "White Board Response", color: "#f07124" };
+        if (kind === "otrSmall_groupDisc" || kind === "otrGroupDisc") return { group: "small", label: "Group Discussion", color: "#e55612" };
+        if (kind === "otrSmall_teamShare" || kind === "otrTeamShare") return { group: "small", label: "Team Share", color: "#e0510f" };
 
         // Custom buttons
         if (state.customOtrButtons && state.customOtrButtons.length > 0) {
@@ -4567,7 +4635,7 @@
             return {
               group: isWhole ? "whole" : "small",
               label: customMatch.label || "Custom OTR",
-              color: isWhole ? "#7b47c4" : "#2779b5"
+              color: isWhole ? "#7b47c4" : "#ea5d15"
             };
           }
         }
@@ -4575,7 +4643,7 @@
         if (kind.startsWith("otrWhole") || kind.startsWith("otr_whole")) {
           return { group: "whole", label: "Whole Group OTR", color: "#7b47c4" };
         }
-        return { group: "small", label: "Small Group OTR", color: "#2779b5" };
+        return { group: "small", label: "Small Group OTR", color: "#ea5d15" };
       }
 
       function renderResultsCompositeSVG(blocks){
@@ -4710,25 +4778,55 @@
             }
           }
 
-          // Measure max label width for summary ratios in this block so pills align to the exact same column
-          let maxSummaryLabelW = 320;
+          // Measure max prefix width (label + optional actual counts) for summary ratios and 5-minute increments so pills align cleanly
+          let maxSummaryPrefixW = 280;
+          let maxIncrementPrefixW = 140;
           for (const l of block.lines) {
             const s = typeof l === "string" ? l : (l && l.text ? l.text : "");
             if (s.startsWith("Opportunities to Respond per min") || s.startsWith("Average Positive to Negative ratio:") || s.includes("(ratio):")) {
               const colon = s.indexOf(":");
               const lbl = s.substring(0, colon + 1).trim();
+              const rawVal = s.substring(colon + 1).trim();
+              const cMatch = rawVal.match(/^(\d+:\d+)\s+\(([^)]+)\)$/);
+              const countsStr = cMatch ? cMatch[1] : "";
               let mW = 0;
+              let cCountsW = 0;
               try {
                 if (measureCtx) {
                   measureCtx.font = `bold 14px ${fontSans}`;
                   mW = measureCtx.measureText(lbl).width;
+                  if (countsStr) cCountsW = measureCtx.measureText(countsStr).width;
                 }
               } catch (_) {}
-              const cW = Math.ceil(lbl.length * 9.2);
-              maxSummaryLabelW = Math.max(maxSummaryLabelW, mW, cW);
+              const lblW = Math.max(mW, Math.ceil(lbl.length * 8.4));
+              const countsW = countsStr ? Math.max(cCountsW, Math.ceil(countsStr.length * 8.5)) : 0;
+              const totalPrefixW = lblW + (countsW > 0 ? 12 + countsW : 0);
+              maxSummaryPrefixW = Math.max(maxSummaryPrefixW, totalPrefixW);
+            } else if (s.includes("min ratio:")) {
+              const colon = s.indexOf(":");
+              const lbl = s.substring(0, colon + 1).trim();
+              const rawVal = s.substring(colon + 1).trim();
+              const cMatch = rawVal.match(/^(\d+:\d+)\s+\(([^)]+)\)$/);
+              const countsStr = cMatch ? cMatch[1] : "";
+              let mW = 0;
+              let cCountsW = 0;
+              try {
+                if (measureCtx) {
+                  measureCtx.font = `600 13.5px ${fontSans}`;
+                  mW = measureCtx.measureText(lbl).width;
+                  if (countsStr) {
+                    measureCtx.font = `700 13.5px ${fontSans}`;
+                    cCountsW = measureCtx.measureText(countsStr).width;
+                  }
+                }
+              } catch (_) {}
+              const lblW = Math.max(mW, Math.ceil(lbl.length * 8.2));
+              const countsW = countsStr ? Math.max(cCountsW, Math.ceil(countsStr.length * 8.4)) : 0;
+              const totalIncPrefixW = lblW + (countsW > 0 ? 10 + countsW : 0);
+              maxIncrementPrefixW = Math.max(maxIncrementPrefixW, totalIncPrefixW);
             }
           }
-          const sharedRatioBadgeX = pad + maxSummaryLabelW + 14;
+          const sharedRatioBadgeX = pad + maxSummaryPrefixW + 14;
 
           for (let i = 0; i < block.lines.length; i++){
             const isTitle = i === 0;
@@ -4747,16 +4845,23 @@
             if (isRatioSummaryLine) {
               const colonIdx = lineText.indexOf(":");
               const label = lineText.substring(0, colonIdx + 1).trim();
-              const ratioVal = lineText.substring(colonIdx + 1).trim();
+              const rawVal = lineText.substring(colonIdx + 1).trim();
+              const countsMatch = rawVal.match(/^(\d+:\d+)\s+\(([^)]+)\)$/);
+              const countsText = countsMatch ? countsMatch[1] : "";
+              const ratioVal = countsMatch ? countsMatch[2] : rawVal;
 
+              let measuredLabelW = 0;
               let measuredRatioW = 0;
               try {
                 if (measureCtx) {
+                  measureCtx.font = `bold 14px ${fontSans}`;
+                  measuredLabelW = measureCtx.measureText(label).width;
                   measureCtx.font = `bold 15px ${fontSans}`;
                   measuredRatioW = measureCtx.measureText(ratioVal).width;
                 }
               } catch (_) {}
 
+              const actualLabelW = Math.max(measuredLabelW, Math.ceil(label.length * 8.4));
               const ratioW = Math.max(measuredRatioW, Math.ceil(ratioVal.length * 10), 28);
 
               let isGoalMet = false;
@@ -4804,7 +4909,19 @@
                 fill: "rgba(0,0,0,.90)"
               }, label));
 
-              // Circle/pill border around the actual ratio (shared badgeX and 22px height prevents overlap)
+              // Render actual counts right before the pill (e.g. "11:2")
+              if (countsText) {
+                root.appendChild(createStyledRatioTextEl(svgNS, {
+                  x: pad + actualLabelW + 10,
+                  y: yPos,
+                  "text-anchor": "start",
+                  "font-size": 14,
+                  "font-family": fontSans,
+                  "font-weight": 700
+                }, countsText, "#1e293b"));
+              }
+
+              // Circle/pill border around the rounded ratio (shared badgeX and 22px height prevents overlap)
               const badgeH = 22;
               const badgePadX = 14;
               const badgeW = Math.max(ratioW + (badgePadX * 2), 52);
@@ -4823,16 +4940,15 @@
                 "stroke-width": 2
               }));
 
-              // Text inside the circled ratio
-              root.appendChild(el(svgNS, "text", {
+              // Text inside the circled ratio (lighter decimal, darker ratio colon)
+              root.appendChild(createStyledRatioTextEl(svgNS, {
                 x: badgeX + (badgeW / 2),
                 y: yPos - 1,
                 "text-anchor": "middle",
                 "font-size": 14,
                 "font-family": fontSans,
-                "font-weight": 800,
-                fill: textColor
-              }, ratioVal));
+                "font-weight": 800
+              }, ratioVal, textColor));
 
               // Goal text right after the circled ratio
               let goalText = "";
@@ -4843,33 +4959,32 @@
               }
 
               if (goalText) {
-                root.appendChild(el(svgNS, "text", {
+                root.appendChild(createStyledRatioTextEl(svgNS, {
                   x: badgeX + badgeW + 14,
                   y: yPos,
                   "text-anchor": "start",
                   "font-size": 13,
                   "font-family": fontSans,
-                  "font-weight": 600,
-                  fill: "#64748b"
-                }, goalText));
+                  "font-weight": 600
+                }, goalText, "#64748b"));
               }
 
               continue;
             }
 
-            // 5-minute increment ratio line with lighter pastel pill and subtle row highlight
+            // 5-minute increment ratio line with actual counts before the pill and lighter pastel pill
             if (lineText.includes("min ratio:")) {
               const colonIdx = lineText.indexOf(":");
               const label = lineText.substring(0, colonIdx + 1).trim();
-              const ratioVal = lineText.substring(colonIdx + 1).trim();
+              const rawVal = lineText.substring(colonIdx + 1).trim();
+              const countsMatch = rawVal.match(/^(\d+:\d+)\s+\(([^)]+)\)$/);
+              const countsText = countsMatch ? countsMatch[1] : "";
+              const ratioVal = countsMatch ? countsMatch[2] : rawVal;
 
               let isGoalMet = false;
               if (ratioVal.includes(":")) {
-                const parts = ratioVal.split(":");
-                const pos = parseInt(parts[0], 10) || 0;
-                const neg = parseInt(parts[1], 10) || 0;
-                const rVal = neg === 0 ? pos : Math.round(pos / neg);
-                isGoalMet = rVal >= 5;
+                const rateNum = parseFloat(ratioVal);
+                isGoalMet = !isNaN(rateNum) && rateNum >= 5;
               } else {
                 const rateNum = parseFloat(ratioVal);
                 isGoalMet = !isNaN(rateNum) && rateNum >= 3;
@@ -4912,14 +5027,26 @@
                 }
               } catch (_) {}
 
-              const labelW = Math.max(measuredLabelW, Math.ceil(label.length * 8.5), 140);
+              const actualLabelW = Math.max(measuredLabelW, Math.ceil(label.length * 8.2));
               const ratioW = Math.max(measuredRatioW, Math.ceil(ratioVal.length * 9), 30);
+
+              // Render actual counts right before the pill (e.g. "11:2")
+              if (countsText) {
+                root.appendChild(createStyledRatioTextEl(svgNS, {
+                  x: pad + 8 + actualLabelW + 10,
+                  y: yPos,
+                  "text-anchor": "start",
+                  "font-size": 13.5,
+                  "font-family": fontSans,
+                  "font-weight": 700
+                }, countsText, "#1e293b"));
+              }
 
               // Lighter colored pill badge around the ratio
               const badgeH = 22;
               const badgePadX = 10;
               const badgeW = Math.max(ratioW + (badgePadX * 2), 48);
-              const badgeX = pad + labelW + 18;
+              const badgeX = pad + 8 + maxIncrementPrefixW + 14;
               const badgeY = yPos - 16;
 
               root.appendChild(el(svgNS, "rect", {
@@ -4934,16 +5061,15 @@
                 "stroke-width": 1.5
               }));
 
-              // Text inside the pill badge
-              root.appendChild(el(svgNS, "text", {
+              // Text inside the pill badge (lighter decimal, darker ratio colon)
+              root.appendChild(createStyledRatioTextEl(svgNS, {
                 x: badgeX + (badgeW / 2),
                 y: yPos - 1,
                 "text-anchor": "middle",
                 "font-size": 13,
                 "font-family": fontSans,
-                "font-weight": 700,
-                fill: textColor
-              }, ratioVal));
+                "font-weight": 700
+              }, ratioVal, textColor));
 
               continue;
             }
