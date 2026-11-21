@@ -129,21 +129,11 @@
     .screen-stack.has-single-bottom-dock{
       padding-bottom:106px;
     }
-    .walkthrough-sticky-banner{
-      position:sticky;
-      top:calc(10px + env(safe-area-inset-top));
-      z-index:400;
-      transition:background-color 0.2s ease, box-shadow 0.2s ease;
-      will-change:opacity, transform;
-    }
-    .walkthrough-sticky-banner.is-scrolled-sticky{
-      background:rgba(255,255,255,0.88);
-      backdrop-filter:blur(16px) saturate(160%);
-      -webkit-backdrop-filter:blur(16px) saturate(160%);
-      box-shadow:0 8px 24px rgba(15,23,42,0.10), 0 2px 6px rgba(15,23,42,0.05);
-    }
+    .walkthrough-sticky-banner,
     .details-fade-banner{
-      will-change:opacity;
+      position:static;
+      opacity:1;
+      transform:none;
     }
     .section-card{
       width:100%;
@@ -416,6 +406,42 @@
       gap: 16px;
       padding: 12px 0;
       border-bottom: 1px solid var(--hairline);
+    }
+    .question-group.question-group-stack {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    .question-group-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+    .skipped-items-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+    }
+    .skipped-items-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .skipped-items-input {
+      font-family: inherit;
+      line-height: 1.4;
+      min-height: 68px;
+      resize: vertical;
+      background: #f8fafc;
+    }
+    .skipped-items-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
     }
     .question-group:last-of-type {
       border-bottom: none;
@@ -865,33 +891,59 @@
       margin-top:0;
       display:flex;
       flex-direction:column;
-      gap:12px;
+      gap:8px;
+    }
+    .runControls .section-card{
+      padding:10px 12px;
+    }
+    .runControls .btn.otr .btn-badge{
+      top:2px;
+      right:3px;
+      min-width:15px;
+      height:15px;
+      font-size:9.5px;
+      line-height:15px;
+      padding:0 3px;
     }
     .otrRow{
       display:grid;
       grid-template-columns:1fr 1fr 1fr;
-      gap:12px;
+      gap:8px;
       align-items:stretch;
     }
+    #praiseButtons{
+      gap:6px !important;
+    }
+    #praiseButtons .btn.otr{
+      min-height:40px;
+      padding:6px 6px;
+      font-size:12.5px;
+      line-height:1.15;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
 
-    /* Apple-style Segmented Control (Simple, grayscale, short) */
+    /* Apple-style Segmented Control (Simple, grayscale, compact) */
     .otr-group-toggle-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
+      margin-bottom: 7px;
     }
     .apple-segmented-control {
       display: inline-flex;
       align-items: center;
       background: #e2e8f0;
-      height: 52px;
-      padding: 4px;
-      border-radius: 14px;
-      gap: 4px;
+      height: 36px;
+      padding: 3px;
+      border-radius: 10px;
+      gap: 3px;
       box-sizing: border-box;
       width: 100%;
-      max-width: 320px;
+      max-width: 300px;
       user-select: none;
     }
     .apple-segment {
@@ -899,14 +951,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 6px 12px;
-      height: 44px;
-      font-size: 14px;
+      padding: 4px 10px;
+      height: 30px;
+      font-size: 13px;
       font-weight: 500;
       color: #64748b;
       background: transparent;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.16s ease;
       font-family: inherit;
@@ -931,27 +983,27 @@
     .otr-columns-3-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 6px;
       align-items: start;
       width: 100%;
     }
     .otr-col {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
       min-width: 0;
     }
     .otr-col .btn.otr {
       width: 100%;
-      min-height: 56px;
-      padding: 10px 6px;
-      font-size: 13px;
-      line-height: 1.25;
+      min-height: 40px;
+      padding: 6px 5px;
+      font-size: 12.5px;
+      line-height: 1.15;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      border-radius: 12px;
+      border-radius: 10px;
     }
     .otr-columns-3-container .otr-add-container {
       grid-column: 1 / -1;
@@ -959,7 +1011,7 @@
     }
     .otr-columns-3-container .btn.otr.otr-custom-btn {
       grid-column: 1 / -1;
-      min-height: 48px;
+      min-height: 40px;
     }
 
     /* OTR Button Grids fallback */
@@ -1400,6 +1452,7 @@
       .screen-stack.has-bottom-dock{padding-bottom:176px;}
       .screen-stack.has-single-bottom-dock{padding-bottom:112px;}
       .section-card{padding:18px 20px;border-radius:var(--radius);}
+      .runControls .section-card{padding:10px 14px;}
       .run-bottom-dock{padding:10px 20px calc(14px + env(safe-area-inset-bottom));}
       .run-bottom-dock-inner{max-width:920px;}
       .header h1{font-size:28px;}
@@ -1408,8 +1461,9 @@
       .control{font-size:14px;}
       .stats{grid-template-columns:1fr 1fr;}
 
-      .runControls .btn{width:100%; border-radius:12px;}
-      .otrRow{gap:14px;}
+      .runControls .btn{width:100%; border-radius:10px;}
+      .runControls .btn.otr{min-height:40px; padding:6px 8px; font-size:12.5px;}
+      .otrRow{gap:10px;}
       .otr-columns{gap:16px;}
       .otr-col-buttons{gap:12px;}
       .otr-col-title{font-size:14px; margin-bottom:12px;}
@@ -1468,15 +1522,16 @@
         max-width: 100%;
       }
       .otr-columns-3-container {
-        gap: 8px;
+        gap: 6px;
       }
       .otr-col {
-        gap: 8px;
+        gap: 6px;
       }
-      .otr-col .btn.otr {
-        min-height: 52px;
-        padding: 8px 4px;
-        font-size: 12px;
+      .otr-col .btn.otr,
+      #praiseButtons .btn.otr {
+        min-height: 38px;
+        padding: 5px 4px;
+        font-size: 11.5px;
       }
       .otr-button-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1485,23 +1540,25 @@
     }
     @media (max-width: 480px) {
       .otr-columns-3-container {
-        gap: 6px;
+        gap: 5px;
       }
       .otr-col {
-        gap: 6px;
+        gap: 5px;
       }
-      .otr-col .btn.otr {
-        min-height: 50px;
-        padding: 6px 4px;
+      .otr-col .btn.otr,
+      #praiseButtons .btn.otr {
+        min-height: 36px;
+        padding: 4px 3px;
         font-size: 11px;
       }
-      .otr-col .btn.otr .btn-badge {
+      .otr-col .btn.otr .btn-badge,
+      #praiseButtons .btn.otr .btn-badge {
         top: 2px;
         right: 3px;
-        min-width: 16px;
-        height: 16px;
-        font-size: 10px;
-        line-height: 16px;
+        min-width: 15px;
+        height: 15px;
+        font-size: 9.5px;
+        line-height: 15px;
         padding: 0 3px;
       }
       .otr-button-grid {
@@ -1693,6 +1750,36 @@
             </div>
           </div>
 
+          <div class="question-group">
+            <div class="label">Had the lesson been sufficiently read before it was taught?</div>
+            <div class="yn-group">
+              <button id="qReadBeforeYesBtn" class="btn yn yes" type="button">Yes</button>
+              <button id="qReadBeforeNoBtn" class="btn yn no" type="button">No</button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <div class="label">Are groups and partnerships clearly structured?</div>
+            <div class="yn-group">
+              <button id="qGroupsStructuredYesBtn" class="btn yn yes" type="button">Yes</button>
+              <button id="qGroupsStructuredNoBtn" class="btn yn no" type="button">No</button>
+            </div>
+          </div>
+
+          <div class="question-group question-group-stack">
+            <div class="question-group-row">
+              <div class="label">Were all elements of the lesson taught?</div>
+              <div class="yn-group">
+                <button id="qAllElementsYesBtn" class="btn yn yes" type="button">Yes</button>
+                <button id="qAllElementsNoBtn" class="btn yn no" type="button">No</button>
+              </div>
+            </div>
+            <div id="qSkippedItemsGroup" class="skipped-items-wrap" style="display: none;">
+              <label for="qSkippedItemsInput" class="skipped-items-label">If no, skipped items:</label>
+              <textarea id="qSkippedItemsInput" class="control skipped-items-input" rows="2" placeholder="Enter skipped lesson items…"></textarea>
+            </div>
+          </div>
+
           <div class="question-group" id="qRegulationSpaceGroup" style="display: none;">
             <div class="label">Is there a regulation space in the classroom?</div>
             <div class="yn-group">
@@ -1845,7 +1932,7 @@
 
         <!-- 3. Opportunity to Respond Floating Card -->
         <div id="otrContainer" class="section-card" style="display:none;">
-          <div id="otrHeaderRow" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;">
+          <div id="otrHeaderRow" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;">
             <span id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Opportunity to Respond</span>
             <button id="toggleAllOtrBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Opportunity to Respond timer" title="Opportunity to Respond" style="display: none;">
               <span class="apple-switch-track">
@@ -1915,7 +2002,7 @@
 
         <!-- 4. Instructional Feedback (Praise) Floating Card -->
         <div id="praiseContainer" class="section-card" style="display:none;">
-          <div id="praiseHeaderRow" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; margin-top: 0;">
+          <div id="praiseHeaderRow" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; margin-top: 0;">
             <span id="praiseSubLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Instructional Feedback</span>
             <button id="toggleAllSelBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Instructional Feedback timer" title="Instructional Feedback" style="display: none;">
               <span class="apple-switch-track">
@@ -1923,7 +2010,7 @@
               </span>
             </button>
           </div>
-          <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Instructional Feedback buttons">
+          <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 6px;" aria-label="Instructional Feedback buttons">
             <!-- Row 1: Corrective Feedback (Left) | Redirective Statements (Right) -->
             <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
             <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements<span class="btn-badge" id="badge-praiseRedirect" aria-hidden="true">0</span></button>
@@ -2076,6 +2163,10 @@
         educatorName: "",
         lessonTargetPosted: null,
         curriculaMaterialsUsed: null,
+        lessonReadBefore: null,
+        groupsStructured: null,
+        allLessonElementsTaught: null,
+        skippedLessonItems: "",
         regulationSpace: null,
         characterTraitGraphic: null,
         skipSELObservations: true,
@@ -2132,6 +2223,10 @@
         state.notes = "";
         state.lessonTargetPosted = null;
         state.curriculaMaterialsUsed = null;
+        state.lessonReadBefore = null;
+        state.groupsStructured = null;
+        state.allLessonElementsTaught = null;
+        state.skippedLessonItems = "";
         state.regulationSpace = null;
         state.characterTraitGraphic = null;
         state.skipSELObservations = true;
@@ -2163,69 +2258,16 @@
         }
         const banner = document.querySelector(selector);
         const secondaryBanner = secondarySelector ? document.querySelector(secondarySelector) : null;
-        if (!banner && !secondaryBanner) return;
-
-        let lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
-        let revealProgress = 1;
-        let rafId = null;
-
-        const applyVisuals = (currentY) => {
-          if (banner) {
-            const clamped = Math.min(1, Math.max(0, revealProgress));
-            const yShift = (1 - clamped) * -8;
-            banner.style.opacity = clamped.toFixed(3);
-            banner.style.transform = `translate3d(0, ${yShift.toFixed(2)}px, 0)`;
-            banner.style.pointerEvents = clamped <= 0.05 ? "none" : "";
-            banner.classList.toggle("is-scrolled-sticky", currentY > 8 && clamped > 0.05);
-          }
-          if (secondaryBanner) {
-            const fadeSpan = Math.max(68, Math.round((secondaryBanner.offsetHeight || 72) * 0.95));
-            const inPlaceProgress = Math.max(0, Math.min(1, 1 - currentY / fadeSpan));
-            secondaryBanner.style.opacity = inPlaceProgress.toFixed(3);
-            secondaryBanner.style.pointerEvents = inPlaceProgress <= 0.05 ? "none" : "";
-          }
-        };
-
-        const update = () => {
-          rafId = null;
-          if ((banner && !banner.isConnected) || (secondaryBanner && !secondaryBanner.isConnected)) return;
-          const currentY = Math.max(0, window.scrollY || window.pageYOffset || 0);
-          const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-          const fadeDistance = Math.max(72, Math.round(((banner && banner.offsetHeight) || 72) * 1.1));
-          const delta = currentY - lastScrollY;
-          lastScrollY = currentY;
-
-          if (currentY <= 2) {
-            revealProgress = 1;
-          } else if (delta > 0) {
-            revealProgress = Math.max(0, revealProgress - delta / fadeDistance);
-          } else if (delta < 0 && currentY < maxScroll - 2) {
-            revealProgress = Math.min(1, revealProgress - delta / fadeDistance);
-          }
-
-          if (currentY > 0 && currentY < fadeDistance) {
-            revealProgress = Math.max(revealProgress, 1 - currentY / fadeDistance);
-          }
-
-          applyVisuals(currentY);
-        };
-
-        const onScroll = () => {
-          if (banner && !banner.isConnected) {
-            window.removeEventListener("scroll", onScroll);
-            return;
-          }
-          if (rafId === null) {
-            rafId = requestAnimationFrame(update);
-          }
-        };
-
-        window.addEventListener("scroll", onScroll, { passive: true });
-        applyVisuals(lastScrollY);
-        window.__wtBannerScrollCleanup = () => {
-          window.removeEventListener("scroll", onScroll);
-          if (rafId !== null) cancelAnimationFrame(rafId);
-        };
+        if (banner) {
+          banner.style.opacity = "";
+          banner.style.transform = "";
+          banner.style.pointerEvents = "";
+          banner.classList.remove("is-scrolled-sticky");
+        }
+        if (secondaryBanner) {
+          secondaryBanner.style.opacity = "";
+          secondaryBanner.style.pointerEvents = "";
+        }
       }
 
       function setupNotesPopupDock({ popupId, inputId, toggleBtnId, onLayoutChange }) {
@@ -2388,6 +2430,10 @@
         state.mode = "All";
         state.lessonTargetPosted = null;
         state.curriculaMaterialsUsed = null;
+        state.lessonReadBefore = null;
+        state.groupsStructured = null;
+        state.allLessonElementsTaught = null;
+        state.skippedLessonItems = "";
         state.regulationSpace = null;
         state.characterTraitGraphic = null;
         state.skipQuestions = true;
@@ -2415,6 +2461,15 @@
         const q1NoBtn = document.getElementById("q1NoBtn");
         const q2YesBtn = document.getElementById("q2YesBtn");
         const q2NoBtn = document.getElementById("q2NoBtn");
+
+        const qReadBeforeYesBtn = document.getElementById("qReadBeforeYesBtn");
+        const qReadBeforeNoBtn = document.getElementById("qReadBeforeNoBtn");
+        const qGroupsStructuredYesBtn = document.getElementById("qGroupsStructuredYesBtn");
+        const qGroupsStructuredNoBtn = document.getElementById("qGroupsStructuredNoBtn");
+        const qAllElementsYesBtn = document.getElementById("qAllElementsYesBtn");
+        const qAllElementsNoBtn = document.getElementById("qAllElementsNoBtn");
+        const qSkippedItemsGroup = document.getElementById("qSkippedItemsGroup");
+        const qSkippedItemsInput = document.getElementById("qSkippedItemsInput");
         
         const qRegulationSpaceGroup = document.getElementById("qRegulationSpaceGroup");
         const q3YesBtn = document.getElementById("q3YesBtn");
@@ -2474,6 +2529,25 @@
           
           q2YesBtn.classList.toggle("selected", state.curriculaMaterialsUsed === "Yes");
           q2NoBtn.classList.toggle("selected", state.curriculaMaterialsUsed === "No");
+
+          if (qReadBeforeYesBtn && qReadBeforeNoBtn) {
+            qReadBeforeYesBtn.classList.toggle("selected", state.lessonReadBefore === "Yes");
+            qReadBeforeNoBtn.classList.toggle("selected", state.lessonReadBefore === "No");
+          }
+          if (qGroupsStructuredYesBtn && qGroupsStructuredNoBtn) {
+            qGroupsStructuredYesBtn.classList.toggle("selected", state.groupsStructured === "Yes");
+            qGroupsStructuredNoBtn.classList.toggle("selected", state.groupsStructured === "No");
+          }
+          if (qAllElementsYesBtn && qAllElementsNoBtn) {
+            qAllElementsYesBtn.classList.toggle("selected", state.allLessonElementsTaught === "Yes");
+            qAllElementsNoBtn.classList.toggle("selected", state.allLessonElementsTaught === "No");
+          }
+          if (qSkippedItemsGroup) {
+            qSkippedItemsGroup.style.display = state.allLessonElementsTaught === "No" ? "flex" : "none";
+          }
+          if (qSkippedItemsInput && qSkippedItemsInput.value !== (state.skippedLessonItems || "")) {
+            qSkippedItemsInput.value = state.skippedLessonItems || "";
+          }
           
           if (isPraiseOrAll) {
             q3YesBtn.classList.toggle("selected", state.regulationSpace === "Yes");
@@ -2508,6 +2582,56 @@
           state.questionsButtonsClicked = true;
           updateUI();
         });
+
+        if (qReadBeforeYesBtn && qReadBeforeNoBtn) {
+          qReadBeforeYesBtn.addEventListener("click", () => {
+            state.lessonReadBefore = state.lessonReadBefore === "Yes" ? null : "Yes";
+            state.questionsButtonsClicked = true;
+            updateUI();
+          });
+          qReadBeforeNoBtn.addEventListener("click", () => {
+            state.lessonReadBefore = state.lessonReadBefore === "No" ? null : "No";
+            state.questionsButtonsClicked = true;
+            updateUI();
+          });
+        }
+
+        if (qGroupsStructuredYesBtn && qGroupsStructuredNoBtn) {
+          qGroupsStructuredYesBtn.addEventListener("click", () => {
+            state.groupsStructured = state.groupsStructured === "Yes" ? null : "Yes";
+            state.questionsButtonsClicked = true;
+            updateUI();
+          });
+          qGroupsStructuredNoBtn.addEventListener("click", () => {
+            state.groupsStructured = state.groupsStructured === "No" ? null : "No";
+            state.questionsButtonsClicked = true;
+            updateUI();
+          });
+        }
+
+        if (qAllElementsYesBtn && qAllElementsNoBtn) {
+          qAllElementsYesBtn.addEventListener("click", () => {
+            state.allLessonElementsTaught = state.allLessonElementsTaught === "Yes" ? null : "Yes";
+            state.questionsButtonsClicked = true;
+            updateUI();
+          });
+          qAllElementsNoBtn.addEventListener("click", () => {
+            const nextVal = state.allLessonElementsTaught === "No" ? null : "No";
+            state.allLessonElementsTaught = nextVal;
+            state.questionsButtonsClicked = true;
+            updateUI();
+            if (nextVal === "No" && qSkippedItemsInput) {
+              requestAnimationFrame(() => qSkippedItemsInput.focus());
+            }
+          });
+        }
+
+        if (qSkippedItemsInput) {
+          qSkippedItemsInput.value = state.skippedLessonItems || "";
+          qSkippedItemsInput.addEventListener("input", (e) => {
+            state.skippedLessonItems = e.target.value;
+          });
+        }
         
         q3YesBtn.addEventListener("click", () => {
           state.regulationSpace = state.regulationSpace === "Yes" ? null : "Yes";
@@ -2535,6 +2659,9 @@
           const hasAnyQuestionAnswer = !!(
             state.curriculaMaterialsUsed ||
             state.lessonTargetPosted ||
+            state.lessonReadBefore ||
+            state.groupsStructured ||
+            state.allLessonElementsTaught ||
             (isPraiseOrAll && (state.regulationSpace || state.characterTraitGraphic))
           );
           const hasAnyCsRating = isPraiseOrAll && !!(
@@ -2545,6 +2672,10 @@
             state.skipQuestions = true;
             state.curriculaMaterialsUsed = null;
             state.lessonTargetPosted = null;
+            state.lessonReadBefore = null;
+            state.groupsStructured = null;
+            state.allLessonElementsTaught = null;
+            state.skippedLessonItems = "";
             state.regulationSpace = null;
             state.characterTraitGraphic = null;
             state.questionsButtonsClicked = false;
@@ -3004,8 +3135,8 @@
             if (toggleAllSelBtn) toggleAllSelBtn.style.setProperty("display", "none", "important");
             if (otrContainer) otrContainer.classList.remove("is-toggle-off");
             if (praiseContainer) praiseContainer.classList.remove("is-toggle-off");
-            if (otrHeaderRow) otrHeaderRow.style.marginBottom = "10px";
-            if (praiseHeaderRow) praiseHeaderRow.style.marginBottom = "12px";
+            if (otrHeaderRow) otrHeaderRow.style.marginBottom = "6px";
+            if (praiseHeaderRow) praiseHeaderRow.style.marginBottom = "6px";
             return;
           }
 
@@ -3036,7 +3167,7 @@
               toggleAllOtrBtn.classList.add("is-on");
               toggleAllOtrBtn.setAttribute("aria-checked", "true");
               toggleAllOtrBtn.setAttribute("title", "Opportunity to Respond");
-              if (otrHeaderRow) otrHeaderRow.style.marginBottom = "10px";
+              if (otrHeaderRow) otrHeaderRow.style.marginBottom = "6px";
               if (otrGroupToggleContainer) otrGroupToggleContainer.style.display = "flex";
               if (otrButtonsWrapper) otrButtonsWrapper.style.display = "block";
               setOtrGroupView(state.activeOtrGroup || "whole", false);
@@ -3058,7 +3189,7 @@
               toggleAllSelBtn.classList.add("is-on");
               toggleAllSelBtn.setAttribute("aria-checked", "true");
               toggleAllSelBtn.setAttribute("title", "Instructional Feedback");
-              if (praiseHeaderRow) praiseHeaderRow.style.marginBottom = "12px";
+              if (praiseHeaderRow) praiseHeaderRow.style.marginBottom = "6px";
               if (praiseButtons) praiseButtons.style.display = "grid";
             } else {
               toggleAllSelBtn.classList.remove("is-on");
@@ -5140,7 +5271,7 @@
         if (cur) targetLines.push(cur);
       }
 
-      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, wholeOtr, smallOtr, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, otrRatioText, praiseRatioText, lessonTargetPosted, curriculaMaterialsUsed, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock, bins, events = [], includeOtr = true, includePraise = true }){
+      function buildResultsLines({ educator, recordedOn, recordedFrom, durationMs, structWhole, structSmall, structPartners, structIndividual, wholeOtr, smallOtr, customOtrTotals, customPraiseTotals, specific, general, corrective, redirect, genCrit, indCrit, otrTotal, ratioText, otrRatioText, praiseRatioText, lessonTargetPosted, curriculaMaterialsUsed, lessonReadBefore, groupsStructured, allLessonElementsTaught, skippedLessonItems, regulationSpace, characterTraitGraphic, notes, engagementChecks, praiseRatings, skipSELObservations, skipQuestions, isSubsequentBlock, bins, events = [], includeOtr = true, includePraise = true }){
         const titlePrefix = state.mode === 'Praise' ? 'Instructional Feedback' : state.mode === 'Lesson Structure' ? 'Lesson Structure' : state.mode === 'NotesOnly' ? 'Observation' : 'Opportunities to Respond';
         const lines = [
           `${titlePrefix} Timer Results`
@@ -5159,6 +5290,21 @@
           if (!skipQuestions) {
             if (curriculaMaterialsUsed) addWrappedResultLine(lines, `Agreed upon teaching materials used: ${curriculaMaterialsUsed}`, 85);
             if (lessonTargetPosted) addWrappedResultLine(lines, `Lesson target referenced: ${lessonTargetPosted}`, 85);
+            if (lessonReadBefore) addWrappedResultLine(lines, `Lesson sufficiently read before taught: ${lessonReadBefore}`, 85);
+            if (groupsStructured) addWrappedResultLine(lines, `Groups and partnerships clearly structured: ${groupsStructured}`, 85);
+            if (allLessonElementsTaught) addWrappedResultLine(lines, `All elements of the lesson taught: ${allLessonElementsTaught}`, 85);
+            if (allLessonElementsTaught === "No" && skippedLessonItems && skippedLessonItems.trim()) {
+              const skippedParts = skippedLessonItems.trim().split(/\r?\n+/);
+              skippedParts.forEach((part, idx) => {
+                const cleaned = part.trim();
+                if (!cleaned) return;
+                if (idx === 0) {
+                  addWrappedResultLine(lines, `Skipped items: ${cleaned}`, 85);
+                } else {
+                  addWrappedResultLine(lines, `  ${cleaned}`, 85);
+                }
+              });
+            }
           }
 
           // Opportunities to Respond ratio and Instructional Feedback ratio below recorded info (omitted if toggled off)
@@ -6233,6 +6379,10 @@
               durationMs,
               lessonTargetPosted: state.lessonTargetPosted,
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
+              lessonReadBefore: state.lessonReadBefore,
+              groupsStructured: state.groupsStructured,
+              allLessonElementsTaught: state.allLessonElementsTaught,
+              skippedLessonItems: state.skippedLessonItems,
               regulationSpace: state.regulationSpace,
               characterTraitGraphic: state.characterTraitGraphic,
               
@@ -6322,6 +6472,10 @@
               durationMs,
               lessonTargetPosted: state.lessonTargetPosted,
               curriculaMaterialsUsed: state.curriculaMaterialsUsed,
+              lessonReadBefore: state.lessonReadBefore,
+              groupsStructured: state.groupsStructured,
+              allLessonElementsTaught: state.allLessonElementsTaught,
+              skippedLessonItems: state.skippedLessonItems,
               regulationSpace: state.regulationSpace,
               characterTraitGraphic: state.characterTraitGraphic,
               structWhole: totalStructWhole,
@@ -6575,6 +6729,12 @@
 
           lines.push(row(["Observation Details", "Agreed upon teaching materials used", (!state.skipQuestions && state.curriculaMaterialsUsed) ? state.curriculaMaterialsUsed : "Skipped / Not Answered"]));
           lines.push(row(["Observation Details", "Lesson target referenced", (!state.skipQuestions && state.lessonTargetPosted) ? state.lessonTargetPosted : "Skipped / Not Answered"]));
+          lines.push(row(["Observation Details", "Had the lesson been sufficiently read before it was taught?", (!state.skipQuestions && state.lessonReadBefore) ? state.lessonReadBefore : "Skipped / Not Answered"]));
+          lines.push(row(["Observation Details", "Are groups and partnerships clearly structured?", (!state.skipQuestions && state.groupsStructured) ? state.groupsStructured : "Skipped / Not Answered"]));
+          lines.push(row(["Observation Details", "Were all elements of the lesson taught?", (!state.skipQuestions && state.allLessonElementsTaught) ? state.allLessonElementsTaught : "Skipped / Not Answered"]));
+          if (!state.skipQuestions && state.allLessonElementsTaught === "No") {
+            lines.push(row(["Observation Details", "If no, skipped items", (state.skippedLessonItems && state.skippedLessonItems.trim()) ? state.skippedLessonItems.trim() : "(None entered)"]));
+          }
           lines.push(row(["Observation Details", "Is there a regulation space in the classroom?", (!state.skipQuestions && state.regulationSpace) ? state.regulationSpace : "Skipped / Not Answered"]));
           lines.push(row(["Observation Details", "Is there a graphic depicting the character trait of the month?", (!state.skipQuestions && state.characterTraitGraphic) ? state.characterTraitGraphic : "Skipped / Not Answered"]));
 
