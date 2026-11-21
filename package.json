@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "start": "vite preview",
     "clean": "rm -rf dist",
     "lint": "echo 'No syntax errors'"
   },

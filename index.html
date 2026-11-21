@@ -110,10 +110,57 @@
       width:100%;
       max-width:520px;
       background:var(--card);
-      border:1px solid var(--hairline);
-      border-radius:14px;
-      box-shadow:var(--shadow);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:16px;
+      box-shadow:0 4px 16px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.04);
       padding:16px;
+    }
+    .screen-stack{
+      margin:0 auto;
+      width:100%;
+      max-width:520px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .screen-stack.has-bottom-dock{
+      padding-bottom:168px;
+    }
+    .screen-stack.has-single-bottom-dock{
+      padding-bottom:106px;
+    }
+    .walkthrough-sticky-banner{
+      position:sticky;
+      top:calc(10px + env(safe-area-inset-top));
+      z-index:400;
+      transition:background-color 0.2s ease, box-shadow 0.2s ease;
+      will-change:opacity, transform;
+    }
+    .walkthrough-sticky-banner.is-scrolled-sticky{
+      background:rgba(255,255,255,0.88);
+      backdrop-filter:blur(16px) saturate(160%);
+      -webkit-backdrop-filter:blur(16px) saturate(160%);
+      box-shadow:0 8px 24px rgba(15,23,42,0.10), 0 2px 6px rgba(15,23,42,0.05);
+    }
+    .details-fade-banner{
+      will-change:opacity;
+    }
+    .section-card{
+      width:100%;
+      background:var(--card);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:16px;
+      box-shadow:0 4px 16px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.04);
+      padding:14px 16px;
+      transition:background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .section-card.is-toggle-off{
+      background:#e5e7eb;
+      border-color:rgba(15,23,42,.10);
+      box-shadow:none;
+    }
+    .section-card.is-toggle-off .label{
+      color:#6b7280 !important;
     }
 
     .header h1{
@@ -123,6 +170,11 @@
       letter-spacing:.2px;
     }
     .subhead{margin:0;color:var(--muted);font-size:14px;line-height:1.3;}
+    .tile-header-divider{
+      padding-bottom:14px;
+      margin-bottom:14px;
+      border-bottom:1px solid var(--hairline);
+    }
 
     .form{
       margin-top:16px;
@@ -147,7 +199,7 @@
 
     .btn{
       width:100%;
-      border-radius:14px;
+      border-radius:12px;
       border:1px solid var(--hairline);
       background:#fff;
       color:var(--ink);
@@ -186,8 +238,8 @@
       color:#fff;
       border-color:rgba(0,0,0,.20);
       min-height:56px;
-      border-radius:14px;
-      padding:14px 10px;
+      border-radius:12px;
+      padding:12px 10px;
       font-size:14px;
       font-weight:600;
       text-shadow:0 1px 2px rgba(0,0,0,.40);
@@ -389,25 +441,26 @@
       padding: 8px 16px;
       font-size: 15px;
       font-weight: 600;
-      border-radius: 999px;
+      border-radius: 12px;
       border-width: 2px;
+      border-color: #cbd5e1;
       background: #fff;
+      color: #334155;
       flex: 0 0 auto;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
-    .btn.yn.yes {
-      border-color: #1f9d55;
-      color: #1f9d55;
+    .btn.yn:hover {
+      border-color: #94a3b8;
+      background: #f8fafc;
     }
     .btn.yn.yes.selected {
       background: #1f9d55;
+      border-color: #1f9d55;
       color: #fff;
-    }
-    .btn.yn.no {
-      border-color: var(--stop);
-      color: var(--stop);
     }
     .btn.yn.no.selected {
       background: var(--stop);
+      border-color: var(--stop);
       color: #fff;
     }
 
@@ -420,100 +473,368 @@
     .timer-top-bar{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-top:16px;
+      justify-content:space-evenly;
+      gap:0;
+      margin-top:0;
+      padding:7px 0;
+    }
+    .timer-right-group{
+      margin-left:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      flex:0 0 auto;
+      min-width:0;
     }
     .timer-top-bar .btn{
-      flex:1;
-      min-height:52px;
+      flex:0 0 auto;
+      width:auto;
+      min-height:46px;
+      height:46px;
       font-weight:700;
-      font-size:16px;
+      font-size:14px;
       border-radius:12px;
+      padding:0 6px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+      box-shadow:0 2px 8px rgba(0,0,0,0.12);
+    }
+    .timer-top-bar #transitionBtn,
+    .timer-top-bar .transition-dock-btn{
+      flex:0 0 148px;
+      width:148px;
+      min-width:0;
+      height:46px;
+      min-height:46px;
+      padding:4px 12px;
+      font-size:11.5px;
+      font-weight:700 !important;
+      border-radius:12px !important;
+      background:rgba(255,255,255,0.45) !important;
+      color:#0f172a !important;
+      border:1px solid rgba(15,23,42,0.14) !important;
+      box-shadow:0 1px 4px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.72) !important;
+      display:inline-flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:2px;
+      line-height:1.05;
+      cursor:pointer;
+      transition:background-color 0.2s, border-color 0.2s, opacity 0.2s, transform 0.1s;
+    }
+    .timer-top-bar .transition-dock-btn svg{
+      display:block;
+      flex-shrink:0;
+    }
+    .timer-top-bar .transition-dock-btn:hover:not(:disabled){
+      background:rgba(255,255,255,0.68) !important;
+      border-color:rgba(15,23,42,0.20) !important;
+    }
+    .timer-top-bar .transition-dock-btn:active:not(:disabled){
+      transform:scale(0.96);
+      background:rgba(255,255,255,0.86) !important;
+    }
+    .timer-top-bar .transition-dock-btn:disabled{
+      background:rgba(255,255,255,0.22) !important;
+      color:rgba(15,23,42,0.35) !important;
+      border-color:rgba(15,23,42,0.08) !important;
+      opacity:1 !important;
+      cursor:not-allowed;
+      box-shadow:none !important;
     }
     .timer-top-bar .stat{
-      flex:1.4;
+      flex:0 0 auto;
+      min-width:104px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
       text-align:center;
-      padding:10px 14px;
+      min-height:46px;
+      height:46px;
+      padding:4px 12px;
       margin:0;
+      border-radius:12px;
+      background:#000000;
+      border:1px solid rgba(255,255,255,0.22);
+      box-shadow:0 2px 10px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.14);
+    }
+    .timer-top-bar .kicker{
+      font-size:10.5px;
+      font-weight:600;
+      letter-spacing:0.3px;
+      line-height:1.1;
+      margin-bottom:2px;
+      color:#e4e4e7;
+    }
+    .timer-top-bar .value{
+      font-size:19px;
+      font-weight:700;
+      line-height:1.1;
+      color:#ffffff;
+    }
+
+    /* Bottom-pinned floating dock on timer screen (Light Frosted Liquid Glass) */
+    .run-bottom-dock{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:500;
+      padding:8px 12px calc(10px + env(safe-area-inset-bottom));
+      pointer-events:none;
+    }
+    .run-bottom-dock-inner{
+      margin:0 auto;
+      width:100%;
+      max-width:520px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      pointer-events:auto;
+    }
+    .run-dock-card{
+      background:linear-gradient(135deg, rgba(255,255,255,0.52) 0%, rgba(255,255,255,0.34) 100%);
+      backdrop-filter:blur(22px) saturate(185%);
+      -webkit-backdrop-filter:blur(22px) saturate(185%);
+      border:1px solid rgba(255,255,255,0.78);
+      border-radius:16px;
+      box-shadow:
+        0 10px 30px rgba(15,23,42,0.14),
+        0 2px 8px rgba(15,23,42,0.06),
+        inset 0 1.5px 1px rgba(255,255,255,0.92),
+        inset 0 -1px 1.5px rgba(255,255,255,0.32);
+      padding:8px 10px;
+    }
+    .run-dock-nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      padding:7px 9px;
+    }
+    .run-dock-nav .btn-dock-sm{
+      flex:0 0 auto;
+      width:auto;
+      min-width:70px;
+      min-height:38px;
+      height:38px;
+      padding:0 14px;
+      font-size:13px;
+      font-weight:700;
+      border-radius:12px;
+      border:1px solid rgba(15,23,42,0.14);
+      background:rgba(255,255,255,0.45);
+      color:#0f172a;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:background-color 0.15s, border-color 0.15s, opacity 0.15s, transform 0.1s;
+    }
+    .run-dock-nav #runBackBtn,
+    .run-dock-nav #questionsBackBtn,
+    .run-dock-nav #csBackBtn,
+    .run-dock-nav #resultsBackBtn{
+      background:rgba(255,255,255,0.45) !important;
+      color:#0f172a !important;
+      border:1px solid rgba(15,23,42,0.14) !important;
+      box-shadow:0 1px 4px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.72) !important;
+    }
+    .run-dock-nav #runBackBtn:hover,
+    .run-dock-nav #questionsBackBtn:hover,
+    .run-dock-nav #csBackBtn:hover,
+    .run-dock-nav #resultsBackBtn:hover{
+      background:rgba(255,255,255,0.68) !important;
+      border-color:rgba(15,23,42,0.20) !important;
     }
     #undoBtnContainer{
       display:flex;
       justify-content:center;
       align-items:center;
-      width:100%;
-      margin:16px 0 12px 0;
+      flex:1 1 0 !important;
+      min-width:0 !important;
+      width:0;
+      margin:0;
     }
     #undoBtn{
-      background-color:#000000 !important;
-      color:#ffffff !important;
+      width:100%;
+      background:rgba(255,255,255,0.45) !important;
+      color:#0f172a !important;
       font-weight:700;
-      font-size:15px;
-      min-height:48px;
-      height:48px;
-      padding:0 28px;
-      border-radius:999px;
-      border:1px solid #000000 !important;
+      font-size:11.5px;
+      min-height:52px;
+      height:52px;
+      padding:4px;
+      border-radius:12px;
+      border:1px solid rgba(15,23,42,0.14) !important;
       cursor:pointer;
       display:inline-flex;
+      flex-direction:column;
       align-items:center;
       justify-content:center;
-      box-shadow:0 2px 8px rgba(0,0,0,0.2);
-      transition:background-color 0.2s, opacity 0.2s, transform 0.1s;
+      gap:2px;
+      line-height:1.05;
+      white-space:nowrap;
+      box-shadow:0 1px 4px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.72) !important;
+      transition:background-color 0.2s, border-color 0.2s, opacity 0.2s, transform 0.1s;
     }
     #undoBtn:hover:not(:disabled){
-      background-color:#262626 !important;
-      border-color:#262626 !important;
+      background:rgba(255,255,255,0.68) !important;
+      border-color:rgba(15,23,42,0.20) !important;
     }
     #undoBtn:active:not(:disabled){
       transform:scale(0.98);
     }
     #undoBtn:disabled{
-      background-color:#000000 !important;
-      color:#ffffff !important;
-      opacity:0.38;
+      background:rgba(255,255,255,0.22) !important;
+      color:rgba(15,23,42,0.35) !important;
+      border-color:rgba(15,23,42,0.08) !important;
+      opacity:1 !important;
       cursor:not-allowed;
-      box-shadow:none;
+      box-shadow:none !important;
     }
-    #nextBtn,
-    #questionsNextBtn,
-    #csNextBtn {
-      flex: 1;
-      min-height:50px;
-      padding:0 24px;
-      font-size:16px;
-      font-weight:700 !important;
-      border-radius:999px !important;
-      background-color:#4b5563 !important;
-      color:#ffffff !important;
-      border:none !important;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      transition:background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+    #nextBtn{
+      background:rgba(255,255,255,0.45) !important;
+      color:#0f172a !important;
+      border:1px solid rgba(15,23,42,0.14) !important;
+      box-shadow:0 1px 4px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.72) !important;
     }
-    #nextBtn:hover,
-    #questionsNextBtn:hover,
-    #csNextBtn:hover {
-      background-color:#374151 !important;
+    #nextBtn:hover:not(:disabled){
+      background:rgba(255,255,255,0.68) !important;
+      border-color:rgba(15,23,42,0.20) !important;
     }
-    #nextBtn:active,
-    #questionsNextBtn:active,
-    #csNextBtn:active {
+    #nextBtn:disabled{
+      background:rgba(255,255,255,0.22) !important;
+      color:rgba(15,23,42,0.35) !important;
+      border-color:rgba(15,23,42,0.08) !important;
+      opacity:1 !important;
+      cursor:not-allowed;
+      box-shadow:none !important;
+    }
+    #nextBtn:active:not(:disabled),
+    .run-dock-nav #runBackBtn:active,
+    .run-dock-nav #questionsBackBtn:active,
+    .run-dock-nav #csBackBtn:active,
+    .run-dock-nav #resultsBackBtn:active{
       transform:scale(0.98);
     }
 
+    /* Equal-width 52px Clear Glass Back / Notes / Undo / Next and Back / Notes / Skip / Next bottom dock buttons */
+    #runBackBtn,
+    #runNotesBtn,
+    #nextBtn,
+    #questionsBackBtn,
+    #questionsNotesBtn,
     #questionsSkipBtn,
-    #questionsSkipBtnHeader,
+    #questionsNextBtn,
+    #csBackBtn,
+    #csNotesBtn,
     #csSkipBtn,
-    #csSkipBtnHeader,
+    #csNextBtn {
+      flex: 1 1 0 !important;
+      min-width: 0 !important;
+      width: 0;
+      min-height: 52px;
+      height: 52px;
+      padding: 4px;
+      font-size: 11.5px;
+      font-weight: 700 !important;
+      border-radius: 12px !important;
+      background: rgba(255, 255, 255, 0.45) !important;
+      color: #0f172a !important;
+      border: 1px solid rgba(15, 23, 42, 0.14) !important;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      line-height: 1.05;
+      white-space: nowrap;
+      position: relative;
+      transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.1s;
+    }
+    .run-dock-nav svg {
+      display: block;
+      flex-shrink: 0;
+    }
+    .dock-btn-label {
+      display: block;
+      line-height: 1.05;
+    }
+    .notes-dock-btn:hover {
+      background: rgba(255, 255, 255, 0.68) !important;
+      border-color: rgba(15, 23, 42, 0.20) !important;
+    }
+    .notes-dock-btn:active {
+      transform: scale(0.98);
+    }
+    .notes-dock-btn.is-open {
+      background: rgba(255, 255, 255, 0.92) !important;
+      color: #0f172a !important;
+      border-color: rgba(15, 23, 42, 0.24) !important;
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    }
+    .notes-dock-btn .notes-dot {
+      display: none;
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #60a5fa;
+      box-shadow: 0 0 0 1.5px rgba(59, 130, 246, 0.16);
+      flex-shrink: 0;
+    }
+    .notes-dock-btn.has-notes:not(.is-open) .notes-dot {
+      display: inline-block;
+    }
+    .notes-popup-dock {
+      padding: 12px 14px;
+    }
+    .notes-popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .notes-popup-title {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .notes-popup-dock .notes-input {
+      margin-top: 0;
+      min-height: 56px;
+      max-height: 165px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(15, 23, 42, 0.14);
+    }
+    #questionsNextBtn:hover,
+    #csNextBtn:hover,
+    #questionsSkipBtn:hover,
+    #csSkipBtn:hover {
+      background: rgba(255, 255, 255, 0.68) !important;
+      border-color: rgba(15, 23, 42, 0.20) !important;
+    }
+    #questionsNextBtn:active,
+    #csNextBtn:active {
+      transform: scale(0.98);
+    }
     #engSkipBtn {
       min-height:50px;
       padding:0 24px;
       font-size:16px;
       font-weight:700 !important;
-      border-radius:999px !important;
+      border-radius:12px !important;
       background-color:#9ca3af !important;
       color:#ffffff !important;
       border:none !important;
@@ -523,26 +844,13 @@
       justify-content:center;
       transition:background-color 0.2s, box-shadow 0.2s, transform 0.1s;
     }
-    #questionsSkipBtnHeader,
-    #csSkipBtnHeader {
-      min-height: auto !important;
-      height: auto !important;
-      padding: 8px 16px !important;
-      font-size: 14px !important;
-    }
-    #questionsSkipBtn:hover,
-    #questionsSkipBtnHeader:hover,
-    #csSkipBtn:hover,
-    #csSkipBtnHeader:hover,
-    #engSkipBtn:hover {
-      background-color:#6b7280 !important;
-    }
     #questionsSkipBtn:active,
-    #questionsSkipBtnHeader:active,
     #csSkipBtn:active,
-    #csSkipBtnHeader:active,
     #engSkipBtn:active {
       transform:scale(0.98);
+    }
+    #engSkipBtn:hover {
+      background-color:#6b7280 !important;
     }
     .stat{
       border:1px solid var(--hairline);
@@ -554,9 +862,10 @@
     .value{font-family:var(--mono);font-size:22px;letter-spacing:.2px;}
 
     .runControls{
-      margin-top:14px;
-      display:grid;
-      gap:36px;
+      margin-top:0;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
     .otrRow{
       display:grid;
@@ -569,15 +878,17 @@
     .otr-group-toggle-container {
       display: flex;
       align-items: center;
+      justify-content: center;
       margin-bottom: 12px;
     }
     .apple-segmented-control {
       display: inline-flex;
       align-items: center;
       background: #e2e8f0;
-      padding: 3px;
-      border-radius: 9px;
-      gap: 2px;
+      height: 52px;
+      padding: 4px;
+      border-radius: 14px;
+      gap: 4px;
       box-sizing: border-box;
       width: 100%;
       max-width: 320px;
@@ -588,14 +899,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 5px 12px;
-      height: 30px;
-      font-size: 13px;
+      padding: 6px 12px;
+      height: 44px;
+      font-size: 14px;
       font-weight: 500;
       color: #64748b;
       background: transparent;
       border: none;
-      border-radius: 7px;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.16s ease;
       font-family: inherit;
@@ -683,14 +994,14 @@
       border-radius: 12px;
     }
 
-    /* Apple-style Grayscale Toggle Switch */
+    /* Apple-style Toggle Switch */
     .apple-toggle-btn {
       display: inline-flex !important;
       align-items: center !important;
-      gap: 6px !important;
+      gap: 0 !important;
       background: none !important;
       border: none !important;
-      padding: 0 2px !important;
+      padding: 0 !important;
       margin: 0 !important;
       min-height: 20px !important;
       height: 20px !important;
@@ -733,31 +1044,18 @@
       transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     .apple-toggle-btn.is-on .apple-switch-track {
-      background-color: #0f172a;
-      border-color: #0f172a;
+      background-color: #8fd1a6;
+      border-color: #5eb87e;
     }
     .apple-toggle-btn.is-on .apple-switch-thumb {
       transform: translateX(16px);
     }
     .apple-toggle-btn.is-off .apple-switch-track {
-      background-color: #e2e8f0;
-      border-color: #cbd5e1;
+      background-color: #f2b5b5;
+      border-color: #e08a8a;
     }
     .apple-toggle-btn.is-off .apple-switch-thumb {
       transform: translateX(0px);
-    }
-    .apple-toggle-label {
-      font-size: 11px;
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: 0.4px;
-      color: #0f172a;
-      font-family: inherit;
-      transition: color 0.15s ease;
-    }
-    .apple-toggle-btn.is-off .apple-toggle-label {
-      color: #64748b;
-      font-weight: 500;
     }
     .bottomControls{
       display:flex;
@@ -773,8 +1071,9 @@
       flex: 1;
     }
 
-    #startBtn{min-height:52px;border-radius:14px;font-size:16px;}
-    #stopBtn{min-height:48px; font-weight: 600;}
+    #startBtn{flex:0 0 56px;width:56px;min-width:56px;min-height:46px;height:46px;border-radius:12px;padding:0;display:inline-flex;align-items:center;justify-content:center;line-height:0;}
+    #stopBtn{flex:0 0 56px;width:56px;min-width:56px;min-height:46px;height:46px;border-radius:12px;padding:0;display:inline-flex;align-items:center;justify-content:center;line-height:0;}
+    #startBtn svg,#stopBtn svg{display:block;flex-shrink:0;}
 
     .notes-input {
       width: 100%;
@@ -823,7 +1122,9 @@
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(248, 250, 252, 0.42);
+      backdrop-filter: blur(12px) saturate(150%);
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -831,24 +1132,92 @@
       padding: 16px;
     }
     .modal-content {
-      background: #fff;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.46) 100%);
+      backdrop-filter: blur(26px) saturate(190%);
+      -webkit-backdrop-filter: blur(26px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       padding: 24px;
-      border-radius: 16px;
+      border-radius: 26px;
       width: 100%;
       max-width: 400px;
       display: flex;
       flex-direction: column;
       gap: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      box-shadow:
+        0 18px 46px rgba(15, 23, 42, 0.18),
+        0 4px 14px rgba(15, 23, 42, 0.08),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
+        inset 0 -1px 1.5px rgba(255, 255, 255, 0.35);
+    }
+    #engagementModal .field .label,
+    #welcomeModal .field .label {
+      color: #1e293b;
+      font-weight: 600;
+    }
+    #engagementModal .control,
+    #welcomeModal .control {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.14);
+    }
+    #beginBtn,
+    #engRecordBtn,
+    #welcomeContinueBtn {
+      background-color: var(--primary);
+      border-color: rgba(0, 0, 0, 0.12);
+      color: #ffffff;
+    }
+    #beginBtn:hover:not(:disabled),
+    #engRecordBtn:hover:not(:disabled),
+    #welcomeContinueBtn:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+    }
+    #engRecordBtn,
+    #welcomeContinueBtn {
+      min-height: 50px;
+      height: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 12px;
+    }
+    .welcome-toggle-group {
+      background: rgba(255, 255, 255, 0.70);
+      border: 1px solid rgba(15, 23, 42, 0.10);
+      border-radius: 12px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .welcome-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 8px;
+      border-radius: 9px;
+      transition: background-color 0.2s ease;
+    }
+    .welcome-toggle-row.is-toggle-off {
+      background: rgba(203, 213, 225, 0.58);
+    }
+    .welcome-toggle-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #1e293b;
+      line-height: 1.25;
+      transition: color 0.2s ease;
+    }
+    .welcome-toggle-row.is-toggle-off .welcome-toggle-name {
+      color: #64748b;
     }
 
     .fineprint{
-      margin-top:16px;
+      margin-top:4px;
       color:var(--muted);
       font-size:12px;
-      border-top:1px solid var(--hairline);
-      padding-top:12px;
+      padding:2px 4px;
       line-height:1.35;
+      text-align:center;
     }
 
     .results-grid{
@@ -904,7 +1273,7 @@
     .mode-btn {
       width: 104px;
       height: 104px;
-      border-radius: 50%;
+      border-radius: 16px;
       background: var(--ink);
       color: #fff;
       display: flex;
@@ -926,41 +1295,120 @@
     }
 
 
-    #shareBtn, #restartBtn {
+    .run-dock-nav.results-dock-bar {
+      gap: 8px;
+      padding: 7px 9px;
+    }
+    .run-dock-nav #resultsBackBtn,
+    .run-dock-nav #csvBtn,
+    .run-dock-nav #restartBtn {
+      flex: 1 1 0;
+      width: 0;
+      min-width: 0;
       min-height: 52px;
-      padding: 14px 20px;
-      font-size: 16px;
-      border-radius: 999px;
-      display: flex;
+      height: 52px;
+      padding: 4px 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 12px;
+      display: inline-flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-weight: 600;
+      gap: 2px;
+      line-height: 1.05;
+      white-space: nowrap;
     }
     #shareBtn {
-      background: #1f9d55;
-      color: #fff;
-      border-color: rgba(0,0,0,.08);
-      transition: background-color 0.2s, color 0.2s;
+      flex: 1.25 1 0;
+      width: 0;
+      min-width: 0;
+      min-height: 52px;
+      height: 52px;
+      padding: 4px 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 12px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      line-height: 1.05;
+      white-space: nowrap;
+      background: #bbf7d0;
+      color: #14532d;
+      border: 1px solid #86efac;
+      box-shadow: 0 2px 6px rgba(34, 197, 94, 0.14);
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
     }
     #shareBtn:hover:not(:disabled) {
-      background: #15803d;
+      background: #86efac;
+      border-color: #4ade80;
+    }
+    #shareBtn:active:not(:disabled) {
+      transform: scale(0.98);
     }
     #shareBtn.copied {
-      background: #86efac;
-      color: #064e3b;
+      background: #4ade80;
+      color: #052e16;
+    }
+    #csvBtn {
+      background: #1f9d55 !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, .08) !important;
+      box-shadow: 0 2px 8px rgba(31, 157, 85, 0.25) !important;
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    #csvBtn:hover {
+      background: #15803d !important;
+      border-color: rgba(0, 0, 0, .12) !important;
+    }
+    #csvBtn:active {
+      transform: scale(0.98);
+    }
+    #csvBtn.saved {
+      background: #16a34a !important;
+      border-color: rgba(0, 0, 0, .12) !important;
+      color: #ffffff !important;
+    }
+    #restartBtn {
+      background: rgba(255, 255, 255, 0.45) !important;
+      color: #0f172a !important;
+      border: 1px solid rgba(15, 23, 42, 0.14) !important;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    #restartBtn:hover {
+      background: rgba(255, 255, 255, 0.68) !important;
+      border-color: rgba(15, 23, 42, 0.20) !important;
+    }
+    #restartBtn:active {
+      transform: scale(0.98);
+    }
+    #shareStatus:empty {
+      display: none;
     }
 
     @media (min-width:860px){
       body{background:radial-gradient(1200px 600px at 20% 0%, #fff 0%, var(--bg) 65%);}
-      .app{align-items:center;padding:24px;}
-      .card{max-width:920px;padding:22px;border-radius:var(--radius);}
+      .app{align-items:center;padding:20px;}
+      .card{max-width:920px;padding:20px;border-radius:var(--radius);}
+      .screen-stack{max-width:920px;gap:14px;}
+      .screen-stack.has-bottom-dock{padding-bottom:176px;}
+      .screen-stack.has-single-bottom-dock{padding-bottom:112px;}
+      .section-card{padding:18px 20px;border-radius:var(--radius);}
+      .run-bottom-dock{padding:10px 20px calc(14px + env(safe-area-inset-bottom));}
+      .run-bottom-dock-inner{max-width:920px;}
       .header h1{font-size:28px;}
       .form{grid-template-columns:1fr 1fr auto;gap:14px;}
-      .btn{width:auto;min-height:auto;font-size:14px;border-radius:999px;padding:11px 14px;}
+      .btn{width:auto;min-height:auto;font-size:14px;border-radius:12px;padding:11px 14px;}
       .control{font-size:14px;}
       .stats{grid-template-columns:1fr 1fr;}
 
-      .runControls .btn{width:100%; border-radius:14px;}
+      .runControls .btn{width:100%; border-radius:12px;}
       .otrRow{gap:14px;}
       .otr-columns{gap:16px;}
       .otr-col-buttons{gap:12px;}
@@ -968,12 +1416,6 @@
       .bottomRow{gap:14px;}
       .bottomControls{gap:14px;}
 
-      #shareBtn, #restartBtn {
-        min-height: 52px;
-        padding: 14px 28px;
-        font-size: 16px;
-        border-radius: 999px;
-      }
       .actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
       .actions .btn{flex: 1;}
     }
@@ -1050,12 +1492,12 @@
       }
       .otr-col .btn.otr {
         min-height: 50px;
-        padding: 6px 3px;
+        padding: 6px 4px;
         font-size: 11px;
       }
       .otr-col .btn.otr .btn-badge {
         top: 2px;
-        right: 2px;
+        right: 3px;
         min-width: 16px;
         height: 16px;
         font-size: 10px;
@@ -1068,12 +1510,12 @@
       }
       .otr-button-grid .btn.otr {
         min-height: 52px;
-        padding: 10px 4px;
+        padding: 10px 6px;
         font-size: 11.5px;
       }
       .otr-button-grid .btn.otr .btn-badge {
         top: 2px;
-        right: 3px;
+        right: 4px;
         min-width: 16px;
         height: 16px;
         font-size: 10px;
@@ -1087,6 +1529,47 @@
         min-width: 144px;
         font-size: 12px;
         padding: 5px 22px 5px 8px;
+      }
+    }
+    @media (max-width: 440px) {
+      .timer-right-group {
+        gap: 4px;
+      }
+      #startBtn,
+      #stopBtn {
+        flex: 0 0 42px;
+        width: 42px;
+        min-width: 42px;
+      }
+      .timer-top-bar .stat {
+        min-width: 84px;
+        padding: 4px 7px;
+      }
+      .timer-top-bar .value {
+        font-size: 16.5px;
+      }
+      .timer-top-bar #transitionBtn,
+      .timer-top-bar .transition-dock-btn {
+        flex: 0 0 116px;
+        width: 116px;
+        min-width: 0;
+        padding: 4px 6px;
+        font-size: 11px;
+      }
+    }
+    @media (max-width: 400px) {
+      .run-dock-nav #resultsBackBtn,
+      .run-dock-nav #csvBtn,
+      .run-dock-nav #restartBtn {
+        flex: 1 1 0;
+        width: 0;
+        min-width: 0;
+        padding: 4px 4px;
+        font-size: 11px;
+      }
+      #shareBtn {
+        padding: 4px 4px;
+        font-size: 11px;
       }
     }
     .rating-select:disabled {
@@ -1110,7 +1593,7 @@
       padding: 6px 12px;
       font-size: 14px;
       font-weight: 700;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1.5px solid #d1d5db;
       background: #ffffff;
       color: #4b5563;
@@ -1131,16 +1614,16 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .btn.cs-btn.selected[data-val="1"] {
-      background: #dbeafe;
-      border-color: #60a5fa;
-      color: #1e40af;
-      box-shadow: 0 1px 3px rgba(37,99,235,0.15);
+      background: #dcfce7;
+      border-color: #4ade80;
+      color: #166534;
+      box-shadow: 0 1px 3px rgba(22,163,74,0.15);
     }
     .btn.cs-btn.selected[data-val="2"] {
-      background: #3b82f6;
-      border-color: #2563eb;
+      background: #15803d;
+      border-color: #166534;
       color: #ffffff;
-      box-shadow: 0 1px 3px rgba(37,99,235,0.3);
+      box-shadow: 0 1px 3px rgba(21,128,61,0.3);
     }
   </style>
 </head>
@@ -1148,18 +1631,22 @@
   <div id="app" class="app" aria-live="polite"></div>
 
   <template id="screen-setup">
-    <main class="card">
-      <header class="header">
-        <h1 id="setupTitle">Walk Through Tool</h1>
-      </header>
+    <main class="screen-stack">
+      <section class="section-card">
+        <header class="header">
+          <h1 id="setupTitle">Walk Through Tool</h1>
+        </header>
+      </section>
 
-      <section class="form">
-        <label class="field">
-          <span class="label">Observed Educator Name</span>
-          <input type="text" id="educatorInput" class="control" placeholder="Enter name…" />
-        </label>
+      <section class="section-card">
+        <div class="form" style="margin-top:0; display:flex; flex-direction:column; gap:12px; align-items:stretch;">
+          <label class="field">
+            <span class="label" style="font-weight:700; color:var(--ink);">Observed Educator Name</span>
+            <input type="text" id="educatorInput" class="control" placeholder="Enter name…" />
+          </label>
 
-        <button id="beginBtn" class="btn primary" disabled>Continue</button>
+          <button id="beginBtn" class="btn primary" disabled>Continue</button>
+        </div>
       </section>
 
       <footer class="fineprint">
@@ -1169,147 +1656,159 @@
   </template>
 
   <template id="screen-questions">
-    <main class="card">
-      <header class="header" style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div>
+    <main class="screen-stack has-single-bottom-dock" id="questionsScreenStack">
+      <section id="questionsTopBanner" class="section-card walkthrough-sticky-banner">
+        <header class="header">
+          <h1>The Walk Through Tool</h1>
+        </header>
+      </section>
+
+      <section id="questionsDetailsBanner" class="section-card details-fade-banner">
+        <header class="header">
+          <p class="subhead" id="detailsEducatorContext" style="font-weight:600; color:var(--ink);">Observed Educator Name: —</p>
+          <p class="subhead" id="detailsIntroText" style="margin-top:4px;">Please complete Observation Details and Character Strong Observations below.</p>
+        </header>
+      </section>
+
+      <section class="section-card" id="observationDetailsCard">
+        <header class="header tile-header-divider">
           <h1>Observation Details</h1>
           <p class="subhead">Please answer the following questions.</p>
-        </div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <button id="questionsSkipBtnHeader" class="btn" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer; font-weight: 700;" type="button">Skip</button>
-          <button id="questionsBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
-        </div>
-      </header>
+        </header>
 
-      <section class="form" style="margin-top: 16px; display: flex; flex-direction: column; gap: 4px; align-items: stretch;">
-        <div class="question-group">
-          <div class="label">Are the agreed upon teaching materials being used?</div>
-          <div class="yn-group">
-            <button id="q2YesBtn" class="btn yn yes" type="button">Yes</button>
-            <button id="q2NoBtn" class="btn yn no" type="button">No</button>
+        <div style="display: flex; flex-direction: column; gap: 4px; align-items: stretch;">
+          <div class="question-group">
+            <div class="label">Are the agreed upon teaching materials being used?</div>
+            <div class="yn-group">
+              <button id="q2YesBtn" class="btn yn yes" type="button">Yes</button>
+              <button id="q2NoBtn" class="btn yn no" type="button">No</button>
+            </div>
           </div>
-        </div>
 
-        <div class="question-group">
-          <div class="label">Was the lesson target referenced visually and/or verbally?</div>
-          <div class="yn-group">
-            <button id="q1YesBtn" class="btn yn yes" type="button">Yes</button>
-            <button id="q1NoBtn" class="btn yn no" type="button">No</button>
+          <div class="question-group">
+            <div class="label">Was the lesson target referenced visually and/or verbally?</div>
+            <div class="yn-group">
+              <button id="q1YesBtn" class="btn yn yes" type="button">Yes</button>
+              <button id="q1NoBtn" class="btn yn no" type="button">No</button>
+            </div>
           </div>
-        </div>
 
-        <div class="question-group" id="qRegulationSpaceGroup" style="display: none;">
-          <div class="label">Is there a regulation space in the classroom?</div>
-          <div class="yn-group">
-            <button id="q3YesBtn" class="btn yn yes" type="button">Yes</button>
-            <button id="q3NoBtn" class="btn yn no" type="button">No</button>
+          <div class="question-group" id="qRegulationSpaceGroup" style="display: none;">
+            <div class="label">Is there a regulation space in the classroom?</div>
+            <div class="yn-group">
+              <button id="q3YesBtn" class="btn yn yes" type="button">Yes</button>
+              <button id="q3NoBtn" class="btn yn no" type="button">No</button>
+            </div>
           </div>
-        </div>
 
-        <div class="question-group" id="qZonesGraphicGroup" style="display: none;">
-          <div class="label">Is there a graphic depicting the character trait of the month?</div>
-          <div class="yn-group">
-            <button id="q4YesBtn" class="btn yn yes" type="button">Yes</button>
-            <button id="q4NoBtn" class="btn yn no" type="button">No</button>
+          <div class="question-group" id="qZonesGraphicGroup" style="display: none;">
+            <div class="label">Is there a graphic depicting the character trait of the month?</div>
+            <div class="yn-group">
+              <button id="q4YesBtn" class="btn yn yes" type="button">Yes</button>
+              <button id="q4NoBtn" class="btn yn no" type="button">No</button>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="actions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
-        <button id="questionsSkipBtn" class="btn" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer;">Skip</button>
-        <button id="questionsNextBtn" class="btn primary" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #4b5563; color: #ffffff; border: none; cursor: pointer;">Next</button>
-      </section>
-    </main>
-  </template>
-
-  <template id="screen-character-strong">
-    <main class="card" id="characterStrongCard">
-      <header class="header" id="characterStrongHeader" style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div>
+      <section class="section-card" id="characterStrongCard" style="display: none;">
+        <header class="header tile-header-divider" id="characterStrongHeader">
           <h1 id="characterStrongTitle">Character Strong Observations</h1>
-          <p class="subhead" id="characterStrongSubhead">Please rate each observed practice or skip this section.</p>
-        </div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <button id="csSkipBtnHeader" class="btn" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer; font-weight: 700;" type="button">Skip</button>
-          <button id="csBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none; cursor: pointer;" type="button">Back</button>
-        </div>
-      </header>
+          <p class="subhead" id="characterStrongSubhead">Please rate each observed practice or skip below.</p>
+        </header>
 
-      <section class="form" id="characterStrongForm" style="margin-top: 16px; display: flex; flex-direction: column; gap: 4px; align-items: stretch;">
-        <div style="font-size: 13px; color: var(--muted); margin-bottom: 10px; font-weight: 500;">Scale: <strong>0</strong> = Not Present &nbsp;|&nbsp; <strong>1</strong> = Partial &nbsp;|&nbsp; <strong>2</strong> = Fully Implemented</div>
+        <div id="characterStrongForm" style="display: flex; flex-direction: column; gap: 4px; align-items: stretch;">
+          <div style="font-size: 13px; color: var(--muted); margin-bottom: 10px; font-weight: 500;">Scale: <strong>0</strong> = Not Present &nbsp;|&nbsp; <strong>1</strong> = Partial &nbsp;|&nbsp; <strong>2</strong> = Fully Implemented</div>
 
-        <div class="question-row" id="csRow0">
-          <span class="question-label">Educator models warm & respectful interactions</span>
-          <div class="cs-btn-group" data-q="0" aria-label="Educator models warm & respectful interactions rating">
-            <button type="button" class="btn cs-btn" data-q="0" data-val="0" title="0 - Not Present">0</button>
-            <button type="button" class="btn cs-btn" data-q="0" data-val="1" title="1 - Partial">1</button>
-            <button type="button" class="btn cs-btn" data-q="0" data-val="2" title="2 - Fully Implemented">2</button>
+          <div class="question-row" id="csRow0">
+            <span class="question-label">Educator models warm & respectful interactions</span>
+            <div class="cs-btn-group" data-q="0" aria-label="Educator models warm & respectful interactions rating">
+              <button type="button" class="btn cs-btn" data-q="0" data-val="0" title="0 - Not Present">0</button>
+              <button type="button" class="btn cs-btn" data-q="0" data-val="1" title="1 - Partial">1</button>
+              <button type="button" class="btn cs-btn" data-q="0" data-val="2" title="2 - Fully Implemented">2</button>
+            </div>
+          </div>
+
+          <div class="question-row" id="csRow1">
+            <span class="question-label">Educator joins in community-building activities</span>
+            <div class="cs-btn-group" data-q="1" aria-label="Educator joins in community-building activities rating">
+              <button type="button" class="btn cs-btn" data-q="1" data-val="0" title="0 - Not Present">0</button>
+              <button type="button" class="btn cs-btn" data-q="1" data-val="1" title="1 - Partial">1</button>
+              <button type="button" class="btn cs-btn" data-q="1" data-val="2" title="2 - Fully Implemented">2</button>
+            </div>
+          </div>
+
+          <div class="question-row" id="csRow2">
+            <span class="question-label">Educator leads activities with enthusiasm</span>
+            <div class="cs-btn-group" data-q="2" aria-label="Educator leads activities with enthusiasm rating">
+              <button type="button" class="btn cs-btn" data-q="2" data-val="0" title="0 - Not Present">0</button>
+              <button type="button" class="btn cs-btn" data-q="2" data-val="1" title="1 - Partial">1</button>
+              <button type="button" class="btn cs-btn" data-q="2" data-val="2" title="2 - Fully Implemented">2</button>
+            </div>
+          </div>
+
+          <div class="question-row" id="csRow3">
+            <span class="question-label">Students share their ideas and perspectives</span>
+            <div class="cs-btn-group" data-q="3" aria-label="Students share their ideas and perspectives rating">
+              <button type="button" class="btn cs-btn" data-q="3" data-val="0" title="0 - Not Present">0</button>
+              <button type="button" class="btn cs-btn" data-q="3" data-val="1" title="1 - Partial">1</button>
+              <button type="button" class="btn cs-btn" data-q="3" data-val="2" title="2 - Fully Implemented">2</button>
+            </div>
+          </div>
+
+          <div class="question-row" id="csRow4">
+            <span class="question-label">Overall atmosphere of safety and respect</span>
+            <div class="cs-btn-group" data-q="4" aria-label="Overall atmosphere of safety and respect rating">
+              <button type="button" class="btn cs-btn" data-q="4" data-val="0" title="0 - Not Present">0</button>
+              <button type="button" class="btn cs-btn" data-q="4" data-val="1" title="1 - Partial">1</button>
+              <button type="button" class="btn cs-btn" data-q="4" data-val="2" title="2 - Fully Implemented">2</button>
+            </div>
+          </div>
+
+          <div class="question-row" id="csRow5">
+            <span class="question-label">Evidence of class agreement with student input</span>
+            <div class="cs-btn-group" data-q="5" aria-label="Evidence of class agreement with student input rating">
+              <button type="button" class="btn cs-btn" data-q="5" data-val="0" title="0 - Not Present">0</button>
+              <button type="button" class="btn cs-btn" data-q="5" data-val="1" title="1 - Partial">1</button>
+              <button type="button" class="btn cs-btn" data-q="5" data-val="2" title="2 - Fully Implemented">2</button>
+            </div>
           </div>
         </div>
-
-        <div class="question-row" id="csRow1">
-          <span class="question-label">Educator joins in community-building activities</span>
-          <div class="cs-btn-group" data-q="1" aria-label="Educator joins in community-building activities rating">
-            <button type="button" class="btn cs-btn" data-q="1" data-val="0" title="0 - Not Present">0</button>
-            <button type="button" class="btn cs-btn" data-q="1" data-val="1" title="1 - Partial">1</button>
-            <button type="button" class="btn cs-btn" data-q="1" data-val="2" title="2 - Fully Implemented">2</button>
-          </div>
-        </div>
-
-        <div class="question-row" id="csRow2">
-          <span class="question-label">Educator leads activities with enthusiasm</span>
-          <div class="cs-btn-group" data-q="2" aria-label="Educator leads activities with enthusiasm rating">
-            <button type="button" class="btn cs-btn" data-q="2" data-val="0" title="0 - Not Present">0</button>
-            <button type="button" class="btn cs-btn" data-q="2" data-val="1" title="1 - Partial">1</button>
-            <button type="button" class="btn cs-btn" data-q="2" data-val="2" title="2 - Fully Implemented">2</button>
-          </div>
-        </div>
-
-        <div class="question-row" id="csRow3">
-          <span class="question-label">Students share their ideas and perspectives</span>
-          <div class="cs-btn-group" data-q="3" aria-label="Students share their ideas and perspectives rating">
-            <button type="button" class="btn cs-btn" data-q="3" data-val="0" title="0 - Not Present">0</button>
-            <button type="button" class="btn cs-btn" data-q="3" data-val="1" title="1 - Partial">1</button>
-            <button type="button" class="btn cs-btn" data-q="3" data-val="2" title="2 - Fully Implemented">2</button>
-          </div>
-        </div>
-
-        <div class="question-row" id="csRow4">
-          <span class="question-label">Overall atmosphere of safety and respect</span>
-          <div class="cs-btn-group" data-q="4" aria-label="Overall atmosphere of safety and respect rating">
-            <button type="button" class="btn cs-btn" data-q="4" data-val="0" title="0 - Not Present">0</button>
-            <button type="button" class="btn cs-btn" data-q="4" data-val="1" title="1 - Partial">1</button>
-            <button type="button" class="btn cs-btn" data-q="4" data-val="2" title="2 - Fully Implemented">2</button>
-          </div>
-        </div>
-
-        <div class="question-row" id="csRow5">
-          <span class="question-label">Evidence of class agreement with student input</span>
-          <div class="cs-btn-group" data-q="5" aria-label="Evidence of class agreement with student input rating">
-            <button type="button" class="btn cs-btn" data-q="5" data-val="0" title="0 - Not Present">0</button>
-            <button type="button" class="btn cs-btn" data-q="5" data-val="1" title="1 - Partial">1</button>
-            <button type="button" class="btn cs-btn" data-q="5" data-val="2" title="2 - Fully Implemented">2</button>
-          </div>
-        </div>
-
-        <section class="actions" id="characterStrongActions" style="margin-top: 24px; display:flex; flex-direction: row; gap:12px;">
-          <button id="csSkipBtn" class="btn" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #9ca3af; color: #ffffff; border: none; cursor: pointer;">Skip</button>
-          <button id="csNextBtn" class="btn primary" type="button" style="flex: 1; min-height: 50px; height: 50px; font-size: 16px; font-weight: 700; border-radius: 999px; background-color: #4b5563; color: #ffffff; border: none; cursor: pointer;">Next</button>
-        </section>
       </section>
     </main>
+
+    <div id="questionsBottomDock" class="run-bottom-dock" aria-label="Pinned navigation controls">
+      <div class="run-bottom-dock-inner">
+        <div id="questionsNotesPopup" class="run-dock-card notes-popup-dock" style="display:none;" aria-label="Observation notes">
+          <div class="notes-popup-header">
+            <span class="notes-popup-title">Notes</span>
+          </div>
+          <div id="questionsNotesInput" class="notes-input" contenteditable="true" role="textbox" aria-multiline="true" placeholder="Type notes here..." aria-label="Observation notes"></div>
+        </div>
+
+        <nav class="run-dock-card run-dock-nav" aria-label="Observation details navigation controls">
+          <button id="questionsBackBtn" class="btn btn-dock-sm" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span class="dock-btn-label">Back</span></button>
+          <button id="questionsNotesBtn" class="btn notes-dock-btn" type="button" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg><span class="dock-btn-label">Notes</span><span class="notes-dot" aria-hidden="true"></span></button>
+          <button id="questionsSkipBtn" class="btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg><span class="dock-btn-label">Skip</span></button>
+          <button id="questionsNextBtn" class="btn btn-dock-sm" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg><span class="dock-btn-label">Next</span></button>
+        </nav>
+      </div>
+    </div>
   </template>
 
   <template id="screen-mode-select">
-    <main class="card">
-      <header class="header" style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div>
-          <h1>Select Timer</h1>
-          <p class="subhead">Choose the type of observation to record.</p>
-        </div>
-        <button id="modeSelectBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
-      </header>
-      <section style="display: flex; justify-content: space-around; margin-top: 32px; margin-bottom: 32px; gap: 16px; flex-wrap: wrap;">
+    <main class="screen-stack">
+      <section class="section-card">
+        <header class="header" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+          <div>
+            <h1>Select Timer</h1>
+            <p class="subhead">Choose the type of observation to record.</p>
+          </div>
+          <button id="modeSelectBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 12px; background-color: #6b7280; color: #fff; border: none; flex-shrink: 0;" type="button">Back</button>
+        </header>
+      </section>
+
+      <section class="section-card" style="display: flex; justify-content: space-around; padding: 28px 16px; gap: 16px; flex-wrap: wrap;">
         <button id="modeOtrBtn" class="mode-btn" type="button">Opportunities to Respond</button>
         <button id="modePraiseBtn" class="mode-btn" type="button">Instructional Feedback</button>
         <button id="modeAllBtn" class="mode-btn" type="button">All</button>
@@ -1318,39 +1817,25 @@
   </template>
 
   <template id="screen-run">
-    <main class="card">
-      <header class="header" style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div>
-          <h1 id="runTitle">Recording</h1>
-          <p class="subhead"><span id="runContext"></span></p>
-        </div>
-        <button id="runBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
-      </header>
+    <main class="screen-stack has-bottom-dock" id="runScreenStack">
+      <!-- Top Title Floating Card -->
+      <section id="runTopBanner" class="section-card walkthrough-sticky-banner">
+        <header class="header">
+          <h1 id="runTitle">The Walk Through Tool</h1>
+        </header>
+      </section>
 
-      <section class="timer-top-bar" aria-label="Timer and controls">
-        <button id="startBtn" class="btn start" type="button">Start</button>
-        <div class="stat">
-          <div class="kicker">Elapsed</div>
-          <div class="value" id="elapsedText">00:00.0</div>
-        </div>
-        <button id="stopBtn" class="btn stop" type="button" disabled>Stop</button>
+      <section id="runDetailsBanner" class="section-card details-fade-banner">
+        <header class="header">
+          <p class="subhead" style="font-weight:600; color:var(--ink);"><span id="runContext"></span></p>
+          <p id="hintText" class="subhead" style="margin-top:4px;">Press Start to begin. Then tap an Opportunities to Respond button for each observed response.</p>
+        </header>
       </section>
 
       <section class="runControls" role="group" aria-label="Recording controls">
 
-        <!-- 1. Notes (First on every timer) -->
-        <div id="timerNotesContainer" style="margin-top:0px;">
-          <span class="label" style="font-weight:bold;">Notes</span>
-          <div id="timerNotes" class="notes-input" contenteditable="true" role="textbox" aria-multiline="true" style="margin-top:8px; min-height: 60px;" placeholder="Type notes here..." aria-label="Observation notes"></div>
-        </div>
-
-        <!-- Undo Button (Centered below notes and above first set of buttons) -->
-        <div id="undoBtnContainer">
-          <button id="undoBtn" class="btn" type="button" disabled>Undo last button click</button>
-        </div>
-
-        <!-- 2. Engagement Check -->
-        <div id="structContainer" style="display:none; margin-top:12px;">
+        <!-- 1. Engagement Check Floating Card -->
+        <div id="structContainer" class="section-card" style="display:none;">
           <div id="structSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; margin-bottom:12px; color:var(--ink);">Engagement Check</div>
           <div id="structButtons2" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Engagement Check">
             <button id="structPartnersBtn" class="btn otr struct-partners" type="button" disabled>Partners<span class="btn-badge" id="badge-structPartners" aria-hidden="true">0</span></button>
@@ -1358,15 +1843,14 @@
           </div>
         </div>
 
-        <!-- 3. Opportunities to Respond (OTR) -->
-        <div id="otrContainer" style="display:none; margin-top:14px;">
-          <div id="otrHeaderRow" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 10px;">
+        <!-- 3. Opportunity to Respond Floating Card -->
+        <div id="otrContainer" class="section-card" style="display:none;">
+          <div id="otrHeaderRow" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;">
             <span id="otrSectionLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Opportunity to Respond</span>
-            <button id="toggleAllOtrBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Opportunity to Respond timer" title="Opportunity to Respond: ON" style="display: none;">
+            <button id="toggleAllOtrBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Opportunity to Respond timer" title="Opportunity to Respond" style="display: none;">
               <span class="apple-switch-track">
                 <span class="apple-switch-thumb"></span>
               </span>
-              <span id="toggleAllOtrStateText" class="apple-toggle-label">ON</span>
             </button>
           </div>
 
@@ -1429,44 +1913,65 @@
           </div>
         </div>
 
-        <!-- 4. Instructional Feedback (Praise) buttons -->
-        <div id="praiseContainer" style="display:none; margin-top:16px;">
-          <div id="praiseHeaderRow" style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 12px; margin-top: 0;">
+        <!-- 4. Instructional Feedback (Praise) Floating Card -->
+        <div id="praiseContainer" class="section-card" style="display:none;">
+          <div id="praiseHeaderRow" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; margin-top: 0;">
             <span id="praiseSubLabel" class="label" style="display:none; font-size:14px; font-weight:bold; color:var(--ink); margin:0;">Instructional Feedback</span>
-            <button id="toggleAllSelBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Instructional Feedback timer" title="Instructional Feedback: ON" style="display: none;">
+            <button id="toggleAllSelBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Instructional Feedback timer" title="Instructional Feedback" style="display: none;">
               <span class="apple-switch-track">
                 <span class="apple-switch-thumb"></span>
               </span>
-              <span id="toggleAllSelStateText" class="apple-toggle-label">ON</span>
             </button>
           </div>
           <div id="praiseButtons" class="otrRow" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px;" aria-label="Instructional Feedback buttons">
-            <!-- Row 1: Specific Praise (Left) | Redirective Statements (Right) -->
-            <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise<span class="btn-badge" id="badge-praiseSpecific" aria-hidden="true">0</span></button>
+            <!-- Row 1: Corrective Feedback (Left) | Redirective Statements (Right) -->
+            <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
             <button id="praiseRedirectBtn" class="btn otr redirect" type="button" disabled>Redirective Statements<span class="btn-badge" id="badge-praiseRedirect" aria-hidden="true">0</span></button>
 
-            <!-- Row 2: General Praise (Left) | General Criticism (Right) -->
-            <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
+            <!-- Row 2: Specific Praise (Left) | General Criticism (Right) -->
+            <button id="praiseSpecificBtn" class="btn otr specific" type="button" disabled>Specific Praise<span class="btn-badge" id="badge-praiseSpecific" aria-hidden="true">0</span></button>
             <button id="praiseGenCritBtn" class="btn otr gen-crit" type="button" disabled>General Criticism<span class="btn-badge" id="badge-praiseGenCrit" aria-hidden="true">0</span></button>
 
-            <!-- Row 3: Corrective Feedback (Left) | Individual Criticism (Right) -->
-            <button id="praiseCorrectiveBtn" class="btn otr corrective" type="button" disabled>Corrective Feedback<span class="btn-badge" id="badge-praiseCorrective" aria-hidden="true">0</span></button>
+            <!-- Row 3: General Praise (Left) | Individual Criticism (Right) -->
+            <button id="praiseGeneralBtn" class="btn otr general" type="button" disabled>General Praise<span class="btn-badge" id="badge-praiseGeneral" aria-hidden="true">0</span></button>
             <button id="praiseIndCritBtn" class="btn otr ind-crit" type="button" disabled>Individual Criticism<span class="btn-badge" id="badge-praiseIndCrit" aria-hidden="true">0</span></button>
-          </div>
-        </div>
-
-        <!-- 5. Bottom Controls -->
-        <div class="bottomControls" aria-label="Action controls" style="margin-top: 20px;">
-          <div class="bottomRow" aria-label="Next button" style="display: flex; gap: 12px; align-items: center;">
-            <button id="nextBtn" class="btn" type="button">Next</button>
           </div>
         </div>
       </section>
 
-      <footer class="fineprint">
-        <span id="hintText">Press Start to begin. Then tap an Opportunities to Respond button for each observed response.</span>
-      </footer>
     </main>
+
+    <!-- Bottom-Pinned Floating Dock: Start/Elapsed/Stop over pop-up Notes over Back/Notes/Undo/Next -->
+    <div id="runBottomDock" class="run-bottom-dock" aria-label="Pinned timer and navigation controls">
+      <div class="run-bottom-dock-inner">
+        <section class="run-dock-card timer-top-bar" aria-label="Timer and controls">
+          <button id="transitionBtn" class="btn transition-dock-btn" type="button" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3l4 4-4 4"/><path d="M20 7H4"/><path d="M8 21l-4-4 4-4"/><path d="M4 17h16"/></svg><span class="dock-btn-label">Transition</span></button>
+          <div class="timer-right-group">
+            <button id="startBtn" class="btn start" type="button" aria-label="Start"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v14l11-7-11-7z"/></svg></button>
+            <div class="stat">
+              <div class="value" id="elapsedText">00:00.0</div>
+            </div>
+            <button id="stopBtn" class="btn stop" type="button" aria-label="Stop" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg></button>
+          </div>
+        </section>
+
+        <div id="timerNotesContainer" class="run-dock-card notes-popup-dock" style="display:none;" aria-label="Observation notes">
+          <div class="notes-popup-header">
+            <span class="notes-popup-title">Notes</span>
+          </div>
+          <div id="timerNotes" class="notes-input" contenteditable="true" role="textbox" aria-multiline="true" placeholder="Type notes here..." aria-label="Observation notes"></div>
+        </div>
+
+        <nav class="run-dock-card run-dock-nav" aria-label="Action and navigation controls">
+          <button id="runBackBtn" class="btn btn-dock-sm" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span class="dock-btn-label">Back</span></button>
+          <button id="runNotesBtn" class="btn notes-dock-btn" type="button" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg><span class="dock-btn-label">Notes</span><span class="notes-dot" aria-hidden="true"></span></button>
+          <div id="undoBtnContainer">
+            <button id="undoBtn" class="btn" type="button" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg><span class="dock-btn-label">Undo</span></button>
+          </div>
+          <button id="nextBtn" class="btn btn-dock-sm" type="button" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg><span class="dock-btn-label">Next</span></button>
+        </nav>
+      </div>
+    </div>
 
     <div id="engagementModal" class="modal-overlay" style="display:none;">
       <div class="modal-content">
@@ -1481,38 +1986,88 @@
           <input type="number" id="engTotalStudents" class="control" min="0" />
         </label>
         <div style="display:flex; gap:10px; margin-top:16px;">
-          <button id="engSkipBtn" class="btn" style="flex:1; min-height:50px; height:50px; font-size:16px; font-weight:700; border-radius:999px; background-color:#9ca3af; color:#ffffff; border:none; cursor:pointer;" type="button">Skip</button>
+          <button id="engSkipBtn" class="btn" style="flex:1; min-height:50px; height:50px; font-size:16px; font-weight:700; border-radius:12px; background-color:#9ca3af; color:#ffffff; border:none; cursor:pointer;" type="button">Skip</button>
           <button id="engRecordBtn" class="btn primary" style="flex:1;" disabled>Record</button>
         </div>
+      </div>
+    </div>
+
+    <div id="welcomeModal" class="modal-overlay" style="display:none;">
+      <div class="modal-content">
+        <h2 style="font-size: 22px; font-weight: 800; margin: 0 0 2px;">Walk Through Tool</h2>
+        <label class="field">
+          <span class="label" style="font-weight:700; color:#1e293b;">Observed Educator Name</span>
+          <input type="text" id="welcomeEducatorInput" class="control" placeholder="Enter name…" />
+        </label>
+        <div class="welcome-toggle-group" aria-label="Observation timer sections">
+          <div class="welcome-toggle-row">
+            <span class="welcome-toggle-name">Opportunities to Respond</span>
+            <button id="welcomeOtrToggleBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Opportunities to Respond" title="Opportunities to Respond">
+              <span class="apple-switch-track">
+                <span class="apple-switch-thumb"></span>
+              </span>
+            </button>
+          </div>
+          <div class="welcome-toggle-row">
+            <span class="welcome-toggle-name">Instructional Feedback</span>
+            <button id="welcomeSelToggleBtn" type="button" class="apple-toggle-btn is-on" role="switch" aria-checked="true" aria-label="Toggle Instructional Feedback" title="Instructional Feedback">
+              <span class="apple-switch-track">
+                <span class="apple-switch-thumb"></span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <button id="welcomeContinueBtn" class="btn primary" type="button" disabled>Continue</button>
+        <footer class="fineprint" style="margin-top:0; color:#475569;">
+          <span>Data stays in your browser until you share or restart.</span>
+        </footer>
       </div>
     </div>
   </template>
 
   <template id="screen-results">
-    <main class="card">
-      <header class="header" style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div>
-          <h1 id="resultsTitle">Opportunities to Respond Results</h1>
-          <p class="subhead" id="resultsContext"></p>
-        </div>
-        <button id="resultsBackBtn" class="btn primary" style="min-height: auto; padding: 8px 16px; font-size: 14px; width: auto; border-radius: 999px; background-color: #6b7280; color: #fff; border: none;" type="button">Back</button>
-      </header>
-
-      <section class="actions" style="margin-top: 16px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--hairline);">
-        <div class="fineprint" style="width: 100%; text-align: center; margin-bottom: 8px; border-top: none; padding-top: 0; color: #1f9d55; font-weight: bold;">Clicking Copy Image puts these results on your clipboard so you can paste into an email or spreadsheet.</div>
-        <div style="display:flex; gap:12px; width:100%;">
-          <button id="shareBtn" class="btn" type="button" style="flex:1;">Copy Image</button>
-          <button id="restartBtn" class="btn restart" type="button" style="flex:1;">Restart</button>
-        </div>
-        <div id="shareStatus" class="fineprint" aria-live="polite" style="width: 100%; text-align: center; margin-top: 6px; border-top: none; padding-top: 0;"></div>
+    <main class="screen-stack has-single-bottom-dock" id="resultsScreenStack">
+      <section id="resultsTopBanner" class="section-card walkthrough-sticky-banner">
+        <header class="header">
+          <h1>The Walk Through Tool</h1>
+        </header>
       </section>
 
-      <section id="resultsGraphicSection" style="width: 100%; margin-top: 12px; text-align: center;">
-        <div class="fineprint" style="font-size: 12px; color: var(--muted); margin-bottom: 12px; border-top: none; padding-top: 0;">Tip for mobile: Touch &amp; hold the graphic below to Share or Copy.</div>
-        <div id="resultsLoadingIndicator" style="padding: 36px 16px; font-size: 14px; color: var(--muted);">Generating graphic...</div>
-        <img id="resultsGraphicImg" style="display: none; max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--hairline); box-shadow: var(--shadow); margin: 0 auto; -webkit-touch-callout: default;" alt="Results Summary Graphic" />
+      <section id="resultsDetailsBanner" class="section-card details-fade-banner">
+        <header class="header">
+          <p class="subhead" id="resultsContext" style="font-weight:600; color:var(--ink);">Observed Educator Name: —</p>
+          <p class="subhead" style="margin-top:4px;">Your observation summary is ready to copy or share below.</p>
+        </header>
+      </section>
+
+      <section class="section-card">
+        <header class="header tile-header-divider">
+          <h1 id="resultsTitle">Opportunities to Respond Results</h1>
+        </header>
+
+        <div style="display:flex; flex-direction:column; gap:6px; align-items:stretch; margin-bottom:12px;">
+          <div class="fineprint" style="width: 100%; text-align: center; margin-top: 0; color: #1f9d55; font-weight: bold;">Clicking Copy Image puts these results on your clipboard so you can paste into an email or spreadsheet.</div>
+          <div id="shareStatus" class="fineprint" aria-live="polite" style="width: 100%; text-align: center;"></div>
+        </div>
+
+        <div id="resultsGraphicSection" style="width: 100%; text-align: center;">
+          <div class="fineprint" style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">Tip for mobile: Touch &amp; hold the graphic below to Share or Copy.</div>
+          <div id="resultsLoadingIndicator" style="padding: 36px 16px; font-size: 14px; color: var(--muted);">Generating graphic...</div>
+          <img id="resultsGraphicImg" style="display: none; max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--hairline); box-shadow: var(--shadow); margin: 0 auto; -webkit-touch-callout: default;" alt="Results Summary Graphic" />
+        </div>
       </section>
     </main>
+
+    <div class="run-bottom-dock" aria-label="Pinned results actions">
+      <div class="run-bottom-dock-inner">
+        <nav class="run-dock-card run-dock-nav results-dock-bar" aria-label="Results navigation and sharing controls">
+          <button id="resultsBackBtn" class="btn btn-dock-sm" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg><span class="dock-btn-label">Back</span></button>
+          <button id="shareBtn" class="btn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="dock-btn-label">Copy Image</span></button>
+          <button id="csvBtn" class="btn btn-dock-sm" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span class="dock-btn-label">CSV</span></button>
+          <button id="restartBtn" class="btn restart" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="dock-btn-label">Restart</span></button>
+        </nav>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -1591,27 +2146,246 @@
       }
 
       function mountTemplate(id){
+        if (window.__wtBannerScrollCleanup) {
+          window.__wtBannerScrollCleanup();
+          window.__wtBannerScrollCleanup = null;
+        }
         const tpl = document.getElementById(id);
         app.innerHTML = "";
         app.appendChild(tpl.content.cloneNode(true));
+        window.scrollTo(0, 0);
+      }
+
+      function setupStickyWalkthroughBanner(selector, secondarySelector) {
+        if (window.__wtBannerScrollCleanup) {
+          window.__wtBannerScrollCleanup();
+          window.__wtBannerScrollCleanup = null;
+        }
+        const banner = document.querySelector(selector);
+        const secondaryBanner = secondarySelector ? document.querySelector(secondarySelector) : null;
+        if (!banner && !secondaryBanner) return;
+
+        let lastScrollY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+        let revealProgress = 1;
+        let rafId = null;
+
+        const applyVisuals = (currentY) => {
+          if (banner) {
+            const clamped = Math.min(1, Math.max(0, revealProgress));
+            const yShift = (1 - clamped) * -8;
+            banner.style.opacity = clamped.toFixed(3);
+            banner.style.transform = `translate3d(0, ${yShift.toFixed(2)}px, 0)`;
+            banner.style.pointerEvents = clamped <= 0.05 ? "none" : "";
+            banner.classList.toggle("is-scrolled-sticky", currentY > 8 && clamped > 0.05);
+          }
+          if (secondaryBanner) {
+            const fadeSpan = Math.max(68, Math.round((secondaryBanner.offsetHeight || 72) * 0.95));
+            const inPlaceProgress = Math.max(0, Math.min(1, 1 - currentY / fadeSpan));
+            secondaryBanner.style.opacity = inPlaceProgress.toFixed(3);
+            secondaryBanner.style.pointerEvents = inPlaceProgress <= 0.05 ? "none" : "";
+          }
+        };
+
+        const update = () => {
+          rafId = null;
+          if ((banner && !banner.isConnected) || (secondaryBanner && !secondaryBanner.isConnected)) return;
+          const currentY = Math.max(0, window.scrollY || window.pageYOffset || 0);
+          const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+          const fadeDistance = Math.max(72, Math.round(((banner && banner.offsetHeight) || 72) * 1.1));
+          const delta = currentY - lastScrollY;
+          lastScrollY = currentY;
+
+          if (currentY <= 2) {
+            revealProgress = 1;
+          } else if (delta > 0) {
+            revealProgress = Math.max(0, revealProgress - delta / fadeDistance);
+          } else if (delta < 0 && currentY < maxScroll - 2) {
+            revealProgress = Math.min(1, revealProgress - delta / fadeDistance);
+          }
+
+          if (currentY > 0 && currentY < fadeDistance) {
+            revealProgress = Math.max(revealProgress, 1 - currentY / fadeDistance);
+          }
+
+          applyVisuals(currentY);
+        };
+
+        const onScroll = () => {
+          if (banner && !banner.isConnected) {
+            window.removeEventListener("scroll", onScroll);
+            return;
+          }
+          if (rafId === null) {
+            rafId = requestAnimationFrame(update);
+          }
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        applyVisuals(lastScrollY);
+        window.__wtBannerScrollCleanup = () => {
+          window.removeEventListener("scroll", onScroll);
+          if (rafId !== null) cancelAnimationFrame(rafId);
+        };
+      }
+
+      function setupNotesPopupDock({ popupId, inputId, toggleBtnId, onLayoutChange }) {
+        const popupEl = document.getElementById(popupId);
+        const editorEl = document.getElementById(inputId);
+        const toggleBtnEl = document.getElementById(toggleBtnId);
+        if (!editorEl) return null;
+
+        const notifyLayout = () => {
+          if (typeof onLayoutChange === "function") {
+            requestAnimationFrame(onLayoutChange);
+          }
+        };
+
+        const autoResizeNotes = () => {
+          editorEl.style.height = "auto";
+          const nextH = Math.max(56, editorEl.scrollHeight);
+          if (nextH > 165) {
+            editorEl.style.height = "165px";
+            editorEl.style.overflowY = "auto";
+          } else {
+            editorEl.style.height = nextH + "px";
+            editorEl.style.overflowY = "hidden";
+          }
+          notifyLayout();
+        };
+
+        const updateNotesEmptyAndDot = () => {
+          const isEmpty = !editorEl.innerText || editorEl.innerText.trim() === "";
+          editorEl.classList.toggle("is-empty", isEmpty);
+          if (toggleBtnEl) {
+            toggleBtnEl.classList.toggle("has-notes", !!(state.notes && state.notes.trim().length > 0));
+          }
+        };
+
+        Object.defineProperty(editorEl, "disabled", {
+          configurable: true,
+          get() {
+            return editorEl.getAttribute("contenteditable") !== "true";
+          },
+          set(val) {
+            editorEl.contentEditable = val ? "false" : "true";
+            editorEl.setAttribute("aria-disabled", val ? "true" : "false");
+            editorEl.style.opacity = val ? "0.6" : "1";
+            editorEl.style.pointerEvents = val ? "none" : "auto";
+            editorEl.style.backgroundColor = val ? "#f3f4f6" : "rgba(255, 255, 255, 0.94)";
+          }
+        });
+
+        Object.defineProperty(editorEl, "value", {
+          configurable: true,
+          get() {
+            return domToFormattedText(editorEl);
+          },
+          set(val) {
+            setFormattedTextToDom(editorEl, val);
+            updateNotesEmptyAndDot();
+            autoResizeNotes();
+          }
+        });
+
+        setFormattedTextToDom(editorEl, state.notes);
+        updateNotesEmptyAndDot();
+        requestAnimationFrame(autoResizeNotes);
+
+        const syncNotes = () => {
+          state.notes = domToFormattedText(editorEl);
+          updateNotesEmptyAndDot();
+          autoResizeNotes();
+        };
+
+        editorEl.addEventListener("input", syncNotes);
+        editorEl.addEventListener("blur", syncNotes);
+        editorEl.addEventListener("paste", () => {
+          requestAnimationFrame(syncNotes);
+        });
+
+        editorEl.addEventListener("keydown", (e) => {
+          if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === "b" || e.key === "B" || e.code === "KeyB")) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+            try {
+              document.execCommand("styleWithCSS", false, false);
+            } catch (err) {}
+
+            let success = false;
+            try {
+              success = document.execCommand("bold", false, null);
+            } catch (err) {
+              success = false;
+            }
+
+            const sel = window.getSelection();
+            if (!success && sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+              const range = sel.getRangeAt(0);
+              if (editorEl.contains(range.commonAncestorContainer)) {
+                try {
+                  const b = document.createElement("b");
+                  b.appendChild(range.extractContents());
+                  range.insertNode(b);
+                  sel.removeAllRanges();
+                  const newRange = document.createRange();
+                  newRange.selectNodeContents(b);
+                  sel.addRange(newRange);
+                } catch (err) {}
+              }
+            }
+
+            syncNotes();
+            return;
+          }
+          if (e.key === "Enter") {
+            requestAnimationFrame(autoResizeNotes);
+          }
+        });
+
+        editorEl.addEventListener("keyup", autoResizeNotes);
+        editorEl.addEventListener("change", autoResizeNotes);
+        const onWindowResize = () => {
+          if (!editorEl.isConnected) {
+            window.removeEventListener("resize", onWindowResize);
+            return;
+          }
+          autoResizeNotes();
+        };
+        window.addEventListener("resize", onWindowResize);
+
+        if (toggleBtnEl && popupEl) {
+          toggleBtnEl.addEventListener("click", () => {
+            const isCurrentlyOpen = popupEl.style.display !== "none";
+            if (isCurrentlyOpen) {
+              syncNotes();
+              popupEl.style.display = "none";
+              toggleBtnEl.classList.remove("is-open");
+              toggleBtnEl.setAttribute("aria-expanded", "false");
+              notifyLayout();
+            } else {
+              setFormattedTextToDom(editorEl, state.notes);
+              updateNotesEmptyAndDot();
+              popupEl.style.display = "block";
+              toggleBtnEl.classList.add("is-open");
+              toggleBtnEl.setAttribute("aria-expanded", "true");
+              requestAnimationFrame(() => {
+                autoResizeNotes();
+                editorEl.focus();
+                notifyLayout();
+              });
+            }
+          });
+        }
+
+        return editorEl;
       }
 
       function showSetup(){
-        state.currentScreen = "setup";
         resetRunData();
-        mountTemplate("screen-setup");
-
-        const setupTitle = document.getElementById("setupTitle");
-
-        const educatorInput = document.getElementById("educatorInput");
-        const beginBtn = document.getElementById("beginBtn");
-
-        function updateBeginEnabled(){
-          beginBtn.disabled = !state.educatorName.trim();
-        }
-
-        setupTitle.textContent = "Walk Through Tool";
         state.educatorName = "";
+        state.mode = "All";
         state.lessonTargetPosted = null;
         state.curriculaMaterialsUsed = null;
         state.regulationSpace = null;
@@ -1621,29 +2395,50 @@
         state.praiseRatingsTouched = false;
         state.questionsButtonsClicked = false;
         state.praiseRatings = [null, null, null, null, null, null];
-        updateBeginEnabled();
-
-        educatorInput.addEventListener("input", (e) => {
-          state.educatorName = e.target.value;
-          updateBeginEnabled();
-        });
-
-        educatorInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" && !beginBtn.disabled) {
-            e.preventDefault();
-            beginBtn.click();
-          }
-        });
-
-        beginBtn.addEventListener("click", () => {
-          state.mode = "All";
-          showRun();
-        });
+        showRun(false, true);
       }
 
-      function showCharacterStrong() {
-        state.currentScreen = "character-strong";
-        mountTemplate("screen-character-strong");
+      function showQuestions() {
+        state.currentScreen = "questions";
+        mountTemplate("screen-questions");
+        setupStickyWalkthroughBanner("#questionsTopBanner", "#questionsDetailsBanner");
+
+        const detailsEducatorContext = document.getElementById("detailsEducatorContext");
+        const detailsIntroText = document.getElementById("detailsIntroText");
+        if (detailsEducatorContext) {
+          detailsEducatorContext.textContent = state.educatorName && state.educatorName.trim()
+            ? `Observed Educator Name: ${state.educatorName}`
+            : "Observed Educator Name: —";
+        }
+
+        const q1YesBtn = document.getElementById("q1YesBtn");
+        const q1NoBtn = document.getElementById("q1NoBtn");
+        const q2YesBtn = document.getElementById("q2YesBtn");
+        const q2NoBtn = document.getElementById("q2NoBtn");
+        
+        const qRegulationSpaceGroup = document.getElementById("qRegulationSpaceGroup");
+        const q3YesBtn = document.getElementById("q3YesBtn");
+        const q3NoBtn = document.getElementById("q3NoBtn");
+        
+        const qZonesGraphicGroup = document.getElementById("qZonesGraphicGroup");
+        const q4YesBtn = document.getElementById("q4YesBtn");
+        const q4NoBtn = document.getElementById("q4NoBtn");
+
+        const characterStrongCard = document.getElementById("characterStrongCard");
+        const nextBtn = document.getElementById("questionsNextBtn");
+        
+        const isPraiseOrAll = state.mode === "Praise" || (state.mode === "All" && state.allIncludeSel);
+        if (isPraiseOrAll) {
+          qRegulationSpaceGroup.style.display = "flex";
+          qZonesGraphicGroup.style.display = "flex";
+          if (characterStrongCard) characterStrongCard.style.display = "block";
+          if (detailsIntroText) detailsIntroText.textContent = "Please complete Observation Details and Character Strong Observations below, or tap Skip.";
+        } else {
+          qRegulationSpaceGroup.style.display = "none";
+          qZonesGraphicGroup.style.display = "none";
+          if (characterStrongCard) characterStrongCard.style.display = "none";
+          if (detailsIntroText) detailsIntroText.textContent = "Please answer the Observation Details questions below, or tap Skip.";
+        }
 
         const updateCsButtonsUI = () => {
           document.querySelectorAll(".cs-btn-group").forEach(group => {
@@ -1664,7 +2459,7 @@
               state.praiseRatings = [null, null, null, null, null, null];
             }
             if (state.praiseRatings[qIndex] === val) {
-              state.praiseRatings[qIndex] = null; // Unselect if clicked again
+              state.praiseRatings[qIndex] = null;
             } else {
               state.praiseRatings[qIndex] = val;
             }
@@ -1672,66 +2467,6 @@
             updateCsButtonsUI();
           });
         });
-
-        const handleSkip = () => {
-          state.skipSELObservations = true;
-          state.praiseRatings = [null, null, null, null, null, null];
-          state.praiseRatingsTouched = false;
-          showQuestions();
-        };
-
-        const csSkipBtn = document.getElementById("csSkipBtn");
-        if (csSkipBtn) csSkipBtn.addEventListener("click", handleSkip);
-        const csSkipBtnHeader = document.getElementById("csSkipBtnHeader");
-        if (csSkipBtnHeader) csSkipBtnHeader.addEventListener("click", handleSkip);
-
-        const csBackBtn = document.getElementById("csBackBtn");
-        csBackBtn.addEventListener("click", () => {
-          showRun(true);
-        });
-
-        const csNextBtn = document.getElementById("csNextBtn");
-        csNextBtn.addEventListener("click", () => {
-          const hasAnyRating = state.praiseRatings && state.praiseRatings.some(r => r !== null && r !== undefined);
-          if (!hasAnyRating || !state.praiseRatingsTouched) {
-            state.skipSELObservations = true;
-            state.praiseRatings = [null, null, null, null, null, null];
-          } else {
-            state.skipSELObservations = false;
-          }
-          showQuestions();
-        });
-
-        updateCsButtonsUI();
-      }
-
-      function showQuestions() {
-        state.currentScreen = "questions";
-        mountTemplate("screen-questions");
-
-        const q1YesBtn = document.getElementById("q1YesBtn");
-        const q1NoBtn = document.getElementById("q1NoBtn");
-        const q2YesBtn = document.getElementById("q2YesBtn");
-        const q2NoBtn = document.getElementById("q2NoBtn");
-        
-        const qRegulationSpaceGroup = document.getElementById("qRegulationSpaceGroup");
-        const q3YesBtn = document.getElementById("q3YesBtn");
-        const q3NoBtn = document.getElementById("q3NoBtn");
-        
-        const qZonesGraphicGroup = document.getElementById("qZonesGraphicGroup");
-        const q4YesBtn = document.getElementById("q4YesBtn");
-        const q4NoBtn = document.getElementById("q4NoBtn");
-
-        const nextBtn = document.getElementById("questionsNextBtn");
-        
-        const isPraiseOrAll = state.mode === "Praise" || (state.mode === "All" && state.allIncludeSel);
-        if (isPraiseOrAll) {
-          qRegulationSpaceGroup.style.display = "flex";
-          qZonesGraphicGroup.style.display = "flex";
-        } else {
-          qRegulationSpaceGroup.style.display = "none";
-          qZonesGraphicGroup.style.display = "none";
-        }
 
         function updateUI() {
           q1YesBtn.classList.toggle("selected", state.lessonTargetPosted === "Yes");
@@ -1748,6 +2483,7 @@
             q4NoBtn.classList.toggle("selected", state.characterTraitGraphic === "No");
           }
 
+          updateCsButtonsUI();
           nextBtn.disabled = false;
         }
 
@@ -1795,43 +2531,71 @@
           updateUI();
         });
 
-        const handleQuestionsSkip = () => {
-          state.skipQuestions = true;
-          state.curriculaMaterialsUsed = null;
-          state.lessonTargetPosted = null;
-          state.regulationSpace = null;
-          state.characterTraitGraphic = null;
-          state.questionsButtonsClicked = false;
-          showResults();
-        };
+        const commitCombinedAndContinue = () => {
+          const hasAnyQuestionAnswer = !!(
+            state.curriculaMaterialsUsed ||
+            state.lessonTargetPosted ||
+            (isPraiseOrAll && (state.regulationSpace || state.characterTraitGraphic))
+          );
+          const hasAnyCsRating = isPraiseOrAll && !!(
+            state.praiseRatings && state.praiseRatings.some(r => r !== null && r !== undefined)
+          );
 
-        const questionsSkipBtn = document.getElementById("questionsSkipBtn");
-        if (questionsSkipBtn) questionsSkipBtn.addEventListener("click", handleQuestionsSkip);
-        const questionsSkipBtnHeader = document.getElementById("questionsSkipBtnHeader");
-        if (questionsSkipBtnHeader) questionsSkipBtnHeader.addEventListener("click", handleQuestionsSkip);
-
-        nextBtn.addEventListener("click", () => {
-          const hasAnyAnswer = !!(state.curriculaMaterialsUsed || state.lessonTargetPosted || state.regulationSpace || state.characterTraitGraphic);
-          if (!hasAnyAnswer) {
+          if (!hasAnyQuestionAnswer) {
             state.skipQuestions = true;
             state.curriculaMaterialsUsed = null;
             state.lessonTargetPosted = null;
             state.regulationSpace = null;
             state.characterTraitGraphic = null;
+            state.questionsButtonsClicked = false;
           } else {
             state.skipQuestions = false;
+            state.questionsButtonsClicked = true;
           }
+
+          if (!hasAnyCsRating) {
+            state.skipSELObservations = true;
+            state.praiseRatings = [null, null, null, null, null, null];
+            state.praiseRatingsTouched = false;
+          } else {
+            state.skipSELObservations = false;
+            state.praiseRatingsTouched = true;
+          }
+
           showResults();
-        });
+        };
+
+        const questionsSkipBtn = document.getElementById("questionsSkipBtn");
+        if (questionsSkipBtn) questionsSkipBtn.addEventListener("click", commitCombinedAndContinue);
+
+        nextBtn.addEventListener("click", commitCombinedAndContinue);
         
         const backBtn = document.getElementById("questionsBackBtn");
         backBtn.addEventListener("click", () => {
-          if (state.mode === "Praise" || (state.mode === "All" && state.allIncludeSel)) {
-            showCharacterStrong();
-          } else {
-            showRun(true);
-          }
+          showRun(true);
         });
+
+        const questionsStack = document.getElementById("questionsScreenStack");
+        const questionsDock = document.getElementById("questionsBottomDock");
+        const syncQuestionsPadding = () => {
+          if (!questionsStack || !questionsDock || !questionsStack.isConnected) return;
+          const dockH = Math.ceil(questionsDock.getBoundingClientRect().height || 80);
+          const appPadBottom = parseFloat(getComputedStyle(app).paddingBottom) || 12;
+          questionsStack.style.paddingBottom = Math.max(24, dockH + 16 - appPadBottom) + "px";
+        };
+
+        setupNotesPopupDock({
+          popupId: "questionsNotesPopup",
+          inputId: "questionsNotesInput",
+          toggleBtnId: "questionsNotesBtn",
+          onLayoutChange: syncQuestionsPadding
+        });
+
+        window.addEventListener("resize", () => {
+          if (!questionsStack || !questionsStack.isConnected) return;
+          syncQuestionsPadding();
+        });
+        requestAnimationFrame(syncQuestionsPadding);
 
         updateUI();
       }
@@ -2077,12 +2841,27 @@
         return segments;
       }
 
-      function showRun(restore = false){
+      function showRun(restore = false, openWelcomeOnMount = false){
         state.currentScreen = "run";
         if (!restore) {
           resetRunData();
         }
         mountTemplate("screen-run");
+        setupStickyWalkthroughBanner("#runTopBanner", "#runDetailsBanner");
+
+        const runStack = document.getElementById("runScreenStack");
+        const runDock = document.getElementById("runBottomDock");
+        const syncRunScrollPadding = () => {
+          if (!runStack || !runDock || !runStack.isConnected) return;
+          const timerBar = runDock.querySelector(".timer-top-bar");
+          const topEdge = timerBar
+            ? timerBar.getBoundingClientRect().top
+            : runDock.getBoundingClientRect().top;
+          const distFromBottomToTimerTop = Math.max(0, window.innerHeight - topEdge);
+          const appPadBottom = parseFloat(getComputedStyle(app).paddingBottom) || 12;
+          const targetPad = Math.max(24, Math.ceil(distFromBottomToTimerTop + 12 - appPadBottom));
+          runStack.style.paddingBottom = targetPad + "px";
+        };
 
         const runTitle = document.getElementById("runTitle");
         const runContext = document.getElementById("runContext");
@@ -2123,8 +2902,8 @@
 
         const toggleAllOtrBtn = document.getElementById("toggleAllOtrBtn");
         const toggleAllSelBtn = document.getElementById("toggleAllSelBtn");
-        const toggleAllOtrStateText = document.getElementById("toggleAllOtrStateText");
-        const toggleAllSelStateText = document.getElementById("toggleAllSelStateText");
+        const welcomeOtrToggleBtn = document.getElementById("welcomeOtrToggleBtn");
+        const welcomeSelToggleBtn = document.getElementById("welcomeSelToggleBtn");
 
         function setOtrGroupView(group, recordEvent = false) {
           state.activeOtrGroup = group;
@@ -2217,10 +2996,37 @@
         }
 
         function updateAllTogglesUI() {
+          const otrHeaderRow = document.getElementById("otrHeaderRow");
+          const praiseHeaderRow = document.getElementById("praiseHeaderRow");
+
           if (state.mode !== "All") {
             if (toggleAllOtrBtn) toggleAllOtrBtn.style.setProperty("display", "none", "important");
             if (toggleAllSelBtn) toggleAllSelBtn.style.setProperty("display", "none", "important");
+            if (otrContainer) otrContainer.classList.remove("is-toggle-off");
+            if (praiseContainer) praiseContainer.classList.remove("is-toggle-off");
+            if (otrHeaderRow) otrHeaderRow.style.marginBottom = "10px";
+            if (praiseHeaderRow) praiseHeaderRow.style.marginBottom = "12px";
             return;
+          }
+
+          if (otrContainer) otrContainer.classList.toggle("is-toggle-off", !state.allIncludeOtr);
+          if (praiseContainer) praiseContainer.classList.toggle("is-toggle-off", !state.allIncludeSel);
+
+          if (welcomeOtrToggleBtn) {
+            welcomeOtrToggleBtn.classList.toggle("is-on", !!state.allIncludeOtr);
+            welcomeOtrToggleBtn.classList.toggle("is-off", !state.allIncludeOtr);
+            welcomeOtrToggleBtn.setAttribute("aria-checked", state.allIncludeOtr ? "true" : "false");
+            welcomeOtrToggleBtn.setAttribute("title", "Opportunities to Respond");
+            const welcomeOtrRow = welcomeOtrToggleBtn.closest(".welcome-toggle-row");
+            if (welcomeOtrRow) welcomeOtrRow.classList.toggle("is-toggle-off", !state.allIncludeOtr);
+          }
+          if (welcomeSelToggleBtn) {
+            welcomeSelToggleBtn.classList.toggle("is-on", !!state.allIncludeSel);
+            welcomeSelToggleBtn.classList.toggle("is-off", !state.allIncludeSel);
+            welcomeSelToggleBtn.setAttribute("aria-checked", state.allIncludeSel ? "true" : "false");
+            welcomeSelToggleBtn.setAttribute("title", "Instructional Feedback");
+            const welcomeSelRow = welcomeSelToggleBtn.closest(".welcome-toggle-row");
+            if (welcomeSelRow) welcomeSelRow.classList.toggle("is-toggle-off", !state.allIncludeSel);
           }
 
           if (toggleAllOtrBtn) {
@@ -2229,8 +3035,8 @@
               toggleAllOtrBtn.classList.remove("is-off");
               toggleAllOtrBtn.classList.add("is-on");
               toggleAllOtrBtn.setAttribute("aria-checked", "true");
-              toggleAllOtrBtn.setAttribute("title", "Opportunity to Respond: ON");
-              if (toggleAllOtrStateText) toggleAllOtrStateText.textContent = "ON";
+              toggleAllOtrBtn.setAttribute("title", "Opportunity to Respond");
+              if (otrHeaderRow) otrHeaderRow.style.marginBottom = "10px";
               if (otrGroupToggleContainer) otrGroupToggleContainer.style.display = "flex";
               if (otrButtonsWrapper) otrButtonsWrapper.style.display = "block";
               setOtrGroupView(state.activeOtrGroup || "whole", false);
@@ -2238,8 +3044,8 @@
               toggleAllOtrBtn.classList.remove("is-on");
               toggleAllOtrBtn.classList.add("is-off");
               toggleAllOtrBtn.setAttribute("aria-checked", "false");
-              toggleAllOtrBtn.setAttribute("title", "Opportunity to Respond: OFF");
-              if (toggleAllOtrStateText) toggleAllOtrStateText.textContent = "OFF";
+              toggleAllOtrBtn.setAttribute("title", "Opportunity to Respond");
+              if (otrHeaderRow) otrHeaderRow.style.marginBottom = "0px";
               if (otrGroupToggleContainer) otrGroupToggleContainer.style.display = "none";
               if (otrButtonsWrapper) otrButtonsWrapper.style.display = "none";
             }
@@ -2251,18 +3057,19 @@
               toggleAllSelBtn.classList.remove("is-off");
               toggleAllSelBtn.classList.add("is-on");
               toggleAllSelBtn.setAttribute("aria-checked", "true");
-              toggleAllSelBtn.setAttribute("title", "Instructional Feedback: ON");
-              if (toggleAllSelStateText) toggleAllSelStateText.textContent = "ON";
+              toggleAllSelBtn.setAttribute("title", "Instructional Feedback");
+              if (praiseHeaderRow) praiseHeaderRow.style.marginBottom = "12px";
               if (praiseButtons) praiseButtons.style.display = "grid";
             } else {
               toggleAllSelBtn.classList.remove("is-on");
               toggleAllSelBtn.classList.add("is-off");
               toggleAllSelBtn.setAttribute("aria-checked", "false");
-              toggleAllSelBtn.setAttribute("title", "Instructional Feedback: OFF");
-              if (toggleAllSelStateText) toggleAllSelStateText.textContent = "OFF";
+              toggleAllSelBtn.setAttribute("title", "Instructional Feedback");
+              if (praiseHeaderRow) praiseHeaderRow.style.marginBottom = "0px";
               if (praiseButtons) praiseButtons.style.display = "none";
             }
           }
+          requestAnimationFrame(syncRunScrollPadding);
         }
 
         updateAllTogglesUI();
@@ -2275,6 +3082,18 @@
         }
         if (toggleAllSelBtn) {
           toggleAllSelBtn.addEventListener("click", () => {
+            state.allIncludeSel = !state.allIncludeSel;
+            updateAllTogglesUI();
+          });
+        }
+        if (welcomeOtrToggleBtn) {
+          welcomeOtrToggleBtn.addEventListener("click", () => {
+            state.allIncludeOtr = !state.allIncludeOtr;
+            updateAllTogglesUI();
+          });
+        }
+        if (welcomeSelToggleBtn) {
+          welcomeSelToggleBtn.addEventListener("click", () => {
             state.allIncludeSel = !state.allIncludeSel;
             updateAllTogglesUI();
           });
@@ -2341,14 +3160,69 @@
         const praiseIndCritBtn = document.getElementById("praiseIndCritBtn");
 
         const stopBtn = document.getElementById("stopBtn");
+        const transitionBtn = document.getElementById("transitionBtn");
         const runBackBtn = document.getElementById("runBackBtn");
+
+        const welcomeModal = document.getElementById("welcomeModal");
+        const welcomeEducatorInput = document.getElementById("welcomeEducatorInput");
+        const welcomeContinueBtn = document.getElementById("welcomeContinueBtn");
+
+        function updateRunContext() {
+          runContext.textContent = state.educatorName && state.educatorName.trim()
+            ? `Observed Educator Name: ${state.educatorName}`
+            : "Observed Educator Name: —";
+        }
+
+        function updateWelcomeContinueEnabled() {
+          if (welcomeContinueBtn && welcomeEducatorInput) {
+            welcomeContinueBtn.disabled = !welcomeEducatorInput.value.trim();
+          }
+        }
+
+        function openWelcomeModal(prefill = false) {
+          if (!welcomeModal) return;
+          if (welcomeEducatorInput) {
+            welcomeEducatorInput.value = prefill ? (state.educatorName || "") : "";
+          }
+          updateAllTogglesUI();
+          updateWelcomeContinueEnabled();
+          welcomeModal.style.display = "flex";
+          setTimeout(() => {
+            if (welcomeEducatorInput) welcomeEducatorInput.focus();
+          }, 60);
+        }
+
+        if (welcomeEducatorInput) {
+          welcomeEducatorInput.addEventListener("input", (e) => {
+            state.educatorName = e.target.value;
+            updateWelcomeContinueEnabled();
+          });
+          welcomeEducatorInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && welcomeContinueBtn && !welcomeContinueBtn.disabled) {
+              e.preventDefault();
+              welcomeContinueBtn.click();
+            }
+          });
+        }
+
+        if (welcomeContinueBtn) {
+          welcomeContinueBtn.addEventListener("click", () => {
+            state.educatorName = welcomeEducatorInput ? welcomeEducatorInput.value : state.educatorName;
+            updateRunContext();
+            if (welcomeModal) welcomeModal.style.display = "none";
+            requestAnimationFrame(syncRunScrollPadding);
+          });
+        }
 
         runBackBtn.addEventListener("click", () => {
           clearTimers();
-          showSetup();
+          openWelcomeModal(true);
         });
 
-        runContext.textContent = `Observed Educator Name: ${state.educatorName}`;
+        updateRunContext();
+        if (openWelcomeOnMount) {
+          openWelcomeModal(false);
+        }
 
         const engagementModal = document.getElementById("engagementModal");
         const engTotalStudents = document.getElementById("engTotalStudents");
@@ -2364,10 +3238,9 @@
 
           if (state.mode === "All" && state.startedAt !== null && state.stoppedAt === null) {
             const minutesElapsed = elapsed / 60000;
-            // Engagement checks begin at 1 minute and continue every 4 minutes (1, 5, 9, 13, 17, 21, 25, 29...)
-            // Pop up continues on this frequency throughout the entire observation
+            // Engagement checks trigger on the 4th minute of each 5-minute block (4, 9, 14, 19, 24...)
             if (engagementModal && engagementModal.style.display === "none") {
-              for (let t = 1; t <= minutesElapsed; t += 4) {
+              for (let t = 4; t <= minutesElapsed; t += 5) {
                 if (!state.engagementPopupsShown[t]) {
                   state.engagementPopupsShown[t] = true;
                   showEngagementModal(t);
@@ -2424,6 +3297,7 @@
         }
 
         function setOtrEnabled(on){
+          if (transitionBtn) transitionBtn.disabled = !on;
           if (structWholeBtn) structWholeBtn.disabled = !on;
           if (structSmallBtn) structSmallBtn.disabled = !on;
           if (structPartnersBtn) structPartnersBtn.disabled = !on;
@@ -2614,18 +3488,24 @@
         }
 
         function doStart(){
-          if (state.startedAt !== null) return;
+          if (state.startedAt !== null) {
+            if (state.stoppedAt === null) return;
+            const now = performance.now();
+            state.startedAt += Math.max(0, now - state.stoppedAt);
+            state.stoppedAt = null;
+            state.stopWall = null;
+          } else {
+            state.startWall = new Date();
+            state.stopWall = null;
+            state.startedAt = performance.now();
+            state.stoppedAt = null;
+          }
 
-          state.startWall = new Date();
-          state.stopWall = null;
-
-          state.startedAt = performance.now();
-          state.stoppedAt = null;
-
+          clearTimers();
           setOtrEnabled(true);
           stopBtn.disabled = false;
           startBtn.disabled = true;
-          if (nextBtn) nextBtn.disabled = false;
+          if (nextBtn) nextBtn.disabled = true;
           updateUndoBtn();
           updateButtonBadges();
           
@@ -2661,6 +3541,7 @@
           }
           setOtrEnabled(false);
           stopBtn.disabled = true;
+          startBtn.disabled = false;
 
           state.stoppedAt = performance.now();
           state.stopWall = new Date();
@@ -2668,26 +3549,21 @@
 
           clearTimers();
           if (nextBtn) nextBtn.disabled = false;
-          if (hintText) hintText.textContent = "Timer stopped. You can edit your notes or tap Next to proceed.";
+          if (hintText) hintText.textContent = "Timer paused. Tap Play to resume, edit notes, or tap Next to proceed.";
         }
 
         const nextBtn = document.getElementById("nextBtn");
         function doNext(){
+          if (state.stoppedAt === null) return;
           if (timerNotes) {
             state.notes = domToFormattedText(timerNotes);
           }
-          if (state.startedAt !== null && state.stoppedAt === null) {
-            doStop();
-          }
-          if (state.mode === "Praise" || (state.mode === "All" && state.allIncludeSel)) {
-            showCharacterStrong();
-          } else {
-            showQuestions();
-          }
+          showQuestions();
         }
 
         undoBtn.addEventListener("click", doUndo);
         startBtn.addEventListener("click", doStart);
+        if (transitionBtn) transitionBtn.addEventListener("click", () => doOtr("transition"));
         if (nextBtn) nextBtn.addEventListener("click", doNext);
         if (structWholeBtn) structWholeBtn.addEventListener("click", () => doOtr("structWhole"));
         if (structSmallBtn) structSmallBtn.addEventListener("click", () => doOtr("structSmall"));
@@ -2814,109 +3690,36 @@
 
         stopBtn.addEventListener("click", doStop);
 
-        const timerNotes = document.getElementById("timerNotes");
-        const autoResizeNotes = () => {
-          if (!timerNotes) return;
-          timerNotes.style.height = "auto";
-          timerNotes.style.height = Math.max(60, timerNotes.scrollHeight) + "px";
-        };
+        const timerNotes = setupNotesPopupDock({
+          popupId: "timerNotesContainer",
+          inputId: "timerNotes",
+          toggleBtnId: "runNotesBtn",
+          onLayoutChange: syncRunScrollPadding
+        });
 
-        if (timerNotes) {
-          Object.defineProperty(timerNotes, "disabled", {
-            configurable: true,
-            get() {
-              return timerNotes.getAttribute("contenteditable") !== "true";
-            },
-            set(val) {
-              timerNotes.contentEditable = val ? "false" : "true";
-              timerNotes.setAttribute("aria-disabled", val ? "true" : "false");
-              timerNotes.style.opacity = val ? "0.6" : "1";
-              timerNotes.style.pointerEvents = val ? "none" : "auto";
-              timerNotes.style.backgroundColor = val ? "#f3f4f6" : "var(--bg)";
-            }
-          });
-
-          Object.defineProperty(timerNotes, "value", {
-            configurable: true,
-            get() {
-              return domToFormattedText(timerNotes);
-            },
-            set(val) {
-              setFormattedTextToDom(timerNotes, val);
-              autoResizeNotes();
-            }
-          });
-
-          setFormattedTextToDom(timerNotes, state.notes);
-          requestAnimationFrame(autoResizeNotes);
-
-          const syncNotes = () => {
-            state.notes = domToFormattedText(timerNotes);
-            if (!timerNotes.innerText || timerNotes.innerText.trim() === "") {
-              timerNotes.classList.add("is-empty");
-            } else {
-              timerNotes.classList.remove("is-empty");
-            }
-            autoResizeNotes();
-          };
-
-          timerNotes.addEventListener("input", syncNotes);
-          timerNotes.addEventListener("blur", syncNotes);
-          timerNotes.addEventListener("paste", () => {
-            requestAnimationFrame(syncNotes);
-          });
-
-          timerNotes.addEventListener("keydown", (e) => {
-            if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === "b" || e.key === "B" || e.code === "KeyB")) {
-              e.preventDefault();
-              e.stopPropagation();
-              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-
-              try {
-                document.execCommand("styleWithCSS", false, false);
-              } catch (err) {}
-
-              let success = false;
-              try {
-                success = document.execCommand("bold", false, null);
-              } catch (err) {
-                success = false;
-              }
-
-              const sel = window.getSelection();
-              if (!success && sel && sel.rangeCount > 0 && !sel.isCollapsed) {
-                const range = sel.getRangeAt(0);
-                if (timerNotes.contains(range.commonAncestorContainer)) {
-                  try {
-                    const b = document.createElement("b");
-                    b.appendChild(range.extractContents());
-                    range.insertNode(b);
-                    sel.removeAllRanges();
-                    const newRange = document.createRange();
-                    newRange.selectNodeContents(b);
-                    sel.addRange(newRange);
-                  } catch (err) {}
-                }
-              }
-
-              syncNotes();
+        if (typeof ResizeObserver !== "undefined" && runDock) {
+          const ro = new ResizeObserver(() => {
+            if (!runStack || !runStack.isConnected) {
+              ro.disconnect();
               return;
             }
-            if (e.key === "Enter") {
-              requestAnimationFrame(autoResizeNotes);
-            }
+            requestAnimationFrame(syncRunScrollPadding);
           });
-          timerNotes.addEventListener("keyup", autoResizeNotes);
-          timerNotes.addEventListener("change", autoResizeNotes);
-          window.addEventListener("resize", autoResizeNotes);
+          ro.observe(runDock);
         }
+
+        window.addEventListener("resize", () => {
+          if (!runStack || !runStack.isConnected) return;
+          syncRunScrollPadding();
+        });
+        requestAnimationFrame(syncRunScrollPadding);
 
         if (state.startedAt === null) {
           startBtn.disabled = false;
           stopBtn.disabled = true;
           setOtrEnabled(false);
           updateUndoBtn();
-          if (nextBtn) nextBtn.disabled = false;
+          if (nextBtn) nextBtn.disabled = true;
           if (timerNotes) timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = true);
           elapsedText.textContent = "00:00.0";
@@ -2925,7 +3728,7 @@
           const durationMs = state.stoppedAt - state.startedAt;
           elapsedText.textContent = formatElapsed(durationMs);
           
-          startBtn.disabled = true;
+          startBtn.disabled = false;
           setOtrEnabled(false);
           updateUndoBtn();
           
@@ -2934,13 +3737,18 @@
           
           if (timerNotes) timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
-          hintText.textContent = "Timer stopped. You can edit your notes or tap Next to proceed.";
+          hintText.textContent = "Timer paused. Tap Play to resume, edit notes, or tap Next to proceed.";
         } else {
           startBtn.disabled = true;
           stopBtn.disabled = false;
-          if (nextBtn) nextBtn.disabled = false;
+          setOtrEnabled(true);
+          updateUndoBtn();
+          if (nextBtn) nextBtn.disabled = true;
           if (timerNotes) timerNotes.disabled = false;
           document.querySelectorAll(".rating-select").forEach(s => s.disabled = false);
+          clearTimers();
+          state.tickerId = setInterval(updateUI, 100);
+          updateUI();
         }
 
         updateButtonBadges();
@@ -3024,6 +3832,7 @@
         }
 
         for (const e of events){
+          if (e.kind === "transition") continue;
           const idx = Math.min(minutes - 1, Math.max(0, Math.floor(e.tMs / 60000)));
           bins.total[idx] += 1;
           
@@ -3267,7 +4076,7 @@
             "font-size": 14,
             "font-family": fontSans,
             "font-weight": 700
-          }, countsText, "#1e293b"));
+          }, countsText, "#64748b"));
         }
 
         // Circle/pill border
@@ -3741,6 +4550,22 @@
           }));
         }
 
+        // Thick grey dotted vertical lines for recorded Transition timestamps
+        const transitionEvents = (state.otrEvents || []).filter(e => e.kind === "transition");
+        if (transitionEvents.length > 0) {
+          const xMs = (ms) => pad.l + (ms / (maxMinutes * 60000)) * innerW;
+          for (const tev of transitionEvents) {
+            const tx = Math.max(pad.l, Math.min(pad.l + innerW, xMs(tev.tMs)));
+            svg.appendChild(el(svgNS, "line", {
+              x1: tx, y1: pad.t, x2: tx, y2: pad.t + innerH,
+              stroke: "#6b7280",
+              "stroke-width": 4,
+              "stroke-dasharray": "2 7",
+              "stroke-linecap": "round"
+            }));
+          }
+        }
+
         // 5-minute block ratio cards/pills under the x-axis
         for (let b = 0; b < numBlocks; b++) {
           const bStartMin = b * 5;
@@ -4071,6 +4896,9 @@
               legendRow(pIdx++, "#0d9488", cb.label, "3 2", 2.6, "1", lh);
             }
           }
+          if (transitionEvents.length > 0) {
+            legendRow(pIdx++, "#6b7280", "Transition", "2 7", 3.5, "1", lh);
+          }
           nextLegendY = ly + pIdx * lh + 12;
         } else if (state.mode === "Lesson Structure") {
           legendRow(0, cStructWhole, "Whole Group", null, 3.8, "1");
@@ -4170,6 +4998,11 @@
             for (const cb of smallCustom) {
               renderGroupItem(cOtrSgCustom, cb.label, "3 2", 2.6);
             }
+            curY += groupGap;
+          }
+
+          if (transitionEvents.length > 0) {
+            renderGroupItem("#6b7280", "Transition", "2 7", 3.5);
           }
 
           nextLegendY = curY + 8;
@@ -4267,6 +5100,8 @@
         const pos = positive || 0;
         const neg = negative || 0;
         if (neg === 0) return `${pos}:0`;
+        if (pos === 0) return `0:${neg}`;
+        if (pos < 5 && neg < 5) return `${pos}:${neg}`;
         const rounded = Math.round((pos / neg) * 10) / 10;
         const display = (rounded % 1 === 0) ? String(rounded) : rounded.toFixed(1);
         return `${pos}:${neg} (${display}:1)`;
@@ -4416,6 +5251,7 @@
 
           // 5-minute increment ratios placed directly under raw data of instructional feedback
           const numBlocks = Math.max(1, Math.ceil(durationMs / 300000));
+          const sortedTransitions = (state.otrEvents || []).filter(e => e.kind === "transition").slice().sort((a, b) => a.tMs - b.tMs);
           lines.push("");
           lines.push("Five-Minute Increment Ratios:");
           const customPraiseIds = (state.customPraiseButtons || []).map(c => c.id);
@@ -4431,6 +5267,12 @@
             const bNeg = bEvents.filter(e => ["redirect", "genCrit", "indCrit"].includes(e.kind)).length;
             const bRatioText = formatPraiseRatio(bPos, bNeg, effectiveDurationMs);
             lines.push(`  ${bStartMin}-${bEndMin} min ratio: ${bRatioText}`);
+            const bTransitions = sortedTransitions.filter(e =>
+              b === numBlocks - 1 ? e.tMs >= bStartMs : (e.tMs >= bStartMs && e.tMs < bEndMs)
+            );
+            for (const tev of bTransitions) {
+              lines.push(`    Transition at ${formatElapsed(Math.max(0, tev.tMs))}`);
+            }
           }
           
           const hasQuestionsObservations = !skipQuestions && !!(regulationSpace || characterTraitGraphic);
@@ -4460,6 +5302,7 @@
         } else if (state.mode === "Lesson Structure" || state.mode === "Engagement Check") {
           lines.push(`Total Events: ${otrTotal}`);
           const numBlocks = Math.max(1, Math.ceil(durationMs / 300000));
+          const sortedTransitions = (state.otrEvents || []).filter(e => e.kind === "transition").slice().sort((a, b) => a.tMs - b.tMs);
           lines.push("");
           lines.push("Five-Minute Increment Ratios:");
           for (let b = 0; b < numBlocks; b++) {
@@ -4472,6 +5315,12 @@
             const effectiveDurationMs = bDurationMs > 0 ? bDurationMs : 300000;
             const bRatioText = formatOtrRatio(bEvents.length, effectiveDurationMs);
             lines.push(`  ${bStartMin}-${bEndMin} min ratio: ${bRatioText}`);
+            const bTransitions = sortedTransitions.filter(e =>
+              b === numBlocks - 1 ? e.tMs >= bStartMs : (e.tMs >= bStartMs && e.tMs < bEndMs)
+            );
+            for (const tev of bTransitions) {
+              lines.push(`    Transition at ${formatElapsed(Math.max(0, tev.tMs))}`);
+            }
           }
         } else {
           const w = wholeOtr || {};
@@ -4549,6 +5398,7 @@
 
           // 5-minute increment ratios placed directly under raw data of whole group and small group
           const numBlocks = Math.max(1, Math.ceil(durationMs / 300000));
+          const sortedTransitions = (state.otrEvents || []).filter(e => e.kind === "transition").slice().sort((a, b) => a.tMs - b.tMs);
           lines.push("");
           lines.push("Five-Minute Increment Ratios:");
           for (let b = 0; b < numBlocks; b++) {
@@ -4561,6 +5411,12 @@
             const effectiveDurationMs = bDurationMs > 0 ? bDurationMs : 300000;
             const bRatioText = formatOtrRate(bEvents.length, effectiveDurationMs);
             lines.push(`  ${bStartMin}-${bEndMin} min ratio: ${bRatioText}`);
+            const bTransitions = sortedTransitions.filter(e =>
+              b === numBlocks - 1 ? e.tMs >= bStartMs : (e.tMs >= bStartMs && e.tMs < bEndMs)
+            );
+            for (const tev of bTransitions) {
+              lines.push(`    Transition at ${formatElapsed(Math.max(0, tev.tMs))}`);
+            }
           }
         }
 
@@ -4918,7 +5774,7 @@
                   "font-size": 14,
                   "font-family": fontSans,
                   "font-weight": 700
-                }, countsText, "#1e293b"));
+                }, countsText, "#64748b"));
               }
 
               // Circle/pill border around the rounded ratio (shared badgeX and 22px height prevents overlap)
@@ -5039,7 +5895,7 @@
                   "font-size": 13.5,
                   "font-family": fontSans,
                   "font-weight": 700
-                }, countsText, "#1e293b"));
+                }, countsText, "#64748b"));
               }
 
               // Lighter colored pill badge around the ratio
@@ -5117,6 +5973,30 @@
               continue;
             }
 
+            if (lineText.startsWith("    Transition at ")) {
+              const labelStr = lineText.trim();
+              root.appendChild(el(svgNS, "line", {
+                x1: pad + 12,
+                y1: yPos - 4,
+                x2: pad + 26,
+                y2: yPos - 4,
+                stroke: "#6b7280",
+                "stroke-width": 2.5,
+                "stroke-dasharray": "1 5",
+                "stroke-linecap": "round"
+              }));
+              root.appendChild(el(svgNS, "text", {
+                x: pad + 32,
+                y: yPos,
+                "text-anchor": "start",
+                "font-size": 12.5,
+                "font-family": fontSans,
+                "font-weight": 600,
+                fill: "#475569"
+              }, labelStr));
+              continue;
+            }
+
             if (lineText.startsWith("  ")) {
               const textEl = el(svgNS, "text", {
                 x: pad + 4,
@@ -5189,6 +6069,7 @@
       function showResults(){
         state.currentScreen = "results";
         mountTemplate("screen-results");
+        setupStickyWalkthroughBanner("#resultsTopBanner", "#resultsDetailsBanner");
 
         const durationMs = state.stoppedAt - state.startedAt;
         const bins = computeBinsByKind(state.otrEvents, durationMs);
@@ -5283,13 +6164,13 @@
           resultsTitle.textContent = "Instructional Feedback Results";
         } else if (state.mode === "All") {
           if (state.allIncludeOtr && state.allIncludeSel) {
-            resultsTitle.textContent = "The Walk Through Tool Results";
+            resultsTitle.textContent = "Results";
           } else if (state.allIncludeOtr) {
-            resultsTitle.textContent = "The Walk Through Tool Results (OTR Only)";
+            resultsTitle.textContent = "Results (OTR Only)";
           } else if (state.allIncludeSel) {
-            resultsTitle.textContent = "The Walk Through Tool Results (Instructional Feedback Only)";
+            resultsTitle.textContent = "Results (Instructional Feedback Only)";
           } else {
-            resultsTitle.textContent = "The Walk Through Tool Results (Timers Off)";
+            resultsTitle.textContent = "Results (Timers Off)";
           }
         } else {
           resultsTitle.textContent = "Opportunities to Respond Results";
@@ -5528,13 +6409,19 @@
             return await renderImageBlob();
           })();
 
+          const shareBtnLabel = shareBtn.querySelector(".dock-btn-label");
+          const setShareBtnLabel = (text) => {
+            if (shareBtnLabel) shareBtnLabel.textContent = text;
+            else shareBtn.textContent = text;
+          };
+
           const handleCopySuccess = () => {
             shareStatus.innerHTML = '<span style="color:#15803d; font-weight:bold;">✓ Image copied to clipboard!</span> You can now paste directly into an email or spreadsheet.';
             shareBtn.disabled = false;
-            shareBtn.textContent = "Copied!";
+            setShareBtnLabel("Copied!");
             shareBtn.classList.add("copied");
             setTimeout(() => {
-              shareBtn.textContent = "Copy Image";
+              setShareBtnLabel("Copy Image");
               shareBtn.classList.remove("copied");
             }, 3500);
           };
@@ -5560,7 +6447,7 @@
               }
             }
             shareBtn.disabled = false;
-            shareBtn.textContent = "Copy Image";
+            setShareBtnLabel("Copy Image");
             shareBtn.classList.remove("copied");
           };
 
@@ -5588,6 +6475,238 @@
             handleCopyFallback();
           }
         });
+
+        // 2. Raw Data CSV Download button
+        const csvBtn = document.getElementById("csvBtn");
+        function getEventCsvMeta(kind) {
+          if (kind === "transition") {
+            return { category: "Transition", eventName: "Transition", detail: "Classroom Transition" };
+          }
+          if (kind === "specific") return { category: "Instructional Feedback", eventName: "Specific Praise", detail: "Positive" };
+          if (kind === "general") return { category: "Instructional Feedback", eventName: "General Praise", detail: "Positive" };
+          if (kind === "corrective") return { category: "Instructional Feedback", eventName: "Corrective Feedback", detail: "Positive" };
+          if (kind === "redirect") return { category: "Instructional Feedback", eventName: "Redirective Statements", detail: "Negative" };
+          if (kind === "genCrit") return { category: "Instructional Feedback", eventName: "General Criticism", detail: "Negative" };
+          if (kind === "indCrit") return { category: "Instructional Feedback", eventName: "Individual Criticism", detail: "Negative" };
+          if (kind === "structWhole") return { category: "Lesson Structure", eventName: "Whole Group", detail: "Structure Change" };
+          if (kind === "structSmall") return { category: "Lesson Structure", eventName: "Small Group", detail: "Structure Change" };
+          if (kind === "structPartners") return { category: "Lesson Structure", eventName: "Partners", detail: "Structure Change" };
+          if (kind === "structIndividual") return { category: "Lesson Structure", eventName: "Individual", detail: "Structure Change" };
+
+          const customPraise = (state.customPraiseButtons || []).find(c => c.id === kind);
+          if (customPraise) {
+            return { category: "Instructional Feedback", eventName: customPraise.label, detail: "Positive (Custom)" };
+          }
+
+          const otrDetails = getOtrEventDetails(kind);
+          const groupLabel = otrDetails.group === "whole" ? "Whole Group" : "Small Group";
+          return { category: "Opportunities to Respond", eventName: otrDetails.label, detail: groupLabel };
+        }
+
+        function generateObservationCsv() {
+          const csvEscape = (val) => {
+            const s = val === null || val === undefined ? "" : String(val);
+            if (/[",\r\n]/.test(s)) {
+              return `"${s.replace(/"/g, '""')}"`;
+            }
+            return s;
+          };
+          const row = (cols) => cols.map(csvEscape).join(",");
+          const lines = [];
+
+          const obsDateObj = state.startWall || state.stopWall || new Date();
+          const recordedDate = obsDateObj.toLocaleDateString();
+          const recordedStart = formatTime(state.startWall);
+          const recordedEnd = formatTime(state.stopWall);
+          const transitionEvents = state.otrEvents.filter(e => e.kind === "transition");
+          const plainNotes = (state.notes || "")
+            .replace(/<\/?b>/gi, "")
+            .replace(/<\/?strong>/gi, "")
+            .replace(/\*\*(.*?)\*\*/g, "$1")
+            .trim();
+
+          // 1. Summary Metadata Section
+          lines.push(row(["SUMMARY METADATA"]));
+          lines.push(row(["Section", "Field", "Value"]));
+          lines.push(row(["Session", "Observed Educator Name", state.educatorName || ""]));
+          lines.push(row(["Session", "Recorded Date", recordedDate]));
+          lines.push(row(["Session", "Start Time", recordedStart]));
+          lines.push(row(["Session", "End Time", recordedEnd]));
+          lines.push(row(["Session", "Active Duration", formatElapsed(Math.max(0, durationMs))]));
+          lines.push(row(["Session", "Active Duration (Seconds)", (Math.max(0, durationMs) / 1000).toFixed(1)]));
+          lines.push(row(["Sections", "Opportunities to Respond Active", isOtrActive ? "Yes" : "No"]));
+          lines.push(row(["Sections", "Instructional Feedback Active", isPraiseActive ? "Yes" : "No"]));
+
+          if (isOtrActive) {
+            const totalWholeOtr = Object.values(wholeOtrTotals).reduce((a, b) => a + b, 0) +
+              customOtrTotals.whole.reduce((a, b) => a + (b.count || 0), 0);
+            const totalSmallOtr = Object.values(smallOtrTotals).reduce((a, b) => a + b, 0) +
+              customOtrTotals.small.reduce((a, b) => a + (b.count || 0), 0);
+            lines.push(row(["Opportunities to Respond", "Total OTRs", totalOtr]));
+            lines.push(row(["Opportunities to Respond", "Rate per Minute", formatOtrRate(totalOtr, durationMs)]));
+            lines.push(row(["Opportunities to Respond", "Whole Group OTRs", totalWholeOtr]));
+            lines.push(row(["Opportunities to Respond", "Small Group OTRs", totalSmallOtr]));
+          }
+
+          if (isPraiseActive) {
+            lines.push(row(["Instructional Feedback", "Total Statements", totalPraise]));
+            lines.push(row(["Instructional Feedback", "Positive Statements", positivePraise]));
+            lines.push(row(["Instructional Feedback", "Negative Statements", negativePraise]));
+            lines.push(row(["Instructional Feedback", "Positive to Negative Ratio", formatPraiseRatio(positivePraise, negativePraise, durationMs)]));
+            lines.push(row(["Instructional Feedback", "Specific Praise", totalSpecific]));
+            lines.push(row(["Instructional Feedback", "General Praise", totalGeneral]));
+            lines.push(row(["Instructional Feedback", "Corrective Feedback", totalCorrective]));
+            lines.push(row(["Instructional Feedback", "Redirective Statements", totalRedirect]));
+            lines.push(row(["Instructional Feedback", "General Criticism", totalGenCrit]));
+            lines.push(row(["Instructional Feedback", "Individual Criticism", totalIndCrit]));
+            for (const cp of customPraiseTotals) {
+              lines.push(row(["Instructional Feedback", cp.label, cp.count]));
+            }
+          }
+
+          lines.push(row(["Transitions", "Total Transitions", transitionEvents.length]));
+
+          if (state.engagementChecks && state.engagementChecks.length > 0) {
+            for (const chk of state.engagementChecks) {
+              const pct = chk.totalStudents > 0 ? Math.round((chk.offTaskStudents / chk.totalStudents) * 100) : 0;
+              lines.push(row(["Engagement Check", `Minute ${chk.timeMin}`, `${chk.offTaskStudents} off task / ${chk.totalStudents} total (${pct}%)`]));
+            }
+          }
+
+          lines.push(row(["Observation Details", "Agreed upon teaching materials used", (!state.skipQuestions && state.curriculaMaterialsUsed) ? state.curriculaMaterialsUsed : "Skipped / Not Answered"]));
+          lines.push(row(["Observation Details", "Lesson target referenced", (!state.skipQuestions && state.lessonTargetPosted) ? state.lessonTargetPosted : "Skipped / Not Answered"]));
+          lines.push(row(["Observation Details", "Is there a regulation space in the classroom?", (!state.skipQuestions && state.regulationSpace) ? state.regulationSpace : "Skipped / Not Answered"]));
+          lines.push(row(["Observation Details", "Is there a graphic depicting the character trait of the month?", (!state.skipQuestions && state.characterTraitGraphic) ? state.characterTraitGraphic : "Skipped / Not Answered"]));
+
+          const csPrompts = [
+            "Educator models warm & respectful interactions",
+            "Educator joins in community-building activities",
+            "Educator leads activities with enthusiasm",
+            "Students share their ideas and perspectives",
+            "Overall atmosphere of safety and respect",
+            "Evidence of class agreement with student input"
+          ];
+          const csLabels = ["0 - Not Present", "1 - Partial", "2 - Fully Implemented"];
+          for (let i = 0; i < csPrompts.length; i++) {
+            const val = (!state.skipSELObservations && state.praiseRatings && state.praiseRatings[i] !== null && state.praiseRatings[i] !== undefined)
+              ? csLabels[state.praiseRatings[i]]
+              : "Skipped / Not Answered";
+            lines.push(row(["Character Strong Observations", csPrompts[i], val]));
+          }
+
+          lines.push(row(["Notes", "Observation Notes", plainNotes || "(No notes entered)"]));
+
+          // 2. Five-Minute Blocks Breakdown
+          lines.push("");
+          lines.push(row(["FIVE-MINUTE BLOCKS"]));
+          lines.push(row(["Block", "Start Minute", "End Minute", "OTRs", "OTR Rate", "Positive Feedback", "Negative Feedback", "Praise Ratio", "Transitions"]));
+          const numBlocks = Math.max(1, Math.ceil(Math.max(0, durationMs) / 300000));
+          for (let b = 0; b < numBlocks; b++) {
+            const bStartMin = b * 5;
+            const bEndMin = (b + 1) * 5;
+            const bStartMs = bStartMin * 60000;
+            const bEndMs = bEndMin * 60000;
+            const bDurationMs = Math.max(0, Math.min(durationMs, bEndMs) - bStartMs);
+            const effDur = bDurationMs > 0 ? bDurationMs : 300000;
+
+            const bOtrs = state.otrEvents.filter(e =>
+              e.tMs >= bStartMs && e.tMs < bEndMs &&
+              (e.kind.startsWith("otrWhole_") || e.kind.startsWith("otrSmall_") || e.kind.startsWith("otr") || customIds.includes(e.kind))
+            ).length;
+            const bPos = state.otrEvents.filter(e =>
+              e.tMs >= bStartMs && e.tMs < bEndMs &&
+              ["specific", "general", "corrective", ...customPraiseIds].includes(e.kind)
+            ).length;
+            const bNeg = state.otrEvents.filter(e =>
+              e.tMs >= bStartMs && e.tMs < bEndMs &&
+              ["redirect", "genCrit", "indCrit"].includes(e.kind)
+            ).length;
+            const bTrans = state.otrEvents.filter(e =>
+              e.tMs >= bStartMs && e.tMs < bEndMs && e.kind === "transition"
+            ).length;
+
+            lines.push(row([
+              `${bStartMin}-${bEndMin} min`,
+              bStartMin,
+              bEndMin,
+              isOtrActive ? bOtrs : "N/A",
+              isOtrActive ? formatOtrRate(bOtrs, effDur) : "N/A",
+              isPraiseActive ? bPos : "N/A",
+              isPraiseActive ? bNeg : "N/A",
+              isPraiseActive ? formatPraiseRatio(bPos, bNeg, effDur) : "N/A",
+              bTrans
+            ]));
+          }
+
+          // 3. Chronological Timestamped Events
+          lines.push("");
+          lines.push(row(["CHRONOLOGICAL EVENTS"]));
+          lines.push(row(["Event #", "Date", "Timestamp (MM:SS.d)", "Elapsed Seconds", "5-Min Block", "Category", "Event / Action", "Detail"]));
+
+          const chronological = [];
+          for (const ev of state.otrEvents) {
+            const meta = getEventCsvMeta(ev.kind);
+            chronological.push({
+              tMs: Math.max(0, ev.tMs),
+              category: meta.category,
+              eventName: meta.eventName,
+              detail: meta.detail
+            });
+          }
+          for (const chk of (state.engagementChecks || [])) {
+            const tMs = Math.max(0, (chk.timeMin || 0) * 60000);
+            const pct = chk.totalStudents > 0 ? Math.round((chk.offTaskStudents / chk.totalStudents) * 100) : 0;
+            chronological.push({
+              tMs,
+              category: "Engagement Check",
+              eventName: "Engagement Check",
+              detail: `${chk.offTaskStudents} off task / ${chk.totalStudents} total (${pct}%)`
+            });
+          }
+          chronological.sort((a, b) => a.tMs - b.tMs);
+
+          if (chronological.length === 0) {
+            lines.push(row(["", recordedDate, "", "", "", "None", "No timestamped events recorded", ""]));
+          } else {
+            chronological.forEach((item, idx) => {
+              const blockIdx = Math.floor(item.tMs / 300000);
+              const blockLabel = `${blockIdx * 5}-${(blockIdx + 1) * 5} min`;
+              lines.push(row([
+                idx + 1,
+                recordedDate,
+                formatElapsed(item.tMs),
+                (item.tMs / 1000).toFixed(1),
+                blockLabel,
+                item.category,
+                item.eventName,
+                item.detail
+              ]));
+            });
+          }
+
+          return lines.join("\r\n");
+        }
+
+        if (csvBtn) {
+          csvBtn.addEventListener("click", () => {
+            const csvText = generateObservationCsv();
+            const csvBlob = new Blob(["\uFEFF" + csvText], { type: "text/csv;charset=utf-8;" });
+            const dateObj = state.startWall || state.stopWall || new Date();
+            const dateStamp = `${dateObj.getFullYear()}-${pad2(dateObj.getMonth() + 1)}-${pad2(dateObj.getDate())}`;
+            const csvFilename = safeFilename().replace(/\.png$/i, `_${dateStamp}.csv`);
+            downloadBlob(csvBlob, csvFilename);
+            if (shareStatus) {
+              shareStatus.innerHTML = '<span style="color:#15803d; font-weight:bold;">✓ Raw data downloaded as .csv!</span>';
+            }
+            const csvLabel = csvBtn.querySelector(".dock-btn-label");
+            if (csvLabel) csvLabel.textContent = "Saved!";
+            csvBtn.classList.add("saved");
+            setTimeout(() => {
+              if (csvLabel) csvLabel.textContent = "CSV";
+              csvBtn.classList.remove("saved");
+            }, 2500);
+          });
+        }
       }
 
 
